@@ -45,6 +45,7 @@ interface Props {
 interface PNode {
   id: string;
   label: string;
+  lines: string[];
   kind: string;
   x: number;
   y: number;
@@ -52,8 +53,28 @@ interface PNode {
   h: number;
 }
 
-function nodeW(label: string) {
-  return Math.max(90, Math.min(210, 26 + label.length * 12));
+const PAD = 40;
+
+/** ラベルを最大2行に折る（・→（ などの区切りを優先） */
+function wrapLabel(s: string): string[] {
+  if (s.length <= 13) return [s];
+  const marks = ['・', ' → ', '→', '（', ' ', '後'];
+  let best = -1;
+  for (const m of marks) {
+    const i = s.indexOf(m, 4);
+    if (i > 3 && i < s.length - 2) {
+      best = m === '後' ? i + 1 : i + (m === '（' ? 0 : m.length);
+      break;
+    }
+  }
+  if (best < 0) best = Math.ceil(s.length / 2);
+  const a = s.slice(0, best).trim();
+  const b = s.slice(best).trim();
+  return [a.length > 18 ? a.slice(0, 17) + '…' : a, b.length > 18 ? b.slice(0, 17) + '…' : b];
+}
+function nodeSize(lines: string[]) {
+  const w = Math.max(...lines.map((l) => l.length));
+  return { w: Math.max(110, Math.min(240, 24 + w * 12)), h: lines.length > 1 ? 42 : 28 };
 }
 
 export default function SystemMap({ elements, center, height = 520 }: Props) {
@@ -66,19 +87,57 @@ export default function SystemMap({ elements, center, height = 520 }: Props) {
 
   const layout = useMemo(() => {
     const g = new dagre.graphlib.Graph({ multigraph: true });
-    g.setGraph({ rankdir: 'LR', nodesep: 18, ranksep: 70, marginx: 16, marginy: 16 });
+    g.setGraph({
+      rankdir: 'LR',
+      nodesep: 62,
+      ranksep: 190,
+      edgesep: 44,
+      marginx: PAD,
+      marginy: PAD,
+      ranker: 'network-simplex',
+    });
     g.setDefaultEdgeLabel(() => ({}));
-    for (const n of elements.nodes) g.setNode(n.data.id, { width: nodeW(n.data.label), height: 30 });
+    const meta = new Map<string, { lines: string[]; w: number; h: number }>();
+    for (const n of elements.nodes) {
+      const lines = wrapLabel(n.data.label);
+      const { w, h } = nodeSize(lines);
+      meta.set(n.data.id, { lines, w, h });
+      g.setNode(n.data.id, { width: w, height: h });
+    }
     for (const e of elements.edges) g.setEdge(e.data.source, e.data.target, {}, e.data.id);
     dagre.layout(g);
+
     const nodes: PNode[] = elements.nodes.map((n) => {
       const p = g.node(n.data.id);
-      const w = nodeW(n.data.label);
-      return { id: n.data.id, label: n.data.label, kind: n.data.kind, x: p.x - w / 2, y: p.y - 15, w, h: 30 };
+      const m = meta.get(n.data.id)!;
+      return {
+        id: n.data.id,
+        label: n.data.label,
+        lines: m.lines,
+        kind: n.data.kind,
+        x: p.x - m.w / 2,
+        y: p.y - m.h / 2,
+        w: m.w,
+        h: m.h,
+      };
     });
     const byId = new Map(nodes.map((n) => [n.id, n]));
+
+    // dagre が計算したエッジの経路（平行エッジが分かれる・ノードを避ける）
+    const edgePts = new Map<string, { x: number; y: number }[]>();
+    for (const e of elements.edges) {
+      const ed = g.edge(e.data.source, e.data.target, e.data.id);
+      if (ed?.points?.length) edgePts.set(e.data.id, ed.points);
+    }
+
     const gg = g.graph();
-    return { nodes, byId, width: (gg.width ?? 400) + 32, height: (gg.height ?? 300) + 32 };
+    return {
+      nodes,
+      byId,
+      edgePts,
+      width: (gg.width ?? 400) + PAD,
+      height: (gg.height ?? 300) + PAD,
+    };
   }, [elements]);
 
   const edgeKinds = useMemo(
@@ -217,24 +276,45 @@ export default function SystemMap({ elements, center, height = 520 }: Props) {
               const b = layout.byId.get(e.data.target);
               if (!a || !b) return null;
               const dim = hiddenKinds.has(e.data.kind);
-              const sx = a.x + a.w;
-              const sy = a.y + a.h / 2;
-              const tx = b.x;
-              const ty = b.y + b.h / 2;
-              const dx = Math.max(30, Math.abs(tx - sx) * 0.5);
+              const pts = layout.edgePts.get(e.data.id);
+              let d: string;
+              if (pts && pts.length >= 2) {
+                // dagre の経路（折れ線）を二次ベジェで滑らかに。端点はノード縁へ
+                const p = pts.map((q) => ({ ...q }));
+                p[0] = { x: a.x + a.w, y: a.y + a.h / 2 };
+                p[p.length - 1] = { x: b.x, y: b.y + b.h / 2 };
+                d = `M ${p[0].x} ${p[0].y}`;
+                for (let i = 1; i < p.length - 1; i++) {
+                  const xc = (p[i].x + p[i + 1].x) / 2;
+                  const yc = (p[i].y + p[i + 1].y) / 2;
+                  d += ` Q ${p[i].x} ${p[i].y} ${xc} ${yc}`;
+                }
+                const e2 = p[p.length - 1];
+                d += ` L ${e2.x} ${e2.y}`;
+              } else {
+                const sx = a.x + a.w;
+                const sy = a.y + a.h / 2;
+                const tx = b.x;
+                const ty = b.y + b.h / 2;
+                const dx = Math.max(40, Math.abs(tx - sx) * 0.45);
+                d = `M ${sx} ${sy} C ${sx + dx} ${sy}, ${tx - dx} ${ty}, ${tx} ${ty}`;
+              }
               return (
                 <path
                   key={e.data.id}
                   data-nav
-                  d={`M ${sx} ${sy} C ${sx + dx} ${sy}, ${tx - dx} ${ty}, ${tx} ${ty}`}
+                  class="sm-edge"
+                  d={d}
                   fill="none"
                   stroke={EDGE_COLOR[e.data.kind] ?? '#888'}
-                  stroke-width={1.5}
-                  opacity={dim ? 0.08 : 0.75}
+                  stroke-width={1.6}
+                  opacity={dim ? 0.05 : 0.5}
                   marker-end={`url(#${uid}-${e.data.kind})`}
                   style={{ cursor: 'pointer' }}
                   onClick={() => (window.location.href = `/manon/routes/${e.data.id}/`)}
-                />
+                >
+                  <title>{e.data.label}</title>
+                </path>
               );
             })}
             {layout.nodes.map((n) => (
@@ -245,6 +325,7 @@ export default function SystemMap({ elements, center, height = 520 }: Props) {
                 style={{ cursor: 'pointer' }}
                 onClick={() => (window.location.href = `/manon/situations/${n.id}/`)}
               >
+                <title>{n.label}</title>
                 <rect
                   width={n.w}
                   height={n.h}
@@ -255,14 +336,21 @@ export default function SystemMap({ elements, center, height = 520 }: Props) {
                 />
                 <rect width={5} height={n.h} fill={KIND_COLOR[n.kind] ?? '#888'} />
                 <text
-                  x={n.w / 2 + 2}
-                  y={n.h / 2}
+                  x={n.w / 2 + 3}
                   text-anchor="middle"
-                  dominant-baseline="central"
                   fill="var(--text)"
                   style={{ fontSize: '10px', fontFamily: 'var(--font-pixel)' }}
                 >
-                  {n.label.length > 16 ? n.label.slice(0, 15) + '…' : n.label}
+                  {n.lines.map((ln, i) => (
+                    <tspan
+                      key={i}
+                      x={n.w / 2 + 3}
+                      y={n.lines.length > 1 ? n.h / 2 - 6 + i * 13 : n.h / 2}
+                      dominant-baseline="central"
+                    >
+                      {ln}
+                    </tspan>
+                  ))}
                 </text>
               </g>
             ))}
@@ -270,7 +358,8 @@ export default function SystemMap({ elements, center, height = 520 }: Props) {
         </svg>
       </div>
       <p class="sm-hint">
-        ドラッグで移動・ホイールで拡大縮小。丸枠＝状況ノード、矢印＝パーツ。クリックで各詳細へ。
+        ドラッグで移動・ホイールで拡大縮小。クリックで各詳細へ。
+        「起き攻め」の辺を隠すとコンボの骨組みだけが見えます。
       </p>
 
       <style>{`
@@ -285,6 +374,9 @@ export default function SystemMap({ elements, center, height = 520 }: Props) {
         .sm-vp { position:relative; overflow:hidden; cursor:grab; touch-action:none; background:var(--bg-sunken); }
         .sm-vp:active { cursor:grabbing; }
         .sm-svg { position:absolute; inset:0; display:block; }
+        .sm-edge { transition:opacity .1s, stroke-width .1s; }
+        .sm-edge:hover { opacity:1 !important; stroke-width:3; }
+        .sm-svg g[data-nav]:hover rect:first-of-type { filter:brightness(1.35); }
         .sm-hint { margin:0; padding:.45rem .8rem; font-size:.7rem; color:var(--text-faint); border-top:1px solid var(--border); background:var(--bg-raised); }
       `}</style>
     </div>
