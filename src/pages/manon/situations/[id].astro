@@ -86,7 +86,7 @@ const flow = hasFlow ? buildSituationFlow(situation.id) : null;
                     {r.steps.map((st, i) => (
                       <>
                         {i > 0 && <span class="j">›</span>}
-                        <Sequence command={st.command} />
+                        <Sequence command={st.command} commandModern={st.commandModern} />
                       </>
                     ))}
                   </div>
@@ -145,7 +145,7 @@ const flow = hasFlow ? buildSituationFlow(situation.id) : null;
                   {r.steps.map((st, i) => (
                     <>
                       {i > 0 && <span class="j">›</span>}
-                      <Sequence command={st.command} />
+                      <Sequence command={st.command} commandModern={st.commandModern} />
                     </>
                   ))}
                 </div>
@@ -174,7 +174,7 @@ const flow = hasFlow ? buildSituationFlow(situation.id) : null;
                   {r.steps.map((st, i) => (
                     <>
                       {i > 0 && <span class="j">›</span>}
-                      <Sequence command={st.command} />
+                      <Sequence command={st.command} commandModern={st.commandModern} />
                     </>
                   ))}
                 </div>

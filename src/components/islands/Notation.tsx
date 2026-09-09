@@ -1,6 +1,7 @@
 /** @jsxImportSource preact */
-import { parseCommand, tokensToText } from '../../lib/notation/parse';
+import { deriveModern, parseCommand, tokensToPlain, tokensToText } from '../../lib/notation/parse';
 import { DIRECTION_ANGLE, DIRECTION_GLYPH } from '../../lib/notation/tokens';
+import type { Token } from '../../lib/notation/tokens';
 
 function ArrowIcon({ dir }: { dir: number }) {
   const angle = DIRECTION_ANGLE[dir];
@@ -21,14 +22,21 @@ function ArrowIcon({ dir }: { dir: number }) {
   );
 }
 
-/** Astro の Sequence.astro と同じ見た目を Preact で描画する */
-export default function Notation({ command }: { command: string }) {
+function btnStrength(t: Extract<Token, { kind: 'button' }>): string {
+  const b = t.buttons[0];
+  if (b === 'SP') return 'SP';
+  if (b === 'AS') return 'AS';
+  if (t.buttons.length === 2 || t.od) return 'OD';
+  return t.strength;
+}
+
+function Tokens({ command }: { command: string }) {
   const tokens = parseCommand(command);
   const text = tokensToText(tokens);
-
+  const plain = tokensToPlain(tokens);
   return (
-    <span class="nt">
-      <span class="nt-seq nt-icon" aria-label={text}>
+    <>
+      <span class="nt-seq nt-icon" aria-label={plain}>
         {tokens.map((t, i) => {
           if (t.kind === 'directions') {
             return (
@@ -40,9 +48,8 @@ export default function Notation({ command }: { command: string }) {
             );
           }
           if (t.kind === 'button') {
-            const s = t.buttons.length === 2 || t.od ? 'OD' : t.strength;
             return (
-              <span class="nt-btn" data-s={s} key={i}>
+              <span class="nt-btn" data-s={btnStrength(t)} key={i}>
                 {t.text.replace(/^OD/, '')}
               </span>
             );
@@ -79,6 +86,27 @@ export default function Notation({ command }: { command: string }) {
         })}
       </span>
       <span class="nt-text">{text}</span>
+    </>
+  );
+}
+
+/** Astro の Sequence.astro と同じ見た目を Preact で描画する（クラシック／モダン両対応） */
+export default function Notation({
+  command,
+  commandModern,
+}: {
+  command: string;
+  commandModern?: string;
+}) {
+  const modern = commandModern && commandModern.trim() ? commandModern.trim() : deriveModern(command);
+  return (
+    <span class="nt">
+      <span class="nt-ctl nt-ctl-classic">
+        <Tokens command={command} />
+      </span>
+      <span class="nt-ctl nt-ctl-modern" data-fallback={modern === command ? 'true' : undefined}>
+        <Tokens command={modern} />
+      </span>
     </span>
   );
 }

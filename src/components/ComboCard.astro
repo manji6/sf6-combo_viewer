@@ -26,7 +26,7 @@ const end = getSituation(combo.endAt);
       flat.steps.map((st, i) => (
         <>
           {i > 0 && <span class="join">{st.boundary ? '»' : '›'}</span>}
-          <Sequence command={st.command} />
+          <Sequence command={st.command} commandModern={st.commandModern} />
         </>
       ))
     }

@@ -1,0 +1,42 @@
+---
+// 操作タイプのトグル（クラシック ⇄ モダン）。<html data-control> を切り替える。
+---
+
+<div class="ctl-toggle" role="group" aria-label="操作タイプ">
+  <button type="button" class="btn" data-control-set="classic" aria-pressed="true">クラシック</button>
+  <button type="button" class="btn" data-control-set="modern" aria-pressed="false">モダン</button>
+</div>
+
+<style>
+  .ctl-toggle {
+    display: inline-flex;
+  }
+  .ctl-toggle .btn {
+    padding: 0.3em 0.7em;
+    font-size: 0.8rem;
+    box-shadow: none;
+  }
+  .ctl-toggle .btn:first-child {
+    border-right-width: 1px;
+  }
+</style>
+
+<script>
+  function sync() {
+    const mode = document.documentElement.dataset.control === 'modern' ? 'modern' : 'classic';
+    document.querySelectorAll<HTMLButtonElement>('[data-control-set]').forEach((b) => {
+      b.setAttribute('aria-pressed', String(b.dataset.controlSet === mode));
+    });
+  }
+  document.querySelectorAll<HTMLButtonElement>('[data-control-set]').forEach((b) => {
+    b.addEventListener('click', () => {
+      const mode = b.dataset.controlSet === 'modern' ? 'modern' : 'classic';
+      document.documentElement.dataset.control = mode;
+      try {
+        localStorage.setItem('sf6cv:control', mode);
+      } catch {}
+      sync();
+    });
+  });
+  sync();
+</script>

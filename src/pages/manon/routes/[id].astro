@@ -44,7 +44,7 @@ const p = route.properties;
     <section>
       <h2>手順</h2>
       <div class="pixel-box pad">
-        <StepList steps={route.steps} showModern />
+        <StepList steps={route.steps} />
       </div>
       {route.constraints && <p class="constraints">制約: {route.constraints}</p>}
       {route.notes && <p class="notes">{route.notes}</p>}

@@ -1,0 +1,64 @@
+---
+// 1 つのコマンド文字列を「アイコン表記」と「テキスト表記」の両方で出力する。
+// 表示切替は global.css の [data-notation] が担当。
+import { parseCommand, tokensToPlain, tokensToText } from '../../lib/notation/parse';
+import Arrow from './Arrow.astro';
+
+interface Props {
+  command: string;
+}
+const { command } = Astro.props;
+const tokens = parseCommand(command);
+const text = tokensToText(tokens);
+const plain = tokensToPlain(tokens);
+
+function btnStrength(t: (typeof tokens)[number]): string {
+  if (t.kind !== 'button') return '';
+  const b = t.buttons[0];
+  if (b === 'SP') return 'SP';
+  if (b === 'AS') return 'AS';
+  if (t.buttons.length === 2 || t.od) return 'OD';
+  return t.strength;
+}
+---
+
+<span class="nt-seq nt-icon" aria-label={plain}>
+  {
+    tokens.map((t) => {
+      if (t.kind === 'directions') {
+        return (
+          <span class="nt-dirs">
+            {t.dirs.map((d) => (
+              <Arrow dir={d} />
+            ))}
+          </span>
+        );
+      }
+      if (t.kind === 'button') {
+        return (
+          <span class="nt-btn" data-s={btnStrength(t)}>
+            {t.text.replace(/^OD/, '')}
+          </span>
+        );
+      }
+      if (t.kind === 'meta') return <span class="nt-meta">{t.text}</span>;
+      if (t.kind === 'modifier') {
+        if (t.type === 'cancel') return <span class="nt-mod"> › </span>;
+        if (t.type === 'then') return <span class="nt-mod"> </span>;
+        if (t.type === 'link') return <span class="nt-mod"> ~ </span>;
+        return <span class="nt-mod">{t.text}</span>;
+      }
+      if (t.kind === 'note') return <span class="nt-note">（{t.text}）</span>;
+      return <span class="nt-mod">{t.text}</span>;
+    })
+  }
+</span>
+<span class="nt-text">{text}</span>
+
+<style>
+  .nt-dirs {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.05em;
+  }
+</style>

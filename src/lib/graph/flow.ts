@@ -16,6 +16,7 @@ export interface FlowNode {
   id: string;
   type: FlowNodeType;
   command?: string;
+  commandModern?: string;
   move?: string;
   note?: string;
   cancel?: boolean;
@@ -84,6 +85,7 @@ function stepNode(id: string, st: Step, groupId: string): FlowNode {
     id,
     type: 'step',
     command: st.command,
+    commandModern: st.commandModern,
     move: st.move,
     note: st.note,
     cancel: st.cancel,

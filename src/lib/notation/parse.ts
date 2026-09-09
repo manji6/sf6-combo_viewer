@@ -7,13 +7,17 @@ import {
   type Token,
 } from './tokens';
 
-const BUTTON_RE = /^(PP|KK|LP|MP|HP|LK|MK|HK|P|K)/;
+// SP/AS（モダン）→ PP/KK → L?P など → 単独 P/K → 単独 L/M/H（モダンの弱中強攻撃）
+const BUTTON_RE = /^(SP|AS|PP|KK|LP|MP|HP|LK|MK|HK|P|K|L|M|H)/;
 
 function buttonText(strength: ButtonStrength, buttons: ButtonKind[], od: boolean): string {
-  // PP/KK は OD を含意するので接頭辞なし
-  if (buttons.length === 2) return `${buttons[0]}${buttons[1]}`;
+  if (buttons.length === 2) return `${buttons[0]}${buttons[1]}`; // PP/KK
+  const b = buttons[0];
+  if (b === 'SP') return 'SP';
+  if (b === 'AS') return 'AS';
   const s = STRENGTH_LABEL[strength];
-  return `${od ? 'OD' : ''}${s}${buttons[0] ?? ''}`;
+  if (b === 'A') return `${s || ''}`.trim() || 'A'; // モダン攻撃（弱/中/強）
+  return `${od ? 'OD' : ''}${s}${b ?? ''}`;
 }
 
 /**
@@ -164,13 +168,18 @@ export function parseCommand(input: string): Token[] {
       let buttons: ButtonKind[] = [];
       if (raw === 'PP') buttons = ['P', 'P'];
       else if (raw === 'KK') buttons = ['K', 'K'];
-      else if (raw.length === 2) {
+      else if (raw === 'SP') buttons = ['SP'];
+      else if (raw === 'AS') buttons = ['AS'];
+      else if (raw === 'L' || raw === 'M' || raw === 'H') {
+        strength = raw as ButtonStrength;
+        buttons = ['A']; // モダンの弱中強攻撃
+      } else if (raw.length === 2) {
         strength = raw[0] as ButtonStrength;
         buttons = [raw[1] as ButtonKind];
       } else {
         buttons = [raw as ButtonKind];
       }
-      const isOd = od || buttons.length === 2;
+      const isOd = od || raw === 'PP' || raw === 'KK';
       tokens.push({
         kind: 'button',
         strength,
@@ -239,4 +248,26 @@ export function tokensToPlain(tokens: Token[]): string {
 
 export function commandToText(input: string): string {
   return tokensToText(parseCommand(input));
+}
+
+/**
+ * クラシックのコマンドからモダンのコマンドを推定する（commandModern 未指定時のフォールバック）。
+ *  - 通常技: 方向 + 弱中強（P/K を落とす）  例 5MP → 5M, 2MK → 2M, 4HP → 4H
+ *  - 必殺技: 方向連番 3 桁以上 → 方向 + SP    例 236MP → 236SP, 214LK → 214SP
+ *  - SA: 236236x / 214214x → SP AS
+ *  - DR / DRC / PC / CH / DI / ため / j. などはそのまま
+ */
+export function deriveModern(classic: string): string {
+  let s = classic.trim();
+  if (/\b(SP|AS)\b/.test(s) || /[1-9](L|M|H)(?![PK])/.test(s)) return s; // すでにモダン表記
+
+  // SA（連続波動・昇龍）
+  s = s.replace(/(236236|214214)([LMH]?)([PK]|PP|KK)/g, () => 'SP AS');
+  // OD 必殺技（方向 3 桁以上 ＋ PP/KK）
+  s = s.replace(/([1-9]{3,})(PP|KK)/g, (_m, motion) => `${motion}SP`);
+  // 必殺技（方向 3 桁以上）
+  s = s.replace(/([1-9]{3,})([LMH]?)([PK])/g, (_m, motion) => `${motion}SP`);
+  // 通常技（方向 0〜2 桁 ＋ 弱中強 ＋ P/K）
+  s = s.replace(/(\bj\.)?([1-9]{0,2})([LMH])([PK])/g, (_m, jp, dir, str) => `${jp ?? ''}${dir}${str}`);
+  return s;
 }

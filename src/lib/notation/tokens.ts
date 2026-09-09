@@ -1,7 +1,8 @@
 // numpad 正準表記のトークン定義とマッピング
 
 export type ButtonStrength = 'L' | 'M' | 'H' | '';
-export type ButtonKind = 'P' | 'K';
+/** P/K = クラシックの攻撃、A = モダンの攻撃（弱中強）、SP = 必殺技ボタン、AS = アシスト */
+export type ButtonKind = 'P' | 'K' | 'A' | 'SP' | 'AS';
 
 export interface DirectionsToken {
   kind: 'directions';
@@ -92,6 +93,8 @@ export const STRENGTH_COLOR: Record<string, string> = {
   M: 'var(--btn-m)',
   H: 'var(--btn-h)',
   OD: 'var(--btn-od)',
+  SP: 'var(--btn-sp)',
+  AS: 'var(--btn-as)',
   '': 'var(--btn-none)',
 };
 

@@ -67,7 +67,7 @@ const endOki = outgoingRoutes(end.id).filter((r) => r.kind === 'okizeme');
           flat.steps.map((st, i) => (
             <>
               {i > 0 && <span class="j">{st.boundary ? '»' : '›'}</span>}
-              <Sequence command={st.command} />
+              <Sequence command={st.command} commandModern={st.commandModern} />
             </>
           ))
         }

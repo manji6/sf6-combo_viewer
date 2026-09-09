@@ -25,6 +25,8 @@
   --btn-m: #ffcb3d;
   --btn-h: #ff5a5a;
   --btn-od: #46d17a;
+  --btn-sp: #c08cff;
+  --btn-as: #5bd1c9;
   --btn-none: #b0b0b0;
 
   /* リスク帯 */
@@ -48,11 +50,24 @@
   --border: #cfc8b4;
   --border-strong: #a99f82;
   --text: #23201a;
-  --text-dim: #5c574a;
-  --text-faint: #8a8371;
-  --accent: #b5811f;
+  --text-dim: #4f4a3d;
+  --text-faint: #7a7360;
+  --accent: #a5721a;
   --accent-ink: #fff;
-  --link: #1f6feb;
+  --link: #1256c4;
+
+  /* ライトの背景（クリーム系）で読めるよう濃いめに振り直す */
+  --btn-l: #1c6fd6;
+  --btn-m: #a06a00;
+  --btn-h: #c62330;
+  --btn-od: #1a7f37;
+  --btn-sp: #7b3fd0;
+  --btn-as: #0f8f86;
+  --btn-none: #6b675c;
+
+  --risk-low: #1a7f37;
+  --risk-mid: #8a5a00;
+  --risk-high: #c62330;
 }
 
 * {
@@ -141,7 +156,7 @@ h3 {
    コマンド表記（notation）
    ================================================================ */
 
-/* トグルで表示を出し分け。既定はアイコン表記。 */
+/* アイコン ⇄ テキスト（既定アイコン） */
 :root .nt-text {
   display: none;
 }
@@ -149,6 +164,17 @@ h3 {
   display: inline;
 }
 :root[data-notation='text'] .nt-icon {
+  display: none;
+}
+
+/* クラシック ⇄ モダン（既定クラシック） */
+:root .nt-ctl-modern {
+  display: none;
+}
+:root[data-control='modern'] .nt-ctl-modern {
+  display: inline;
+}
+:root[data-control='modern'] .nt-ctl-classic {
   display: none;
 }
 
@@ -215,6 +241,14 @@ h3 {
 }
 .nt-btn[data-s='OD'] {
   --c: var(--btn-od);
+}
+.nt-btn[data-s='SP'] {
+  --c: var(--btn-sp);
+  border-radius: 4px;
+}
+.nt-btn[data-s='AS'] {
+  --c: var(--btn-as);
+  border-radius: 4px;
 }
 
 /* メタ（DR / SA など） */

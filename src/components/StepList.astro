@@ -4,11 +4,8 @@ import Sequence from './notation/Sequence.astro';
 
 interface Props {
   steps: Step[];
-  /** モダンのコマンドも併記する */
-  showModern?: boolean;
-  /** 各手にパーツ名の帯を出す場合の関数 */
 }
-const { steps, showModern = false } = Astro.props;
+const { steps } = Astro.props;
 ---
 
 <ol class="steps">
@@ -18,14 +15,9 @@ const { steps, showModern = false } = Astro.props;
         <span class="idx">{st.cancel ? '›' : ''}</span>
         <span class="body">
           <span class="cmd">
-            <Sequence command={st.command} />
+            <Sequence command={st.command} commandModern={st.commandModern} />
           </span>
           <span class="move">{st.move}</span>
-          {showModern && st.commandModern && st.commandModern !== st.command && (
-            <span class="modern">
-              モダン: <Sequence command={st.commandModern} />
-            </span>
-          )}
           {st.note && <span class="note">— {st.note}</span>}
         </span>
       </li>

@@ -15,7 +15,7 @@ export const routes: Route[] = [
     to: 'hit_2mk_mid',
     kind: 'starter',
     label: '2中K 差し込み',
-    steps: [{ move: '2中K', command: '2MK', commandModern: '2MK' }],
+    steps: [{ move: '2中K', command: '2MK' }],
     resources: { driveCost: 0, superCost: 0, saLevel: null },
     damage: 500,
     difficulty: 1,
@@ -177,7 +177,7 @@ export const routes: Route[] = [
     label: 'ドライブラッシュ 2中K 重ね',
     steps: [
       { move: 'ドライブラッシュ', command: 'DR' },
-      { move: '2中K', command: '2MK', commandModern: '2MK', note: '最速重ね' },
+      { move: '2中K', command: '2MK', note: '最速重ね' },
     ],
     resources: { driveCost: 1, superCost: 0, saLevel: null },
     damage: 600,
