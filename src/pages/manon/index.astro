@@ -20,6 +20,9 @@ const setplayStarts = situations.filter(
   <header class="page-head">
     <h1>{character.name}</h1>
     <p>{character.tagline}</p>
+    <p class="ch-links">
+      <a href="/manon/graph/">相関グラフ（全体の見取り図）</a>
+    </p>
   </header>
 
   <div class="tabs">
@@ -81,6 +84,10 @@ const setplayStarts = situations.filter(
     margin: 0;
     color: var(--text-dim);
     font-size: 0.9rem;
+  }
+  .page-head .ch-links {
+    margin-top: 0.4rem;
+    font-size: 0.85rem;
   }
 
   .tabs > input[type='radio'] {

@@ -2,6 +2,7 @@
 import '../styles/global.css';
 import NotationToggle from '../components/NotationToggle.astro';
 import ThemeToggle from '../components/ThemeToggle.astro';
+import { characters } from '../data/characters';
 
 interface Props {
   title: string;
@@ -53,8 +54,22 @@ const desc =
       <div class="wrap header-inner">
         <a href="/" class="brand">SF6 コンボビューア</a>
         <nav class="main-nav">
-          <a href="/manon/">マノン</a>
-          <a href="/manon/graph/">相関グラフ</a>
+          <div class="nav-item has-menu">
+            <a href="/#characters" class="nav-top" aria-haspopup="true">キャラクター ▾</a>
+            <div class="nav-menu">
+              <div class="nav-menu-inner">
+                {
+                  characters.map((c) => (
+                    <a href={`/${c.id}/`} class="char-row">
+                      <span class="cr-name">{c.name}</span>
+                      <span class="cr-en">{c.nameEn}</span>
+                    </a>
+                  ))
+                }
+                <span class="char-soon">他キャラは順次追加</span>
+              </div>
+            </div>
+          </div>
           <a href="/guide/notation/">表記の見方</a>
           <a href="/about/">このサイト</a>
         </nav>
@@ -121,16 +136,99 @@ const desc =
       }
       .main-nav {
         display: flex;
-        gap: 0.9rem;
-        flex-wrap: wrap;
+        gap: 1.1rem;
+        align-items: center;
         font-size: 0.9rem;
         margin-right: auto;
       }
-      .main-nav a {
+      .main-nav > a {
         color: var(--text-dim);
       }
-      .main-nav a:hover {
+      .main-nav > a:hover {
         color: var(--text);
+      }
+
+      /* キャラクター ドロップダウン */
+      .nav-item {
+        position: relative;
+      }
+      .nav-top {
+        color: var(--text-dim);
+        white-space: nowrap;
+        cursor: pointer;
+      }
+      .nav-item:hover .nav-top,
+      .nav-item:focus-within .nav-top {
+        color: var(--text);
+      }
+      .nav-menu {
+        position: absolute;
+        left: -0.6rem;
+        top: 100%;
+        padding-top: 0.6rem;
+        min-width: 200px;
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(-4px);
+        transition: opacity 0.12s ease, transform 0.12s ease, visibility 0.12s;
+        z-index: 40;
+      }
+      .nav-item:hover .nav-menu,
+      .nav-item:focus-within .nav-menu {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+      }
+      .nav-menu-inner {
+        background: var(--panel);
+        border: 2px solid var(--border-strong);
+        box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.35);
+        display: flex;
+        flex-direction: column;
+      }
+      .char-row {
+        display: flex;
+        align-items: baseline;
+        gap: 0.5rem;
+        padding: 0.5rem 0.9rem;
+        color: var(--text) !important;
+        border-bottom: 1px solid var(--border);
+      }
+      .char-row:last-of-type {
+        border-bottom: 0;
+      }
+      .char-row:hover {
+        background: var(--bg-raised);
+        text-decoration: none;
+      }
+      .cr-name {
+        font-family: var(--font-pixel);
+        color: var(--accent);
+      }
+      .cr-en {
+        font-size: 0.72rem;
+        color: var(--text-faint);
+        letter-spacing: 0.08em;
+      }
+      .char-soon {
+        padding: 0.4rem 0.9rem;
+        font-size: 0.72rem;
+        color: var(--text-faint);
+        background: var(--bg-sunken);
+        border-top: 1px solid var(--border);
+      }
+      @media (max-width: 640px) {
+        .nav-menu {
+          position: static;
+          opacity: 1;
+          visibility: visible;
+          transform: none;
+          padding-top: 0.3rem;
+          min-width: 0;
+        }
+        .nav-menu-inner {
+          box-shadow: none;
+        }
       }
       .header-tools {
         display: flex;
