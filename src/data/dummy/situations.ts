@@ -89,6 +89,7 @@ export const situations: Situation[] = [
     position: 'midscreen',
     opponentState: 'knockdown_hard',
     advantage: '+38 前後',
+    wakeupNote: '後ろ受け身可（基本は後ろ受け身。その場起きも可）',
     tags: ['起き攻め開始'],
     notes: 'マノンの基本的な起き攻め開始点。ドライブラッシュから四択を仕掛ける。',
   },
@@ -99,6 +100,7 @@ export const situations: Situation[] = [
     position: 'midscreen',
     opponentState: 'knockdown_hard',
     advantage: '+30 前後',
+    wakeupNote: '後ろ受け身可。後ろ受け身されると距離が離れ一部の重ねが届かない',
     tags: ['起き攻め開始'],
   },
   {
@@ -108,6 +110,7 @@ export const situations: Situation[] = [
     position: 'midscreen',
     opponentState: 'knockdown_hard',
     advantage: '距離遠め',
+    wakeupNote: '受け身不可（強制ダウン）だが距離が遠く強い起き攻めは無い',
     tags: [],
     notes: 'SA3 締め。距離が離れるため強い起き攻めは無く、体力リードを活かす展開になりやすい。',
   },
@@ -118,6 +121,7 @@ export const situations: Situation[] = [
     position: 'midscreen',
     opponentState: 'knockdown_hard',
     advantage: 'メダル獲得 +1',
+    wakeupNote: '受け身不可（コマ投げ）。受け身方向による距離変化なし',
     tags: ['起き攻め開始', 'メダル'],
   },
   {
@@ -127,6 +131,7 @@ export const situations: Situation[] = [
     position: 'midscreen',
     opponentState: 'knockdown_soft',
     advantage: '+20 前後',
+    wakeupNote: '後ろ受け身可（受け身時は有利減）',
     tags: ['起き攻め開始'],
   },
   {
@@ -136,6 +141,7 @@ export const situations: Situation[] = [
     position: 'corner',
     opponentState: 'knockdown_hard',
     advantage: '+34 前後',
+    wakeupNote: '受け身不可（画面端の強制ダウン）。最も強い起き攻め',
     tags: ['起き攻め開始', '画面端'],
   },
 ];

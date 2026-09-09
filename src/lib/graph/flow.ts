@@ -23,6 +23,8 @@ export interface FlowNode {
   situationId?: string;
   label?: string;
   sitKind?: SituationKind;
+  /** ダウンなど：相手が動けるようになるまでの有利フレーム（situation.advantage） */
+  advantage?: string;
   /** 既出ノードへ戻る（ループ）ことを示す */
   loop?: boolean;
   /** これ以上の展開は省略（詳細ページへ） */
@@ -42,6 +44,8 @@ export interface FlowGroup {
   nodeIds: string[];
   /** okizeme の枠に表示する「この択の特徴」。パーツページへのリンクにも使う */
   routeId: string;
+  frameAdvantage?: string;
+  vsWakeup?: string;
   strongVs?: string[];
   weakVs?: string[];
   caution?: string;
@@ -100,6 +104,8 @@ function outcomeNode(
   situation: Situation,
   opts: { loop?: boolean; more?: boolean; repeat?: boolean } = {},
 ): FlowNode {
+  const showAdv =
+    (situation.kind === 'knockdown' || situation.kind === 'okiStart') && !!situation.advantage;
   const { w, h } = outcomeSize(situation.label);
   return {
     id,
@@ -107,11 +113,12 @@ function outcomeNode(
     situationId: situation.id,
     label: situation.label,
     sitKind: situation.kind,
+    advantage: showAdv ? situation.advantage : undefined,
     loop: opts.loop,
     more: opts.more,
     repeat: opts.repeat,
     w,
-    h,
+    h: showAdv ? h + 14 : h,
   };
 }
 
@@ -155,6 +162,8 @@ function emitRouteSteps(
     variant,
     nodeIds: [],
     routeId: route.id,
+    frameAdvantage: p?.frameAdvantage,
+    vsWakeup: p?.vsWakeup,
     strongVs: p?.strongVs,
     weakVs: p?.weakVs,
     caution: p?.caution,

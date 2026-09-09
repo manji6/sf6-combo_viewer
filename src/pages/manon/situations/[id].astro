@@ -46,9 +46,16 @@ const hasClassicOnly = outs.some((r) => r.controlType === 'classic');
         <span class="pixel-chip">{SITUATION_KIND_LABEL[situation.kind]}</span>
         <span class="pixel-chip">{POSITION_LABEL[situation.position]}</span>
         <span class="pixel-chip">{OPPONENT_STATE_LABEL[situation.opponentState]}</span>
-        {situation.advantage && <span class="pixel-chip">{situation.advantage}</span>}
+        {situation.advantage && (
+          <span class="pixel-chip">相手復帰まで {situation.advantage}</span>
+        )}
         {situation.tags.map((t) => <span class="tag">{t}</span>)}
       </div>
+      {situation.wakeupNote && (
+        <p class="wakeup">
+          <strong>起き上がり:</strong> {situation.wakeupNote}
+        </p>
+      )}
       {situation.notes && <p class="notes">{situation.notes}</p>}
     </header>
 
@@ -66,7 +73,7 @@ const hasClassicOnly = outs.some((r) => r.controlType === 'classic');
                 client:only="preact"
                 graph={flow}
                 graphModern={flowModern}
-                height={540}
+                height={800}
               />
             </div>
           </div>
@@ -100,6 +107,18 @@ const hasClassicOnly = outs.some((r) => r.controlType === 'classic');
                   </div>
                   {p && (
                     <dl class="props">
+                      {p.frameAdvantage && (
+                        <>
+                          <dt class="s-frame">初回行動後</dt>
+                          <dd>{p.frameAdvantage}</dd>
+                        </>
+                      )}
+                      {p.vsWakeup && (
+                        <>
+                          <dt>起き上がり</dt>
+                          <dd>{p.vsWakeup}</dd>
+                        </>
+                      )}
                       {p.useWhen && (
                         <>
                           <dt>使いどき</dt>
@@ -215,6 +234,7 @@ const hasClassicOnly = outs.some((r) => r.controlType === 'classic');
   h1 { margin: 0 0 0.5rem; color: var(--accent); }
   .meta { display: flex; flex-wrap: wrap; gap: 0.35rem; align-items: center; }
   .notes { margin: 0.7rem 0 0; color: var(--text-dim); font-size: 0.92rem; }
+  .wakeup { margin: 0.6rem 0 0; font-size: 0.88rem; color: var(--text); background: var(--bg-sunken); border-left: 3px solid var(--accent); padding: 0.35rem 0.6rem; }
   h2 { font-size: 1rem; border-bottom: 2px solid var(--border-strong); padding-bottom: 0.25rem; margin: 0 0 0.6rem; }
   .lead { font-size: 0.83rem; color: var(--text-faint); margin: 0 0 0.8rem; }
 
@@ -231,6 +251,7 @@ const hasClassicOnly = outs.some((r) => r.controlType === 'classic');
   .props dt { color: var(--text-faint); white-space: nowrap; }
   .props dt.s-good { color: var(--risk-low); }
   .props dt.s-bad { color: var(--risk-high); }
+  .props dt.s-frame { color: var(--btn-od); font-weight: 700; }
   .props dd { margin: 0; color: var(--text-dim); }
   .bc-foot { display: flex; justify-content: space-between; align-items: center; margin-top: 0.5rem; flex-wrap: wrap; gap: 0.4rem; }
   .bc-foot .to { font-size: 0.8rem; color: var(--text-faint); }

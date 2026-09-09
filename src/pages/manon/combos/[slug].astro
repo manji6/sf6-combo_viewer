@@ -48,7 +48,7 @@ const endOki = outgoingRoutes(end.id).filter((r) => r.kind === 'okizeme');
         <div class="stat"><span class="k">難易度</span><span class="v"><Stars value={combo.difficulty} showNumber /></span></div>
         <div class="stat"><span class="k">Dゲージ</span><span class="v">{driveLabel(flat.totalDrive)}</span></div>
         <div class="stat"><span class="k">SA</span><span class="v">{superLabel(flat.totalSuper, flat.maxSaLevel)}</span></div>
-        <div class="stat"><span class="k">操作</span><span class="v">{flat.usesModern ? 'クラシック / モダン' : 'クラシック'}</span></div>
+        <div class="stat"><span class="k">操作</span><span class="v">{supportsModern ? 'クラシック / モダン' : 'クラシックのみ'}</span></div>
       </div>
       <div class="tags">{combo.tags.map((t) => <span class="tag">{t}</span>)}</div>
     </header>
@@ -64,7 +64,7 @@ const endOki = outgoingRoutes(end.id).filter((r) => r.kind === 'okizeme');
       </p>
       <div class="full-bleed">
         <div class="full-bleed-inner">
-          <FlowCanvas client:only="preact" graph={flow} graphModern={flowModern} height={580} />
+          <FlowCanvas client:only="preact" graph={flow} graphModern={flowModern} height={860} />
         </div>
       </div>
     </section>

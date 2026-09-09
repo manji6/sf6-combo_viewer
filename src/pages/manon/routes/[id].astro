@@ -96,6 +96,18 @@ const p = route.properties;
           <div class="props pixel-box" style={p.risk ? `--risk:${RISK_VAR[p.risk]}` : ''}>
             {p.risk && <span class="risk-badge">リスク {p.risk}</span>}
             <dl>
+              {p.frameAdvantage && (
+                <>
+                  <dt class="frame">初回行動後の有利F</dt>
+                  <dd>{p.frameAdvantage}</dd>
+                </>
+              )}
+              {p.vsWakeup && (
+                <>
+                  <dt>相手の起き上がり方</dt>
+                  <dd>{p.vsWakeup}</dd>
+                </>
+              )}
               {p.useWhen && (
                 <>
                   <dt>使いどき</dt>
@@ -303,6 +315,10 @@ const p = route.properties;
   }
   .props dt.bad {
     color: var(--risk-high);
+  }
+  .props dt.frame {
+    color: var(--btn-od);
+    font-weight: 700;
   }
   .props dd {
     margin: 0;

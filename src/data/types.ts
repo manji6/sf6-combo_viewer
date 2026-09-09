@@ -52,8 +52,13 @@ export interface Situation {
   kind: SituationKind;
   position: Position;
   opponentState: OpponentState;
-  /** 有利フレームなど（任意テキスト） */
+  /** 相手が動けるようになるまでの有利フレーム（任意テキスト。基本は後ろ受け身想定） */
   advantage?: string;
+  /**
+   * この状況（多くはダウン）で相手が取れる起き上がり方。
+   * 例: "後ろ受け身可（基本は後ろ受け身）" / "後ろ受け身不可・その場のみ" / "受け身不可（強制ダウン）"
+   */
+  wakeupNote?: string;
   tags: string[];
   notes?: string;
 }
@@ -73,13 +78,24 @@ export interface Step {
 
 /** 択の特徴（フロー図・パーツ詳細で表示） */
 export interface RouteProperties {
+  /**
+   * 起き攻けの初回行動を重ねた（or 前ステ・微歩き等をした）後の有利フレーム。
+   * このアプリで一番見たいフレーム情報。基本は後ろ受け身を想定した値。
+   * 例: "+3", "+2（2中K持続当て）", "-1"
+   */
+  frameAdvantage?: string;
+  /**
+   * 相手の起き上がり方（その場／前受け身／後ろ受け身）ごとの対応可否とフレーム差。
+   * 例: "その場・後ろ受け身どちらもOK（後ろ受け身時 +1）" / "その場のみ、後ろ受け身は届かない"
+   */
+  vsWakeup?: string;
   /** 有効な相手の行動・状況（例: パリィ／ガード継続、打撃暴れ） */
   strongVs?: string[];
   /** 弱い相手の行動（例: 垂直ジャンプ、無敵技） */
   weakVs?: string[];
   /** いつ選ぶか（一言） */
   useWhen?: string;
-  /** ガードされた時の状況 */
+  /** ガードされた（重ならず空振り/最速ガードされた）時の状況 */
   onBlock?: string;
   /** 注意点（例: ドライブインパクト返し不可、先端当てないと反確） */
   caution?: string;

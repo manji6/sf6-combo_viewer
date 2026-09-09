@@ -57,11 +57,12 @@ function wrapLines(text: string | undefined, perLine = 30): number {
 const OKI_MIN_W = 300; // 起き攻け枠の最小幅（特徴テキストが折り返しても読める幅）
 const OKI_LINE_CHARS = 22;
 function okizemeHeaderHeight(g: FlowGroup): number {
-  let lines = 1; // ヘッダ（種別＋リスク＋詳細）
+  let lines = 1; // ヘッダ（種別＋有利F＋リスク＋詳細）
+  lines += wrapLines(g.vsWakeup, OKI_LINE_CHARS);
   lines += wrapLines(g.strongVs?.join('・'), OKI_LINE_CHARS);
   lines += wrapLines(g.weakVs?.join('・'), OKI_LINE_CHARS);
   lines += wrapLines(g.caution, OKI_LINE_CHARS);
-  return 22 + lines * 15;
+  return 24 + lines * 15;
 }
 
 function layout(graph: FlowGraph, sizes: Map<string, { w: number; h: number }>) {
@@ -207,10 +208,7 @@ export default function FlowCanvas({ graph, graphModern, height = 520 }: Props) 
   const [uid] = useState(() => 'fc' + Math.random().toString(36).slice(2, 8));
   const drag = useRef<{ x: number; y: number; vx: number; vy: number } | null>(null);
 
-  const hasModern =
-    !!graphModern &&
-    (graphModern.nodes.length !== graph.nodes.length ||
-      graphModern.groups.length !== graph.groups.length);
+  const hasModern = !!graphModern;
   const activeGraph = modern && graphModern ? graphModern : graph;
 
   function fitTo(width: number, worldH: number, mode: 'fit' | 'start' = 'start') {
@@ -311,16 +309,26 @@ export default function FlowCanvas({ graph, graphModern, height = 520 }: Props) 
       style={full ? undefined : { height: `${height}px` }}
     >
       <div class="fc-toolbar">
-        {hasModern && (
-          <span class="fc-ctl" role="group" aria-label="操作タイプ">
-            <button type="button" class={!modern ? 'on' : ''} onClick={() => setModern(false)}>
-              クラシック
-            </button>
-            <button type="button" class={modern ? 'on' : ''} onClick={() => setModern(true)}>
-              モダン
-            </button>
-          </span>
-        )}
+        <span class="fc-ctl" role="group" aria-label="操作タイプ">
+          <button
+            type="button"
+            class={!modern ? 'on' : ''}
+            onClick={() => setModern(false)}
+          >
+            クラシック
+          </button>
+          <button
+            type="button"
+            class={modern ? 'on' : ''}
+            disabled={!hasModern}
+            title={hasModern ? undefined : 'このコンボはクラシックのみ'}
+            onClick={() => hasModern && setModern(true)}
+          >
+            モダン
+          </button>
+        </span>
+        <span class="fc-tbsep" />
+
         <button type="button" onClick={() => lay && fitTo(lay.width, lay.height, 'fit')}>
           全体表示
         </button>
@@ -377,6 +385,9 @@ export default function FlowCanvas({ graph, graphModern, height = 520 }: Props) 
                   <div class="fc-group-info" style={{ height: `${gb.headerH}px` }}>
                     <div class="gi-head">
                       <span class="gi-kind">起き攻め</span>
+                      {gb.group.frameAdvantage && (
+                        <span class="gi-frame">初回行動後 {gb.group.frameAdvantage}</span>
+                      )}
                       {gb.group.risk && (
                         <span class={`gi-risk r-${gb.group.risk}`}>リスク{gb.group.risk}</span>
                       )}
@@ -384,6 +395,9 @@ export default function FlowCanvas({ graph, graphModern, height = 520 }: Props) 
                         詳細
                       </a>
                     </div>
+                    {gb.group.vsWakeup ? (
+                      <div class="gi-line gi-wake">起き上がり: {gb.group.vsWakeup}</div>
+                    ) : null}
                     {gb.group.strongVs?.length ? (
                       <div class="gi-line gi-good">◯ {gb.group.strongVs.join('・')}</div>
                     ) : null}
@@ -463,10 +477,12 @@ export default function FlowCanvas({ graph, graphModern, height = 520 }: Props) 
         .fc-toolbar button { font-family:var(--font-pixel); font-size:.75rem; padding:.2em .6em; border:1px solid var(--border-strong); background:var(--bg-raised); color:var(--text); cursor:pointer; }
         .fc-toolbar button:hover { background:var(--panel); }
         .fc-full-btn { color:var(--accent) !important; border-color:var(--accent) !important; }
-        .fc-ctl { display:inline-flex; margin-right:.2rem; }
+        .fc-ctl { display:inline-flex; }
         .fc-ctl button { font-family:var(--font-pixel); font-size:.75rem; padding:.2em .6em; border:1px solid var(--border-strong); background:var(--bg-raised); color:var(--text-dim); cursor:pointer; }
         .fc-ctl button:first-child { border-right-width:1px; }
         .fc-ctl button.on { background:var(--accent); color:var(--accent-ink); border-color:var(--accent); }
+        .fc-ctl button:disabled { opacity:.4; cursor:not-allowed; }
+        .fc-tbsep { width:1px; align-self:stretch; background:var(--border); margin:0 .3rem; }
         .fc-legend { font-size:.72rem; color:var(--text-faint); display:inline-flex; align-items:center; gap:.35em; margin-left:auto; flex-wrap:wrap; }
         .fc-legend i { width:16px; height:0; display:inline-block; border-top:2px solid var(--text-faint); }
         .fc-legend i.l-flow { border-top-color:#9aa0ab; }
@@ -495,11 +511,14 @@ export default function FlowCanvas({ graph, graphModern, height = 520 }: Props) 
         .gi-risk.r-中 { color:var(--risk-mid); }
         .gi-risk.r-高 { color:var(--risk-high); }
         .gi-link { margin-left:auto; font-size:.66rem; color:var(--link); font-weight:700; }
+        .gi-frame { font-family:var(--font-pixel); font-size:.66rem; background:var(--btn-od); color:#08160c; padding:.05em .4em; font-weight:700; }
+        :root[data-theme='light'] .gi-frame { color:#fff; }
         .gi-line { font-size:.68rem; line-height:1.3; color:var(--text); white-space:normal; overflow:hidden; }
         .gi-line b { font-weight:700; }
         .gi-good { color:var(--risk-low); }
         .gi-bad { color:var(--risk-high); }
         .gi-warn { color:var(--risk-mid); }
+        .gi-wake { color:var(--text-dim); }
 
         .fc-pnode { position:absolute; }
         .fc-pnode > .fc-node { width:100%; height:100%; }
@@ -515,6 +534,7 @@ export default function FlowCanvas({ graph, graphModern, height = 520 }: Props) 
         .fc-node.n-start { border-style:double; border-width:4px; }
         .fc-oc-strip { font-size:.6rem; font-family:var(--font-pixel); text-align:center; padding:.08em 0; border-bottom:1px solid var(--border); background:var(--accent); color:var(--accent-ink); white-space:nowrap; }
         .fc-oc-strip.s-dim { background:var(--border-strong); color:var(--text); }
+        .fc-oc-adv { font-size:.62rem; font-family:var(--font-pixel); color:var(--text-dim); background:var(--bg-sunken); border-top:1px solid var(--border); padding:.1em .3em; text-align:center; white-space:nowrap; }
         .fc-hint { margin:0; padding:.45rem .7rem; font-size:.7rem; color:var(--text-faint); border-top:1px solid var(--border); background:var(--bg-raised); }
       `}</style>
     </div>
@@ -548,6 +568,7 @@ function NodeInner({ node: n }: { node: FlowNode }) {
     >
       {strip && <div class={`fc-oc-strip ${strip.cls}`}>{strip.text}</div>}
       <a href={`/manon/situations/${n.situationId}/`}>{n.label}</a>
+      {n.advantage && <div class="fc-oc-adv">相手復帰まで {n.advantage}</div>}
     </div>
   );
 }
