@@ -18,8 +18,6 @@
     "@tailwindcss/vite": "^4.3.3",
     "astro": "^7.3.2",
     "astro-icon": "^1.2.0",
-    "cytoscape": "^3.34.3",
-    "cytoscape-dagre": "^4.0.1",
     "preact": "^10.29.8",
     "tailwindcss": "^4.3.3"
   },
@@ -28,8 +26,6 @@
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.10",
-    "@types/cytoscape": "^3.21.9",
-    "@types/cytoscape-dagre": "^2.3.4",
     "typescript": "^6.0.3"
   }
 }

@@ -2,10 +2,10 @@
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import StepList from '../../../components/StepList.astro';
 import Stars from '../../../components/Stars.astro';
-import RelationGraph from '../../../components/islands/RelationGraph.tsx';
+import SystemMap from '../../../components/islands/SystemMap.tsx';
 import { getRoute, getSituation, routes } from '../../../data';
 import { combosUsingRoute, incomingRoutes, outgoingRoutes } from '../../../lib/graph/derive';
-import { neighborhood } from '../../../lib/graph/cytoscape';
+import { neighborhood } from '../../../lib/graph/systemmap';
 import { driveLabel, POSITION_LABEL, RISK_VAR, ROUTE_KIND_LABEL, superLabel } from '../../../lib/ui';
 
 export function getStaticPaths() {
@@ -194,7 +194,7 @@ const p = route.properties;
 
     <section>
       <h2>周辺の相関</h2>
-      <RelationGraph client:only="preact" elements={nbh} center={route.from} height={340} />
+      <SystemMap client:only="preact" elements={nbh} center={route.from} height={360} />
     </section>
   </article>
 </BaseLayout>
