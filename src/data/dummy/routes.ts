@@ -27,7 +27,7 @@ export const routes: Route[] = [
     from: 'hit_2mk_mid',
     to: 'kd_after_degage_light_mid',
     kind: 'combo_route',
-    label: '中P 〆 弱デガジェ',
+    label: '中P → 弱デガジェ',
     steps: [
       { move: '中P', command: '5MP', cancel: true },
       { move: '弱デガジェ', command: '214LK', cancel: true },
@@ -47,7 +47,7 @@ export const routes: Route[] = [
     label: '5中P キャンセルドライブラッシュ 2中P',
     steps: [
       { move: '中P', command: '5MP', cancel: true },
-      { move: 'ドライブラッシュ', command: 'DRC' },
+      { move: 'キャンセルドライブラッシュ', command: 'DRC' },
       { move: '2中P', command: '2MP' },
     ],
     resources: { driveCost: 3, superCost: 0, saLevel: null },
@@ -98,7 +98,7 @@ export const routes: Route[] = [
     from: 'juggle_can_4hp_ranversement',
     to: 'kd_after_ranversement_mid',
     kind: 'ender',
-    label: '4強P 〆 中ランヴェルセ',
+    label: '4強P → 中ランヴェルセ',
     steps: [
       { move: '4強P', command: '4HP' },
       { move: '中ランヴェルセ', command: '236MP', cancel: true },
@@ -114,9 +114,9 @@ export const routes: Route[] = [
     id: 'route_4hp_sa3_mid',
     character: 'manon',
     from: 'juggle_can_4hp_ranversement',
-    to: 'kd_after_ranversement_mid',
+    to: 'kd_after_pas_de_deux_mid',
     kind: 'ender',
-    label: '4強P 〆 SA3 パ・ド・ドゥ',
+    label: '4強P → SA3 パ・ド・ドゥ',
     steps: [
       { move: '4強P', command: '4HP' },
       { move: 'SA3 パ・ド・ドゥ', command: '236236P', cancel: true, note: 'メダル最大で最大火力' },
@@ -135,7 +135,7 @@ export const routes: Route[] = [
     from: 'juggle_pc_5hp',
     to: 'kd_after_rondpoint_mid',
     kind: 'ender',
-    label: '2中P 〆 弱ロン・ポワン',
+    label: '2中P → 弱ロン・ポワン',
     steps: [
       { move: '2中P', command: '2MP', cancel: true },
       { move: '弱ロン・ポワン', command: '236LK', note: '対空派生' },
@@ -154,7 +154,7 @@ export const routes: Route[] = [
     from: 'juggle_corner_medal',
     to: 'kd_after_rondpoint_corner',
     kind: 'ender',
-    label: '5強P 〆 OD ロン・ポワン',
+    label: '5強P → OD ロン・ポワン',
     steps: [
       { move: '5強P', command: '5HP', cancel: true },
       { move: 'OD ロン・ポワン', command: '236KK', note: 'メダル+2・強制ダウン' },
@@ -271,7 +271,7 @@ export const routes: Route[] = [
     from: 'hit_enhaut_mid',
     to: 'kd_after_ranversement_mid',
     kind: 'combo_route',
-    label: 'アン・オー派生 〆 中ランヴェルセ',
+    label: 'アン・オー派生 → 中ランヴェルセ',
     steps: [
       { move: 'アン・オー派生中K', command: '4MK~MK', cancel: true },
       { move: '中ランヴェルセ', command: '236MP' },

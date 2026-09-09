@@ -36,7 +36,7 @@ export const combos: Combo[] = [
     situationLabel: '中央・地上ヒット確認（SA3所持）',
     routeChain: ['starter_5mp_drc_2mp_mid', 'route_4hp_sa3_mid'],
     startFrom: 'neutral_mid',
-    endAt: 'kd_after_ranversement_mid',
+    endAt: 'kd_after_pas_de_deux_mid',
     difficulty: 3,
     tags: ['SA3', 'とどめ', '高火力'],
     description: '同始動から締めを SA3 パ・ド・ドゥに変更。メダル最大で最大火力。',

@@ -102,6 +102,16 @@ export const situations: Situation[] = [
     tags: ['置き攻け開始'],
   },
   {
+    id: 'kd_after_pas_de_deux_mid',
+    label: 'SA3 パ・ド・ドゥ後・中央ダウン',
+    kind: 'knockdown',
+    position: 'midscreen',
+    opponentState: 'knockdown_hard',
+    advantage: '距離遠め',
+    tags: [],
+    notes: 'SA3 締め。距離が離れるため強い置き攻けは無く、体力リードを活かす展開になりやすい。',
+  },
+  {
     id: 'kd_after_manege_dore_mid',
     label: 'マネージュ・ドレ後・中央ダウン',
     kind: 'knockdown',

@@ -97,7 +97,7 @@ export const STRENGTH_COLOR: Record<string, string> = {
 
 export const META_LABEL: Record<MetaToken['type'], string> = {
   DR: 'DR',
-  DRC: 'DRC',
+  DRC: 'CDR', // キャンセルドライブラッシュ
   OD: 'OD',
   PC: 'PC',
   CH: 'CH',

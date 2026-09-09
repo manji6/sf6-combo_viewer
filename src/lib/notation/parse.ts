@@ -106,10 +106,10 @@ export function parseCommand(input: string): Token[] {
     }
 
     // メタ（大文字トークン）
-    const drc = s.match(/^DRC/);
+    const drc = s.match(/^(DRC|CDR)/);
     if (drc) {
       tokens.push({ kind: 'meta', type: 'DRC', text: META_LABEL.DRC, raw: drc[0] });
-      s = s.slice(3);
+      s = s.slice(drc[0].length);
       continue;
     }
     const dr = s.match(/^DR(?![A-Za-z])/);

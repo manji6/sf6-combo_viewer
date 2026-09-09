@@ -49,11 +49,15 @@ const endOki = outgoingRoutes(end.id).filter((r) => r.kind === 'okizeme');
     <section>
       <h2>コンボフロー</h2>
       <p class="lead">
-        左から右へコマンドが流れます。実線＝コンボ本線、細い水色＝分岐（別の締めなど）、
+        左から右へコマンドが流れます。実線＝コンボ本線、水色＝分岐（別の締めなど）、
         破線＝締めからの置き攻け。
         {endOki.length > 0 && '「置き攻け」ノードをクリックすると分岐の詳細へ。'}
       </p>
-      <FlowCanvas client:only="preact" graph={flow} height={560} />
+      <div class="full-bleed">
+        <div class="full-bleed-inner">
+          <FlowCanvas client:only="preact" graph={flow} height={580} />
+        </div>
+      </div>
     </section>
 
     <details class="text-recipe">

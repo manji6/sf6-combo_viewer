@@ -247,6 +247,21 @@ h3 {
   margin: 0 auto;
   padding: 0 1rem;
 }
+
+/* .wrap の中で横幅いっぱいに広げる（ノードキャンバス用） */
+.full-bleed {
+  width: 100vw;
+  position: relative;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+}
+.full-bleed > .full-bleed-inner {
+  max-width: 1500px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
 .stack > * + * {
   margin-top: var(--gap, 1rem);
 }
