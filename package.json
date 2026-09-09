@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "@astrojs/preact": "^6.0.5",
+    "@dagrejs/dagre": "^3.1.1",
     "@iconify-json/pixelarticons": "^1.2.9",
     "@tailwindcss/vite": "^4.3.3",
     "astro": "^7.3.2",

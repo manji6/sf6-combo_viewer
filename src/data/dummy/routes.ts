@@ -3,6 +3,7 @@ import type { Route } from '../types';
 // ダミーのパーツ（辺）。numpad 正準表記で command を保持。
 // マノン特殊技: ランヴェルセ 236P / デガジェ 214K / ロン・ポワン 236K
 //              マネージュ・ドレ 63214P / アン・オー 4MK / SA3 パ・ド・ドゥ 236236P
+// note は「タイミング・性質」など機能的なもののみ。ナレーション的な説明は入れない。
 
 export const routes: Route[] = [
   // ── 始動・確認 ───────────────────────────────
@@ -13,7 +14,7 @@ export const routes: Route[] = [
     to: 'hit_2mk_mid',
     kind: 'starter',
     label: '2中K 差し込み',
-    steps: [{ move: '2中K', command: '2MK', commandModern: '2MK', note: '下段・差し込み' }],
+    steps: [{ move: '2中K', command: '2MK', commandModern: '2MK' }],
     resources: { driveCost: 0, superCost: 0, saLevel: null },
     damage: 500,
     difficulty: 1,
@@ -28,8 +29,8 @@ export const routes: Route[] = [
     kind: 'combo_route',
     label: '中P 〆 弱デガジェ',
     steps: [
-      { move: '中P', command: '5MP', cancel: true, note: 'ヒット確認' },
-      { move: '弱デガジェ', command: '214LK', cancel: true, note: 'ダウン奪取' },
+      { move: '中P', command: '5MP', cancel: true },
+      { move: '弱デガジェ', command: '214LK', cancel: true },
     ],
     resources: { driveCost: 0, superCost: 0, saLevel: null },
     damage: 900,
@@ -45,14 +46,14 @@ export const routes: Route[] = [
     kind: 'starter',
     label: '5中P キャンセルドライブラッシュ 2中P',
     steps: [
-      { move: '中P', command: '5MP', cancel: true, note: '確認から' },
-      { move: 'キャンセルドライブラッシュ', command: 'DRC' },
-      { move: '2中P', command: '2MP', note: '拾い直し' },
+      { move: '中P', command: '5MP', cancel: true },
+      { move: 'ドライブラッシュ', command: 'DRC' },
+      { move: '2中P', command: '2MP' },
     ],
     resources: { driveCost: 3, superCost: 0, saLevel: null },
     damage: 1100,
     difficulty: 3,
-    constraints: '5中Pヒット時のみ。DRCの受付が短い。',
+    constraints: '5中Pヒット時のみ。DRC の受付が短い。',
     controlType: 'both',
     tags: ['頻出', 'DRC'],
   },
@@ -63,7 +64,7 @@ export const routes: Route[] = [
     to: 'juggle_pc_5hp',
     kind: 'starter',
     label: '5強P パニッシュカウンター',
-    steps: [{ move: '5強P', command: '5HP', note: 'パニカン始動' }],
+    steps: [{ move: '5強P', command: 'PC 5HP' }],
     resources: { driveCost: 0, superCost: 0, saLevel: null },
     damage: 800,
     difficulty: 1,
@@ -81,7 +82,7 @@ export const routes: Route[] = [
     steps: [
       { move: '2中K', command: '2MK', cancel: true },
       { move: '中P', command: '5MP', cancel: true },
-      { move: '中ランヴェルセ', command: '236MP', note: 'メダル +1' },
+      { move: '中ランヴェルセ', command: '236MP', note: 'メダル+1' },
     ],
     resources: { driveCost: 0, superCost: 0, saLevel: null },
     damage: 1400,
@@ -99,8 +100,8 @@ export const routes: Route[] = [
     kind: 'ender',
     label: '4強P 〆 中ランヴェルセ',
     steps: [
-      { move: '4強P', command: '4HP', note: '浮き拾い' },
-      { move: '中ランヴェルセ', command: '236MP', cancel: true, note: 'ダウン奪取' },
+      { move: '4強P', command: '4HP' },
+      { move: '中ランヴェルセ', command: '236MP', cancel: true },
     ],
     resources: { driveCost: 0, superCost: 0, saLevel: null },
     damage: 1200,
@@ -108,7 +109,6 @@ export const routes: Route[] = [
     constraints: '「4強P → 中ランヴェルセ が繋がる浮き」からのみ。',
     controlType: 'both',
     tags: ['〆', '連結'],
-    notes: 'この締めは置き攻けルートと頻出コンボの両方で共有される。',
   },
   {
     id: 'route_4hp_sa3_mid',
@@ -138,7 +138,7 @@ export const routes: Route[] = [
     label: '2中P 〆 弱ロン・ポワン',
     steps: [
       { move: '2中P', command: '2MP', cancel: true },
-      { move: '弱ロン・ポワン', command: '236LK', note: '対空派生でダウン' },
+      { move: '弱ロン・ポワン', command: '236LK', note: '対空派生' },
     ],
     resources: { driveCost: 0, superCost: 0, saLevel: null },
     damage: 1000,
@@ -157,7 +157,7 @@ export const routes: Route[] = [
     label: '5強P 〆 OD ロン・ポワン',
     steps: [
       { move: '5強P', command: '5HP', cancel: true },
-      { move: 'OD ロン・ポワン', command: 'OD236KK', note: 'メダル +2・強制ダウン' },
+      { move: 'OD ロン・ポワン', command: '236KK', note: 'メダル+2・強制ダウン' },
     ],
     resources: { driveCost: 2, superCost: 0, saLevel: null },
     damage: 1500,
@@ -200,7 +200,7 @@ export const routes: Route[] = [
     label: 'ドライブラッシュ マネージュ・ドレ',
     steps: [
       { move: 'ドライブラッシュ', command: 'DR' },
-      { move: 'マネージュ・ドレ', command: '63214P', note: 'コマンド投げ' },
+      { move: 'マネージュ・ドレ', command: '63214P' },
     ],
     resources: { driveCost: 1, superCost: 0, saLevel: null },
     damage: 1400,
@@ -248,7 +248,7 @@ export const routes: Route[] = [
     label: 'ドライブラッシュ 様子見（シミー）',
     steps: [
       { move: 'ドライブラッシュ', command: 'DR' },
-      { move: '様子見', command: '(様子見)', note: '相手の暴れ・バクステを見てから反撃' },
+      { move: '様子見', command: '(様子見)' },
     ],
     resources: { driveCost: 1, superCost: 0, saLevel: null },
     damage: 0,
@@ -274,7 +274,7 @@ export const routes: Route[] = [
     label: 'アン・オー派生 〆 中ランヴェルセ',
     steps: [
       { move: 'アン・オー派生中K', command: '4MK~MK', cancel: true },
-      { move: '中ランヴェルセ', command: '236MP', note: 'ダウン奪取' },
+      { move: '中ランヴェルセ', command: '236MP' },
     ],
     resources: { driveCost: 0, superCost: 0, saLevel: null },
     damage: 900,

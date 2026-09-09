@@ -1,19 +1,19 @@
 ---
 import BaseLayout from '../../../layouts/BaseLayout.astro';
-import SetplayTree from '../../../components/SetplayTree.astro';
 import Sequence from '../../../components/notation/Sequence.astro';
-import RelationGraph from '../../../components/islands/RelationGraph.tsx';
+import Stars from '../../../components/Stars.astro';
+import FlowCanvas from '../../../components/islands/FlowCanvas.tsx';
 import { getSituation, situations } from '../../../data';
 import {
   combosThroughSituation,
   incomingRoutes,
   outgoingRoutes,
 } from '../../../lib/graph/derive';
-import { buildSetplayTree } from '../../../lib/graph/tree';
-import { neighborhood } from '../../../lib/graph/cytoscape';
+import { buildSituationFlow } from '../../../lib/graph/flow';
 import {
   OPPONENT_STATE_LABEL,
   POSITION_LABEL,
+  RISK_VAR,
   ROUTE_KIND_LABEL,
   SITUATION_KIND_LABEL,
 } from '../../../lib/ui';
@@ -25,12 +25,12 @@ export function getStaticPaths() {
 const { id } = Astro.params;
 const situation = getSituation(id!);
 const outs = outgoingRoutes(situation.id);
+const okis = outs.filter((r) => r.kind === 'okizeme');
+const otherOuts = outs.filter((r) => r.kind !== 'okizeme');
 const ins = incomingRoutes(situation.id);
 const throughCombos = combosThroughSituation(situation.id);
-const showTree =
-  outs.length > 0 && (situation.kind === 'knockdown' || situation.kind === 'okiStart');
-const tree = showTree ? buildSetplayTree(situation.id, { maxDepth: 4 }) : null;
-const nbh = neighborhood(situation.id, 2);
+const hasFlow = okis.length > 0;
+const flow = hasFlow ? buildSituationFlow(situation.id) : null;
 ---
 
 <BaseLayout
@@ -51,25 +51,87 @@ const nbh = neighborhood(situation.id, 2);
     </header>
 
     {
-      tree && (
+      flow && (
         <section>
-          <h2>置き攻け {outs.length} 択（樹形図）</h2>
+          <h2>置き攻け {okis.length} 択（フロー）</h2>
           <p class="lead">
-            各分岐の色帯はリスク（<span class="rl low">低</span> /{' '}
-            <span class="rl mid">中</span> / <span class="rl high">高</span>）。
-            ヒット後・ガード後の展開はネストして確認できます。
+            破線が各択。ヒット後の展開・ループはノードでつながって見えます。
+            各択の詳細は下の「特徴」または各パーツページで。
           </p>
-          <SetplayTree node={tree} root />
+          <FlowCanvas client:only="preact" graph={flow} height={520} />
         </section>
       )
     }
 
     {
-      !tree && outs.length > 0 && (
+      okis.length > 0 && (
         <section>
-          <h2>ここから出るパーツ（{outs.length}）</h2>
+          <h2>各択の特徴</h2>
+          <ul class="branch-cards">
+            {okis.map((r) => {
+              const p = r.properties;
+              return (
+                <li class="pixel-box bc" style={p?.risk ? `--risk:${RISK_VAR[p.risk]}` : ''}>
+                  <div class="bc-head">
+                    <a class="bc-title" href={`/manon/routes/${r.id}/`}>
+                      {r.label}
+                    </a>
+                    {p?.risk && <span class="risk">リスク{p.risk}</span>}
+                  </div>
+                  <div class="bc-recipe scroll-x">
+                    {r.steps.map((st, i) => (
+                      <>
+                        {i > 0 && <span class="j">›</span>}
+                        <Sequence command={st.command} />
+                      </>
+                    ))}
+                  </div>
+                  {p && (
+                    <dl class="props">
+                      {p.useWhen && (
+                        <>
+                          <dt>使いどき</dt>
+                          <dd>{p.useWhen}</dd>
+                        </>
+                      )}
+                      {p.strongVs?.length ? (
+                        <>
+                          <dt class="s-good">強い</dt>
+                          <dd>{p.strongVs.join(' / ')}</dd>
+                        </>
+                      ) : null}
+                      {p.weakVs?.length ? (
+                        <>
+                          <dt class="s-bad">弱い</dt>
+                          <dd>{p.weakVs.join(' / ')}</dd>
+                        </>
+                      ) : null}
+                      {p.onBlock && (
+                        <>
+                          <dt>ガード時</dt>
+                          <dd>{p.onBlock}</dd>
+                        </>
+                      )}
+                    </dl>
+                  )}
+                  <div class="bc-foot">
+                    <Stars value={r.difficulty} />
+                    <span class="to">→ <a href={`/manon/situations/${r.to}/`}>{getSituation(r.to).label}</a></span>
+                  </div>
+                </li>
+              );
+            })}
+          </ul>
+        </section>
+      )
+    }
+
+    {
+      otherOuts.length > 0 && (
+        <section>
+          <h2>ここから出るパーツ</h2>
           <ul class="route-list">
-            {outs.map((r) => (
+            {otherOuts.map((r) => (
               <li class="pixel-box">
                 <a class="rl-title" href={`/manon/routes/${r.id}/`}>
                   <span class="pl-kind">{ROUTE_KIND_LABEL[r.kind]}</span>
@@ -134,102 +196,39 @@ const nbh = neighborhood(situation.id, 2);
         </section>
       )
     }
-
-    <section>
-      <h2>周辺の相関</h2>
-      <RelationGraph client:only="preact" elements={nbh} center={situation.id} height={400} />
-    </section>
   </article>
 </BaseLayout>
 
 <style>
-  h1 {
-    margin: 0 0 0.5rem;
-    color: var(--accent);
-  }
-  .meta {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.35rem;
-    align-items: center;
-  }
-  .notes {
-    margin: 0.7rem 0 0;
-    color: var(--text-dim);
-    font-size: 0.92rem;
-  }
-  h2 {
-    font-size: 1rem;
-    border-bottom: 2px solid var(--border-strong);
-    padding-bottom: 0.25rem;
-    margin: 0 0 0.8rem;
-  }
-  .lead {
-    font-size: 0.85rem;
-    color: var(--text-faint);
-    margin: 0 0 1rem;
-  }
-  .rl {
-    font-family: var(--font-pixel);
-  }
-  .rl.low {
-    color: var(--risk-low);
-  }
-  .rl.mid {
-    color: var(--risk-mid);
-  }
-  .rl.high {
-    color: var(--risk-high);
-  }
-  .route-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 0.6rem;
-  }
-  .route-list li {
-    padding: 0.65rem 0.85rem;
-  }
-  .rl-title {
-    font-family: var(--font-pixel);
-    font-size: 0.92rem;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-  }
-  .pl-kind {
-    background: var(--bg-sunken);
-    border: 1px solid var(--border);
-    color: var(--text-dim);
-    font-size: 0.68rem;
-    padding: 0.05em 0.4em;
-  }
-  .rl-recipe {
-    display: flex;
-    align-items: center;
-    gap: 0.3rem;
-    white-space: nowrap;
-    padding: 0.4rem 0 0.2rem;
-    font-size: 1.02rem;
-  }
-  .rl-recipe .j {
-    color: var(--text-faint);
-  }
-  .rl-to {
-    font-size: 0.78rem;
-    color: var(--text-faint);
-  }
-  .combo-links {
-    padding-left: 1.1rem;
-    margin: 0;
-  }
-  .combo-links li {
-    padding: 0.2rem 0;
-  }
-  .empty {
-    color: var(--text-faint);
-    font-size: 0.88rem;
-  }
+  h1 { margin: 0 0 0.5rem; color: var(--accent); }
+  .meta { display: flex; flex-wrap: wrap; gap: 0.35rem; align-items: center; }
+  .notes { margin: 0.7rem 0 0; color: var(--text-dim); font-size: 0.92rem; }
+  h2 { font-size: 1rem; border-bottom: 2px solid var(--border-strong); padding-bottom: 0.25rem; margin: 0 0 0.6rem; }
+  .lead { font-size: 0.83rem; color: var(--text-faint); margin: 0 0 0.8rem; }
+
+  .branch-cards { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 0.7rem; }
+  .bc { padding: 0.7rem 0.85rem; border-left: 6px solid var(--risk, var(--border-strong)); }
+  .bc-head { display: flex; align-items: center; gap: 0.5rem; }
+  .bc-title { font-family: var(--font-pixel); font-size: 0.92rem; }
+  .bc-head .risk { margin-left: auto; font-size: 0.7rem; color: var(--risk, var(--text-faint)); border: 1px solid currentColor; padding: 0.05em 0.4em; }
+  .bc-recipe { display: flex; align-items: center; gap: 0.3rem; white-space: nowrap; padding: 0.5rem 0; font-size: 1rem; }
+  .bc-recipe .j { color: var(--text-faint); }
+  .props { display: grid; grid-template-columns: max-content 1fr; gap: 0.15rem 0.7rem; margin: 0.2rem 0 0; font-size: 0.8rem; }
+  .props dt { color: var(--text-faint); white-space: nowrap; }
+  .props dt.s-good { color: var(--risk-low); }
+  .props dt.s-bad { color: var(--risk-high); }
+  .props dd { margin: 0; color: var(--text-dim); }
+  .bc-foot { display: flex; justify-content: space-between; align-items: center; margin-top: 0.5rem; flex-wrap: wrap; gap: 0.4rem; }
+  .bc-foot .to { font-size: 0.8rem; color: var(--text-faint); }
+
+  .route-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.6rem; }
+  .route-list li { padding: 0.65rem 0.85rem; }
+  .rl-title { font-family: var(--font-pixel); font-size: 0.92rem; display: inline-flex; align-items: center; gap: 0.5rem; }
+  .pl-kind { background: var(--bg-sunken); border: 1px solid var(--border); color: var(--text-dim); font-size: 0.68rem; padding: 0.05em 0.4em; }
+  .rl-recipe { display: flex; align-items: center; gap: 0.3rem; white-space: nowrap; padding: 0.4rem 0 0.2rem; font-size: 1rem; }
+  .rl-recipe .j { color: var(--text-faint); }
+  .rl-to { font-size: 0.78rem; color: var(--text-faint); }
+  .combo-links { padding-left: 1.1rem; margin: 0; }
+  .combo-links li { padding: 0.2rem 0; }
+  .empty { color: var(--text-faint); font-size: 0.88rem; }
 </style>
