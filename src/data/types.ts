@@ -71,12 +71,18 @@ export interface Step {
   note?: string;
 }
 
-/** 択の特徴（樹形図・パーツ詳細で表示） */
+/** 択の特徴（フロー図・パーツ詳細で表示） */
 export interface RouteProperties {
+  /** 有効な相手の行動・状況（例: パリィ／ガード継続、打撃暴れ） */
   strongVs?: string[];
+  /** 弱い相手の行動（例: 垂直ジャンプ、無敵技） */
   weakVs?: string[];
+  /** いつ選ぶか（一言） */
   useWhen?: string;
+  /** ガードされた時の状況 */
   onBlock?: string;
+  /** 注意点（例: ドライブインパクト返し不可、先端当てないと反確） */
+  caution?: string;
   risk?: Risk;
 }
 

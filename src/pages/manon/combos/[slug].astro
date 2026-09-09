@@ -50,8 +50,8 @@ const endOki = outgoingRoutes(end.id).filter((r) => r.kind === 'okizeme');
       <h2>コンボフロー</h2>
       <p class="lead">
         左から右へコマンドが流れます。実線＝コンボ本線、水色＝分岐（別の締めなど）、
-        破線＝締めからの置き攻け。
-        {endOki.length > 0 && '「置き攻け」ノードをクリックすると分岐の詳細へ。'}
+        破線＝締めからの起き攻め。
+        {endOki.length > 0 && '「起き攻め」ノードをクリックすると分岐の詳細へ。'}
       </p>
       <div class="full-bleed">
         <div class="full-bleed-inner">
@@ -109,7 +109,7 @@ const endOki = outgoingRoutes(end.id).filter((r) => r.kind === 'okizeme');
     {
       endOki.length > 0 && (
         <section>
-          <h2>締め後の置き攻け</h2>
+          <h2>締め後の起き攻め</h2>
           <p class="lead">
             <a href={`/manon/situations/${end.id}/`}>{end.label}</a>（{end.advantage}）から {endOki.length} 択。
           </p>

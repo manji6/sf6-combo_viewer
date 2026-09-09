@@ -19,7 +19,7 @@ export const SITUATION_KIND_LABEL: Record<SituationKind, string> = {
   juggle: '浮き',
   knockdown: 'ダウン',
   blockstring: 'ガード連携',
-  okiStart: '置き攻け起点',
+  okiStart: '起き攻め起点',
 };
 
 export const OPPONENT_STATE_LABEL: Record<OpponentState, string> = {
@@ -37,7 +37,7 @@ export const OPPONENT_STATE_LABEL: Record<OpponentState, string> = {
 export const ROUTE_KIND_LABEL: Record<RouteKind, string> = {
   starter: '始動',
   combo_route: '中継',
-  okizeme: '置き攻け',
+  okizeme: '起き攻め',
   ender: '締め',
   conversion: 'リターン変換',
 };

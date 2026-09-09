@@ -25,16 +25,16 @@ interface GroupBox {
   y: number;
   w: number;
   h: number;
+  headerH: number;
 }
 
 const GROUP_PAD = 13;
-const GROUP_HEADER = 3;
 const OFFSET = 52;
 
 const ROUTE_KIND_LABEL: Record<string, string> = {
   starter: '始動',
   combo_route: '中継',
-  okizeme: '置き攻け',
+  okizeme: '起き攻め',
   ender: '締め',
   conversion: '変換',
 };
@@ -47,14 +47,40 @@ const SIT_KIND_COLOR: Record<string, string> = {
   okiStart: '#ff5a5a',
 };
 
+/** 起き攻けの枠に出す特徴テキストの行数から高さを見積もる */
+function wrapLines(text: string | undefined, perLine = 30): number {
+  if (!text) return 0;
+  return Math.max(1, Math.ceil(text.length / perLine));
+}
+function okizemeHeaderHeight(g: FlowGroup): number {
+  let lines = 1; // ヘッダ（種別＋リスク＋詳細）
+  lines += wrapLines(g.strongVs?.join('・'));
+  lines += wrapLines(g.weakVs?.join('・'));
+  lines += wrapLines(g.caution);
+  return 14 + lines * 13.5;
+}
+
 function layout(graph: FlowGraph, sizes: Map<string, { w: number; h: number }>) {
   const g = new dagre.graphlib.Graph({ multigraph: true });
-  g.setGraph({ rankdir: 'LR', nodesep: 40, ranksep: 76, marginx: 18, marginy: 24 });
+  g.setGraph({ rankdir: 'LR', nodesep: 30, ranksep: 78, marginx: 18, marginy: 24 });
   g.setDefaultEdgeLabel(() => ({}));
+
+  // 各ノードが属するグループと、先頭ノードかどうか
+  const firstOfGroup = new Map<string, FlowGroup>();
+  for (const grp of graph.groups) {
+    if (grp.nodeIds[0]) firstOfGroup.set(grp.nodeIds[0], grp);
+  }
+  const headerHOf = new Map<string, number>();
+  for (const grp of graph.groups) {
+    headerHOf.set(grp.id, grp.variant === 'okizeme' ? okizemeHeaderHeight(grp) : 14);
+  }
 
   for (const n of graph.nodes) {
     const s = sizes.get(n.id) ?? { w: 150, h: 64 };
-    g.setNode(n.id, { width: s.w, height: s.h });
+    const grp = firstOfGroup.get(n.id);
+    // 先頭ノードは上にヘッダ分の余白を確保させる（dagre 用に高さを水増し）
+    const extra = grp ? headerHOf.get(grp.id)! + GROUP_PAD : 0;
+    g.setNode(n.id, { width: s.w, height: s.h + extra });
   }
   for (const e of graph.edges) g.setEdge(e.from, e.to, {}, e.id);
 
@@ -63,7 +89,16 @@ function layout(graph: FlowGraph, sizes: Map<string, { w: number; h: number }>) 
   const placed: Placed[] = graph.nodes.map((node) => {
     const p = g.node(node.id);
     const s = sizes.get(node.id) ?? { w: 150, h: 64 };
-    return { node, x: p.x - s.w / 2 + OFFSET, y: p.y - s.h / 2 + OFFSET, w: s.w, h: s.h };
+    const grp = firstOfGroup.get(node.id);
+    const extra = grp ? headerHOf.get(grp.id)! + GROUP_PAD : 0;
+    // dagre 中心から、水増し分を除いた実ノードの左上（先頭ノードは下寄せ）
+    return {
+      node,
+      x: p.x - s.w / 2 + OFFSET,
+      y: p.y - (s.h + extra) / 2 + extra + OFFSET,
+      w: s.w,
+      h: s.h,
+    };
   });
   const byId = new Map(placed.map((p) => [p.node.id, p]));
 
@@ -75,12 +110,14 @@ function layout(graph: FlowGraph, sizes: Map<string, { w: number; h: number }>) 
       const minY = Math.min(...members.map((m) => m.y));
       const maxX = Math.max(...members.map((m) => m.x + m.w));
       const maxY = Math.max(...members.map((m) => m.y + m.h));
+      const headerH = headerHOf.get(group.id)!;
       return {
         group,
         x: minX - GROUP_PAD,
-        y: minY - GROUP_PAD - GROUP_HEADER,
+        y: minY - GROUP_PAD - headerH,
         w: maxX - minX + GROUP_PAD * 2,
-        h: maxY - minY + GROUP_PAD * 2 + GROUP_HEADER,
+        h: maxY - minY + GROUP_PAD * 2 + headerH,
+        headerH,
       };
     })
     .filter(Boolean) as GroupBox[];
@@ -111,6 +148,7 @@ export default function FlowCanvas({ graph, height = 520 }: Props) {
   const measureRef = useRef<HTMLDivElement>(null);
   const [lay, setLay] = useState<LayoutState>(null);
   const [view, setView] = useState({ x: 0, y: 0, k: 1 });
+  const [full, setFull] = useState(false);
   const drag = useRef<{ x: number; y: number; vx: number; vy: number } | null>(null);
 
   function fitTo(width: number, worldH: number, mode: 'fit' | 'start' = 'start') {
@@ -125,7 +163,6 @@ export default function FlowCanvas({ graph, height = 520 }: Props) {
       });
       return;
     }
-    // 既定: 高さに合わせて（読める大きさで）左端から表示。横はパンで追う
     const k = Math.max(0.5, Math.min(1, (vp.clientHeight - 16) / worldH)) || 1;
     setView({ x: 12, y: Math.max(8, (vp.clientHeight - worldH * k) / 2), k });
   }
@@ -154,6 +191,20 @@ export default function FlowCanvas({ graph, height = 520 }: Props) {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [graph]);
+
+  // 全画面切り替え時に再フィット
+  useLayoutEffect(() => {
+    if (lay) requestAnimationFrame(() => fitTo(lay.width, lay.height, full ? 'fit' : 'start'));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [full]);
+
+  useEffect(() => {
+    function onKey(ev: KeyboardEvent) {
+      if (ev.key === 'Escape') setFull(false);
+    }
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, []);
 
   useEffect(() => {
     const vp = viewportRef.current;
@@ -192,7 +243,7 @@ export default function FlowCanvas({ graph, height = 520 }: Props) {
   }
 
   return (
-    <div class="fc" style={{ height: `${height}px` }}>
+    <div class={`fc ${full ? 'fc-full' : ''}`} style={full ? undefined : { height: `${height}px` }}>
       <div class="fc-toolbar">
         <button type="button" onClick={() => lay && fitTo(lay.width, lay.height, 'fit')}>
           全体表示
@@ -206,8 +257,11 @@ export default function FlowCanvas({ graph, height = 520 }: Props) {
         <button type="button" onClick={() => setView((v) => ({ ...v, k: Math.max(0.15, v.k / 1.15) }))}>
           －
         </button>
+        <button type="button" class="fc-full-btn" onClick={() => setFull((f) => !f)}>
+          {full ? '✕ 閉じる' : '⛶ 全画面'}
+        </button>
         <span class="fc-legend">
-          <i class="l-flow" />実線=コンボ <i class="l-branch" />分岐 <i class="l-oki" />破線=置き攻け
+          <i class="l-flow" />実線=コンボ <i class="l-branch" />分岐 <i class="l-oki" />破線=起き攻め
         </span>
       </div>
 
@@ -219,7 +273,6 @@ export default function FlowCanvas({ graph, height = 520 }: Props) {
         onPointerUp={onPointerUp}
         onPointerLeave={onPointerUp}
       >
-        {/* 計測用（非表示・自然幅） */}
         <div class="fc-measure" ref={measureRef} aria-hidden="true">
           {graph.nodes.map((n) => (
             <div class="fc-mnode" data-mid={n.id} key={n.id}>
@@ -281,10 +334,33 @@ export default function FlowCanvas({ graph, height = 520 }: Props) {
                   height: `${gb.h}px`,
                 }}
               >
-                <span class="fc-group-label">
-                  <b>{ROUTE_KIND_LABEL[gb.group.routeKind] ?? gb.group.routeKind}</b>
-                  {gb.group.label}
-                </span>
+                {gb.group.variant === 'okizeme' ? (
+                  <div class="fc-group-info" style={{ height: `${gb.headerH}px` }}>
+                    <div class="gi-head">
+                      <span class="gi-kind">起き攻め</span>
+                      {gb.group.risk && (
+                        <span class={`gi-risk r-${gb.group.risk}`}>リスク{gb.group.risk}</span>
+                      )}
+                      <a class="gi-link" href={`/manon/routes/${gb.group.routeId}/`}>
+                        詳細
+                      </a>
+                    </div>
+                    {gb.group.strongVs?.length ? (
+                      <div class="gi-line gi-good">◯ {gb.group.strongVs.join('・')}</div>
+                    ) : null}
+                    {gb.group.weakVs?.length ? (
+                      <div class="gi-line gi-bad">× {gb.group.weakVs.join('・')}</div>
+                    ) : null}
+                    {gb.group.caution ? (
+                      <div class="gi-line gi-warn">⚠ {gb.group.caution}</div>
+                    ) : null}
+                  </div>
+                ) : (
+                  <span class="fc-group-label">
+                    <b>{ROUTE_KIND_LABEL[gb.group.routeKind] ?? gb.group.routeKind}</b>
+                    {gb.group.label}
+                  </span>
+                )}
               </div>
             ))}
 
@@ -300,18 +376,23 @@ export default function FlowCanvas({ graph, height = 520 }: Props) {
           </div>
         )}
       </div>
-      <p class="fc-hint">ドラッグで移動・ホイールで拡大縮小。「置き攻け」ノードのクリックで詳細へ。</p>
+      <p class="fc-hint">
+        ドラッグで移動・ホイールで拡大縮小。起き攻けの枠にその択の特徴を表示。ノードのクリックで詳細へ。
+      </p>
 
       <style>{`
         .fc { border:2px solid var(--border-strong); background:var(--bg-sunken); display:flex; flex-direction:column; }
-        .fc-toolbar { display:flex; gap:.4rem; align-items:center; padding:.5rem .7rem; border-bottom:1px solid var(--border); flex-wrap:wrap; }
+        .fc-full { position:fixed; inset:0; z-index:9999; height:100dvh !important; border:0; }
+        .fc-toolbar { display:flex; gap:.4rem; align-items:center; padding:.5rem .7rem; border-bottom:1px solid var(--border); flex-wrap:wrap; background:var(--bg-raised); }
         .fc-toolbar button { font-family:var(--font-pixel); font-size:.75rem; padding:.2em .6em; border:1px solid var(--border-strong); background:var(--bg-raised); color:var(--text); cursor:pointer; }
+        .fc-toolbar button:hover { background:var(--panel); }
+        .fc-full-btn { color:var(--accent) !important; border-color:var(--accent) !important; }
         .fc-legend { font-size:.72rem; color:var(--text-faint); display:inline-flex; align-items:center; gap:.35em; margin-left:auto; flex-wrap:wrap; }
         .fc-legend i { width:16px; height:0; display:inline-block; border-top:2px solid var(--text-faint); }
         .fc-legend i.l-flow { border-top-color:#9aa0ab; }
         .fc-legend i.l-branch { border-top-color:#88bbdd; }
         .fc-legend i.l-oki { border-top-style:dashed; border-top-color:var(--accent); }
-        .fc-viewport { position:relative; flex:1; overflow:hidden; cursor:grab; touch-action:none; }
+        .fc-viewport { position:relative; flex:1; overflow:hidden; cursor:grab; touch-action:none; background:var(--bg-sunken); }
         .fc-viewport:active { cursor:grabbing; }
         .fc-measure { position:absolute; visibility:hidden; pointer-events:none; left:-99999px; top:0; width:400px; }
         .fc-mnode { display:inline-block; margin:4px; vertical-align:top; }
@@ -323,9 +404,21 @@ export default function FlowCanvas({ graph, height = 520 }: Props) {
         .fc-edge.v-okizeme { stroke:var(--accent); stroke-dasharray:6 5; }
         .fc-group { position:absolute; border:1px solid var(--border-strong); border-radius:2px; background:color-mix(in srgb, var(--panel) 35%, transparent); }
         .fc-group.g-branch { border-color:#5a7a99; }
-        .fc-group.g-okizeme { border-style:dashed; border-color:var(--accent); }
+        .fc-group.g-okizeme { border-style:dashed; border-color:var(--accent); background:color-mix(in srgb, var(--accent) 6%, var(--bg-sunken)); }
         .fc-group-label { position:absolute; top:-11px; left:6px; z-index:3; font-size:.66rem; color:var(--text-dim); background:var(--bg-raised); border:1px solid var(--border-strong); padding:.05em .45em; white-space:nowrap; display:flex; gap:.4em; max-width:280px; overflow:hidden; text-overflow:ellipsis; }
         .fc-group-label b { color:var(--accent); font-weight:400; }
+        .fc-group-info { position:absolute; top:0; left:0; right:0; padding:4px 8px; overflow:hidden; display:flex; flex-direction:column; gap:1px; }
+        .gi-head { display:flex; align-items:center; gap:.35em; font-size:.62rem; }
+        .gi-kind { font-family:var(--font-pixel); background:var(--accent); color:var(--accent-ink); padding:0 .35em; }
+        .gi-risk { border:1px solid currentColor; padding:0 .3em; }
+        .gi-risk.r-低 { color:var(--risk-low); }
+        .gi-risk.r-中 { color:var(--risk-mid); }
+        .gi-risk.r-高 { color:var(--risk-high); }
+        .gi-link { margin-left:auto; font-size:.62rem; color:var(--link); }
+        .gi-line { font-size:.63rem; line-height:1.25; color:var(--text-dim); white-space:normal; overflow:hidden; }
+        .gi-good { color:var(--risk-low); }
+        .gi-bad { color:var(--risk-high); }
+        .gi-warn { color:var(--risk-mid); }
 
         .fc-pnode { position:absolute; }
         .fc-pnode > .fc-node { width:100%; height:100%; }
@@ -342,7 +435,7 @@ export default function FlowCanvas({ graph, height = 520 }: Props) {
         .fc-node.n-outcome { position:relative; }
         .fc-badge { position:absolute; top:-9px; right:-6px; font-size:.58rem; background:var(--accent); color:var(--accent-ink); padding:0 .35em; border:1px solid var(--accent-ink); }
         .fc-badge.b-dim { background:var(--border-strong); color:var(--text); border-color:var(--bg); }
-        .fc-hint { margin:0; padding:.45rem .7rem; font-size:.7rem; color:var(--text-faint); border-top:1px solid var(--border); }
+        .fc-hint { margin:0; padding:.45rem .7rem; font-size:.7rem; color:var(--text-faint); border-top:1px solid var(--border); background:var(--bg-raised); }
       `}</style>
     </div>
   );

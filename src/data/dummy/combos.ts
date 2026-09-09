@@ -14,7 +14,7 @@ export const combos: Combo[] = [
     difficulty: 2,
     tags: ['基本', 'ノーゲージ', '実戦'],
     description:
-      'まず覚える基本コンボ。締めの弱デガジェ後は「弱デガジェ締め後・中央ダウン」から置き攻け四択に移行できる。',
+      'まず覚える基本コンボ。締めの弱デガジェ後は「弱デガジェ締め後・中央ダウン」から起き攻め四択に移行できる。',
   },
   {
     slug: 'manon-mid-5mp-drc-ranversement',
@@ -27,7 +27,7 @@ export const combos: Combo[] = [
     difficulty: 3,
     tags: ['頻出', 'DRC', '実戦'],
     description:
-      '5中P ヒット確認からキャンセルドライブラッシュで火力を伸ばす主力コンボ。後半の「4強P → 中ランヴェルセ」は置き攻け DR2中K からのルートと共有パーツ。',
+      '5中P ヒット確認からキャンセルドライブラッシュで火力を伸ばす主力コンボ。後半の「4強P → 中ランヴェルセ」は起き攻め DR2中K からのルートと共有パーツ。',
   },
   {
     slug: 'manon-mid-5mp-drc-sa3',
@@ -63,19 +63,19 @@ export const combos: Combo[] = [
     endAt: 'kd_after_rondpoint_corner',
     difficulty: 3,
     tags: ['画面端', 'メダル', 'ゲージ', '実戦'],
-    description: '画面端でメダルを一気に稼ぐルート。締めの強制ダウンから強力な置き攻け。',
+    description: '画面端でメダルを一気に稼ぐルート。締めの強制ダウンから強力な起き攻め。',
   },
   {
     slug: 'manon-oki-degage-dr2mk-ranversement',
     character: 'manon',
-    name: '置き攻け DR2中K → 4強P 中ランヴェルセ〆',
-    situationLabel: '弱デガジェ締め後の置き攻けから',
+    name: '起き攻め DR2中K → 4強P 中ランヴェルセ〆',
+    situationLabel: '弱デガジェ締め後の起き攻めから',
     routeChain: ['oki_dr2mk_from_degage_light', 'route_4hp_ranversement_mid'],
     startFrom: 'kd_after_degage_light_mid',
     endAt: 'kd_after_ranversement_mid',
     difficulty: 3,
-    tags: ['置き攻け', 'DRC', '連結'],
+    tags: ['起き攻め', 'DRC', '連結'],
     description:
-      '置き攻けの基本択 DR2中K がヒットしたときのフルコン。後半パーツは頻出コンボと共有され、そのまま次の置き攻けループへ。',
+      '起き攻めの基本択 DR2中K がヒットしたときのフルコン。後半パーツは頻出コンボと共有され、そのまま次の起き攻めループへ。',
   },
 ];

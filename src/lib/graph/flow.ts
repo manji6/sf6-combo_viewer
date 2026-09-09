@@ -1,4 +1,11 @@
-import type { Combo, RouteKind, Situation, SituationKind, Step } from '../../data/types';
+import type {
+  Combo,
+  Risk,
+  RouteKind,
+  Situation,
+  SituationKind,
+  Step,
+} from '../../data/types';
 import { getCombo, getRoute, getSituation } from '../../data';
 import { outgoingRoutes } from './derive';
 import { commandToText } from '../notation/parse';
@@ -32,6 +39,14 @@ export interface FlowGroup {
   routeKind: RouteKind;
   variant: 'primary' | 'branch' | 'okizeme';
   nodeIds: string[];
+  /** okizeme の枠に表示する「この択の特徴」。パーツページへのリンクにも使う */
+  routeId: string;
+  strongVs?: string[];
+  weakVs?: string[];
+  caution?: string;
+  useWhen?: string;
+  onBlock?: string;
+  risk?: Risk;
 }
 
 export interface FlowEdge {
@@ -121,12 +136,20 @@ function emitRouteSteps(
 ): { firstId: string; lastId: string; groupId: string } {
   const route = getRoute(routeId);
   const groupId = nextId(ctx, `g_${route.id}`);
+  const p = route.properties;
   const group: FlowGroup = {
     id: groupId,
     label: route.label,
     routeKind: route.kind,
     variant,
     nodeIds: [],
+    routeId: route.id,
+    strongVs: p?.strongVs,
+    weakVs: p?.weakVs,
+    caution: p?.caution,
+    useWhen: p?.useWhen,
+    onBlock: p?.onBlock,
+    risk: p?.risk,
   };
   let prev: string | null = sourceNodeId;
   let firstId = '';
@@ -158,9 +181,9 @@ const EXPANDABLE_KINDS = new Set<RouteKind>(['okizeme', 'ender', 'combo_route', 
 
 /**
  * `sourceNode`（＝ある状況を表す outcome ノード）から先を再帰的に展開する。
- *  - okizeme パーツは破線で分岐（＝置き攻けの択）
+ *  - okizeme パーツは破線で分岐（＝起き攻めの択）
  *  - ヒット後の拾い（ender / combo_route）は実線でたどり、次のダウンでまた okizeme を扇状展開
- *  - depth は「置き攻けの段数」。ヒット後の拾いは段を増やさない
+ *  - depth は「起き攻めの段数」。ヒット後の拾いは段を増やさない
  *  - ループは loop、別の枝で展開済みなら repeat、深さ上限は more を sourceNode に立てて打ち切る
  */
 function expandFrom(
@@ -229,7 +252,7 @@ function expandFrom(
  * コンボを ComfyUI 風のフローグラフに変換する。
  *  - 主経路は step ノードを実線で連結
  *  - 経路途中の分岐（別の締めなど）は実線ブランチ
- *  - 締めのダウンから置き攻けを破線で扇状展開
+ *  - 締めのダウンから起き攻めを破線で扇状展開
  */
 export function buildComboFlow(comboOrSlug: Combo | string): FlowGraph {
   const combo = typeof comboOrSlug === 'string' ? getCombo(comboOrSlug) : comboOrSlug;
@@ -274,7 +297,7 @@ export function buildComboFlow(comboOrSlug: Combo | string): FlowGraph {
   // コンボ本線が通ったノードは「既出」扱いにして、扇状展開の重複を防ぐ
   midSituations.forEach((id) => ctx.seen.add(id));
 
-  // 締め（と別の締め）から置き攻けを破線で扇状展開
+  // 締め（と別の締め）から起き攻めを破線で扇状展開
   expandFrom(ctx, combo.endAt, endOut, 0, OKI_MAX_DEPTH_COMBO, new Set());
   for (const bt of branchTerminals) {
     expandFrom(ctx, bt.situationId, bt.node, 0, OKI_MAX_DEPTH_COMBO, new Set());
@@ -283,7 +306,7 @@ export function buildComboFlow(comboOrSlug: Combo | string): FlowGraph {
   return { nodes: ctx.nodes, groups: ctx.groups, edges: ctx.edges };
 }
 
-/** 状況ノードを起点にした置き攻けのフローグラフ */
+/** 状況ノードを起点にした起き攻めのフローグラフ */
 export function buildSituationFlow(situationId: string): FlowGraph {
   const ctx: BuildCtx = { nodes: [], groups: [], edges: [], uid: 0, seen: new Set() };
   const startNode: FlowNode = { ...outcomeNode(nextId(ctx, 'start'), getSituation(situationId)), type: 'start' };

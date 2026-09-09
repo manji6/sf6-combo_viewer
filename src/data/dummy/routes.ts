@@ -4,6 +4,7 @@ import type { Route } from '../types';
 // マノン特殊技: ランヴェルセ 236P / デガジェ 214K / ロン・ポワン 236K
 //              マネージュ・ドレ 63214P / アン・オー 4MK / SA3 パ・ド・ドゥ 236236P
 // note は「タイミング・性質」など機能的なもののみ。ナレーション的な説明は入れない。
+// okizeme の properties が「この択のメリット・デメリット・注意点」。フロー図の枠に表示される。
 
 export const routes: Route[] = [
   // ── 始動・確認 ───────────────────────────────
@@ -166,7 +167,7 @@ export const routes: Route[] = [
     tags: ['画面端', 'メダル', '〆'],
   },
 
-  // ── 弱デガジェ締め後の置き攻け 4択 ────────────
+  // ── 弱デガジェ締め後の起き攻め（DR・微歩き・前ステップの各パターン） ──
   {
     id: 'oki_dr2mk_from_degage_light',
     character: 'manon',
@@ -183,9 +184,10 @@ export const routes: Route[] = [
     difficulty: 2,
     controlType: 'both',
     properties: {
-      strongVs: ['暴れ', 'ドライブリバーサル（ガード可）'],
+      strongVs: ['打撃暴れ', 'ドライブリバーサル（ガード可）'],
       weakVs: ['垂直ジャンプ', '無敵技'],
-      useWhen: '基本択。密着〜近距離で。ヒット時は 4強P へ連結。',
+      caution: '先端気味に当てないと OD 無敵に反確。持続当てを徹底',
+      useWhen: '基本択',
       onBlock: '概ね安全（-2 前後）',
       risk: '低',
     },
@@ -207,9 +209,10 @@ export const routes: Route[] = [
     difficulty: 2,
     controlType: 'both',
     properties: {
-      strongVs: ['パリィ仕込み', 'ガード継続', 'しゃがみ'],
-      weakVs: ['前ジャンプ', 'バックジャンプ', '暴れ'],
-      useWhen: '相手がガードで固まっているとき。メダルも稼げる。',
+      strongVs: ['パリィ仕込み', 'ガード継続', 'しゃがみっぱ'],
+      weakVs: ['前・バックジャンプ', '打撃暴れ'],
+      caution: 'ジャンプで透かされたら着地に確定。透かし確認を用意',
+      useWhen: 'ガードで固まる相手に',
       onBlock: '—（投げ）',
       risk: '中',
     },
@@ -221,7 +224,7 @@ export const routes: Route[] = [
     from: 'kd_after_degage_light_mid',
     to: 'hit_enhaut_mid',
     kind: 'okizeme',
-    label: 'ドライブラッシュ アン・オー（中段）',
+    label: 'ドライブラッシュ アン・オー',
     steps: [
       { move: 'ドライブラッシュ', command: 'DR' },
       { move: 'アン・オー', command: '4MK', note: '中段' },
@@ -231,33 +234,84 @@ export const routes: Route[] = [
     difficulty: 2,
     controlType: 'both',
     properties: {
-      strongVs: ['しゃがみガード', '距離が離れた相手'],
-      weakVs: ['垂直ジャンプ', '暴れ', 'ジャストパリィ'],
-      useWhen: '距離が遠めでコマ投げが届かないとき。ヒットで確認コンボへ。',
+      strongVs: ['しゃがみガード', '離れた相手'],
+      weakVs: ['垂直ジャンプ', '打撃暴れ', 'ジャストパリィ'],
+      caution: 'ドライブインパクトで割り込まれる。ガード -8 で反確',
+      useWhen: 'コマ投げが届かない距離で',
       onBlock: '-8 前後（要ケア）',
       risk: '高',
     },
     tags: ['中段'],
   },
   {
-    id: 'oki_dr_wait_from_degage_light',
+    id: 'oki_walk_2mk_from_degage_light',
+    character: 'manon',
+    from: 'kd_after_degage_light_mid',
+    to: 'juggle_can_4hp_ranversement',
+    kind: 'okizeme',
+    label: '微歩き 2中K 重ね',
+    steps: [
+      { move: '微歩き', command: '(微歩き)', note: '起き上がりに密着を微調整' },
+      { move: '2中K', command: '2MK', note: '最速重ね' },
+    ],
+    resources: { driveCost: 0, superCost: 0, saLevel: null },
+    damage: 600,
+    difficulty: 3,
+    controlType: 'both',
+    properties: {
+      strongVs: ['打撃暴れ', 'ドライブリバーサル（ガード可）'],
+      weakVs: ['垂直ジャンプ', '無敵技'],
+      caution: 'Dゲージを使わない代わりに歩き量の目測がシビア',
+      useWhen: 'ゲージ温存したいとき。DR2中K の下位互換だが 0 ゲージ',
+      onBlock: '概ね安全（-2 前後）',
+      risk: '低',
+    },
+    tags: ['基本択', 'ノーゲージ'],
+  },
+  {
+    id: 'oki_dash_throw_from_degage_light',
     character: 'manon',
     from: 'kd_after_degage_light_mid',
     to: 'neutral_mid_plus',
     kind: 'okizeme',
-    label: 'ドライブラッシュ 様子見（シミー）',
+    label: '前ステップ 通常投げ',
     steps: [
-      { move: 'ドライブラッシュ', command: 'DR' },
-      { move: '様子見', command: '(様子見)' },
+      { move: '前ステップ', command: '66' },
+      { move: '通常投げ', command: '(投げ)', note: '前ステの慣性で密着' },
     ],
-    resources: { driveCost: 1, superCost: 0, saLevel: null },
+    resources: { driveCost: 0, superCost: 0, saLevel: null },
+    damage: 1200,
+    difficulty: 2,
+    controlType: 'both',
+    properties: {
+      strongVs: ['ガード継続', 'しゃがみっぱ'],
+      weakVs: ['前・バックジャンプ', '打撃暴れ', '投げ抜け'],
+      caution: '前ステ硬直に暴れを合わせられると被カウンター。読まれたら危険',
+      useWhen: 'メダルを使いたくない、投げ間合いを速く作りたいとき',
+      onBlock: '—（投げ）',
+      risk: '中',
+    },
+    tags: ['崩し', 'ノーゲージ'],
+  },
+  {
+    id: 'oki_wait_from_degage_light',
+    character: 'manon',
+    from: 'kd_after_degage_light_mid',
+    to: 'neutral_mid_plus',
+    kind: 'okizeme',
+    label: '様子見（シミー）',
+    steps: [
+      { move: '微後ろ歩き', command: '(様子見)', note: '相手の暴れ・バクステを釣る' },
+    ],
+    resources: { driveCost: 0, superCost: 0, saLevel: null },
     damage: 0,
     difficulty: 1,
     controlType: 'both',
     properties: {
-      strongVs: ['暴れ', 'バックステップ', '遅らせグラップ'],
+      strongVs: ['打撃暴れ', 'バックステップ', '遅らせグラップ'],
       weakVs: ['何もしない相手（手番を返す）'],
-      useWhen: '相手が暴れがちなとき。空振りをパニカン確認。',
+      caution: '相手が動かないと手番が返る。多用すると読まれる',
+      useWhen: '相手が暴れ・投げ抜けを多用するとき',
       onBlock: '—',
       risk: '低',
     },
@@ -283,7 +337,7 @@ export const routes: Route[] = [
     tags: ['確認', '〆'],
   },
 
-  // ── 中ランヴェルセ締め後の置き攻け（再帰・サイクル） ──
+  // ── 中ランヴェルセ締め後の起き攻め（再帰・サイクル） ──
   {
     id: 'oki_dr2mk_from_ranversement',
     character: 'manon',
@@ -300,13 +354,40 @@ export const routes: Route[] = [
     difficulty: 2,
     controlType: 'both',
     properties: {
-      strongVs: ['暴れ'],
+      strongVs: ['打撃暴れ'],
       weakVs: ['垂直ジャンプ', '無敵技'],
-      useWhen: 'ランヴェルセ締め後も同じ 4強P 連結ループに入れる。',
+      caution: '同じループを繰り返すと 2中K に的を絞られる。時々崩しを混ぜる',
+      useWhen: 'ランヴェルセ後も同じ 4強P 連結ループへ',
       onBlock: '概ね安全',
       risk: '低',
     },
     tags: ['基本択', 'ループ'],
+  },
+  {
+    id: 'oki_framekill_grab_from_ranversement',
+    character: 'manon',
+    from: 'kd_after_ranversement_mid',
+    to: 'kd_after_manege_dore_mid',
+    kind: 'okizeme',
+    label: '5弱P 空振り → 前ステップ マネージュ・ドレ',
+    steps: [
+      { move: '5弱P', command: '5LP', note: '当てない・フレーム消費' },
+      { move: '前ステップ', command: '66' },
+      { move: 'マネージュ・ドレ', command: '63214P' },
+    ],
+    resources: { driveCost: 0, superCost: 0, saLevel: null },
+    damage: 1400,
+    difficulty: 4,
+    controlType: 'both',
+    properties: {
+      strongVs: ['最速暴れ（空振りが暴れを誘発）', 'ガード継続'],
+      weakVs: ['遅らせ打撃', 'ジャンプ'],
+      caution: '5弱P を当ててしまうと連携が崩れる。あくまで空振りでタイミングを作る技',
+      useWhen: '相手の暴れタイミングをずらして投げを通したいとき',
+      onBlock: '—（投げ）',
+      risk: '中',
+    },
+    tags: ['崩し', 'フレーム消費', 'ノーゲージ'],
   },
   {
     id: 'oki_dr_grab_from_ranversement',
@@ -325,14 +406,15 @@ export const routes: Route[] = [
     controlType: 'both',
     properties: {
       strongVs: ['ガード継続', 'パリィ仕込み'],
-      weakVs: ['前ジャンプ', '暴れ'],
-      useWhen: 'ループを嫌ってガードで固まる相手に。',
+      weakVs: ['前ジャンプ', '打撃暴れ'],
+      caution: 'ジャンプで透かされる。ループを嫌った相手の暴れにも注意',
+      useWhen: 'ループを嫌ってガードで固まる相手に',
       risk: '中',
     },
     tags: ['崩し', 'メダル'],
   },
 
-  // ── マネージュ・ドレ後の置き攻け ──────────────
+  // ── マネージュ・ドレ後の起き攻め ──────────────
   {
     id: 'oki_dr2mk_from_manege',
     character: 'manon',
@@ -349,9 +431,10 @@ export const routes: Route[] = [
     difficulty: 2,
     controlType: 'both',
     properties: {
-      strongVs: ['暴れ'],
+      strongVs: ['打撃暴れ'],
       weakVs: ['ジャンプ'],
-      useWhen: 'コマ投げ後も距離が近いので同じ連結へ。',
+      caution: 'コマ投げ後は相手の受け身方向で距離が変わる。目測に注意',
+      useWhen: 'コマ投げ後も距離が近いので同じ連結へ',
       risk: '低',
     },
     tags: ['基本択'],

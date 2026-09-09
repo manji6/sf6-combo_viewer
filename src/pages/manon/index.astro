@@ -9,7 +9,7 @@ import { POSITION_LABEL } from '../../lib/ui';
 const character = characterById.get('manon')!;
 const manonCombos = combos.filter((c) => c.character === 'manon');
 const setplayStarts = situations.filter(
-  (s) => s.tags.includes('置き攻け開始') && outgoingRoutes(s.id).length > 0,
+  (s) => s.tags.includes('起き攻め開始') && outgoingRoutes(s.id).length > 0,
 );
 ---
 
@@ -36,7 +36,7 @@ const setplayStarts = situations.filter(
 
     <section class="tab-panel" data-panel="setplay">
       <p class="hint">
-        締めからの置き攻け起点。各ページで分岐択の樹形図（何に強い・弱い・いつ使う）を確認できます。
+        締めからの起き攻め起点。各ページで分岐択の樹形図（何に強い・弱い・いつ使う）を確認できます。
       </p>
       <ul class="sp-grid">
         {

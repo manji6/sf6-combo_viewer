@@ -7,19 +7,19 @@ import { validateAll } from '../lib/graph/derive';
 const errors = validateAll();
 if (errors.length) console.warn('[データ検証]\n' + errors.map((e) => ' - ' + e).join('\n'));
 
-const setplayStarts = situations.filter((s) => s.tags.includes('置き攻け開始'));
+const setplayStarts = situations.filter((s) => s.tags.includes('起き攻め開始'));
 ---
 
 <BaseLayout title="SF6 コンボビューア">
   <section class="hero pixel-box">
     <h1>SF6 コンボ・セットプレイビューア</h1>
     <p class="lead">
-      Street Fighter 6 のコンボと<strong>置き攻けの分岐択</strong>を、
+      Street Fighter 6 のコンボと<strong>起き攻めの分岐択</strong>を、
       コマンドアイコンと樹形図で「見て」理解するためのツール。
     </p>
     <p class="sub">
       コンボは「状況ノード」と「パーツ（技の連なり）」のグラフとして表現。
-      置き攻けの各択には「何に強い・弱い・いつ使う」を併記し、
+      起き攻めの各択には「何に強い・弱い・いつ使う」を併記し、
       パーツがどのコンボとつながっているかも追えます。
     </p>
     <div class="proto-note">
@@ -63,7 +63,7 @@ const setplayStarts = situations.filter((s) => s.tags.includes('置き攻け開�
   </section>
 
   <section class="setplay-preview">
-    <h2>置き攻け起点</h2>
+    <h2>起き攻め起点</h2>
     <ul class="sp-list">
       {
         setplayStarts.map((s) => (

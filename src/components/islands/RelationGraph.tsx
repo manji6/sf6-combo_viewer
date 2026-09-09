@@ -31,12 +31,12 @@ const KIND_LABEL: Record<string, string> = {
   juggle: '浮き',
   knockdown: 'ダウン',
   blockstring: 'ガード連携',
-  okiStart: '置き攻け起点',
+  okiStart: '起き攻め起点',
 };
 const EDGE_LABEL: Record<string, string> = {
   starter: '始動',
   combo_route: '中継',
-  okizeme: '置き攻け',
+  okizeme: '起き攻め',
   ender: '締め',
   conversion: '変換',
 };

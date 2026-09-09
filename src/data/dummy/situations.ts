@@ -2,7 +2,7 @@ import type { Situation } from '../types';
 
 // ダミーの状況ノード。マノン想定。Phase 2 で content collection に移行。
 // 連結の肝: 「juggle_can_4hp_ranversement」は
-//   ・置き攻けの DR2中K ヒット後
+//   ・起き攻めの DR2中K ヒット後
 //   ・頻出コンボ 5中P DRC 2中P 後
 // の両方が到達する共有ノード。ここから 4強P > 中ランヴェルセ が繋がる。
 
@@ -72,7 +72,7 @@ export const situations: Situation[] = [
     advantage: '限定浮き',
     tags: ['連結ハブ'],
     notes:
-      '置き攻けの DR2中K ヒット後と、頻出コンボ 5中P DRC 2中P 後の両方がここに到達する共有ノード。',
+      '起き攻めの DR2中K ヒット後と、頻出コンボ 5中P DRC 2中P 後の両方がここに到達する共有ノード。',
   },
   {
     id: 'juggle_corner_medal',
@@ -89,8 +89,8 @@ export const situations: Situation[] = [
     position: 'midscreen',
     opponentState: 'knockdown_hard',
     advantage: '+38 前後',
-    tags: ['置き攻け開始'],
-    notes: 'マノンの基本的な置き攻け開始点。ドライブラッシュから四択を仕掛ける。',
+    tags: ['起き攻め開始'],
+    notes: 'マノンの基本的な起き攻め開始点。ドライブラッシュから四択を仕掛ける。',
   },
   {
     id: 'kd_after_ranversement_mid',
@@ -99,7 +99,7 @@ export const situations: Situation[] = [
     position: 'midscreen',
     opponentState: 'knockdown_hard',
     advantage: '+30 前後',
-    tags: ['置き攻け開始'],
+    tags: ['起き攻め開始'],
   },
   {
     id: 'kd_after_pas_de_deux_mid',
@@ -109,7 +109,7 @@ export const situations: Situation[] = [
     opponentState: 'knockdown_hard',
     advantage: '距離遠め',
     tags: [],
-    notes: 'SA3 締め。距離が離れるため強い置き攻けは無く、体力リードを活かす展開になりやすい。',
+    notes: 'SA3 締め。距離が離れるため強い起き攻めは無く、体力リードを活かす展開になりやすい。',
   },
   {
     id: 'kd_after_manege_dore_mid',
@@ -118,7 +118,7 @@ export const situations: Situation[] = [
     position: 'midscreen',
     opponentState: 'knockdown_hard',
     advantage: 'メダル獲得 +1',
-    tags: ['置き攻け開始', 'メダル'],
+    tags: ['起き攻め開始', 'メダル'],
   },
   {
     id: 'kd_after_rondpoint_mid',
@@ -127,7 +127,7 @@ export const situations: Situation[] = [
     position: 'midscreen',
     opponentState: 'knockdown_soft',
     advantage: '+20 前後',
-    tags: ['置き攻け開始'],
+    tags: ['起き攻め開始'],
   },
   {
     id: 'kd_after_rondpoint_corner',
@@ -136,6 +136,6 @@ export const situations: Situation[] = [
     position: 'corner',
     opponentState: 'knockdown_hard',
     advantage: '+34 前後',
-    tags: ['置き攻け開始', '画面端'],
+    tags: ['起き攻め開始', '画面端'],
   },
 ];
