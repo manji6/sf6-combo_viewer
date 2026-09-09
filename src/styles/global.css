@@ -167,14 +167,15 @@ h3 {
   display: none;
 }
 
-/* クラシック ⇄ モダン（既定クラシック） */
-:root .nt-ctl-modern {
+/* クラシック ⇄ モダン（既定クラシック）。data-control を持つ祖先（フローの枠や
+   ルートページのラッパ）で切替。ヘッダーの一括切替はしない（コンボごとに可否が違うため） */
+.nt-ctl-modern {
   display: none;
 }
-:root[data-control='modern'] .nt-ctl-modern {
+[data-control='modern'] .nt-ctl-modern {
   display: inline;
 }
-:root[data-control='modern'] .nt-ctl-classic {
+[data-control='modern'] .nt-ctl-classic {
   display: none;
 }
 

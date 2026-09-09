@@ -41,14 +41,39 @@ const p = route.properties;
       </p>
     </header>
 
-    <section>
-      <h2>手順</h2>
+    <section data-control="classic" data-ctl-root>
+      <div class="h2row">
+        <h2>手順</h2>
+        {
+          route.controlType === 'both' ? (
+            <span class="ctl-mini" role="group" aria-label="操作タイプ">
+              <button type="button" class="on" data-ctl="classic">クラシック</button>
+              <button type="button" data-ctl="modern">モダン</button>
+            </span>
+          ) : (
+            <span class="ctl-note">クラシックのみ</span>
+          )
+        }
+      </div>
       <div class="pixel-box pad">
         <StepList steps={route.steps} />
       </div>
       {route.constraints && <p class="constraints">制約: {route.constraints}</p>}
       {route.notes && <p class="notes">{route.notes}</p>}
     </section>
+
+    <script>
+      document.querySelectorAll<HTMLElement>('[data-ctl-root]').forEach((root) => {
+        root.querySelectorAll<HTMLButtonElement>('[data-ctl]').forEach((b) => {
+          b.addEventListener('click', () => {
+            root.dataset.control = b.dataset.ctl === 'modern' ? 'modern' : 'classic';
+            root
+              .querySelectorAll<HTMLButtonElement>('[data-ctl]')
+              .forEach((x) => x.classList.toggle('on', x === b));
+          });
+        });
+      });
+    </script>
 
     <section>
       <h2>データ</h2>
@@ -163,6 +188,43 @@ const p = route.properties;
 </BaseLayout>
 
 <style>
+  .h2row {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    margin-bottom: 0.4rem;
+  }
+  .h2row h2 {
+    margin: 0;
+    border: 0;
+    padding: 0;
+  }
+  .ctl-mini {
+    display: inline-flex;
+  }
+  .ctl-mini button {
+    font-family: var(--font-pixel);
+    font-size: 0.72rem;
+    padding: 0.15em 0.55em;
+    border: 1px solid var(--border-strong);
+    background: var(--bg-raised);
+    color: var(--text-dim);
+    cursor: pointer;
+  }
+  .ctl-mini button:first-child {
+    border-right-width: 1px;
+  }
+  .ctl-mini button.on {
+    background: var(--accent);
+    color: var(--accent-ink);
+    border-color: var(--accent);
+  }
+  .ctl-note {
+    font-size: 0.72rem;
+    color: var(--text-faint);
+    border: 1px solid var(--border);
+    padding: 0.1em 0.5em;
+  }
   .kindrow {
     display: flex;
     flex-wrap: wrap;

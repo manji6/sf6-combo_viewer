@@ -9,6 +9,8 @@ const dagre: typeof import('@dagrejs/dagre') =
 
 interface Props {
   graph: FlowGraph;
+  /** モダン操作版のグラフ（あれば クラシック⇄モダン トグルを表示） */
+  graphModern?: FlowGraph;
   height?: number;
 }
 
@@ -195,14 +197,21 @@ function edgePath(a: Placed, b: Placed): string {
 
 type LayoutState = ReturnType<typeof layout> | null;
 
-export default function FlowCanvas({ graph, height = 520 }: Props) {
+export default function FlowCanvas({ graph, graphModern, height = 520 }: Props) {
   const viewportRef = useRef<HTMLDivElement>(null);
   const measureRef = useRef<HTMLDivElement>(null);
   const [lay, setLay] = useState<LayoutState>(null);
   const [view, setView] = useState({ x: 0, y: 0, k: 1 });
   const [full, setFull] = useState(false);
+  const [modern, setModern] = useState(false);
   const [uid] = useState(() => 'fc' + Math.random().toString(36).slice(2, 8));
   const drag = useRef<{ x: number; y: number; vx: number; vy: number } | null>(null);
+
+  const hasModern =
+    !!graphModern &&
+    (graphModern.nodes.length !== graph.nodes.length ||
+      graphModern.groups.length !== graph.groups.length);
+  const activeGraph = modern && graphModern ? graphModern : graph;
 
   function fitTo(width: number, worldH: number, mode: 'fit' | 'start' = 'start') {
     const vp = viewportRef.current;
@@ -232,7 +241,7 @@ export default function FlowCanvas({ graph, height = 520 }: Props) {
         h: Math.max(48, Math.ceil(r.height) + 2),
       });
     });
-    const result = layout(graph, sizes);
+    const result = layout(activeGraph, sizes);
     setLay(result);
     fitTo(result.width, result.height);
   }
@@ -243,7 +252,7 @@ export default function FlowCanvas({ graph, height = 520 }: Props) {
       (document as any).fonts.ready.then(() => remeasure());
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [graph]);
+  }, [activeGraph]);
 
   // 全画面切り替え時に再フィット
   useLayoutEffect(() => {
@@ -296,8 +305,22 @@ export default function FlowCanvas({ graph, height = 520 }: Props) {
   }
 
   return (
-    <div class={`fc ${full ? 'fc-full' : ''}`} style={full ? undefined : { height: `${height}px` }}>
+    <div
+      class={`fc ${full ? 'fc-full' : ''}`}
+      data-control={modern ? 'modern' : 'classic'}
+      style={full ? undefined : { height: `${height}px` }}
+    >
       <div class="fc-toolbar">
+        {hasModern && (
+          <span class="fc-ctl" role="group" aria-label="操作タイプ">
+            <button type="button" class={!modern ? 'on' : ''} onClick={() => setModern(false)}>
+              クラシック
+            </button>
+            <button type="button" class={modern ? 'on' : ''} onClick={() => setModern(true)}>
+              モダン
+            </button>
+          </span>
+        )}
         <button type="button" onClick={() => lay && fitTo(lay.width, lay.height, 'fit')}>
           全体表示
         </button>
@@ -327,7 +350,7 @@ export default function FlowCanvas({ graph, height = 520 }: Props) {
         onPointerLeave={onPointerUp}
       >
         <div class="fc-measure" ref={measureRef} aria-hidden="true">
-          {graph.nodes.map((n) => (
+          {activeGraph.nodes.map((n) => (
             <div class="fc-mnode" data-mid={n.id} key={n.id}>
               <NodeInner node={n} />
             </div>
@@ -339,43 +362,6 @@ export default function FlowCanvas({ graph, height = 520 }: Props) {
             class="fc-world"
             style={{ transform: `translate(${view.x}px, ${view.y}px) scale(${view.k})` }}
           >
-            <svg class="fc-edges" width={lay.width} height={lay.height} aria-hidden="true">
-              <defs>
-                {[
-                  ['flow', '#9aa0ab'],
-                  ['branch', '#88bbdd'],
-                  ['okizeme', '#d9a441'],
-                ].map(([v, color]) => (
-                  <marker
-                    key={v}
-                    id={`${uid}-${v}`}
-                    viewBox="0 0 8 8"
-                    refX="7"
-                    refY="4"
-                    markerWidth="6"
-                    markerHeight="6"
-                    orient="auto"
-                  >
-                    <path d="M0 0 L8 4 L0 8 z" fill={color} />
-                  </marker>
-                ))}
-              </defs>
-              {graph.edges.map((e: FlowEdge) => {
-                const a = lay.byId.get(e.from);
-                const b = lay.byId.get(e.to);
-                if (!a || !b) return null;
-                return (
-                  <path
-                    key={e.id}
-                    d={edgePath(a, b)}
-                    class={`fc-edge v-${e.variant}`}
-                    fill="none"
-                    marker-end={`url(#${uid}-${e.variant})`}
-                  />
-                );
-              })}
-            </svg>
-
             {lay.groupBoxes.map((gb) => (
               <div
                 key={gb.group.id}
@@ -417,6 +403,43 @@ export default function FlowCanvas({ graph, height = 520 }: Props) {
               </div>
             ))}
 
+            <svg class="fc-edges" width={lay.width} height={lay.height} aria-hidden="true">
+              <defs>
+                {[
+                  ['flow', '#9aa0ab'],
+                  ['branch', '#88bbdd'],
+                  ['okizeme', '#d9a441'],
+                ].map(([v, color]) => (
+                  <marker
+                    key={v}
+                    id={`${uid}-${v}`}
+                    viewBox="0 0 8 8"
+                    refX="7"
+                    refY="4"
+                    markerWidth="6"
+                    markerHeight="6"
+                    orient="auto"
+                  >
+                    <path d="M0 0 L8 4 L0 8 z" fill={color} />
+                  </marker>
+                ))}
+              </defs>
+              {activeGraph.edges.map((e: FlowEdge) => {
+                const a = lay.byId.get(e.from);
+                const b = lay.byId.get(e.to);
+                if (!a || !b) return null;
+                return (
+                  <path
+                    key={e.id}
+                    d={edgePath(a, b)}
+                    class={`fc-edge v-${e.variant}`}
+                    fill="none"
+                    marker-end={`url(#${uid}-${e.variant})`}
+                  />
+                );
+              })}
+            </svg>
+
             {lay.placed.map((p) => (
               <div
                 key={p.node.id}
@@ -440,6 +463,10 @@ export default function FlowCanvas({ graph, height = 520 }: Props) {
         .fc-toolbar button { font-family:var(--font-pixel); font-size:.75rem; padding:.2em .6em; border:1px solid var(--border-strong); background:var(--bg-raised); color:var(--text); cursor:pointer; }
         .fc-toolbar button:hover { background:var(--panel); }
         .fc-full-btn { color:var(--accent) !important; border-color:var(--accent) !important; }
+        .fc-ctl { display:inline-flex; margin-right:.2rem; }
+        .fc-ctl button { font-family:var(--font-pixel); font-size:.75rem; padding:.2em .6em; border:1px solid var(--border-strong); background:var(--bg-raised); color:var(--text-dim); cursor:pointer; }
+        .fc-ctl button:first-child { border-right-width:1px; }
+        .fc-ctl button.on { background:var(--accent); color:var(--accent-ink); border-color:var(--accent); }
         .fc-legend { font-size:.72rem; color:var(--text-faint); display:inline-flex; align-items:center; gap:.35em; margin-left:auto; flex-wrap:wrap; }
         .fc-legend i { width:16px; height:0; display:inline-block; border-top:2px solid var(--text-faint); }
         .fc-legend i.l-flow { border-top-color:#9aa0ab; }
@@ -450,14 +477,14 @@ export default function FlowCanvas({ graph, height = 520 }: Props) {
         .fc-measure { position:absolute; visibility:hidden; pointer-events:none; left:-99999px; top:0; width:400px; }
         .fc-mnode { display:inline-block; margin:4px; vertical-align:top; }
         .fc-world { position:absolute; top:0; left:0; transform-origin:0 0; }
-        .fc-edges { position:absolute; top:0; left:0; overflow:visible; }
+        .fc-edges { position:absolute; top:0; left:0; overflow:visible; pointer-events:none; }
         .fc-edge { stroke-width:2; }
         .fc-edge.v-flow { stroke:#9aa0ab; }
         .fc-edge.v-branch { stroke:#88bbdd; }
         .fc-edge.v-okizeme { stroke:var(--accent); stroke-dasharray:6 5; }
-        .fc-group { position:absolute; border:1px solid var(--border-strong); border-radius:2px; background:color-mix(in srgb, var(--panel) 35%, transparent); }
+        .fc-group { position:absolute; border:1px solid var(--border-strong); border-radius:2px; background:rgba(128,128,128,.05); }
         .fc-group.g-branch { border-color:#5a7a99; }
-        .fc-group.g-okizeme { border-style:dashed; border-color:var(--accent); background:color-mix(in srgb, var(--accent) 6%, var(--bg-sunken)); }
+        .fc-group.g-okizeme { border-style:dashed; border-color:var(--accent); background:rgba(217,164,65,.06); }
         .fc-group-label { position:absolute; top:-11px; left:6px; z-index:3; font-size:.66rem; color:var(--text-dim); background:var(--bg-raised); border:1px solid var(--border-strong); padding:.05em .45em; white-space:nowrap; display:flex; gap:.4em; max-width:280px; overflow:hidden; text-overflow:ellipsis; }
         .fc-group-label b { color:var(--accent); font-weight:400; }
         .fc-group-info { position:absolute; top:0; left:0; right:0; padding:5px 8px; overflow:hidden; display:flex; flex-direction:column; gap:2px; }

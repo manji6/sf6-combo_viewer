@@ -115,6 +115,8 @@ function outcomeNode(
   };
 }
 
+export type ControlMode = 'classic' | 'modern';
+
 interface BuildCtx {
   nodes: FlowNode[];
   groups: FlowGroup[];
@@ -122,6 +124,13 @@ interface BuildCtx {
   uid: number;
   /** 既に一度展開した状況ノード（重複展開を防ぐグローバル集合） */
   seen: Set<string>;
+  /** この操作タイプで可能なパーツだけを含める */
+  control: ControlMode;
+}
+
+function routeAllowed(ctx: BuildCtx, routeId: string): boolean {
+  if (ctx.control === 'classic') return true;
+  return getRoute(routeId).controlType === 'both';
 }
 
 function nextId(ctx: BuildCtx, prefix: string) {
@@ -196,7 +205,9 @@ function expandFrom(
   maxDepth: number,
   path: Set<string>,
 ) {
-  const routes = outgoingRoutes(situationId).filter((r) => EXPANDABLE_KINDS.has(r.kind));
+  const routes = outgoingRoutes(situationId).filter(
+    (r) => EXPANDABLE_KINDS.has(r.kind) && routeAllowed(ctx, r.id),
+  );
   if (routes.length === 0) return;
 
   if (path.has(situationId)) {
@@ -256,9 +267,12 @@ function expandFrom(
  *  - 経路途中の分岐（別の締めなど）は実線ブランチ
  *  - 締めのダウンから起き攻めを破線で扇状展開
  */
-export function buildComboFlow(comboOrSlug: Combo | string): FlowGraph {
+export function buildComboFlow(
+  comboOrSlug: Combo | string,
+  control: ControlMode = 'classic',
+): FlowGraph {
   const combo = typeof comboOrSlug === 'string' ? getCombo(comboOrSlug) : comboOrSlug;
-  const ctx: BuildCtx = { nodes: [], groups: [], edges: [], uid: 0, seen: new Set() };
+  const ctx: BuildCtx = { nodes: [], groups: [], edges: [], uid: 0, seen: new Set(), control };
   const chain = combo.routeChain.map(getRoute);
 
   const startSit = getSituation(combo.startFrom);
@@ -277,7 +291,9 @@ export function buildComboFlow(comboOrSlug: Combo | string): FlowGraph {
 
     // 経路途中／末尾の分岐（この地点から出る別の締め・別ルート）
     if (ri >= 1) {
-      const alts = outgoingRoutes(r.from).filter((a) => a.id !== r.id && a.kind !== 'okizeme');
+      const alts = outgoingRoutes(r.from).filter(
+        (a) => a.id !== r.id && a.kind !== 'okizeme' && routeAllowed(ctx, a.id),
+      );
       for (const alt of alts) {
         const { lastId: altLast } = emitRouteSteps(ctx, alt.id, 'branch', prevLast, 'branch');
         const altOut = outcomeNode(nextId(ctx, 'o'), getSituation(alt.to));
@@ -309,8 +325,11 @@ export function buildComboFlow(comboOrSlug: Combo | string): FlowGraph {
 }
 
 /** 状況ノードを起点にした起き攻めのフローグラフ */
-export function buildSituationFlow(situationId: string): FlowGraph {
-  const ctx: BuildCtx = { nodes: [], groups: [], edges: [], uid: 0, seen: new Set() };
+export function buildSituationFlow(
+  situationId: string,
+  control: ControlMode = 'classic',
+): FlowGraph {
+  const ctx: BuildCtx = { nodes: [], groups: [], edges: [], uid: 0, seen: new Set(), control };
   const startNode: FlowNode = { ...outcomeNode(nextId(ctx, 'start'), getSituation(situationId)), type: 'start' };
   ctx.nodes.push(startNode);
   expandFrom(ctx, situationId, startNode, 0, OKI_MAX_DEPTH_SITUATION, new Set());

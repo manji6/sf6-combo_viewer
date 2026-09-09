@@ -23,6 +23,11 @@ export function combosUsingRoute(routeId: string): Combo[] {
   return combos.filter((c) => c.routeChain.includes(routeId));
 }
 
+/** コンボ本線がモダン操作でも実行できるか（全パーツが 'both'） */
+export function comboSupportsModern(combo: Combo): boolean {
+  return combo.routeChain.map(getRoute).every((r) => r.controlType === 'both');
+}
+
 /** この状況ノードを経路上に含むコンボ */
 export function combosThroughSituation(situationId: string): Combo[] {
   return combos.filter((c) => {

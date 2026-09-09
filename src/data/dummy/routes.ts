@@ -139,13 +139,14 @@ export const routes: Route[] = [
     label: '2中P → 弱ロン・ポワン',
     steps: [
       { move: '2中P', command: '2MP', cancel: true },
-      { move: '弱ロン・ポワン', command: '236LK', note: '対空派生' },
+      { move: '弱ロン・ポワン', command: '236LK', note: '弱で低ダメ・高有利' },
     ],
     resources: { driveCost: 0, superCost: 0, saLevel: null },
     damage: 1000,
     difficulty: 2,
-    controlType: 'both',
-    tags: ['〆'],
+    controlType: 'classic',
+    constraints: '弱ロン・ポワンの弱指定はモダンでは出せないためクラシックのみ。',
+    tags: ['〆', 'クラシック限定'],
   },
 
   // ── 画面端メダルループ ───────────────────────
@@ -232,7 +233,8 @@ export const routes: Route[] = [
     resources: { driveCost: 1, superCost: 0, saLevel: null },
     damage: 700,
     difficulty: 2,
-    controlType: 'both',
+    controlType: 'classic',
+    constraints: 'アン・オー派生ルートはクラシックのみ（モダンでは表示されません）。',
     properties: {
       strongVs: ['しゃがみガード', '離れた相手'],
       weakVs: ['垂直ジャンプ', '打撃暴れ', 'ジャストパリィ'],
@@ -241,7 +243,7 @@ export const routes: Route[] = [
       onBlock: '-8 前後（要ケア）',
       risk: '高',
     },
-    tags: ['中段'],
+    tags: ['中段', 'クラシック限定'],
   },
   {
     id: 'oki_walk_2mk_from_degage_light',
@@ -378,7 +380,8 @@ export const routes: Route[] = [
     resources: { driveCost: 0, superCost: 0, saLevel: null },
     damage: 1400,
     difficulty: 4,
-    controlType: 'both',
+    controlType: 'classic',
+    constraints: '5弱P 空振りのフレーム調整がシビアなためクラシックのみ。',
     properties: {
       strongVs: ['最速暴れ（空振りが暴れを誘発）', 'ガード継続'],
       weakVs: ['遅らせ打撃', 'ジャンプ'],

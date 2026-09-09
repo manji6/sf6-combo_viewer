@@ -1,7 +1,6 @@
 ---
 import '../styles/global.css';
 import NotationToggle from '../components/NotationToggle.astro';
-import ControlToggle from '../components/ControlToggle.astro';
 import ThemeToggle from '../components/ThemeToggle.astro';
 
 interface Props {
@@ -18,7 +17,7 @@ const desc =
 ---
 
 <!doctype html>
-<html lang="ja" data-notation="icon" data-control="classic">
+<html lang="ja" data-notation="icon">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -45,8 +44,6 @@ const desc =
           document.documentElement.dataset.theme = t;
           var n = localStorage.getItem('sf6cv:notation');
           document.documentElement.dataset.notation = n === 'text' ? 'text' : 'icon';
-          var c = localStorage.getItem('sf6cv:control');
-          document.documentElement.dataset.control = c === 'modern' ? 'modern' : 'classic';
         } catch (e) {}
       })();
     </script>
@@ -62,7 +59,6 @@ const desc =
           <a href="/about/">このサイト</a>
         </nav>
         <div class="header-tools">
-          <ControlToggle />
           <NotationToggle />
           <ThemeToggle />
         </div>

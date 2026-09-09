@@ -30,7 +30,9 @@ const otherOuts = outs.filter((r) => r.kind !== 'okizeme');
 const ins = incomingRoutes(situation.id);
 const throughCombos = combosThroughSituation(situation.id);
 const hasFlow = okis.length > 0;
-const flow = hasFlow ? buildSituationFlow(situation.id) : null;
+const flow = hasFlow ? buildSituationFlow(situation.id, 'classic') : null;
+const flowModern = hasFlow ? buildSituationFlow(situation.id, 'modern') : undefined;
+const hasClassicOnly = outs.some((r) => r.controlType === 'classic');
 ---
 
 <BaseLayout
@@ -56,11 +58,16 @@ const flow = hasFlow ? buildSituationFlow(situation.id) : null;
           <h2>起き攻め {okis.length} 択（フロー）</h2>
           <p class="lead">
             破線が各択。ヒット後の展開・ループはノードでつながって見えます。
-            各択の詳細は下の「特徴」または各パーツページで。
+            {hasClassicOnly && 'ツールバーで「モダン」にすると、クラシック限定の択は表示から消えます。'}
           </p>
           <div class="full-bleed">
             <div class="full-bleed-inner">
-              <FlowCanvas client:only="preact" graph={flow} height={540} />
+              <FlowCanvas
+                client:only="preact"
+                graph={flow}
+                graphModern={flowModern}
+                height={540}
+              />
             </div>
           </div>
         </section>
@@ -80,6 +87,7 @@ const flow = hasFlow ? buildSituationFlow(situation.id) : null;
                     <a class="bc-title" href={`/manon/routes/${r.id}/`}>
                       {r.label}
                     </a>
+                    {r.controlType === 'classic' && <span class="cl-only">クラシック限定</span>}
                     {p?.risk && <span class="risk">リスク{p.risk}</span>}
                   </div>
                   <div class="bc-recipe scroll-x">
@@ -215,6 +223,8 @@ const flow = hasFlow ? buildSituationFlow(situation.id) : null;
   .bc-head { display: flex; align-items: center; gap: 0.5rem; }
   .bc-title { font-family: var(--font-pixel); font-size: 0.92rem; }
   .bc-head .risk { margin-left: auto; font-size: 0.7rem; color: var(--risk, var(--text-faint)); border: 1px solid currentColor; padding: 0.05em 0.4em; }
+  .bc-head .cl-only { font-size: 0.66rem; color: var(--btn-l); border: 1px solid currentColor; padding: 0.05em 0.35em; }
+  .bc-head .cl-only + .risk { margin-left: 0.3rem; }
   .bc-recipe { display: flex; align-items: center; gap: 0.3rem; white-space: nowrap; padding: 0.5rem 0; font-size: 1rem; }
   .bc-recipe .j { color: var(--text-faint); }
   .props { display: grid; grid-template-columns: max-content 1fr; gap: 0.15rem 0.7rem; margin: 0.2rem 0 0; font-size: 0.8rem; }
