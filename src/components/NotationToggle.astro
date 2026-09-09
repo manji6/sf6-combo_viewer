@@ -1,0 +1,42 @@
+---
+// 表記トグル（アイコン ⇄ テキスト）。<html data-notation> を切り替える。
+---
+
+<div class="nt-toggle" role="group" aria-label="コマンド表記">
+  <button type="button" class="btn" data-notation-set="icon" aria-pressed="true">アイコン</button>
+  <button type="button" class="btn" data-notation-set="text" aria-pressed="false">テキスト</button>
+</div>
+
+<style>
+  .nt-toggle {
+    display: inline-flex;
+  }
+  .nt-toggle .btn {
+    padding: 0.3em 0.7em;
+    font-size: 0.8rem;
+    box-shadow: none;
+  }
+  .nt-toggle .btn:first-child {
+    border-right-width: 1px;
+  }
+</style>
+
+<script>
+  function sync() {
+    const mode = document.documentElement.dataset.notation === 'text' ? 'text' : 'icon';
+    document.querySelectorAll<HTMLButtonElement>('[data-notation-set]').forEach((b) => {
+      b.setAttribute('aria-pressed', String(b.dataset.notationSet === mode));
+    });
+  }
+  document.querySelectorAll<HTMLButtonElement>('[data-notation-set]').forEach((b) => {
+    b.addEventListener('click', () => {
+      const mode = b.dataset.notationSet === 'text' ? 'text' : 'icon';
+      document.documentElement.dataset.notation = mode;
+      try {
+        localStorage.setItem('sf6cv:notation', mode);
+      } catch {}
+      sync();
+    });
+  });
+  sync();
+</script>

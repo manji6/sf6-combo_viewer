@@ -1,0 +1,22 @@
+---
+import { DIRECTION_ANGLE, DIRECTION_GLYPH } from '../../lib/notation/tokens';
+
+interface Props {
+  dir: number;
+}
+const { dir } = Astro.props;
+const angle = DIRECTION_ANGLE[dir];
+const glyph = DIRECTION_GLYPH[dir] ?? '';
+---
+
+{
+  angle === null ? (
+    <span class="nt-neutral" title="ニュートラル" />
+  ) : (
+    <span class="nt-arrow" role="img" aria-label={glyph} style={`transform: rotate(${angle}deg)`}>
+      <svg viewBox="0 0 12 12" aria-hidden="true">
+        <path d="M1 4h5V1l5 5-5 5V8H1z" fill="currentColor" />
+      </svg>
+    </span>
+  )
+}

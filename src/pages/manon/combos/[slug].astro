@@ -1,0 +1,360 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Sequence from '../../../components/notation/Sequence.astro';
+import Stars from '../../../components/Stars.astro';
+import RelationGraph from '../../../components/islands/RelationGraph.tsx';
+import { combos, getRoute, getSituation } from '../../../data';
+import {
+  combosUsingRoute,
+  flattenCombo,
+  outgoingRoutes,
+} from '../../../lib/graph/derive';
+import { neighborhood } from '../../../lib/graph/cytoscape';
+import { driveLabel, ROUTE_KIND_LABEL, superLabel } from '../../../lib/ui';
+
+export function getStaticPaths() {
+  return combos.map((c) => ({ params: { slug: c.slug } }));
+}
+
+const { slug } = Astro.params;
+const combo = combos.find((c) => c.slug === slug)!;
+const flat = flattenCombo(combo);
+const chainRoutes = combo.routeChain.map(getRoute);
+const end = getSituation(combo.endAt);
+const endIsSetplay = outgoingRoutes(end.id).length > 0 && end.kind === 'knockdown';
+const nbh = neighborhood(combo.endAt, 1);
+
+// パーツごとに「このパーツを使う他のコンボ」
+const partUsage = chainRoutes.map((r) => ({
+  route: r,
+  others: combosUsingRoute(r.id).filter((c) => c.slug !== combo.slug),
+}));
+---
+
+<BaseLayout
+  title={combo.name}
+  description={combo.description}
+  crumbs={[{ label: 'マノン', href: '/manon/' }, { label: combo.name }]}
+>
+  <article class="stack" style="--gap:1.6rem">
+    <header class="c-head">
+      <h1>{combo.name}</h1>
+      <p class="sit">{combo.situationLabel}</p>
+      {combo.description && <p class="desc">{combo.description}</p>}
+      <div class="stat-row">
+        <div class="stat">
+          <span class="k">ダメージ</span><span class="v">{flat.totalDamage.toLocaleString()}</span>
+        </div>
+        <div class="stat">
+          <span class="k">難易度</span><span class="v"><Stars value={combo.difficulty} showNumber /></span>
+        </div>
+        <div class="stat">
+          <span class="k">Dゲージ</span><span class="v">{driveLabel(flat.totalDrive)}</span>
+        </div>
+        <div class="stat">
+          <span class="k">SA</span><span class="v">{superLabel(flat.totalSuper, flat.maxSaLevel)}</span>
+        </div>
+        <div class="stat">
+          <span class="k">操作</span><span class="v">{flat.usesModern ? 'クラシック / モダン' : 'クラシック'}</span>
+        </div>
+      </div>
+      <div class="tags">{combo.tags.map((t) => <span class="tag">{t}</span>)}</div>
+    </header>
+
+    <section>
+      <h2>レシピ</h2>
+      <ol class="recipe pixel-box">
+        {
+          flat.steps.map((st) => (
+            <li class={st.boundary ? 'r-step boundary' : 'r-step'} data-route={st.routeId}>
+              {st.boundary && (
+                <div class="part-label">
+                  <span class="pl-kind">{ROUTE_KIND_LABEL[getRoute(st.routeId).kind]}</span>
+                  <a href={`/manon/routes/${st.routeId}/`}>{st.routeLabel}</a>
+                </div>
+              )}
+              <div class="r-body">
+                <span class="r-cancel">{st.cancel ? '›' : ''}</span>
+                <span class="r-cmd"><Sequence command={st.command} /></span>
+                <span class="r-move">{st.move}</span>
+                {st.commandModern && st.commandModern !== st.command && (
+                  <span class="r-modern">
+                    モダン <Sequence command={st.commandModern} />
+                  </span>
+                )}
+                {st.note && <span class="r-note">— {st.note}</span>}
+              </div>
+            </li>
+          ))
+        }
+      </ol>
+    </section>
+
+    <section>
+      <h2>経路（状況ノード）</h2>
+      <ol class="nodepath scroll-x">
+        {
+          flat.nodePath.map((id, i) => {
+            const s = getSituation(id);
+            return (
+              <>
+                {i > 0 && <span class="np-arr">→</span>}
+                <a class="np-node" href={`/manon/situations/${id}/`} data-hub={s.tags.includes('連結ハブ')}>
+                  {s.label}
+                </a>
+              </>
+            );
+          })
+        }
+      </ol>
+      <p class="np-hint">
+        「連結ハブ」ノードを通るパーツは、別のコンボや置き攻けと共有されています。
+      </p>
+    </section>
+
+    {
+      endIsSetplay && (
+        <section class="next-oki pixel-box">
+          <h2>この後の置き攻け</h2>
+          <p>
+            締めの <strong>{end.label}</strong>（{end.advantage}）から
+            <a href={`/manon/situations/${end.id}/`}> 置き攻け {outgoingRoutes(end.id).length} 択の樹形図へ →</a>
+          </p>
+          <ul class="oki-peek">
+            {outgoingRoutes(end.id).map((r) => (
+              <li>
+                <span class="dot" data-risk={r.properties?.risk ?? ''} />
+                <a href={`/manon/routes/${r.id}/`}>{r.label}</a>
+                {r.properties?.useWhen && <span class="uw">— {r.properties.useWhen}</span>}
+              </li>
+            ))}
+          </ul>
+        </section>
+      )
+    }
+
+    <section>
+      <h2>パーツと連結</h2>
+      <ul class="parts">
+        {
+          partUsage.map(({ route, others }) => (
+            <li class="pixel-box part">
+              <div class="p-head">
+                <span class="pl-kind">{ROUTE_KIND_LABEL[route.kind]}</span>
+                <a href={`/manon/routes/${route.id}/`}>{route.label}</a>
+                <span class="p-flow">
+                  {getSituation(route.from).label} → {getSituation(route.to).label}
+                </span>
+              </div>
+              {others.length > 0 ? (
+                <p class="p-others">
+                  このパーツを使う他のコンボ:{' '}
+                  {others.map((c, i) => (
+                    <>
+                      {i > 0 && '、'}
+                      <a href={`/manon/combos/${c.slug}/`}>{c.name}</a>
+                    </>
+                  ))}
+                </p>
+              ) : (
+                <p class="p-others none">このコンボ専用のパーツ</p>
+              )}
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+
+    <section>
+      <h2>周辺の相関</h2>
+      <RelationGraph client:only="preact" elements={nbh} center={combo.endAt} height={360} />
+    </section>
+  </article>
+</BaseLayout>
+
+<style>
+  .c-head h1 {
+    margin: 0 0 0.3rem;
+    color: var(--accent);
+  }
+  .sit {
+    margin: 0;
+    color: var(--text-dim);
+    font-size: 0.9rem;
+  }
+  .desc {
+    margin: 0.6rem 0 0;
+    font-size: 0.92rem;
+  }
+  .stat-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin: 1rem 0 0.6rem;
+  }
+  .stat {
+    border: 1px solid var(--border-strong);
+    background: var(--bg-sunken);
+    padding: 0.35rem 0.7rem;
+    min-width: 6rem;
+  }
+  .stat .k {
+    display: block;
+    font-size: 0.68rem;
+    color: var(--text-faint);
+  }
+  .stat .v {
+    font-family: var(--font-pixel);
+    color: var(--text);
+  }
+  h2 {
+    font-size: 1rem;
+    border-bottom: 2px solid var(--border-strong);
+    padding-bottom: 0.25rem;
+    margin: 0 0 0.8rem;
+  }
+  .recipe {
+    list-style: none;
+    margin: 0;
+    padding: 0.4rem 0.9rem;
+  }
+  .r-step {
+    padding: 0.35rem 0;
+  }
+  .r-step.boundary {
+    border-top: 2px solid var(--border);
+    margin-top: 0.4rem;
+    padding-top: 0.5rem;
+  }
+  .r-step:first-child.boundary {
+    border-top: 0;
+    margin-top: 0;
+  }
+  .part-label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.78rem;
+    margin-bottom: 0.3rem;
+  }
+  .pl-kind {
+    background: var(--accent);
+    color: var(--accent-ink);
+    font-family: var(--font-pixel);
+    padding: 0.05em 0.4em;
+    font-size: 0.7rem;
+  }
+  .r-body {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.5rem;
+  }
+  .r-cancel {
+    color: var(--accent);
+    width: 0.8rem;
+  }
+  .r-cmd {
+    font-size: 1.1rem;
+  }
+  .r-move {
+    color: var(--text-dim);
+    font-size: 0.9rem;
+  }
+  .r-modern {
+    font-size: 0.76rem;
+    color: var(--text-faint);
+    border: 1px solid var(--border);
+    padding: 0 0.35em;
+  }
+  .r-note {
+    font-size: 0.82rem;
+    color: var(--text-faint);
+  }
+  .nodepath {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    white-space: nowrap;
+    padding: 0.3rem 0;
+  }
+  .np-node {
+    border: 1px solid var(--border-strong);
+    padding: 0.2em 0.55em;
+    font-size: 0.82rem;
+    background: var(--bg-raised);
+  }
+  .np-node[data-hub='true'] {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+  .np-arr {
+    color: var(--text-faint);
+  }
+  .np-hint {
+    font-size: 0.76rem;
+    color: var(--text-faint);
+    margin: 0.4rem 0 0;
+  }
+  .next-oki {
+    padding: 0.9rem 1rem;
+    border-color: var(--accent);
+  }
+  .next-oki h2 {
+    border-color: var(--accent);
+  }
+  .oki-peek {
+    list-style: none;
+    padding: 0;
+    margin: 0.6rem 0 0;
+  }
+  .oki-peek li {
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+    padding: 0.25rem 0;
+    font-size: 0.86rem;
+  }
+  .oki-peek .uw {
+    color: var(--text-faint);
+    font-size: 0.8rem;
+  }
+  .dot {
+    width: 9px;
+    height: 9px;
+    flex: none;
+    background: var(--border-strong);
+  }
+  .dot[data-risk='低'] { background: var(--risk-low); }
+  .dot[data-risk='中'] { background: var(--risk-mid); }
+  .dot[data-risk='高'] { background: var(--risk-high); }
+  .parts {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+  .part {
+    padding: 0.7rem 0.9rem;
+  }
+  .p-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .p-flow {
+    font-size: 0.76rem;
+    color: var(--text-faint);
+  }
+  .p-others {
+    margin: 0.4rem 0 0;
+    font-size: 0.83rem;
+    color: var(--text-dim);
+  }
+  .p-others.none {
+    color: var(--text-faint);
+  }
+</style>

@@ -1,0 +1,69 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="このサイトについて" crumbs={[{ label: 'このサイト' }]}>
+  <article class="prose stack" style="--gap:1.2rem">
+    <h1>このサイトについて</h1>
+
+    <p>
+      Street Fighter 6 のコンボと<strong>置き攻けセットプレイ</strong>を「見て」理解するための
+      非公式ファンツールです。現在は <strong>Phase 1（UI/UX プロトタイプ）</strong>で、
+      表示しているマノンのデータはすべてダミー（仮）です。
+    </p>
+
+    <h2>データの考え方</h2>
+    <p>コンボを次の 3 層の有向グラフで表現しています。</p>
+    <ul>
+      <li>
+        <strong>状況ノード</strong> — 「次に何ができるか」を決めるゲーム状況（立ち位置・相手のやられ状態・有利フレームなど）。
+        <em>後続の選択肢が同じ状況は同じノードに統合</em>します。
+      </li>
+      <li>
+        <strong>パーツ</strong> — ある状況から別の状況へ移す技の連なり。再利用単位。
+        置き攻けの各択には「何に強い・弱い・いつ使う」を持たせます。
+      </li>
+      <li>
+        <strong>コンボ</strong> — パーツを連結した「名前付きの経路」。頻出コンボの見せ方。
+      </li>
+    </ul>
+    <p>
+      これにより、「置き攻けの DR2中K から入るパーツ」が「頻出コンボの一部」でもある、
+      といった<strong>連結</strong>を樹形図・相関グラフ・逆引きで追えます。
+    </p>
+
+    <h2>Phase 1 で見てほしいところ</h2>
+    <ul>
+      <li><a href="/manon/situations/kd_after_degage_light_mid/">置き攻けの樹形図</a>（分岐 4 択・各択の特徴・完全再帰）</li>
+      <li><a href="/manon/graph/">相関グラフ</a>（ノードとパーツのつながり・操作性）</li>
+      <li><a href="/guide/notation/">コマンド表記</a>（アイコン ⇄ テキスト切替）</li>
+      <li><a href="/manon/combos/manon-mid-5mp-drc-ranversement/">コンボ詳細</a>（パーツ境界・逆引き）</li>
+      <li><a href="/manon/">一覧のフィルタ・ソート</a>（URL 共有・リロード復元）</li>
+    </ul>
+
+    <h2>クレジット</h2>
+    <p>
+      アイコンは <a href="https://pixelarticons.com/" rel="noopener">Pixelarticons</a>（MIT）を利用予定。
+      Street Fighter は株式会社カプコンの登録商標です。
+    </p>
+  </article>
+</BaseLayout>
+
+<style>
+  .prose h1 {
+    color: var(--accent);
+    margin: 0;
+  }
+  .prose h2 {
+    font-size: 1rem;
+    border-bottom: 2px solid var(--border-strong);
+    padding-bottom: 0.25rem;
+    margin-top: 0.5rem;
+  }
+  .prose ul {
+    padding-left: 1.2rem;
+  }
+  .prose li {
+    padding: 0.15rem 0;
+  }
+</style>

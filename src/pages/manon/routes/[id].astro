@@ -1,0 +1,265 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import StepList from '../../../components/StepList.astro';
+import Stars from '../../../components/Stars.astro';
+import RelationGraph from '../../../components/islands/RelationGraph.tsx';
+import { getRoute, getSituation, routes } from '../../../data';
+import { combosUsingRoute, incomingRoutes, outgoingRoutes } from '../../../lib/graph/derive';
+import { neighborhood } from '../../../lib/graph/cytoscape';
+import { driveLabel, POSITION_LABEL, RISK_VAR, ROUTE_KIND_LABEL, superLabel } from '../../../lib/ui';
+
+export function getStaticPaths() {
+  return routes.map((r) => ({ params: { id: r.id } }));
+}
+
+const { id } = Astro.params;
+const route = getRoute(id!);
+const from = getSituation(route.from);
+const to = getSituation(route.to);
+const usedBy = combosUsingRoute(route.id);
+const alsoFromHere = outgoingRoutes(route.from).filter((r) => r.id !== route.id);
+const alsoIntoTarget = incomingRoutes(route.to).filter((r) => r.id !== route.id);
+const nbh = neighborhood(route.from, 1);
+const p = route.properties;
+---
+
+<BaseLayout
+  title={route.label}
+  crumbs={[{ label: 'マノン', href: '/manon/' }, { label: route.label }]}
+>
+  <article class="stack" style="--gap:1.5rem">
+    <header>
+      <div class="kindrow">
+        <span class="pl-kind">{ROUTE_KIND_LABEL[route.kind]}</span>
+        {route.tags.map((t) => <span class="tag">{t}</span>)}
+      </div>
+      <h1>{route.label}</h1>
+      <p class="flow">
+        <a href={`/manon/situations/${from.id}/`}>{from.label}</a>
+        <span class="arr">→</span>
+        <a href={`/manon/situations/${to.id}/`}>{to.label}</a>
+      </p>
+    </header>
+
+    <section>
+      <h2>手順</h2>
+      <div class="pixel-box pad">
+        <StepList steps={route.steps} showModern />
+      </div>
+      {route.constraints && <p class="constraints">制約: {route.constraints}</p>}
+      {route.notes && <p class="notes">{route.notes}</p>}
+    </section>
+
+    <section>
+      <h2>データ</h2>
+      <table class="spec">
+        <tbody>
+          <tr><th>ダメージ目安</th><td>{route.damage.toLocaleString()}</td></tr>
+          <tr><th>難易度</th><td><Stars value={route.difficulty} showNumber /></td></tr>
+          <tr><th>Dゲージ</th><td>{driveLabel(route.resources.driveCost)}</td></tr>
+          <tr><th>SA</th><td>{superLabel(route.resources.superCost, route.resources.saLevel)}</td></tr>
+          <tr><th>立ち位置</th><td>{POSITION_LABEL[from.position]}</td></tr>
+          <tr><th>操作</th><td>{route.controlType === 'both' ? 'クラシック / モダン' : 'クラシックのみ'}</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    {
+      p && (
+        <section>
+          <h2>択の特徴</h2>
+          <div class="props pixel-box" style={p.risk ? `--risk:${RISK_VAR[p.risk]}` : ''}>
+            {p.risk && <span class="risk-badge">リスク {p.risk}</span>}
+            <dl>
+              {p.useWhen && (
+                <>
+                  <dt>使いどき</dt>
+                  <dd>{p.useWhen}</dd>
+                </>
+              )}
+              {p.strongVs && p.strongVs.length > 0 && (
+                <>
+                  <dt class="good">強い相手・行動</dt>
+                  <dd>{p.strongVs.join(' / ')}</dd>
+                </>
+              )}
+              {p.weakVs && p.weakVs.length > 0 && (
+                <>
+                  <dt class="bad">弱い相手・行動</dt>
+                  <dd>{p.weakVs.join(' / ')}</dd>
+                </>
+              )}
+              {p.onBlock && (
+                <>
+                  <dt>ガードされたら</dt>
+                  <dd>{p.onBlock}</dd>
+                </>
+              )}
+            </dl>
+          </div>
+        </section>
+      )
+    }
+
+    <section>
+      <h2>連結</h2>
+      <div class="link-cols">
+        <div>
+          <h3>このパーツを使うコンボ</h3>
+          {
+            usedBy.length === 0 ? (
+              <p class="empty">なし</p>
+            ) : (
+              <ul>
+                {usedBy.map((c) => (
+                  <li>
+                    <a href={`/manon/combos/${c.slug}/`}>{c.name}</a>
+                  </li>
+                ))}
+              </ul>
+            )
+          }
+        </div>
+        <div>
+          <h3>同じ起点から出る他のパーツ</h3>
+          {
+            alsoFromHere.length === 0 ? (
+              <p class="empty">なし</p>
+            ) : (
+              <ul>
+                {alsoFromHere.map((r) => (
+                  <li>
+                    <a href={`/manon/routes/${r.id}/`}>{r.label}</a>
+                  </li>
+                ))}
+              </ul>
+            )
+          }
+        </div>
+        <div>
+          <h3>同じ着地点へ入る他のパーツ</h3>
+          {
+            alsoIntoTarget.length === 0 ? (
+              <p class="empty">なし</p>
+            ) : (
+              <ul>
+                {alsoIntoTarget.map((r) => (
+                  <li>
+                    <a href={`/manon/routes/${r.id}/`}>{r.label}</a>（{getSituation(r.from).label} から）
+                  </li>
+                ))}
+              </ul>
+            )
+          }
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>周辺の相関</h2>
+      <RelationGraph client:only="preact" elements={nbh} center={route.from} height={340} />
+    </section>
+  </article>
+</BaseLayout>
+
+<style>
+  .kindrow {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.3rem;
+    align-items: center;
+    margin-bottom: 0.4rem;
+  }
+  .pl-kind {
+    background: var(--accent);
+    color: var(--accent-ink);
+    font-family: var(--font-pixel);
+    font-size: 0.72rem;
+    padding: 0.08em 0.5em;
+  }
+  h1 {
+    margin: 0 0 0.4rem;
+    color: var(--accent);
+  }
+  .flow {
+    margin: 0;
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    font-size: 0.9rem;
+  }
+  .flow .arr {
+    color: var(--accent);
+  }
+  h2 {
+    font-size: 1rem;
+    border-bottom: 2px solid var(--border-strong);
+    padding-bottom: 0.25rem;
+    margin: 0 0 0.8rem;
+  }
+  h3 {
+    font-size: 0.85rem;
+    color: var(--text-dim);
+    margin: 0 0 0.4rem;
+  }
+  .pad {
+    padding: 0.5rem 1rem;
+  }
+  .constraints,
+  .notes {
+    margin: 0.6rem 0 0;
+    font-size: 0.85rem;
+    color: var(--text-dim);
+  }
+  .props {
+    padding: 0.9rem 1rem;
+    border-left: 6px solid var(--risk, var(--border-strong));
+    position: relative;
+  }
+  .risk-badge {
+    position: absolute;
+    top: 0.6rem;
+    right: 0.8rem;
+    font-size: 0.72rem;
+    color: var(--risk, var(--text-faint));
+    border: 1px solid currentColor;
+    padding: 0.05em 0.4em;
+  }
+  .props dl {
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    gap: 0.3rem 0.9rem;
+    margin: 0;
+    font-size: 0.9rem;
+  }
+  .props dt {
+    color: var(--text-faint);
+    white-space: nowrap;
+  }
+  .props dt.good {
+    color: var(--risk-low);
+  }
+  .props dt.bad {
+    color: var(--risk-high);
+  }
+  .props dd {
+    margin: 0;
+  }
+  .link-cols {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1rem;
+  }
+  .link-cols ul {
+    margin: 0;
+    padding-left: 1.1rem;
+    font-size: 0.88rem;
+  }
+  .link-cols li {
+    padding: 0.15rem 0;
+  }
+  .empty {
+    color: var(--text-faint);
+    font-size: 0.85rem;
+  }
+</style>

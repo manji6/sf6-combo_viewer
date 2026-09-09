@@ -1,0 +1,174 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ComboExplorer from '../../components/ComboExplorer.astro';
+import { characterById } from '../../data/characters';
+import { combos, situations } from '../../data';
+import { outgoingRoutes } from '../../lib/graph/derive';
+import { POSITION_LABEL } from '../../lib/ui';
+
+const character = characterById.get('manon')!;
+const manonCombos = combos.filter((c) => c.character === 'manon');
+const setplayStarts = situations.filter(
+  (s) => s.tags.includes('置き攻け開始') && outgoingRoutes(s.id).length > 0,
+);
+---
+
+<BaseLayout
+  title={`${character.name} コンボ・セットプレイ`}
+  crumbs={[{ label: character.name }]}
+>
+  <header class="page-head">
+    <h1>{character.name}</h1>
+    <p>{character.tagline}</p>
+  </header>
+
+  <div class="tabs">
+    <input type="radio" name="tab" id="tab-combos" checked />
+    <input type="radio" name="tab" id="tab-setplay" />
+    <div class="tab-bar">
+      <label for="tab-combos">コンボ一覧（{manonCombos.length}）</label>
+      <label for="tab-setplay">セットプレイ（{setplayStarts.length}）</label>
+    </div>
+
+    <section class="tab-panel" data-panel="combos">
+      <ComboExplorer combos={manonCombos} />
+    </section>
+
+    <section class="tab-panel" data-panel="setplay">
+      <p class="hint">
+        締めからの置き攻け起点。各ページで分岐択の樹形図（何に強い・弱い・いつ使う）を確認できます。
+      </p>
+      <ul class="sp-grid">
+        {
+          setplayStarts.map((s) => {
+            const outs = outgoingRoutes(s.id);
+            return (
+              <li class="sp-card pixel-box">
+                <a class="sp-title" href={`/manon/situations/${s.id}/`}>
+                  {s.label}
+                </a>
+                <div class="sp-meta">
+                  <span class="pixel-chip">{POSITION_LABEL[s.position]}</span>
+                  {s.advantage && <span class="pixel-chip">{s.advantage}</span>}
+                  <span class="pixel-chip">{outs.length} 択</span>
+                </div>
+                <ul class="sp-choices">
+                  {outs.map((r) => (
+                    <li>
+                      <span class="dot" data-risk={r.properties?.risk ?? ''} />
+                      {r.label}
+                    </li>
+                  ))}
+                </ul>
+              </li>
+            );
+          })
+        }
+      </ul>
+    </section>
+  </div>
+</BaseLayout>
+
+<style>
+  .page-head {
+    margin-bottom: 1.2rem;
+  }
+  .page-head h1 {
+    margin: 0 0 0.3rem;
+    color: var(--accent);
+  }
+  .page-head p {
+    margin: 0;
+    color: var(--text-dim);
+    font-size: 0.9rem;
+  }
+
+  .tabs > input[type='radio'] {
+    display: none;
+  }
+  .tab-bar {
+    display: flex;
+    gap: 0.4rem;
+    border-bottom: 2px solid var(--border-strong);
+    margin-bottom: 1.2rem;
+  }
+  .tab-bar label {
+    font-family: var(--font-pixel);
+    font-size: 0.85rem;
+    padding: 0.5em 1em;
+    border: 2px solid var(--border-strong);
+    border-bottom: 0;
+    background: var(--bg-sunken);
+    color: var(--text-dim);
+    cursor: pointer;
+    margin-bottom: -2px;
+  }
+  #tab-combos:checked ~ .tab-bar label[for='tab-combos'],
+  #tab-setplay:checked ~ .tab-bar label[for='tab-setplay'] {
+    background: var(--panel);
+    color: var(--accent);
+    border-color: var(--accent);
+  }
+  .tab-panel {
+    display: none;
+  }
+  #tab-combos:checked ~ .tab-panel[data-panel='combos'],
+  #tab-setplay:checked ~ .tab-panel[data-panel='setplay'] {
+    display: block;
+  }
+
+  .hint {
+    font-size: 0.85rem;
+    color: var(--text-faint);
+    margin: 0 0 1rem;
+  }
+  .sp-grid {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 0.9rem;
+  }
+  .sp-card {
+    padding: 0.8rem 0.9rem;
+  }
+  .sp-title {
+    font-family: var(--font-pixel);
+    font-size: 0.95rem;
+  }
+  .sp-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.3rem;
+    margin: 0.5rem 0;
+  }
+  .sp-choices {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    font-size: 0.85rem;
+  }
+  .sp-choices li {
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+    padding: 0.2rem 0;
+    color: var(--text-dim);
+  }
+  .dot {
+    width: 8px;
+    height: 8px;
+    background: var(--border-strong);
+    flex: none;
+  }
+  .dot[data-risk='低'] {
+    background: var(--risk-low);
+  }
+  .dot[data-risk='中'] {
+    background: var(--risk-mid);
+  }
+  .dot[data-risk='高'] {
+    background: var(--risk-high);
+  }
+</style>

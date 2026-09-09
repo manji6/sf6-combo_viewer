@@ -1,0 +1,162 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Sequence from '../../components/notation/Sequence.astro';
+
+const directions = [
+  ['7', '↖ 左上'],
+  ['8', '↑ 上'],
+  ['9', '↗ 右上'],
+  ['4', '← 後ろ'],
+  ['5', '・ ニュートラル'],
+  ['6', '→ 前'],
+  ['1', '↙ 左下'],
+  ['2', '↓ しゃがみ'],
+  ['3', '↘ 右下'],
+];
+
+const buttons = [
+  ['LP', '弱パンチ'],
+  ['MP', '中パンチ'],
+  ['HP', '強パンチ'],
+  ['LK', '弱キック'],
+  ['MK', '中キック'],
+  ['HK', '強キック'],
+  ['PP', 'パンチ2つ（OD）'],
+  ['KK', 'キック2つ（OD）'],
+];
+
+const modifiers = [
+  ['j.HK', 'ジャンプ攻撃（j.）'],
+  ['dl.5HP', 'ディレイ（dl.）'],
+  ['2LP~2LP', '目押しリンク（~）'],
+  ['5MP > 236MP', 'キャンセル（>）'],
+  ['[4]6HK', 'ため（[4]）'],
+  ['DR', 'ドライブラッシュ'],
+  ['DRC', 'キャンセルドライブラッシュ'],
+  ['OD236KK', 'OD（オーバードライブ）必殺技'],
+  ['236236P', 'SA（スーパーアーツ）'],
+];
+
+const examples = [
+  ['236MP', '中ランヴェルセ'],
+  ['214LK', '弱デガジェ'],
+  ['63214P', 'マネージュ・ドレ（コマンド投げ）'],
+  ['4MK~MK', 'アン・オー → 派生中K'],
+  ['5MP > DRC 2MP', '5中P キャンセルドライブラッシュ 2中P'],
+];
+---
+
+<BaseLayout title="表記の見方" crumbs={[{ label: '表記の見方' }]}>
+  <article class="stack" style="--gap:1.8rem">
+    <header>
+      <h1>コマンド表記の見方</h1>
+      <p>
+        このサイトはコマンドを <strong>テンキー表記</strong>（236＝波動コマンド など）で持ち、
+        <strong>アイコン</strong>と<strong>テキスト</strong>の 2 通りで表示します。
+        右上のトグルでいつでも切り替えられます（設定は記憶されます）。
+      </p>
+    </header>
+
+    <section>
+      <h2>方向（テンキー）</h2>
+      <div class="grid dirs">
+        {
+          directions.map(([n, label]) => (
+            <div class="cell">
+              <Sequence command={n} />
+              <span class="lbl">{n} — {label}</span>
+            </div>
+          ))
+        }
+      </div>
+    </section>
+
+    <section>
+      <h2>ボタン</h2>
+      <div class="grid">
+        {
+          buttons.map(([b, label]) => (
+            <div class="cell">
+              <Sequence command={b} />
+              <span class="lbl">{label}</span>
+            </div>
+          ))
+        }
+      </div>
+      <p class="fine">弱＝青 / 中＝黄 / 強＝赤 / OD＝緑 で色分けしています。</p>
+    </section>
+
+    <section>
+      <h2>記号・修飾子</h2>
+      <div class="grid wide">
+        {
+          modifiers.map(([c, label]) => (
+            <div class="cell">
+              <Sequence command={c} />
+              <span class="lbl">{label}</span>
+            </div>
+          ))
+        }
+      </div>
+    </section>
+
+    <section>
+      <h2>マノンの例</h2>
+      <table class="spec">
+        <tbody>
+          {
+            examples.map(([c, label]) => (
+              <tr>
+                <th><Sequence command={c} /></th>
+                <td>{label}</td>
+              </tr>
+            ))
+          }
+        </tbody>
+      </table>
+    </section>
+  </article>
+</BaseLayout>
+
+<style>
+  h1 {
+    color: var(--accent);
+    margin: 0 0 0.5rem;
+  }
+  h2 {
+    font-size: 1rem;
+    border-bottom: 2px solid var(--border-strong);
+    padding-bottom: 0.25rem;
+    margin: 0 0 0.9rem;
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 0.5rem;
+  }
+  .grid.wide {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  }
+  .grid.dirs {
+    grid-template-columns: repeat(3, 1fr);
+    max-width: 360px;
+  }
+  .cell {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    padding: 0.6rem;
+    border: 1px solid var(--border);
+    background: var(--bg-sunken);
+    font-size: 1.1rem;
+  }
+  .cell .lbl {
+    font-size: 0.76rem;
+    color: var(--text-dim);
+    font-family: var(--font-body);
+  }
+  .fine {
+    font-size: 0.8rem;
+    color: var(--text-faint);
+  }
+</style>

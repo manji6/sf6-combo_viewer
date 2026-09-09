@@ -1,0 +1,116 @@
+---
+import type { Combo } from '../data/types';
+import { flattenCombo } from '../lib/graph/derive';
+import { getSituation } from '../data';
+import { driveLabel, POSITION_LABEL, superLabel } from '../lib/ui';
+import Stars from './Stars.astro';
+import Sequence from './notation/Sequence.astro';
+
+interface Props {
+  combo: Combo;
+}
+const { combo } = Astro.props;
+const flat = flattenCombo(combo);
+const start = getSituation(combo.startFrom);
+const end = getSituation(combo.endAt);
+---
+
+<a class="combo-card pixel-box" href={`/manon/combos/${combo.slug}/`}>
+  <div class="head">
+    <h3>{combo.name}</h3>
+    <span class="dmg">{flat.totalDamage.toLocaleString()}<small>dmg</small></span>
+  </div>
+
+  <div class="recipe scroll-x">
+    {
+      flat.steps.map((st, i) => (
+        <>
+          {i > 0 && <span class="join">{st.boundary ? '»' : '›'}</span>}
+          <Sequence command={st.command} />
+        </>
+      ))
+    }
+  </div>
+
+  <div class="meta">
+    <Stars value={combo.difficulty} showNumber />
+    <span class="pixel-chip">{POSITION_LABEL[start.position]}</span>
+    <span class="pixel-chip">{driveLabel(flat.totalDrive)}</span>
+    {flat.totalSuper > 0 && <span class="pixel-chip">{superLabel(flat.totalSuper, flat.maxSaLevel)}</span>}
+    {flat.usesModern && <span class="pixel-chip">モダン可</span>}
+  </div>
+
+  <div class="flow">
+    <span>{start.label}</span><span class="arr">→</span><span>{end.label}</span>
+  </div>
+
+  <div class="tags">
+    {combo.tags.map((t) => <span class="tag">{t}</span>)}
+  </div>
+</a>
+
+<style>
+  .combo-card {
+    display: block;
+    padding: 0.9rem 1rem;
+    color: inherit;
+  }
+  .combo-card:hover {
+    text-decoration: none;
+    border-color: var(--accent);
+  }
+  .head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 0.5rem;
+  }
+  .head h3 {
+    font-size: 0.98rem;
+    margin: 0;
+  }
+  .dmg {
+    font-family: var(--font-pixel);
+    color: var(--accent);
+    white-space: nowrap;
+  }
+  .dmg small {
+    font-size: 0.6em;
+    color: var(--text-faint);
+    margin-left: 0.2em;
+  }
+  .recipe {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.5rem 0;
+    white-space: nowrap;
+  }
+  .join {
+    color: var(--text-faint);
+  }
+  .meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+    align-items: center;
+    margin-top: 0.2rem;
+  }
+  .flow {
+    margin-top: 0.5rem;
+    font-size: 0.78rem;
+    color: var(--text-faint);
+    display: flex;
+    gap: 0.4rem;
+    flex-wrap: wrap;
+  }
+  .flow .arr {
+    color: var(--accent);
+  }
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.3rem;
+    margin-top: 0.5rem;
+  }
+</style>

@@ -1,0 +1,21 @@
+---
+import { stars } from '../lib/ui';
+interface Props {
+  value: number;
+  showNumber?: boolean;
+}
+const { value, showNumber = false } = Astro.props;
+const s = stars(value);
+---
+
+<span class="stars" title={`難易度 ${Math.round(value)}/5`}>
+  <span>{s.on}</span><span class="off">{s.off}</span>{showNumber && <span class="num"> {Math.round(value)}/5</span>}
+</span>
+
+<style>
+  .num {
+    font-family: var(--font-body);
+    font-size: 0.78em;
+    color: var(--text-faint);
+  }
+</style>

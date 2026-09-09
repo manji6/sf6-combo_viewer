@@ -1,0 +1,164 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { characters, combos, situations } from '../data';
+import { validateAll } from '../lib/graph/derive';
+
+// Phase 1: データ整合性をビルドログに出す
+const errors = validateAll();
+if (errors.length) console.warn('[データ検証]\n' + errors.map((e) => ' - ' + e).join('\n'));
+
+const setplayStarts = situations.filter((s) => s.tags.includes('置き攻け開始'));
+---
+
+<BaseLayout title="SF6 コンボビューア">
+  <section class="hero pixel-box">
+    <h1>SF6 コンボ・セットプレイビューア</h1>
+    <p class="lead">
+      Street Fighter 6 のコンボと<strong>置き攻けの分岐択</strong>を、
+      コマンドアイコンと樹形図で「見て」理解するためのツール。
+    </p>
+    <p class="sub">
+      コンボは「状況ノード」と「パーツ（技の連なり）」のグラフとして表現。
+      置き攻けの各択には「何に強い・弱い・いつ使う」を併記し、
+      パーツがどのコンボとつながっているかも追えます。
+    </p>
+    <div class="proto-note">
+      これは <strong>Phase 1 プロトタイプ</strong>です。表示しているマノンのデータはすべて
+      ダミー（仮）で、UI/UX の確認用です。
+    </div>
+  </section>
+
+  <section class="chars">
+    <h2>キャラクター</h2>
+    <div class="char-grid">
+      {
+        characters.map((c) => (
+          <a class="char-card pixel-box" href={`/${c.id}/`}>
+            <span class="cc-name">{c.name}</span>
+            <span class="cc-en">{c.nameEn}</span>
+            <span class="cc-tag">{c.tagline}</span>
+          </a>
+        ))
+      }
+      <div class="char-card pixel-box soon">
+        <span class="cc-name">他キャラ</span>
+        <span class="cc-tag">Phase 2 以降で追加予定</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="quick">
+    <h2>入口</h2>
+    <ul class="quick-list">
+      <li>
+        <a href="/manon/">コンボ一覧・セットプレイ</a> — フィルタ／ソートで探す
+      </li>
+      <li>
+        <a href="/manon/graph/">相関グラフ</a> — 状況とパーツのつながりを俯瞰（{situations.length}ノード・{combos.length}コンボ）
+      </li>
+      <li>
+        <a href="/guide/notation/">表記の見方</a> — アイコン／テキスト表記の凡例
+      </li>
+    </ul>
+  </section>
+
+  <section class="setplay-preview">
+    <h2>置き攻け起点</h2>
+    <ul class="sp-list">
+      {
+        setplayStarts.map((s) => (
+          <li>
+            <a href={`/manon/situations/${s.id}/`}>{s.label}</a>
+            {s.advantage && <span class="adv">{s.advantage}</span>}
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+</BaseLayout>
+
+<style>
+  .hero {
+    padding: 1.4rem 1.6rem;
+  }
+  .hero h1 {
+    margin: 0 0 0.6rem;
+    font-size: clamp(1.2rem, 4vw, 1.8rem);
+    color: var(--accent);
+  }
+  .lead {
+    font-size: 1.05rem;
+    margin: 0 0 0.5rem;
+  }
+  .sub {
+    color: var(--text-dim);
+    font-size: 0.92rem;
+    margin: 0 0 1rem;
+  }
+  .proto-note {
+    border: 2px dashed var(--accent);
+    padding: 0.6rem 0.8rem;
+    font-size: 0.85rem;
+    color: var(--text-dim);
+  }
+  section {
+    margin-top: 2rem;
+  }
+  section h2 {
+    font-size: 1.05rem;
+    border-bottom: 2px solid var(--border-strong);
+    padding-bottom: 0.3rem;
+    margin-bottom: 0.9rem;
+  }
+  .char-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 0.9rem;
+  }
+  .char-card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    padding: 0.9rem 1rem;
+    color: inherit;
+  }
+  .char-card:hover {
+    text-decoration: none;
+    border-color: var(--accent);
+  }
+  .char-card.soon {
+    opacity: 0.5;
+  }
+  .cc-name {
+    font-family: var(--font-pixel);
+    font-size: 1.1rem;
+    color: var(--accent);
+  }
+  .cc-en {
+    font-size: 0.75rem;
+    color: var(--text-faint);
+    letter-spacing: 0.1em;
+  }
+  .cc-tag {
+    font-size: 0.82rem;
+    color: var(--text-dim);
+    margin-top: 0.3rem;
+  }
+  .quick-list,
+  .sp-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .quick-list li,
+  .sp-list li {
+    padding: 0.4rem 0;
+    border-bottom: 1px dashed var(--border);
+  }
+  .sp-list .adv {
+    margin-left: 0.6rem;
+    font-family: var(--font-pixel);
+    font-size: 0.8rem;
+    color: var(--accent);
+  }
+</style>

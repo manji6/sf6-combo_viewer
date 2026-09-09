@@ -1,0 +1,235 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import SetplayTree from '../../../components/SetplayTree.astro';
+import Sequence from '../../../components/notation/Sequence.astro';
+import RelationGraph from '../../../components/islands/RelationGraph.tsx';
+import { getSituation, situations } from '../../../data';
+import {
+  combosThroughSituation,
+  incomingRoutes,
+  outgoingRoutes,
+} from '../../../lib/graph/derive';
+import { buildSetplayTree } from '../../../lib/graph/tree';
+import { neighborhood } from '../../../lib/graph/cytoscape';
+import {
+  OPPONENT_STATE_LABEL,
+  POSITION_LABEL,
+  ROUTE_KIND_LABEL,
+  SITUATION_KIND_LABEL,
+} from '../../../lib/ui';
+
+export function getStaticPaths() {
+  return situations.map((s) => ({ params: { id: s.id } }));
+}
+
+const { id } = Astro.params;
+const situation = getSituation(id!);
+const outs = outgoingRoutes(situation.id);
+const ins = incomingRoutes(situation.id);
+const throughCombos = combosThroughSituation(situation.id);
+const showTree =
+  outs.length > 0 && (situation.kind === 'knockdown' || situation.kind === 'okiStart');
+const tree = showTree ? buildSetplayTree(situation.id, { maxDepth: 4 }) : null;
+const nbh = neighborhood(situation.id, 2);
+---
+
+<BaseLayout
+  title={situation.label}
+  crumbs={[{ label: 'マノン', href: '/manon/' }, { label: situation.label }]}
+>
+  <article class="stack" style="--gap:1.6rem">
+    <header>
+      <h1>{situation.label}</h1>
+      <div class="meta">
+        <span class="pixel-chip">{SITUATION_KIND_LABEL[situation.kind]}</span>
+        <span class="pixel-chip">{POSITION_LABEL[situation.position]}</span>
+        <span class="pixel-chip">{OPPONENT_STATE_LABEL[situation.opponentState]}</span>
+        {situation.advantage && <span class="pixel-chip">{situation.advantage}</span>}
+        {situation.tags.map((t) => <span class="tag">{t}</span>)}
+      </div>
+      {situation.notes && <p class="notes">{situation.notes}</p>}
+    </header>
+
+    {
+      tree && (
+        <section>
+          <h2>置き攻け {outs.length} 択（樹形図）</h2>
+          <p class="lead">
+            各分岐の色帯はリスク（<span class="rl low">低</span> /{' '}
+            <span class="rl mid">中</span> / <span class="rl high">高</span>）。
+            ヒット後・ガード後の展開はネストして確認できます。
+          </p>
+          <SetplayTree node={tree} root />
+        </section>
+      )
+    }
+
+    {
+      !tree && outs.length > 0 && (
+        <section>
+          <h2>ここから出るパーツ（{outs.length}）</h2>
+          <ul class="route-list">
+            {outs.map((r) => (
+              <li class="pixel-box">
+                <a class="rl-title" href={`/manon/routes/${r.id}/`}>
+                  <span class="pl-kind">{ROUTE_KIND_LABEL[r.kind]}</span>
+                  {r.label}
+                </a>
+                <div class="rl-recipe scroll-x">
+                  {r.steps.map((st, i) => (
+                    <>
+                      {i > 0 && <span class="j">›</span>}
+                      <Sequence command={st.command} />
+                    </>
+                  ))}
+                </div>
+                <span class="rl-to">→ {getSituation(r.to).label}</span>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )
+    }
+
+    <section>
+      <h2>ここへ入るパーツ（{ins.length}）</h2>
+      {
+        ins.length === 0 ? (
+          <p class="empty">なし（始動状況）</p>
+        ) : (
+          <ul class="route-list">
+            {ins.map((r) => (
+              <li class="pixel-box">
+                <a class="rl-title" href={`/manon/routes/${r.id}/`}>
+                  <span class="pl-kind">{ROUTE_KIND_LABEL[r.kind]}</span>
+                  {r.label}
+                </a>
+                <div class="rl-recipe scroll-x">
+                  {r.steps.map((st, i) => (
+                    <>
+                      {i > 0 && <span class="j">›</span>}
+                      <Sequence command={st.command} />
+                    </>
+                  ))}
+                </div>
+                <span class="rl-to">{getSituation(r.from).label} →</span>
+              </li>
+            ))}
+          </ul>
+        )
+      }
+    </section>
+
+    {
+      throughCombos.length > 0 && (
+        <section>
+          <h2>この状況を通るコンボ</h2>
+          <ul class="combo-links">
+            {throughCombos.map((c) => (
+              <li>
+                <a href={`/manon/combos/${c.slug}/`}>{c.name}</a>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )
+    }
+
+    <section>
+      <h2>周辺の相関</h2>
+      <RelationGraph client:only="preact" elements={nbh} center={situation.id} height={400} />
+    </section>
+  </article>
+</BaseLayout>
+
+<style>
+  h1 {
+    margin: 0 0 0.5rem;
+    color: var(--accent);
+  }
+  .meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+    align-items: center;
+  }
+  .notes {
+    margin: 0.7rem 0 0;
+    color: var(--text-dim);
+    font-size: 0.92rem;
+  }
+  h2 {
+    font-size: 1rem;
+    border-bottom: 2px solid var(--border-strong);
+    padding-bottom: 0.25rem;
+    margin: 0 0 0.8rem;
+  }
+  .lead {
+    font-size: 0.85rem;
+    color: var(--text-faint);
+    margin: 0 0 1rem;
+  }
+  .rl {
+    font-family: var(--font-pixel);
+  }
+  .rl.low {
+    color: var(--risk-low);
+  }
+  .rl.mid {
+    color: var(--risk-mid);
+  }
+  .rl.high {
+    color: var(--risk-high);
+  }
+  .route-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+  .route-list li {
+    padding: 0.65rem 0.85rem;
+  }
+  .rl-title {
+    font-family: var(--font-pixel);
+    font-size: 0.92rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .pl-kind {
+    background: var(--bg-sunken);
+    border: 1px solid var(--border);
+    color: var(--text-dim);
+    font-size: 0.68rem;
+    padding: 0.05em 0.4em;
+  }
+  .rl-recipe {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    white-space: nowrap;
+    padding: 0.4rem 0 0.2rem;
+    font-size: 1.02rem;
+  }
+  .rl-recipe .j {
+    color: var(--text-faint);
+  }
+  .rl-to {
+    font-size: 0.78rem;
+    color: var(--text-faint);
+  }
+  .combo-links {
+    padding-left: 1.1rem;
+    margin: 0;
+  }
+  .combo-links li {
+    padding: 0.2rem 0;
+  }
+  .empty {
+    color: var(--text-faint);
+    font-size: 0.88rem;
+  }
+</style>

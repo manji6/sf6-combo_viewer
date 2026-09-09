@@ -1,0 +1,69 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import RelationGraph from '../../components/islands/RelationGraph.tsx';
+import { combos, routes, situations } from '../../data';
+import { fullGraph } from '../../lib/graph/cytoscape';
+
+const elements = fullGraph();
+---
+
+<BaseLayout
+  title="相関グラフ"
+  crumbs={[{ label: 'マノン', href: '/manon/' }, { label: '相関グラフ' }]}
+>
+  <header class="head">
+    <h1>相関グラフ</h1>
+    <p>
+      状況ノード（{situations.length}）とパーツ（{routes.length}）のつながり。
+      同じ状況ノードを複数のパーツが共有していることで、コンボと置き攻けが連結されます。
+      コンボ数 {combos.length}。
+    </p>
+  </header>
+
+  <RelationGraph client:only="preact" elements={elements} height={620} />
+
+  <section class="legend-note">
+    <h2>読み方</h2>
+    <ul>
+      <li>丸 = 状況ノード（ニュートラル・ヒット・浮き・ダウンなど）。色は種類。</li>
+      <li>矢印 = パーツ（技の連なり）。色は役割（始動・中継・置き攻け・締め）。</li>
+      <li>
+        <strong>「4強P → 中ランヴェルセ が繋がる浮き」</strong>ノードに注目。
+        置き攻けの DR2中K と、頻出コンボの 5中P DRC 2中P が
+        <em>どちらもここへ入り</em>、同じ締めパーツを共有しています。
+      </li>
+      <li>クリックで各詳細ページへ。ホイールで拡大縮小、ドラッグで移動。</li>
+    </ul>
+  </section>
+</BaseLayout>
+
+<style>
+  .head {
+    margin-bottom: 1rem;
+  }
+  .head h1 {
+    margin: 0 0 0.3rem;
+    color: var(--accent);
+  }
+  .head p {
+    margin: 0;
+    font-size: 0.9rem;
+    color: var(--text-dim);
+  }
+  .legend-note {
+    margin-top: 1.5rem;
+  }
+  .legend-note h2 {
+    font-size: 1rem;
+    border-bottom: 2px solid var(--border-strong);
+    padding-bottom: 0.25rem;
+  }
+  .legend-note ul {
+    font-size: 0.88rem;
+    color: var(--text-dim);
+    padding-left: 1.1rem;
+  }
+  .legend-note li {
+    padding: 0.2rem 0;
+  }
+</style>

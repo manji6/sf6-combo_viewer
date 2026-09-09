@@ -1,0 +1,170 @@
+---
+import '../styles/global.css';
+import NotationToggle from '../components/NotationToggle.astro';
+import ThemeToggle from '../components/ThemeToggle.astro';
+
+interface Props {
+  title: string;
+  description?: string;
+  /** パンくず: [{ label, href? }] */
+  crumbs?: { label: string; href?: string }[];
+}
+const { title, description, crumbs = [] } = Astro.props;
+const fullTitle = title === 'SF6 コンボビューア' ? title : `${title} — SF6 コンボビューア`;
+const desc =
+  description ??
+  'Street Fighter 6 のコンボと置き攻けセットプレイを、樹形図とコマンドアイコンで見られるビューア。';
+---
+
+<!doctype html>
+<html lang="ja" data-notation="icon">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{fullTitle}</title>
+    <meta name="description" content={desc} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={desc} />
+    <meta property="og:type" content="website" />
+    <link
+      rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=DotGothic16&family=Silkscreen:wght@400;700&display=swap"
+    />
+    <script is:inline>
+      (function () {
+        try {
+          var t = localStorage.getItem('sf6cv:theme');
+          if (!t) t = matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+          document.documentElement.dataset.theme = t;
+          var n = localStorage.getItem('sf6cv:notation');
+          document.documentElement.dataset.notation = n === 'text' ? 'text' : 'icon';
+        } catch (e) {}
+      })();
+    </script>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="wrap header-inner">
+        <a href="/" class="brand">SF6 コンボビューア</a>
+        <nav class="main-nav">
+          <a href="/manon/">マノン</a>
+          <a href="/manon/graph/">相関グラフ</a>
+          <a href="/guide/notation/">表記の見方</a>
+          <a href="/about/">このサイト</a>
+        </nav>
+        <div class="header-tools">
+          <NotationToggle />
+          <ThemeToggle />
+        </div>
+      </div>
+    </header>
+
+    {
+      crumbs.length > 0 && (
+        <nav class="wrap crumbs" aria-label="パンくず">
+          <a href="/">ホーム</a>
+          {crumbs.map((c) => (
+            <>
+              <span class="sep">/</span>
+              {c.href ? <a href={c.href}>{c.label}</a> : <span aria-current="page">{c.label}</span>}
+            </>
+          ))}
+        </nav>
+      )
+    }
+
+    <main class="wrap site-main">
+      <slot />
+    </main>
+
+    <footer class="site-footer">
+      <div class="wrap">
+        <p>
+          SF6 コンボ・セットプレイビューア — <strong>Phase 1 プロトタイプ</strong>（表示データはすべてダミーです）
+        </p>
+        <p class="fine">
+          Street Fighter は株式会社カプコンの登録商標です。本サイトは非公式のファンツールです。
+        </p>
+      </div>
+    </footer>
+
+    <style>
+      .site-header {
+        border-bottom: 2px solid var(--border-strong);
+        background: var(--bg-raised);
+        position: sticky;
+        top: 0;
+        z-index: 20;
+      }
+      .header-inner {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        flex-wrap: wrap;
+        padding-top: 0.6rem;
+        padding-bottom: 0.6rem;
+      }
+      .brand {
+        font-family: var(--font-pixel);
+        font-size: 1rem;
+        color: var(--accent);
+        white-space: nowrap;
+      }
+      .brand:hover {
+        text-decoration: none;
+      }
+      .main-nav {
+        display: flex;
+        gap: 0.9rem;
+        flex-wrap: wrap;
+        font-size: 0.9rem;
+        margin-right: auto;
+      }
+      .main-nav a {
+        color: var(--text-dim);
+      }
+      .main-nav a:hover {
+        color: var(--text);
+      }
+      .header-tools {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+      .crumbs {
+        padding-top: 0.8rem;
+        font-size: 0.8rem;
+        color: var(--text-faint);
+      }
+      .crumbs .sep {
+        margin: 0 0.4em;
+        color: var(--border-strong);
+      }
+      .crumbs a {
+        color: var(--text-dim);
+      }
+      .site-main {
+        padding-top: 1.5rem;
+        padding-bottom: 4rem;
+        min-height: 60vh;
+      }
+      .site-footer {
+        border-top: 2px solid var(--border-strong);
+        background: var(--bg-sunken);
+        padding: 1.5rem 0;
+        font-size: 0.8rem;
+        color: var(--text-faint);
+      }
+      .site-footer .fine {
+        margin-top: 0.3rem;
+        font-size: 0.72rem;
+      }
+    </style>
+  </body>
+</html>

@@ -1,0 +1,290 @@
+---
+import type { Combo } from '../data/types';
+import { getSituation } from '../data';
+import { flattenCombo } from '../lib/graph/derive';
+import { POSITION_LABEL, SITUATION_KIND_LABEL } from '../lib/ui';
+import ComboCard from './ComboCard.astro';
+
+interface Props {
+  combos: Combo[];
+}
+const { combos } = Astro.props;
+
+const enriched = combos.map((combo) => {
+  const flat = flattenCombo(combo);
+  const start = getSituation(combo.startFrom);
+  return { combo, flat, start };
+});
+
+const positions = [...new Set(enriched.map((e) => e.start.position))];
+const startKinds = [...new Set(enriched.map((e) => e.start.kind))];
+const allTags = [...new Set(enriched.flatMap((e) => e.combo.tags))].sort();
+
+function driveBucket(n: number) {
+  if (n <= 0) return '0';
+  if (n <= 2) return '1-2';
+  return '3+';
+}
+---
+
+<div class="explorer" data-explorer>
+  <form class="filters pixel-box" data-filters>
+    <div class="fgroup">
+      <span class="flabel">立ち位置</span>
+      {
+        positions.map((p) => (
+          <label class="chip">
+            <input type="checkbox" name="pos" value={p} />
+            {POSITION_LABEL[p]}
+          </label>
+        ))
+      }
+    </div>
+
+    <div class="fgroup">
+      <span class="flabel">始動</span>
+      {
+        startKinds.map((k) => (
+          <label class="chip">
+            <input type="checkbox" name="kind" value={k} />
+            {SITUATION_KIND_LABEL[k]}
+          </label>
+        ))
+      }
+    </div>
+
+    <div class="fgroup">
+      <span class="flabel">Dゲージ</span>
+      <label class="chip"><input type="checkbox" name="drive" value="0" />ノーゲージ</label>
+      <label class="chip"><input type="checkbox" name="drive" value="1-2" />1〜2</label>
+      <label class="chip"><input type="checkbox" name="drive" value="3+" />3以上</label>
+    </div>
+
+    <div class="fgroup">
+      <span class="flabel">SA</span>
+      <label class="chip"><input type="checkbox" name="sa" value="yes" />使用</label>
+      <label class="chip"><input type="checkbox" name="sa" value="no" />不使用</label>
+    </div>
+
+    <div class="fgroup">
+      <span class="flabel">操作</span>
+      <label class="chip"><input type="checkbox" name="modern" value="yes" />モダン可</label>
+    </div>
+
+    <div class="fgroup tags">
+      <span class="flabel">タグ</span>
+      {
+        allTags.map((t) => (
+          <label class="chip">
+            <input type="checkbox" name="tag" value={t} />
+            {t}
+          </label>
+        ))
+      }
+    </div>
+
+    <div class="fgroup sortrow">
+      <span class="flabel">並べ替え</span>
+      <select name="sort" data-sort>
+        <option value="damage">ダメージが高い順</option>
+        <option value="diff-asc">難易度が低い順</option>
+        <option value="diff-desc">難易度が高い順</option>
+        <option value="name">名前順</option>
+      </select>
+      <button type="button" class="btn reset" data-reset>クリア</button>
+    </div>
+  </form>
+
+  <p class="count" data-count></p>
+
+  <div class="grid" data-grid>
+    {
+      enriched.map(({ combo, flat, start }) => (
+        <div
+          class="grid-item"
+          data-item
+          data-pos={start.position}
+          data-kind={start.kind}
+          data-drive={driveBucket(flat.totalDrive)}
+          data-sa={flat.totalSuper > 0 ? 'yes' : 'no'}
+          data-modern={flat.usesModern ? 'yes' : 'no'}
+          data-tags={combo.tags.join('|')}
+          data-damage={flat.totalDamage}
+          data-diff={combo.difficulty}
+          data-name={combo.name}
+        >
+          <ComboCard combo={combo} />
+        </div>
+      ))
+    }
+  </div>
+  <p class="empty" data-empty hidden>条件に一致するコンボがありません。</p>
+</div>
+
+<style>
+  .filters {
+    padding: 0.8rem 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+  .fgroup {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.4rem;
+  }
+  .flabel {
+    font-family: var(--font-pixel);
+    font-size: 0.78rem;
+    color: var(--text-faint);
+    width: 5.5em;
+    flex: none;
+  }
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3em;
+    font-size: 0.8rem;
+    padding: 0.15em 0.55em;
+    border: 1px solid var(--border-strong);
+    background: var(--bg-raised);
+    cursor: pointer;
+    user-select: none;
+  }
+  .chip:has(:checked) {
+    background: var(--accent);
+    color: var(--accent-ink);
+    border-color: var(--accent);
+  }
+  .chip input {
+    accent-color: var(--accent-ink);
+    margin: 0;
+  }
+  .sortrow select {
+    font-family: var(--font-body);
+    padding: 0.25em 0.5em;
+    background: var(--bg-raised);
+    color: var(--text);
+    border: 1px solid var(--border-strong);
+  }
+  .reset {
+    padding: 0.2em 0.7em;
+    font-size: 0.78rem;
+    box-shadow: none;
+  }
+  .count {
+    font-size: 0.8rem;
+    color: var(--text-faint);
+    margin: 0.8rem 0 0.4rem;
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 0.9rem;
+  }
+  .grid-item.hidden {
+    display: none;
+  }
+  .empty {
+    padding: 2rem;
+    text-align: center;
+    color: var(--text-faint);
+  }
+</style>
+
+<script>
+  type ItemEl = HTMLElement;
+
+  document.querySelectorAll<HTMLElement>('[data-explorer]').forEach((root) => {
+    const form = root.querySelector<HTMLFormElement>('[data-filters]')!;
+    const grid = root.querySelector<HTMLElement>('[data-grid]')!;
+    const items = [...root.querySelectorAll<ItemEl>('[data-item]')];
+    const countEl = root.querySelector<HTMLElement>('[data-count]')!;
+    const emptyEl = root.querySelector<HTMLElement>('[data-empty]')!;
+    const sortEl = form.querySelector<HTMLSelectElement>('[data-sort]')!;
+    const GROUPS = ['pos', 'kind', 'drive', 'sa', 'modern', 'tag'] as const;
+
+    function readURL() {
+      const q = new URLSearchParams(location.search);
+      GROUPS.forEach((g) => {
+        const vals = (q.get(g) ?? '').split(',').filter(Boolean);
+        form
+          .querySelectorAll<HTMLInputElement>(`input[name="${g}"]`)
+          .forEach((i) => (i.checked = vals.includes(i.value)));
+      });
+      if (q.get('sort')) sortEl.value = q.get('sort')!;
+    }
+
+    function writeURL() {
+      const q = new URLSearchParams();
+      GROUPS.forEach((g) => {
+        const vals = [
+          ...form.querySelectorAll<HTMLInputElement>(`input[name="${g}"]:checked`),
+        ].map((i) => i.value);
+        if (vals.length) q.set(g, vals.join(','));
+      });
+      if (sortEl.value !== 'damage') q.set('sort', sortEl.value);
+      const s = q.toString();
+      history.replaceState(null, '', s ? `?${s}` : location.pathname);
+    }
+
+    function selected(group: string): string[] {
+      return [
+        ...form.querySelectorAll<HTMLInputElement>(`input[name="${group}"]:checked`),
+      ].map((i) => i.value);
+    }
+
+    function match(it: ItemEl): boolean {
+      const pos = selected('pos');
+      const kind = selected('kind');
+      const drive = selected('drive');
+      const sa = selected('sa');
+      const modern = selected('modern');
+      const tags = selected('tag');
+      if (pos.length && !pos.includes(it.dataset.pos!)) return false;
+      if (kind.length && !kind.includes(it.dataset.kind!)) return false;
+      if (drive.length && !drive.includes(it.dataset.drive!)) return false;
+      if (sa.length && !sa.includes(it.dataset.sa!)) return false;
+      if (modern.length && it.dataset.modern !== 'yes') return false;
+      if (tags.length) {
+        const own = (it.dataset.tags ?? '').split('|');
+        if (!tags.every((t) => own.includes(t))) return false;
+      }
+      return true;
+    }
+
+    function apply() {
+      const sort = sortEl.value;
+      const sorted = [...items].sort((a, b) => {
+        if (sort === 'damage') return +b.dataset.damage! - +a.dataset.damage!;
+        if (sort === 'diff-asc') return +a.dataset.diff! - +b.dataset.diff!;
+        if (sort === 'diff-desc') return +b.dataset.diff! - +a.dataset.diff!;
+        return a.dataset.name!.localeCompare(b.dataset.name!, 'ja');
+      });
+      let visible = 0;
+      sorted.forEach((it) => {
+        const ok = match(it);
+        it.classList.toggle('hidden', !ok);
+        if (ok) visible++;
+        grid.appendChild(it);
+      });
+      countEl.textContent = `${visible} / ${items.length} 件`;
+      emptyEl.hidden = visible > 0;
+      writeURL();
+    }
+
+    form.addEventListener('change', apply);
+    root.querySelector('[data-reset]')?.addEventListener('click', () => {
+      form.reset();
+      apply();
+    });
+    window.addEventListener('popstate', () => {
+      readURL();
+      apply();
+    });
+
+    readURL();
+    apply();
+  });
+</script>

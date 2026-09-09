@@ -1,0 +1,82 @@
+---
+import type { Step } from '../data/types';
+import Sequence from './notation/Sequence.astro';
+
+interface Props {
+  steps: Step[];
+  /** モダンのコマンドも併記する */
+  showModern?: boolean;
+  /** 各手にパーツ名の帯を出す場合の関数 */
+}
+const { steps, showModern = false } = Astro.props;
+---
+
+<ol class="steps">
+  {
+    steps.map((st) => (
+      <li class="step">
+        <span class="idx">{st.cancel ? '›' : ''}</span>
+        <span class="body">
+          <span class="cmd">
+            <Sequence command={st.command} />
+          </span>
+          <span class="move">{st.move}</span>
+          {showModern && st.commandModern && st.commandModern !== st.command && (
+            <span class="modern">
+              モダン: <Sequence command={st.commandModern} />
+            </span>
+          )}
+          {st.note && <span class="note">— {st.note}</span>}
+        </span>
+      </li>
+    ))
+  }
+</ol>
+
+<style>
+  .steps {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    counter-reset: step;
+  }
+  .step {
+    display: flex;
+    gap: 0.5rem;
+    padding: 0.45rem 0;
+    border-bottom: 1px dashed var(--border);
+  }
+  .step:last-child {
+    border-bottom: 0;
+  }
+  .idx {
+    flex: none;
+    width: 1rem;
+    text-align: center;
+    color: var(--accent);
+    font-family: var(--font-pixel);
+  }
+  .body {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.5rem;
+  }
+  .cmd {
+    font-size: 1.05rem;
+  }
+  .move {
+    color: var(--text-dim);
+    font-size: 0.9rem;
+  }
+  .modern {
+    font-size: 0.78rem;
+    color: var(--text-faint);
+    border: 1px solid var(--border);
+    padding: 0 0.35em;
+  }
+  .note {
+    font-size: 0.82rem;
+    color: var(--text-faint);
+  }
+</style>

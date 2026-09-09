@@ -1,0 +1,33 @@
+---
+// テーマトグル（ダーク ⇄ ライト）
+---
+
+<button type="button" class="btn theme-toggle" aria-label="テーマ切り替え">
+  <span class="dark-only">🌙</span><span class="light-only">☀️</span>
+</button>
+
+<style>
+  .theme-toggle {
+    padding: 0.3em 0.6em;
+    box-shadow: none;
+  }
+  .light-only {
+    display: none;
+  }
+  :root[data-theme='light'] .light-only {
+    display: inline;
+  }
+  :root[data-theme='light'] .dark-only {
+    display: none;
+  }
+</style>
+
+<script>
+  document.querySelector<HTMLButtonElement>('.theme-toggle')?.addEventListener('click', () => {
+    const next = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';
+    document.documentElement.dataset.theme = next;
+    try {
+      localStorage.setItem('sf6cv:theme', next);
+    } catch {}
+  });
+</script>

@@ -1,0 +1,69 @@
+---
+import { parseCommand, tokensToPlain, tokensToText } from '../../lib/notation/parse';
+import Arrow from './Arrow.astro';
+
+interface Props {
+  /** numpad 正準表記 */
+  command: string;
+  /** インライン表示（既定 true） */
+  class?: string;
+}
+const { command, class: className = '' } = Astro.props;
+const tokens = parseCommand(command);
+const text = tokensToText(tokens);
+const plain = tokensToPlain(tokens);
+---
+
+<span class={`nt ${className}`.trim()}>
+  {/* アイコン表記 */}
+  <span class="nt-seq nt-icon" aria-label={plain}>
+    {
+      tokens.map((t) => {
+        if (t.kind === 'directions') {
+          return (
+            <span class="nt-dirs">
+              {t.dirs.map((d) => (
+                <Arrow dir={d} />
+              ))}
+            </span>
+          );
+        }
+        if (t.kind === 'button') {
+          const s = t.buttons.length === 2 ? 'OD' : t.od ? 'OD' : t.strength;
+          return (
+            <span class="nt-btn" data-s={s}>
+              {t.text.replace(/^OD/, '')}
+            </span>
+          );
+        }
+        if (t.kind === 'meta') {
+          return <span class="nt-meta">{t.text}</span>;
+        }
+        if (t.kind === 'modifier') {
+          if (t.type === 'cancel') return <span class="nt-mod"> › </span>;
+          if (t.type === 'then') return <span class="nt-mod"> </span>;
+          if (t.type === 'link') return <span class="nt-mod"> ~ </span>;
+          return <span class="nt-mod">{t.text}</span>;
+        }
+        if (t.kind === 'note') {
+          return <span class="nt-note">（{t.text}）</span>;
+        }
+        return <span class="nt-mod">{t.text}</span>;
+      })
+    }
+  </span>
+
+  {/* テキスト表記 */}
+  <span class="nt-text">{text}</span>
+</span>
+
+<style>
+  .nt {
+    display: inline;
+  }
+  .nt-dirs {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.05em;
+  }
+</style>

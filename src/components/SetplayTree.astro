@@ -1,0 +1,251 @@
+---
+import type { TreeNode } from '../lib/graph/tree';
+import { RISK_VAR, ROUTE_KIND_LABEL } from '../lib/ui';
+import Sequence from './notation/Sequence.astro';
+import Stars from './Stars.astro';
+import Self from './SetplayTree.astro';
+
+interface Props {
+  node: TreeNode;
+  root?: boolean;
+}
+const { node, root = false } = Astro.props;
+---
+
+{
+  root && (
+    <div class="tree-root pixel-box">
+      <span class="tag">置き攻け起点</span>
+      <strong>{node.situation.label}</strong>
+      {node.situation.advantage && <span class="adv">{node.situation.advantage}</span>}
+    </div>
+  )
+}
+
+{
+  node.children.length > 0 && (
+    <ul class="branches">
+      {node.children.map((child) => {
+        const r = child.viaRoute!;
+        const risk = r.properties?.risk;
+        return (
+          <li class="branch">
+            <div class="branch-card pixel-box" style={risk ? `--risk:${RISK_VAR[risk]}` : ''}>
+              <div class="bc-head">
+                <span class="kind">{ROUTE_KIND_LABEL[r.kind]}</span>
+                <a href={`/manon/routes/${r.id}/`} class="bc-title">
+                  {r.label}
+                </a>
+                {risk && <span class="risk">リスク{risk}</span>}
+              </div>
+
+              <div class="bc-recipe scroll-x">
+                {r.steps.map((st, i) => (
+                  <>
+                    {i > 0 && <span class="j">›</span>}
+                    <Sequence command={st.command} />
+                  </>
+                ))}
+              </div>
+
+              {r.properties && (
+                <dl class="props">
+                  {r.properties.useWhen && (
+                    <>
+                      <dt>使いどき</dt>
+                      <dd>{r.properties.useWhen}</dd>
+                    </>
+                  )}
+                  {r.properties.strongVs && r.properties.strongVs.length > 0 && (
+                    <>
+                      <dt class="s-good">強い</dt>
+                      <dd>{r.properties.strongVs.join(' / ')}</dd>
+                    </>
+                  )}
+                  {r.properties.weakVs && r.properties.weakVs.length > 0 && (
+                    <>
+                      <dt class="s-bad">弱い</dt>
+                      <dd>{r.properties.weakVs.join(' / ')}</dd>
+                    </>
+                  )}
+                  {r.properties.onBlock && (
+                    <>
+                      <dt>ガード時</dt>
+                      <dd>{r.properties.onBlock}</dd>
+                    </>
+                  )}
+                </dl>
+              )}
+
+              <div class="bc-foot">
+                <Stars value={r.difficulty} />
+                <span class="to">
+                  → <a href={`/manon/situations/${child.situation.id}/`}>{child.situation.label}</a>
+                </span>
+              </div>
+            </div>
+
+            {child.cycle && (
+              <p class="cycle">
+                ↩ <a href={`/manon/situations/${child.situation.id}/`}>{child.situation.label}</a>{' '}
+                に戻る（ループ）
+              </p>
+            )}
+
+            {child.repeated && (
+              <p class="cycle">
+                ⇢ この後の展開は{' '}
+                <a href={`/manon/situations/${child.situation.id}/`}>{child.situation.label}</a>{' '}
+                と同じ
+              </p>
+            )}
+
+            {child.truncated && (
+              <p class="more">
+                <a href={`/manon/situations/${child.situation.id}/`}>この先の置き攻けを見る →</a>
+              </p>
+            )}
+
+            {!child.cycle && !child.truncated && !child.repeated && child.children.length > 0 && (
+              <details class="deeper" open={child.depth <= 1}>
+                <summary>この後の展開（{child.children.length}）</summary>
+                <div class="deeper-body">
+                  <Self node={child} />
+                </div>
+              </details>
+            )}
+          </li>
+        );
+      })}
+    </ul>
+  )
+}
+
+<style>
+  .tree-root {
+    padding: 0.7rem 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+    border-color: var(--accent);
+  }
+  .tree-root .adv {
+    color: var(--accent);
+    font-family: var(--font-pixel);
+    font-size: 0.85rem;
+  }
+  .branches {
+    list-style: none;
+    margin: 0;
+    padding: 0 0 0 1rem;
+    border-left: 2px dashed var(--border-strong);
+  }
+  .branch {
+    margin-top: 1rem;
+    position: relative;
+  }
+  .branch::before {
+    content: '';
+    position: absolute;
+    left: -1rem;
+    top: 1.4rem;
+    width: 0.9rem;
+    height: 2px;
+    background: var(--border-strong);
+  }
+  .branch-card {
+    padding: 0.7rem 0.85rem;
+    border-left-width: 6px;
+    border-left-color: var(--risk, var(--border-strong));
+  }
+  .bc-head {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+  .bc-head .kind {
+    font-size: 0.7rem;
+    background: var(--bg-sunken);
+    border: 1px solid var(--border);
+    padding: 0.05em 0.4em;
+    color: var(--text-dim);
+  }
+  .bc-title {
+    font-family: var(--font-pixel);
+    font-size: 0.95rem;
+    color: inherit;
+  }
+  .bc-head .risk {
+    margin-left: auto;
+    font-size: 0.72rem;
+    color: var(--risk, var(--text-faint));
+    border: 1px solid currentColor;
+    padding: 0.05em 0.4em;
+  }
+  .bc-recipe {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    white-space: nowrap;
+    padding: 0.5rem 0;
+    font-size: 1.02rem;
+  }
+  .bc-recipe .j {
+    color: var(--text-faint);
+  }
+  .props {
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    gap: 0.15rem 0.7rem;
+    margin: 0.3rem 0 0;
+    font-size: 0.82rem;
+  }
+  .props dt {
+    color: var(--text-faint);
+    white-space: nowrap;
+  }
+  .props dt.s-good {
+    color: var(--risk-low);
+  }
+  .props dt.s-bad {
+    color: var(--risk-high);
+  }
+  .props dd {
+    margin: 0;
+    color: var(--text-dim);
+  }
+  .bc-foot {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+    flex-wrap: wrap;
+  }
+  .bc-foot .to {
+    font-size: 0.82rem;
+    color: var(--text-faint);
+  }
+  .cycle,
+  .more {
+    margin: 0.4rem 0 0;
+    font-size: 0.82rem;
+  }
+  .cycle {
+    color: var(--text-faint);
+  }
+  .deeper {
+    margin-top: 0.5rem;
+  }
+  .deeper > summary {
+    cursor: pointer;
+    font-size: 0.8rem;
+    color: var(--text-dim);
+    font-family: var(--font-pixel);
+  }
+  .deeper-body {
+    margin-top: 0.3rem;
+  }
+</style>
