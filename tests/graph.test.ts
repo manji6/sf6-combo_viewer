@@ -1,4 +1,8 @@
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
+
+// src/content は実データ専用（現状ほぼ空）。テストは tests/fixtures の旧ダミーで回す。
+vi.mock('../src/data', () => import('./fixtures/data'));
+
 import { combos, getCombo } from '../src/data';
 import {
   comboStarterMove,

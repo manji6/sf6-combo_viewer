@@ -1,4 +1,7 @@
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
+
+vi.mock('../src/data', () => import('./fixtures/data'));
+
 import { stepModernCommand } from '../src/data';
 import { frameAdvLabel, stepActionLabel, wakeupSummary } from '../src/lib/ui';
 

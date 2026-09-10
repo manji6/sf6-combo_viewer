@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { validateAll } from '../src/lib/graph/derive';
 import type { Combo, Move, Route, Situation } from '../src/data/types';
+import * as fixtures from './fixtures/data';
 
 // 最小の正常データセット。個別のテストで一部を壊して検証を確認する。
 function baseData(): {
@@ -63,9 +64,16 @@ function baseData(): {
   return { situations, routes, combos, moves };
 }
 
-describe('validateAll（本番ダミーデータ）', () => {
-  it('現行のダミーデータは検証エラーなし', () => {
-    expect(validateAll()).toEqual([]);
+describe('validateAll（フィクスチャの旧ダミーデータ）', () => {
+  it('フィクスチャは検証エラーなし', () => {
+    expect(
+      validateAll({
+        situations: fixtures.situations,
+        routes: fixtures.routes,
+        combos: fixtures.combos,
+        moves: fixtures.moves,
+      }),
+    ).toEqual([]);
   });
 });
 

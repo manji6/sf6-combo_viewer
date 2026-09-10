@@ -67,7 +67,13 @@ const setplayStarts = situations.filter(
         <strong>コンボ</strong>＝始動技から始まる伸ばし方。相手の状況を問わず「この技が当たったら
         どこまで伸びるか」。フィルタ／ソートで探せます。
       </p>
-      <ComboExplorer combos={manonCombos} />
+      {
+        manonCombos.length === 0 ? (
+          <p class="empty">まだ登録がありません（実データ投入中）。</p>
+        ) : (
+          <ComboExplorer combos={manonCombos} />
+        )
+      }
     </section>
 
     <section
@@ -82,6 +88,7 @@ const setplayStarts = situations.filter(
         <strong>セットプレイ</strong>＝特定の状況から始まる読み合い（○○締め後のダウン、△△をジャスト
         パリィした後 など）。各起点で分岐択とその特徴・初回行動後の有利フレームを確認できます。
       </p>
+      {setplayStarts.length === 0 && <p class="empty">まだ登録がありません（実データ投入中）。</p>}
       <ul class="sp-grid">
         {
           setplayStarts.map((s) => {
@@ -223,6 +230,11 @@ const setplayStarts = situations.filter(
     font-size: 0.85rem;
     color: var(--text-faint);
     margin: 0 0 1rem;
+  }
+  .empty {
+    padding: 2rem;
+    text-align: center;
+    color: var(--text-faint);
   }
   .sp-grid {
     list-style: none;
