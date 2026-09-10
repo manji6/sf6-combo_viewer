@@ -1,0 +1,25 @@
+{
+  "character": "manon",
+  "verifiedVersion": "Year3（公式フレームデータ参照。パッチ版数未確認）",
+  "key": "manon-degage-od",
+  "name": "OD デガジェ",
+  "category": "special",
+  "inputClassic": "214KK",
+  "inputModern": null,
+  "startup": 22,
+  "active": "22-24",
+  "recovery": "22",
+  "onHit": "+6",
+  "onBlock": "-3",
+  "cancel": null,
+  "damage": 800,
+  "comboScaling": "始動補正20%",
+  "driveGainHit": 0,
+  "driveLossBlock": -4000,
+  "driveLossPunishCounter": -5000,
+  "superGain": 800,
+  "attribute": [
+    "中"
+  ],
+  "notes": "11-24F 足元無敵・投げ無敵、9-21F 空中判定。空中ヒット時床バウンドでコンボが伸びる。モダンの OD 派生入力は要検証。"
+}

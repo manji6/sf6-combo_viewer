@@ -1,0 +1,25 @@
+{
+  "character": "manon",
+  "verifiedVersion": "Year3（公式フレームデータ参照。パッチ版数未確認）",
+  "key": "manon-sa3",
+  "name": "SA3 パ・ド・ドゥ",
+  "category": "super",
+  "inputClassic": "236236P",
+  "inputModern": null,
+  "startup": 7,
+  "active": "7-8",
+  "recovery": "72",
+  "onHit": "D",
+  "onBlock": null,
+  "cancel": null,
+  "damage": 4000,
+  "comboScaling": "最低保障50%。立ち強P・ロン・ポワンからのキャンセル時のみ即時補正15%",
+  "driveGainHit": 0,
+  "driveLossBlock": 0,
+  "driveLossPunishCounter": 0,
+  "superGain": 0,
+  "attribute": [
+    "投"
+  ],
+  "notes": "1-8F 完全無敵。近距離。ダメージはメダルLv1（Lvで上昇: Lv5 で4600）。弱ロン・ポワンから繋ぐと最もSAダメージが高い。カウンター/パニッシュカウンターで数値が変動しない。モダン入力は要検証。"
+}

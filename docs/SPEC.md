@@ -453,6 +453,10 @@ docs/{SPEC, PROTOTYPE, ROADMAP, CONTENT, REVIEW-2026-09-10}.md
 | `c5014d5` | **RV-05**: マノンハブのタブを ARIA タブに（キーボード対応・#hash 同期）。**RV-06**: 「始動」フィルタを始動技ベースに |
 | `3a3d81e` | **P2-1 / P2-2**: Zod スキーマ（`src/data/schema.ts`）＋ データを `src/content/**/*.json`（55 件）へ移行。`import.meta.glob` 同期読み込み＋Zod 検証。`content.config.ts` 登録 |
 | `1726125` | **P2-8 / RV-07**: `@astrojs/sitemap`・`robots.txt`・SEO メタ（canonical/OGP）。フッターに GitHub Issues 報告リンク |
+| `c5620a2` | **案B**: ダミー一掃。`src/content` は実データ専用、旧ダミーは `tests/fixtures/` へ |
+| `1e7359d` `d60afef` | **実データ batch1・batch2**: すこれるブログのコンボ・起き攻け（出典明記、技フレームは公式）。moves24 / situations14 / routes24 / combos12 |
+| （batch3） | **実データ batch3**: SA1/2/3・OD グランフェッテ・OD デガジェ・強ランヴェルセ・弱ロン・ポワンを技辞典へ。無敵ガード〆 / 中P始動リーサル SA3 / J強K ODグランフェッテ / 強Kパニカン SA2 の4コンボ。SA・OD派生を使うルートは modern 入力未確認のため `controlType:'classic'` |
+| （C-1.5〜C-3） | **公開**: Cloudflare Workers Builds で `https://sf6.amanohashi.date` 稼働。`wrangler.jsonc`（Static Assets）、`main` push で自動デプロイ |
 
 ---
 

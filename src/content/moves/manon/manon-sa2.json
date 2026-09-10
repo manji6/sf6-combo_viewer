@@ -1,0 +1,25 @@
+{
+  "character": "manon",
+  "verifiedVersion": "Year3（公式フレームデータ参照。パッチ版数未確認）",
+  "key": "manon-sa2",
+  "name": "SA2 エトワール",
+  "category": "super",
+  "inputClassic": "214214P",
+  "inputModern": null,
+  "startup": 7,
+  "active": "7-80",
+  "recovery": "38+着地後34",
+  "onHit": "D",
+  "onBlock": "-61",
+  "cancel": null,
+  "damage": 2800,
+  "comboScaling": "最低保障40%",
+  "driveGainHit": 0,
+  "driveLossBlock": -1000,
+  "driveLossPunishCounter": 0,
+  "superGain": 0,
+  "attribute": [
+    "上"
+  ],
+  "notes": "1-9F 完全無敵。横にも上にも長く、バクステ・垂直飛びにも勝てる。強Kパニカンからノーキャンセルで繋がり約3800dmg＋Dゲージ合計2削り。カウンター/パニッシュカウンターで数値が変動しない。モダン入力は要検証。"
+}

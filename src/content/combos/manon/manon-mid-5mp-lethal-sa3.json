@@ -1,0 +1,20 @@
+{
+  "character": "manon",
+  "slug": "manon-mid-5mp-lethal-sa3",
+  "name": "中央 中P始動 リーサル SA3〆",
+  "situationLabel": "中央・地上ヒット確認（リーサル）",
+  "routeChain": [
+    "route_5mp_cr_2mp",
+    "route_4hp_cr_2mp_4hp_rondboin_sa3"
+  ],
+  "startFrom": "neutral_mid",
+  "endAt": "kd_after_super_mid",
+  "difficulty": 4,
+  "tags": [
+    "リーサル",
+    "CDR",
+    "SA",
+    "メダル"
+  ],
+  "description": "中P始動の簡単なリーサルコンボ。前半の 中P>CDR>2中P は最頻出コンボと共有。Dゲージ 6 本（CDR×2）＋SA3。コンボパーツは他始動でも使い回せる。出典: すこれるブログ（sukoreru.com/sf6-manon）。合計ダメージは各技の素点合計＝補正前の目安。難易度は推定。"
+}

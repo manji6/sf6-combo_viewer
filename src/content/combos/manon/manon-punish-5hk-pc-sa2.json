@@ -1,0 +1,19 @@
+{
+  "character": "manon",
+  "slug": "manon-punish-5hk-pc-sa2",
+  "name": "差し返し 強K パニカン SA2〆",
+  "situationLabel": "遠めの差し返し（強K パニカン）",
+  "routeChain": [
+    "route_5hk_pc_sa2"
+  ],
+  "startFrom": "neutral_mid",
+  "endAt": "kd_after_super_mid",
+  "damageOverride": 3800,
+  "difficulty": 2,
+  "tags": [
+    "パニカン",
+    "差し返し",
+    "SA"
+  ],
+  "description": "遠めの差し返し 強K がパニカンした時、SA2 がノーキャンセルで繋がる。3800dmg＋Dゲージを合計2削るので非常に強力。出典: すこれるブログ（sukoreru.com/sf6-manon）。合計ダメージは各技の素点合計＝補正前の目安。難易度は推定。"
+}

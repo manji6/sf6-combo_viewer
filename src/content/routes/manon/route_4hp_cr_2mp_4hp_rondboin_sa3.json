@@ -1,0 +1,58 @@
+{
+  "character": "manon",
+  "notes": "出典: すこれるブログ（sukoreru.com/sf6-manon）。合計ダメージは各技の素点合計＝補正前の目安。難易度は推定。",
+  "id": "route_4hp_cr_2mp_4hp_rondboin_sa3",
+  "from": "juggle_can_4hp_ranversement",
+  "to": "kd_after_super_mid",
+  "kind": "ender",
+  "label": "4強P → CDR → 2中P → 4強P → 弱ロン・ポワン → SA3〆",
+  "steps": [
+    {
+      "move": "4強P",
+      "command": "4HP",
+      "moveKey": "manon-4hp"
+    },
+    {
+      "move": "キャンセルドライブラッシュ",
+      "command": "DRC"
+    },
+    {
+      "move": "2中P",
+      "command": "2MP",
+      "moveKey": "manon-2mp"
+    },
+    {
+      "move": "4強P",
+      "command": "4HP",
+      "moveKey": "manon-4hp"
+    },
+    {
+      "move": "弱ロン・ポワン",
+      "command": "236LK",
+      "moveKey": "manon-rondpoint-l",
+      "cancel": true,
+      "note": "SA3 に繋ぐなら弱が最高効率"
+    },
+    {
+      "move": "SA3（パ・ド・ドゥ）",
+      "command": "236236P",
+      "moveKey": "manon-sa3",
+      "cancel": true
+    }
+  ],
+  "resources": {
+    "driveCost": 3,
+    "superCost": 3,
+    "saLevel": 3
+  },
+  "damage": 7100,
+  "difficulty": 4,
+  "constraints": "「4強P → 中ランヴェルセ が繋がる浮き」から。2つ目の CDR で 3 本消費（コンボ全体で Dゲージ 6 本）。",
+  "controlType": "classic",
+  "tags": [
+    "リーサル",
+    "CDR",
+    "SA",
+    "メダル"
+  ]
+}

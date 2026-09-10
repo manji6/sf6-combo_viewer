@@ -1,0 +1,25 @@
+{
+  "character": "manon",
+  "verifiedVersion": "Year3（公式フレームデータ参照。パッチ版数未確認）",
+  "key": "manon-ranversement-h",
+  "name": "強ランヴェルセ",
+  "category": "special",
+  "inputClassic": "236HP",
+  "inputModern": null,
+  "inputModernPrecise": "236H",
+  "startup": 29,
+  "active": "29-30",
+  "recovery": "30",
+  "onHit": "D",
+  "onBlock": "-16",
+  "cancel": "SA3",
+  "damage": 1500,
+  "driveGainHit": 2000,
+  "driveLossBlock": -2000,
+  "driveLossPunishCounter": -8000,
+  "superGain": 2150,
+  "attribute": [
+    "上"
+  ],
+  "notes": "ダメージはメダルLv1（Lvで上昇: Lv5 で2100）。3-30F 飛び道具無敵。ボタンホールドでフェイント。ヒット時メダルLv+1。"
+}

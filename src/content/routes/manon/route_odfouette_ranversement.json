@@ -1,0 +1,58 @@
+{
+  "character": "manon",
+  "notes": "出典: すこれるブログ（sukoreru.com/sf6-manon）。合計ダメージは各技の素点合計＝補正前の目安。難易度は推定。",
+  "id": "route_odfouette_ranversement",
+  "from": "neutral_mid",
+  "to": "kd_after_ranversement_mid",
+  "kind": "combo_route",
+  "label": "4強P → ODグランフェッテ → 4強P → 強ロン・ポワン → 弱ランヴェルセ〆",
+  "steps": [
+    {
+      "move": "4強P",
+      "command": "4HP",
+      "moveKey": "manon-4hp",
+      "note": "無敵技をガードした後"
+    },
+    {
+      "move": "ODグランフェッテ",
+      "command": "236PP~K",
+      "moveKey": "manon-grandfouette-od",
+      "cancel": true,
+      "note": "OD ランヴェルセ K派生。スピン中にDゲージ回復"
+    },
+    {
+      "move": "4強P",
+      "command": "4HP",
+      "moveKey": "manon-4hp"
+    },
+    {
+      "move": "強ロン・ポワン",
+      "command": "236HK",
+      "moveKey": "manon-rondpoint-h",
+      "cancel": true,
+      "note": "難しければ強ランヴェルセに置換可"
+    },
+    {
+      "move": "弱ランヴェルセ",
+      "command": "236LP",
+      "moveKey": "manon-ranversement-l",
+      "cancel": true,
+      "note": "メダルLv+1"
+    }
+  ],
+  "resources": {
+    "driveCost": 2,
+    "superCost": 0,
+    "saLevel": null
+  },
+  "damage": 4550,
+  "difficulty": 3,
+  "constraints": "無敵技をガードした時のコンボ。名目Dゲージ2本だがコンボ中に回復するため実質1本消費。メダル4枚以上ならコマ投げの方が火力上。",
+  "controlType": "classic",
+  "tags": [
+    "パニカン",
+    "無敵技ガード",
+    "メダル",
+    "OD"
+  ]
+}

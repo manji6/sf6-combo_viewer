@@ -1,0 +1,55 @@
+{
+  "character": "manon",
+  "notes": "出典: すこれるブログ（sukoreru.com/sf6-manon）。合計ダメージは各技の素点合計＝補正前の目安。難易度は推定。",
+  "id": "route_jhk_odfouette_ranversement",
+  "from": "neutral_mid",
+  "to": "kd_after_ranversement_mid",
+  "kind": "combo_route",
+  "label": "J強K → 4強P → ODグランフェッテ → 4強P → 強ランヴェルセ〆",
+  "steps": [
+    {
+      "move": "J強K",
+      "command": "j.HK",
+      "moveKey": "manon-jhk",
+      "note": "飛び道具読み前ジャンプ"
+    },
+    {
+      "move": "4強P",
+      "command": "4HP",
+      "moveKey": "manon-4hp"
+    },
+    {
+      "move": "ODグランフェッテ",
+      "command": "236PP~K",
+      "moveKey": "manon-grandfouette-od",
+      "cancel": true,
+      "note": "2024.5.22 アプデで 4強P>ODグランフェッテ が接続。中ランヴェルセに置換も可"
+    },
+    {
+      "move": "4強P",
+      "command": "4HP",
+      "moveKey": "manon-4hp"
+    },
+    {
+      "move": "強ランヴェルセ",
+      "command": "236HP",
+      "moveKey": "manon-ranversement-h",
+      "cancel": true,
+      "note": "メダルLv+1"
+    }
+  ],
+  "resources": {
+    "driveCost": 2,
+    "superCost": 0,
+    "saLevel": null
+  },
+  "damage": 4700,
+  "difficulty": 3,
+  "constraints": "飛び道具読み前ジャンプが通った時。2ゲージ使用（コンボ中に回復し実質1本程度）。ノーゲージなら 4強P>中ランヴェルセ〆。",
+  "controlType": "classic",
+  "tags": [
+    "ジャンプ始動",
+    "メダル",
+    "OD"
+  ]
+}

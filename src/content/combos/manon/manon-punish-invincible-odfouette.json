@@ -1,0 +1,21 @@
+{
+  "character": "manon",
+  "slug": "manon-punish-invincible-odfouette",
+  "name": "無敵技ガード 4強P ODグランフェッテ 弱ランヴェルセ〆",
+  "situationLabel": "中央・相手の無敵技をガード",
+  "routeChain": [
+    "route_odfouette_ranversement"
+  ],
+  "startFrom": "neutral_mid",
+  "endAt": "kd_after_ranversement_mid",
+  "damageOverride": 3000,
+  "driveCostOverride": 1,
+  "difficulty": 3,
+  "tags": [
+    "パニカン",
+    "無敵技ガード",
+    "メダル",
+    "OD"
+  ],
+  "description": "無敵技をガードした時のコンボ。メダル1枚でも3000dmg超。名目2ゲージだがコンボ中に回復するため実質1消費。メダル3枚以下なら積極的にこちら、4枚からはコマ投げの方が火力が高い。出典: すこれるブログ（sukoreru.com/sf6-manon）。合計ダメージは各技の素点合計＝補正前の目安。難易度は推定。"
+}
