@@ -9,7 +9,8 @@
   ],
   "startFrom": "neutral_corner",
   "endAt": "kd_after_ranversement_corner",
-  "damageNote": "メダル保持数で〆のランヴェルセ分が変動（表示値は素点合計＝実測前）",
+  "damageOverride": 2490,
+  "damageNote": "実測 2,490（メダルLv 未確認）。弱ランヴェルセ〆のためメダル保持数で変動",
   "difficulty": 1,
   "tags": [
     "インパクト",
