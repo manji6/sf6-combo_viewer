@@ -37,7 +37,7 @@ const end = getSituation(combo.endAt);
     <span class="pixel-chip">{POSITION_LABEL[start.position]}</span>
     <span class="pixel-chip">{driveLabel(flat.totalDrive)}</span>
     {flat.totalSuper > 0 && <span class="pixel-chip">{superLabel(flat.totalSuper, flat.maxSaLevel)}</span>}
-    {flat.usesModern && <span class="pixel-chip">モダン可</span>}
+    {flat.supportsModern && <span class="pixel-chip">モダン可</span>}
   </div>
 
   <div class="flow">

@@ -25,8 +25,12 @@ export function combosUsingRoute(routeId: string): Combo[] {
   return combos.filter((c) => c.routeChain.includes(routeId));
 }
 
-/** コンボ本線がモダン操作でも実行できるか（全パーツが 'both'） */
+/**
+ * コンボ本線がモダン操作でも通しで実行できるか（本線の全パーツが `controlType: 'both'`）。
+ * 「一部の手にモダン入力がある」とは別概念。一覧バッジ・フィルタ・詳細トグルは全てこれを使う。
+ */
 export function comboSupportsModern(combo: Combo): boolean {
+  if (combo.routeChain.length === 0) return false;
   return combo.routeChain.map(getRoute).every((r) => r.controlType === 'both');
 }
 
@@ -57,7 +61,8 @@ export interface FlatCombo {
   totalDrive: number;
   totalSuper: number;
   maxSaLevel: 1 | 2 | 3 | null;
-  usesModern: boolean;
+  /** 本線をモダン操作で通しで実行できるか（= comboSupportsModern）。一覧バッジ／フィルタ用 */
+  supportsModern: boolean;
 }
 
 /** コンボを 1 本の手順へ平坦化し、合計値を算出する */
@@ -71,13 +76,11 @@ export function flattenCombo(comboOrSlug: Combo | string): FlatCombo {
   let totalDrive = 0;
   let totalSuper = 0;
   let maxSaLevel: 1 | 2 | 3 | null = null;
-  let usesModern = false;
 
   for (const r of chain) {
     r.steps.forEach((st, i) => {
       const commandModern = stepModernCommand(st);
       steps.push({ ...st, commandModern, routeId: r.id, routeLabel: r.label, boundary: i === 0 });
-      if (commandModern) usesModern = true;
     });
     totalDamage += r.damage;
     totalDrive += r.resources.driveCost;
@@ -96,7 +99,7 @@ export function flattenCombo(comboOrSlug: Combo | string): FlatCombo {
     totalDrive: combo.driveCostOverride ?? totalDrive,
     totalSuper,
     maxSaLevel,
-    usesModern,
+    supportsModern: comboSupportsModern(combo),
   };
 }
 

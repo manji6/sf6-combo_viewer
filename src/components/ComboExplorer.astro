@@ -107,7 +107,7 @@ function driveBucket(n: number) {
           data-kind={start.kind}
           data-drive={driveBucket(flat.totalDrive)}
           data-sa={flat.totalSuper > 0 ? 'yes' : 'no'}
-          data-modern={flat.usesModern ? 'yes' : 'no'}
+          data-modern={flat.supportsModern ? 'yes' : 'no'}
           data-tags={combo.tags.join('|')}
           data-damage={flat.totalDamage}
           data-diff={combo.difficulty}
