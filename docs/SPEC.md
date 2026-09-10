@@ -1,0 +1,334 @@
+# SF6 コンボ・セットプレイビューア — 仕様・設計・実装まとめ
+
+最終更新: 2026-09-10（Phase 1 プロトタイプ、レビュー反映後）
+このドキュメントが現状の唯一の正。承認済みの元計画は `C:\Users\ryosu\.claude\plans\web-iridescent-flame.md`、
+レビュー用の短いガイドは `docs/PROTOTYPE.md`。
+
+---
+
+## 1. 概要
+
+Street Fighter 6 のコンボと**起き攻めセットプレイ（分岐択）**を「見て」理解するための一般公開向け閲覧サイト。
+
+- 既存のコンボ情報の課題: 表記がテキスト主体で読みにくい／起き攻けの分岐と各択の特徴が構造化されていない／
+  コンボが実は「再利用パーツの組み合わせ」なのにその連結を追えない
+- 解決: ゲーム状況を**ノード**、技の連なり（パーツ）を**辺**とする有向グラフでコンボ／セットプレイを表現。
+  レシピはアイコン／テキスト両表記、起き攻けは ComfyUI 風のノードグラフ、パーツ連結はビジュアル相関グラフで見せる
+
+### フェーズ
+
+| | Phase 1（現在） | Phase 2 |
+|---|---|---|
+| 目的 | UI/UX をダミーデータで作り切り、レビューで確定 | 本開発 |
+| データ | 素の TS 配列（`src/data/dummy/*.ts`）、マノンのみ、すべて仮 | Content Collections + Zod、実データ、複数キャラ |
+| 成果物 | 全画面が実物コンポーネントで動く Astro 最小アプリ | SEO・登録 Skill・デプロイまで |
+
+**現在地**: Phase 1 実装済み・レビュー中。`npm run build` 45 ページ、`astro check` 0 エラー。
+
+### 決定事項
+
+| 項目 | 決定 |
+|---|---|
+| フレームワーク | Astro（静的出力）+ TypeScript + Tailwind v4 + Preact（インタラクティブな島のみ） |
+| ホスティング | Cloudflare Pages（GitHub 連携）、既存 Cloudflare ドメインを割当（Phase 2） |
+| データ入力 | リポジトリ内ファイルを手編集 → push で自動ビルド（DB なし） |
+| 対象 | マノンのみ。将来キャラ追加・管理画面・外部投稿・i18n・動画 |
+| 言語 | 日本語中心（UI 文言は将来 i18n 可能な形）。用語は「起き攻め」（「置き攻け」ではない） |
+| 難易度 | ★1〜5 |
+| コマンドアイコン | 矢印は自作 SVG（回転）、攻撃ボタンは CSS チップ。pixelarticons（MIT）は導入済みだが未配線 |
+
+---
+
+## 2. 機能要件（レビューで固まったもの含む）
+
+### 2.1 コンボ
+
+- 「コンボ」＝**始動技から始まる伸ばし方**。相手の状況を問わず「この技が当たったらどこまで伸びるか」
+- 始動が特定状況（`knockdown` / `okiStart` / `blockstring`）のものはコンボ一覧から除外し、セットプレイ側で扱う
+- 一覧: フィルタ（立ち位置・始動・Dゲージ・SA・モダン可否・タグ）＋ソート（ダメージ／難易度／名前）。
+  絞り込み状態は URL クエリに同期（共有・リロードで復元）
+- 詳細: **コンボフロー**（後述のノードグラフ）＋テキスト表記（折りたたみ）＋パーツ連結の逆引き＋締め後の起き攻けへの導線
+
+### 2.2 セットプレイ（起き攻け）
+
+- 「セットプレイ」＝**特定の状況から始まる読み合い**（○○締め後のダウン、△△をジャストパリィ後 など）
+- 起点（状況ノード）ごとに、**分岐択を破線で扇状表示**（ComfyUI 風フロー）。
+  ヒット後はコンボ継続を実線でたどり、次のダウンでまた扇状展開（＝完全再帰。ループ／既出／深さで打ち切り）
+- 各択について次を持てる・表示する（`RouteProperties`）:
+  - **`frameAdvantage`** … 起き攻けの初回行動を重ねた後の有利フレーム（このアプリで一番見たい値。基本は後ろ受け身想定）
+  - **`vsWakeup`** … 相手の起き上がり方（その場／前受け身／後ろ受け身）ごとの対応可否・フレーム差
+  - `strongVs` / `weakVs` … 有効・苦手な相手の行動
+  - `caution` … 注意点（例「ドライブインパクトで割り込まれる」「先端当てないと反確」）
+  - `onBlock` / `useWhen` / `risk`（低/中/高）
+- 起き攻けの初回行動は **DR 以外も表現可能**: 微歩き `(微歩き)` / 前ステップ `66` / フレーム消費技（5弱P 空振り、`note` に「当てない」）
+- 状況ノード側は `advantage`（相手が動けるまでの有利F）と `wakeupNote`（そのダウンで相手が取れる受け身、後ろ受け身可否）を持つ
+
+### 2.3 コマンド表記
+
+- 正準表記は **numpad**（236・214 等）で保存
+- **アイコン ⇄ テキスト**をヘッダーのトグルで切替（`data-notation`、localStorage `sf6cv:notation`、FOUC 回避の inline script）
+- **クラシック ⇄ モダン**は**コンボフロー単位**で切替（ヘッダーではない。コンボごとに可否が違うため）
+  - `comboSupportsModern`（本線が全パーツ `controlType:'both'`）が真のコンボだけ「モダン」ボタンが有効。
+    クラシックのみのコンボは「モダン」を disabled 表示
+  - モダンにすると `controlType:'classic'` のパーツはグラフから**消える**（データ駆動。classic 版・modern 版の 2 グラフを持つ）
+  - モダン記法: `SP`＝必殺技ボタン、`AS`＝アシスト、単独 `L/M/H`＝モダン攻撃。
+    `commandModern` 未設定時は `deriveModern()` が推定（通常技は P/K を落とす、必殺技は 方向+SP、連続波動は `SP AS`）
+  - ルート詳細ページにも手順のクラシック/モダン小トグル（`controlType:'both'` のときだけ）
+
+### 2.4 相関グラフ（全体マップ）
+
+- 方針: **「軽い地図」として残す**（案A）。個別のコンボフローと役割が被らず、ハブ構造の把握に効く
+- `/manon/graph/`＝マノン全体、ルート詳細の「周辺の相関」＝そのパーツの周辺1ホップ
+- `SystemMap.tsx`（`@dagrejs/dagre` + 素の SVG）。丸枠＝状況ノード（kind で色）、ベジェ＝パーツ（役割で色）。
+  pan/zoom・辺の種類フィルタ・クリックで各詳細へ。「起き攻め」の辺を隠すとコンボの骨組みだけ見える
+
+### 2.5 その他 UI
+
+- ヘッダーは **「キャラクター ▾」ホバードロップダウン**（キャラが増えても横に伸びない）。
+  focus-within でキーボード対応、640px 以下は静的展開
+- ダーク ⇄ ライトのテーマトグル（`data-theme`、localStorage `sf6cv:theme`、`prefers-color-scheme` 既定）。
+  色は `:root`（ダーク基準）＋ `:root[data-theme='light']` で risk / button を濃いめに再定義
+- ピクセル調レトロテーマ、モバイルファースト
+
+---
+
+## 3. データモデル（3層グラフ ＋ キャラ）
+
+型定義: **`src/data/types.ts`（これが仕様の正）**。データ本体: `src/data/dummy/{characters,situations,routes,combos}.ts`（Phase 2 で JSON + Zod へ）。
+
+### 3.1 `Step` — 1 手（レシピの最小単位）
+
+```ts
+interface Step {
+  move: string;            // 技名（表示用）
+  command: string;         // numpad 正準表記（"5MP" "236MP" "DR" "DRC" "66" "(投げ)" 等）
+  commandModern?: string;  // モダンのコマンド（未指定なら deriveModern() で推定）
+  cancel?: boolean;        // 直前の技からキャンセルで繋ぐか
+  note?: string;           // "最速重ね" 等の機能的メモ（ナレーション禁止）
+}
+```
+
+### 3.2 `Route` — パーツ＝**レシピの実体**
+
+「ある状況 → 別の状況」へ移す技の連なり。再利用単位。
+
+```ts
+interface Route {
+  id: string;
+  character: 'manon';
+  from: string;                 // 開始状況ノード id
+  to: string;                   // 終了状況ノード id
+  kind: 'starter' | 'combo_route' | 'okizeme' | 'ender' | 'conversion';
+  label: string;
+  steps: Step[];                // ← レシピ本体
+  resources: { driveCost: number; superCost: number; saLevel: 1|2|3|null };
+  damage: number;               // このパーツ単体のダメージ目安
+  difficulty: number;           // ★1〜5
+  constraints?: string;         // 補正・やられ判定・ジャンプ数などの制約（Phase 1 は自由記述）
+  properties?: RouteProperties; // 主に okizeme の「択の特徴」
+  controlType: 'classic' | 'both';
+  tags: string[];
+  video?: { youtubeId: string; start: number } | null;
+  notes?: string;
+}
+
+interface RouteProperties {
+  frameAdvantage?: string;  // 起き攻け初回行動後の有利F（例 "+2（2中K持続当て）"）
+  vsWakeup?: string;        // 起き上がり方ごとの対応・フレーム差
+  strongVs?: string[];
+  weakVs?: string[];
+  useWhen?: string;
+  onBlock?: string;
+  caution?: string;
+  risk?: '低' | '中' | '高';
+}
+```
+
+### 3.3 `Combo` — 名前付き経路（**Route の連結だけ**）
+
+技は入れず、Route の ID を並べるだけ。レシピ・合計ダメージ・ゲージは描画時に導出。
+
+```ts
+interface Combo {
+  slug: string;
+  character: 'manon';
+  name: string;
+  situationLabel: string;       // 一覧で見せる状況ラベル
+  routeChain: string[];         // route id の並び（route[i].to === route[i+1].from）
+  startFrom: string;            // routeChain[0].from と一致
+  endAt: string;                // routeChain[last].to と一致
+  damageOverride?: number | null;
+  driveCostOverride?: number | null;
+  difficulty: number;
+  tags: string[];
+  video?: { youtubeId: string; start: number } | null;
+  description?: string;
+}
+```
+
+### 3.4 `Situation` — 状況ノード
+
+「次に何ができるか」を決めるゲーム状況。**後続の選択肢が同じ状況は同一ノードに統合**する（連結表現の肝）。
+
+```ts
+interface Situation {
+  id: string;
+  label: string;
+  kind: 'neutral' | 'hit' | 'juggle' | 'knockdown' | 'blockstring' | 'okiStart';
+  position: 'midscreen' | 'near_corner' | 'corner' | 'anywhere';
+  opponentState: 'neutral'|'standing_hit'|'crouch_hit'|'juggle'|'air'|'wall_splat'|'knockdown_soft'|'knockdown_hard'|'blockstun';
+  advantage?: string;    // 相手が動けるまでの有利F
+  wakeupNote?: string;   // そのダウンで相手が取れる起き上がり方（後ろ受け身可否など）
+  tags: string[];        // "起き攻め開始" 等
+  notes?: string;
+}
+```
+
+### 3.5 連結の肝（具体例）
+
+起き攻け `oki_dr2mk_from_degage_light` と頻出コンボ内 `starter_5mp_drc_2mp_mid` が
+どちらも `juggle_can_4hp_ranversement` ノードに到達し、締めパーツ `route_4hp_ranversement_mid` を**共有**
+→ 「起き攻けの DR2中K から入るパーツが頻出コンボの一部でもある」を表現。
+
+### 3.6 整合性ルール（`src/lib/graph/derive.ts` の `validateAll()`。ビルド時に警告）
+
+- 各 route の `from` / `to` が実在する状況 id か
+- 各 combo の `routeChain` が連続（`route[i].to === route[i+1].from`）、`startFrom` / `endAt` が端と一致
+- 孤立ノード（接続パーツなし）の検出
+
+---
+
+## 4. 画面・ルート
+
+| ルート | 内容 |
+|---|---|
+| `/` | トップ。サイト説明＋キャラ選択（現在マノンのみ、`#characters`） |
+| `/manon/` | マノン ハブ。「コンボ一覧」タブ（フィルタ／ソート／URL 同期）と「セットプレイ」タブ（起き攻め起点の一覧）。各タブに定義の説明文。相関グラフへの導線 |
+| `/manon/combos/[slug]/` | コンボ詳細。**コンボフロー**（ノードグラフ、クラシック/モダントグル、全画面）＋テキスト表記（折りたたみ）＋パーツと連結（逆引き）＋締め後の起き攻け |
+| `/manon/situations/[id]/` | 状況ノード詳細。見出しに `advantage` / `wakeupNote`。**起き攻めフロー**（ノードグラフ）＋各択の特徴カード（frameAdvantage / vsWakeup / strong / weak / caution / ガード時 / 難易度、クラシック限定バッジ）＋ in/out パーツ一覧＋この状況を通るコンボ |
+| `/manon/routes/[id]/` | パーツ詳細。手順（クラシック/モダン小トグル）＋データ表＋択の特徴（frameAdvantage / vsWakeup 含む）＋連結（このパーツを使うコンボ・同起点/同着地点の他パーツ）＋周辺の相関（SystemMap） |
+| `/manon/graph/` | 全体相関グラフ（SystemMap） |
+| `/guide/notation/` | コマンド表記の凡例 |
+| `/about/` | サイトについて |
+
+### 4.1 コンボ／起き攻めのノードグラフ（`FlowCanvas.tsx`）
+
+- ComfyUI 風。1 手＝1 ノードで左→右、パーツごとにグループ枠
+- エッジ: 実線＝コンボ本線／水色＝分岐（別の締めなど）／破線＝起き攻け（accent 色）
+- 起き攻けグループの枠に**その択の特徴**を表示（緑バッジ「初回行動後 +2」＋ 起き上がり ＋ ◯有効/×苦手/⚠注意 ＋ リスク ＋ 詳細リンク）
+- outcome ノード（状況）: ダウンなら「相手復帰まで +38 前後」。`loop`／`repeat`（既出）／`more`（この先へ）を帯表示
+- ツールバー: クラシック/モダン（有効時）・全体表示・先頭へ・＋/−・**全画面**（Esc で閉じる）
+- 実装: `src/lib/graph/flow.ts` が step 単位の DAG を生成
+  - `buildComboFlow(combo, control)` / `buildSituationFlow(id, control)`
+  - `expandFrom()` が完全再帰（`OKI_MAX_DEPTH_COMBO = 1` / `OKI_MAX_DEPTH_SITUATION = 2`、ループ・既出・深さで打ち切り）
+  - `control='modern'` で `controlType:'classic'` のパーツを除外
+- レイアウトは `@dagrejs/dagre`（LR）＋ 2 パス実測（非表示で実寸を測ってから配置）＋ 枠の縦重なりをスイープで解消
+
+### 4.2 相関グラフ（`SystemMap.tsx`）
+
+- `@dagrejs/dagre` LR ＋ 素の SVG。dagre のエッジ経路を使い平行エッジを分離
+- ノードラベルは最大2行、エッジは細く薄く＋ホバー強調、辺の種類フィルタ
+
+### 4.3 コマンド表記（`src/lib/notation/`）
+
+- `parse.ts` … `parseCommand()` がトークン化、`tokensToText()` / `deriveModern()`
+- `tokens.ts` … 方向→角度/文字、強度ラベル/色、メタ（DR / DRC=CDR / SA 等）
+- `Tokens.astro`（Astro）/ `Notation.tsx`（Preact）… クラシック・モダン両方を出力し CSS `[data-control]` で切替
+- `Sequence.astro` … `Tokens` のラッパ（`command` + `commandModern`）
+
+---
+
+## 5. 実装構成
+
+### 技術スタック
+
+- Astro `^7.3` / TypeScript strict / Tailwind v4（`@tailwindcss/vite`）/ Preact（`@astrojs/preact`）
+- `@dagrejs/dagre` … グラフレイアウト（FlowCanvas・SystemMap 共通）
+- 静的出力（`output` 未指定＝static）。インタラクティブ部分だけ Preact 島（`client:only="preact"`）
+- 検証: `npm run build`（45 ページ）＋ `npx astro check`（0 エラー）
+- 開発: `npm run dev`（CLAUDE.md 記載どおり `astro dev --background` 推奨）
+
+### ディレクトリ
+
+```
+src/
+  data/
+    types.ts            ← ★ データ構造の仕様
+    characters.ts
+    dummy/{situations,routes,combos}.ts   ← ダミーデータ（Phase 2 で JSON へ）
+    index.ts            re-export ＋ ID 索引（getRoute / getSituation / getCombo）
+  lib/
+    notation/{parse,tokens}.ts
+    graph/
+      derive.ts         outgoing/incoming・combosUsingRoute 逆引き・flattenCombo・validateAll・comboSupportsModern
+      flow.ts           buildComboFlow / buildSituationFlow（step 単位 DAG、expandFrom 完全再帰）
+      systemmap.ts      fullGraph() / neighborhood()（相関グラフ用データ）
+    ui.ts               ラベル・Stars・driveLabel など
+  components/
+    notation/{Tokens,Sequence,Arrow}.astro
+    islands/{FlowCanvas,SystemMap,Notation}.tsx
+    {ComboCard,ComboExplorer,StepList,Stars,NotationToggle,ThemeToggle}.astro
+  layouts/BaseLayout.astro    ヘッダー（キャラドロップダウン・トグル）・フッター・テーマ/表記の inline 初期化
+  pages/…                     §4 参照
+  styles/global.css           テーマトークン（ダーク基準＋light 上書き）・ピクセル調・notation の CSS
+docs/{SPEC.md, PROTOTYPE.md}
+```
+
+### localStorage / DOM フラグ
+
+| キー / 属性 | 用途 |
+|---|---|
+| `sf6cv:theme` / `<html data-theme>` | ダーク・ライト（既定は `prefers-color-scheme`） |
+| `sf6cv:notation` / `<html data-notation>` | アイコン・テキスト（既定アイコン） |
+| （永続化なし）/ `.fc[data-control]` ・ルート詳細の `[data-ctl-root]` | クラシック・モダン（コンボ／パーツ単位、既定クラシック） |
+
+---
+
+## 6. これまでの経緯（レビュー反映履歴）
+
+| コミット | 反映内容 |
+|---|---|
+| `d875688` | Phase 1 プロトタイプ初版（マノン、ダミーデータ、当初は入れ子リストの樹形図＋Cytoscape 相関グラフ） |
+| `a0ba8ae` | **コンボ／起き攻けを ComfyUI 風のノードグラフ表示に全面変更**（樹形図＋step単位DAG＋FlowCanvas）。要望: レシピは左→右、状況→技がノードでつながる、締めから起き攻けは破線 |
+| `157fa5f` | ノードの2行折返し不具合、キャンバスの最大幅（full-bleed 化）、DR/CDR 表記、SA3 の行き先を専用ノードに分離 |
+| `2004611` | 起き攻け枠に「その択の特徴」を表示（技名の二重表示解消）、非DR始動（微歩き・前ステップ・フレーム消費技）、**全画面ボタン**、用語「置き攻け」→「起き攻め」 |
+| `42c5fd9` | ライト配色の可読性、枠の重なり解消（スイープ＋最小幅）、outcome の帯（バッジ見切れ解消）、矢印描画（SVG 範囲・マーカーID）、クラシック/モダン切替の初期実装 |
+| `6e2dee3` | **クラシック/モダン切替をヘッダーからコンボフロー単位へ**（コンボごとに可否が違うため）、矢印が消える不具合（不透明な枠背景がエッジを隠していた） |
+| `7705c34` | **フレーム情報**（`frameAdvantage`＝初回行動後の有利F）、**受け身状態**（`wakeupNote` / `vsWakeup`）、classic 限定コンボはトグルを disabled 表示、コンボフローの縦幅 1.5倍 |
+| `69e0bb6` | 相関グラフを Cytoscape → **自前 SVG（SystemMap）** へ（Cytoscape がハイドレート失敗で真っ白だった）。cytoscape 依存削除 |
+| `91392e3` | SystemMap の見やすさ（間隔拡大・dagre 経路・2行ラベル・エッジ薄く＋ホバー・「起き攻め」フィルタ） |
+| `cf44e28` | ヘッダーのキャラリンクを**ホバードロップダウン**へ（キャラ増加でヘッダーが伸びない） |
+| `c601841` | **コンボ一覧とセットプレイの区別を明確化**（コンボ＝始動技から／セットプレイ＝特定状況から）＋各タブに説明文 |
+
+---
+
+## 7. 未確定・Phase 2 TODO
+
+### レビューで決めたいこと（Phase 1 の残り）
+
+- ノードグラフの情報量・深さ（`OKI_MAX_DEPTH_*`）・初期ズーム。択が多い状況（6択など）の見やすさ
+- 起き攻け枠に出す特徴項目の粒度（`frameAdvantage` / `vsWakeup` / `strongVs` / `weakVs` / `caution` / `onBlock` / `risk`）
+- 技ごとのフレームデータ辞典（`moves` コレクション＝4層目）を作るか。
+  現状は「初回行動後の有利F」を `route.properties.frameAdvantage` に文字列で保持。層を分けるかは要検討
+- 相関グラフのノード数が増えたときの表示戦略
+- ノード粒度の運用ルール（どこまでを同一ノードにまとめるか。補正・ジャンプ数など）
+- 微歩き・前ステップ・フレーム消費技などの「コマンドではない操作」の表記ルール
+
+### Phase 2 実装項目（承認済み計画）
+
+1. スキーマ確定: `src/content.config.ts`（Zod、3コレクション）。`src/data/dummy` → `src/content/{situations,routes,combos}/manon/*.json`（1レコード1ファイル）。**フィールド構造は不変**
+2. ビルド時導出・検証（`validateAll` を content 由来に接続、mermaid ダンプ）
+3. SEO（`@astrojs/sitemap`、OGP/meta、コンボ詳細に JSON-LD、`robots.txt`、Lighthouse）
+4. **コンボ登録支援 Skill `/register-combo`**: Web ページ・画像・YouTube・テキストから JSON を作成／更新。
+   `drafts/` ＋ dev 限定 `/manon/_preview/` で「アプリと同じ見た目」プレビュー ＋ ターミナルダイジェスト ＋ 承認後 promote
+5. テスト（`vitest`：notation パーサ・graph 導出・再帰打ち切り）
+6. `CONTENT.md`（ノード設計ガイド「後続が同じなら同一ノード」）＋ scaffolding スクリプト。オーナーが実データ投入
+7. デプロイ（GitHub → Cloudflare Pages → カスタムドメイン）
+
+### オーナー作業（ブロッカーではない）
+
+- 実データ投入（正しいレシピ・ダメージ・起き攻け分岐・フレーム・受け身・難易度）
+- マノンの正式技名一覧（公式表記に合わせる）
+- 攻撃ボタン配色規約の最終確認（現状 L=青 / M=黄 / H=赤 / OD=緑 / SP=紫 / AS=青緑）
+- 公開サブドメイン名の決定
+- モダン操作コマンドの表記ルール詳細（凡例で確定）
