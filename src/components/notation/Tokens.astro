@@ -16,8 +16,7 @@ function btnStrength(t: (typeof tokens)[number]): string {
   if (t.kind !== 'button') return '';
   const b = t.buttons[0];
   if (b === 'SP') return 'SP';
-  if (b === 'AS') return 'AS';
-  if (t.buttons.length === 2 || t.od) return 'OD';
+  if (b === 'AS') return 'AUTO';
   return t.strength;
 }
 ---
@@ -35,13 +34,17 @@ function btnStrength(t: (typeof tokens)[number]): string {
         );
       }
       if (t.kind === 'button') {
+        const label = t.buttons[0] === 'AS' ? 'AUTO' : t.text.replace(/^OD/, '');
         return (
-          <span class="nt-btn" data-s={btnStrength(t)}>
-            {t.text.replace(/^OD/, '')}
+          <span class="nt-btnwrap">
+            {t.od && <span class="nt-od">OD</span>}
+            <span class="nt-btn" data-s={btnStrength(t)}>
+              {label}
+            </span>
           </span>
         );
       }
-      if (t.kind === 'meta') return <span class="nt-meta">{t.text}</span>;
+      if (t.kind === 'meta') return <span class="nt-meta" data-m={t.type}>{t.text}</span>;
       if (t.kind === 'modifier') {
         if (t.type === 'cancel') return <span class="nt-mod"> › </span>;
         if (t.type === 'then') return <span class="nt-mod"> </span>;

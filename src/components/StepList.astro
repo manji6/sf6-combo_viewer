@@ -1,27 +1,40 @@
 ---
 import type { Step } from '../data/types';
+import { moveByKey, stepModernCommand } from '../data';
 import Sequence from './notation/Sequence.astro';
 
 interface Props {
   steps: Step[];
+  /** 技辞典のフレーム（発生／ヒット／ガード）を各手順に添える */
+  showFrames?: boolean;
 }
-const { steps } = Astro.props;
+const { steps, showFrames = false } = Astro.props;
 ---
 
 <ol class="steps">
   {
-    steps.map((st) => (
-      <li class="step">
-        <span class="idx">{st.cancel ? '›' : ''}</span>
-        <span class="body">
-          <span class="cmd">
-            <Sequence command={st.command} commandModern={st.commandModern} />
+    steps.map((st) => {
+      const mv = st.moveKey ? moveByKey.get(st.moveKey) : undefined;
+      return (
+        <li class="step">
+          <span class="idx">{st.cancel ? '›' : ''}</span>
+          <span class="body">
+            <span class="cmd">
+              <Sequence command={st.command} commandModern={stepModernCommand(st)} />
+            </span>
+            <span class="move">{st.move}</span>
+            {st.note && <span class="note">— {st.note}</span>}
+            {showFrames && mv && (mv.startup != null || mv.onHit || mv.onBlock) && (
+              <span class="frames">
+                {mv.startup != null && <span>発生 {mv.startup}</span>}
+                {mv.onHit && <span>ヒット {mv.onHit}</span>}
+                {mv.onBlock && <span>ガード {mv.onBlock}</span>}
+              </span>
+            )}
           </span>
-          <span class="move">{st.move}</span>
-          {st.note && <span class="note">— {st.note}</span>}
-        </span>
-      </li>
-    ))
+        </li>
+      );
+    })
   }
 </ol>
 
@@ -70,5 +83,15 @@ const { steps } = Astro.props;
   .note {
     font-size: 0.82rem;
     color: var(--text-faint);
+  }
+  .frames {
+    display: inline-flex;
+    gap: 0.5em;
+    font-size: 0.74rem;
+    color: var(--text-faint);
+    font-family: var(--font-pixel);
+  }
+  .frames span {
+    white-space: nowrap;
   }
 </style>

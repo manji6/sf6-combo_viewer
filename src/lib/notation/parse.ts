@@ -14,7 +14,7 @@ function buttonText(strength: ButtonStrength, buttons: ButtonKind[], od: boolean
   if (buttons.length === 2) return `${buttons[0]}${buttons[1]}`; // PP/KK
   const b = buttons[0];
   if (b === 'SP') return 'SP';
-  if (b === 'AS') return 'AS';
+  if (b === 'AS') return 'AUTO';
   const s = STRENGTH_LABEL[strength];
   if (b === 'A') return `${s || ''}`.trim() || 'A'; // モダン攻撃（弱/中/強）
   return `${od ? 'OD' : ''}${s}${b ?? ''}`;

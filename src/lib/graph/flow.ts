@@ -6,9 +6,10 @@ import type {
   SituationKind,
   Step,
 } from '../../data/types';
-import { getCombo, getRoute, getSituation } from '../../data';
+import { getCombo, getRoute, getSituation, stepModernCommand } from '../../data';
 import { outgoingRoutes } from './derive';
 import { commandToText } from '../notation/parse';
+import { wakeupSummary } from '../ui';
 
 export type FlowNodeType = 'step' | 'outcome' | 'start';
 
@@ -45,7 +46,8 @@ export interface FlowGroup {
   /** okizeme の枠に表示する「この択の特徴」。パーツページへのリンクにも使う */
   routeId: string;
   frameAdvantage?: string;
-  vsWakeup?: string;
+  /** RouteProperties.wakeup を 1 行にまとめた文字列（受け身対応） */
+  wakeup?: string;
   strongVs?: string[];
   weakVs?: string[];
   caution?: string;
@@ -89,7 +91,7 @@ function stepNode(id: string, st: Step, groupId: string): FlowNode {
     id,
     type: 'step',
     command: st.command,
-    commandModern: st.commandModern,
+    commandModern: stepModernCommand(st),
     move: st.move,
     note: st.note,
     cancel: st.cancel,
@@ -163,7 +165,7 @@ function emitRouteSteps(
     nodeIds: [],
     routeId: route.id,
     frameAdvantage: p?.frameAdvantage,
-    vsWakeup: p?.vsWakeup,
+    wakeup: wakeupSummary(p?.wakeup),
     strongVs: p?.strongVs,
     weakVs: p?.weakVs,
     caution: p?.caution,

@@ -20,13 +20,14 @@
   --accent-ink: #1a1206;
   --link: #7cc5ff;
 
-  /* コマンドボタンの色 */
-  --btn-l: #4aa3ff;
-  --btn-m: #ffcb3d;
-  --btn-h: #ff5a5a;
-  --btn-od: #46d17a;
-  --btn-sp: #c08cff;
-  --btn-as: #5bd1c9;
+  /* コマンドボタンの色（公式 SF6 準拠: 弱=シアン/中=イエロー/強=レッド、
+     SP=オレンジのモダン必殺技ボタン、AUTO=モダンのアシスト、DR=ドライブラッシュの緑） */
+  --btn-l: #3f9dc4;
+  --btn-m: #e6c53c;
+  --btn-h: #d8443c;
+  --btn-sp: #e0680f;
+  --btn-auto: #5b6270;
+  --btn-dr: #46d17a;
   --btn-none: #b0b0b0;
 
   /* リスク帯 */
@@ -57,12 +58,12 @@
   --link: #1256c4;
 
   /* ライトの背景（クリーム系）で読めるよう濃いめに振り直す */
-  --btn-l: #1c6fd6;
-  --btn-m: #a06a00;
-  --btn-h: #c62330;
-  --btn-od: #1a7f37;
-  --btn-sp: #7b3fd0;
-  --btn-as: #0f8f86;
+  --btn-l: #1f7fa0;
+  --btn-m: #9a6b00;
+  --btn-h: #b5352c;
+  --btn-sp: #c25610;
+  --btn-auto: #55606f;
+  --btn-dr: #1a7f37;
   --btn-none: #6b675c;
 
   --risk-low: #1a7f37;
@@ -215,6 +216,11 @@ h3 {
 }
 
 /* ボタン */
+.nt-btnwrap {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.12em;
+}
 .nt-btn {
   --c: var(--btn-none);
   display: inline-flex;
@@ -240,16 +246,33 @@ h3 {
 .nt-btn[data-s='H'] {
   --c: var(--btn-h);
 }
-.nt-btn[data-s='OD'] {
-  --c: var(--btn-od);
-}
+/* モダン必殺技ボタン: 公式どおりオレンジのベタ角丸 */
 .nt-btn[data-s='SP'] {
   --c: var(--btn-sp);
   border-radius: 4px;
+  background: var(--c);
+  color: #fff;
 }
-.nt-btn[data-s='AS'] {
-  --c: var(--btn-as);
-  border-radius: 4px;
+/* モダンのアシスト: 濃グレーのピクセル調バッジ */
+.nt-btn[data-s='AUTO'] {
+  --c: var(--btn-auto);
+  border-radius: 3px;
+  background: var(--c);
+  color: #fff;
+  font-size: 0.66em;
+  letter-spacing: 0.06em;
+  min-width: 0;
+}
+/* OD（オーバードライブ）: ボタン2つの前に付く小さな接頭ラベル */
+.nt-od {
+  font-size: 0.68em;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--text-dim);
+  border: 1px solid var(--btn-none);
+  border-radius: 3px;
+  padding: 0 0.25em;
+  margin-right: 0.1em;
 }
 
 /* メタ（DR / SA など） */
@@ -262,6 +285,12 @@ h3 {
   font-size: 0.78em;
   font-weight: 700;
   letter-spacing: 0.04em;
+}
+/* ドライブラッシュ系は緑で統一 */
+.nt-meta[data-m='DR'],
+.nt-meta[data-m='DRC'] {
+  border-color: var(--btn-dr);
+  color: var(--btn-dr);
 }
 
 .nt-mod {

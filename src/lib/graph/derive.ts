@@ -3,8 +3,10 @@ import {
   getCombo,
   getRoute,
   getSituation,
+  moveByKey,
   routes,
   situations,
+  stepModernCommand,
 } from '../../data';
 import type { Combo, Route, Situation, Step } from '../../data/types';
 
@@ -73,8 +75,9 @@ export function flattenCombo(comboOrSlug: Combo | string): FlatCombo {
 
   for (const r of chain) {
     r.steps.forEach((st, i) => {
-      steps.push({ ...st, routeId: r.id, routeLabel: r.label, boundary: i === 0 });
-      if (st.commandModern) usesModern = true;
+      const commandModern = stepModernCommand(st);
+      steps.push({ ...st, commandModern, routeId: r.id, routeLabel: r.label, boundary: i === 0 });
+      if (commandModern) usesModern = true;
     });
     totalDamage += r.damage;
     totalDrive += r.resources.driveCost;
@@ -128,6 +131,11 @@ export function validateAll(): string[] {
   for (const r of routes) {
     if (!ids.has(r.from)) errors.push(`route ${r.id}: from(${r.from}) が存在しない`);
     if (!ids.has(r.to)) errors.push(`route ${r.id}: to(${r.to}) が存在しない`);
+    for (const st of r.steps) {
+      if (st.moveKey && !moveByKey.has(st.moveKey)) {
+        errors.push(`route ${r.id}: step の moveKey(${st.moveKey}) が技辞典に存在しない`);
+      }
+    }
   }
   for (const c of combos) errors.push(...validateComboChain(c));
   // 孤立ノード

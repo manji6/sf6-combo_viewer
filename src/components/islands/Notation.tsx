@@ -25,8 +25,7 @@ function ArrowIcon({ dir }: { dir: number }) {
 function btnStrength(t: Extract<Token, { kind: 'button' }>): string {
   const b = t.buttons[0];
   if (b === 'SP') return 'SP';
-  if (b === 'AS') return 'AS';
-  if (t.buttons.length === 2 || t.od) return 'OD';
+  if (b === 'AS') return 'AUTO';
   return t.strength;
 }
 
@@ -48,15 +47,19 @@ function Tokens({ command }: { command: string }) {
             );
           }
           if (t.kind === 'button') {
+            const label = t.buttons[0] === 'AS' ? 'AUTO' : t.text.replace(/^OD/, '');
             return (
-              <span class="nt-btn" data-s={btnStrength(t)} key={i}>
-                {t.text.replace(/^OD/, '')}
+              <span class="nt-btnwrap" key={i}>
+                {t.od && <span class="nt-od">OD</span>}
+                <span class="nt-btn" data-s={btnStrength(t)}>
+                  {label}
+                </span>
               </span>
             );
           }
           if (t.kind === 'meta') {
             return (
-              <span class="nt-meta" key={i}>
+              <span class="nt-meta" data-m={t.type} key={i}>
                 {t.text}
               </span>
             );

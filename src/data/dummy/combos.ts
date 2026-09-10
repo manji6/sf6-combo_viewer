@@ -65,17 +65,6 @@ export const combos: Combo[] = [
     tags: ['画面端', 'メダル', 'ゲージ', '実戦'],
     description: '画面端でメダルを一気に稼ぐルート。締めの強制ダウンから強力な起き攻め。',
   },
-  {
-    slug: 'manon-oki-degage-dr2mk-ranversement',
-    character: 'manon',
-    name: '起き攻め DR2中K → 4強P 中ランヴェルセ〆',
-    situationLabel: '弱デガジェ締め後の起き攻めから',
-    routeChain: ['oki_dr2mk_from_degage_light', 'route_4hp_ranversement_mid'],
-    startFrom: 'kd_after_degage_light_mid',
-    endAt: 'kd_after_ranversement_mid',
-    difficulty: 3,
-    tags: ['起き攻め', 'DRC', '連結'],
-    description:
-      '起き攻めの基本択 DR2中K がヒットしたときのフルコン。後半パーツは頻出コンボと共有され、そのまま次の起き攻めループへ。',
-  },
+  // 注（A-4）: セットプレイのフル一本（起き攻め1択がヒットして先まで繋がる流れ）は
+  // Combo レコードにしない。セットプレイフロー（状況ノード＋okizeme route の再帰展開）で表現する。
 ];

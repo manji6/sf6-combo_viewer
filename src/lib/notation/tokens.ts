@@ -92,9 +92,8 @@ export const STRENGTH_COLOR: Record<string, string> = {
   L: 'var(--btn-l)',
   M: 'var(--btn-m)',
   H: 'var(--btn-h)',
-  OD: 'var(--btn-od)',
   SP: 'var(--btn-sp)',
-  AS: 'var(--btn-as)',
+  AUTO: 'var(--btn-auto)',
   '': 'var(--btn-none)',
 };
 

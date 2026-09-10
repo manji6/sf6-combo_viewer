@@ -65,15 +65,90 @@ export interface Situation {
 
 /** コンボ 1 手 */
 export interface Step {
-  /** 技名（表示用） */
+  /** 技名（表示用）。moveKey があれば辞典の name を優先してよい */
   move: string;
-  /** numpad 正準表記（例: 236MP, 2MK, DR, DRC） */
+  /** numpad 正準表記（例: 236MP, 2MK, DR, DRC）。クラシックの正 */
   command: string;
-  /** モダン操作のコマンド（あれば） */
+  /**
+   * モダン操作のコマンド（明示指定）。
+   * 未指定かつ moveKey があれば moves 辞典の inputModern を使う。
+   * どちらも無ければ deriveModern() の粗い推定にフォールバック。
+   */
   commandModern?: string;
+  /**
+   * 技辞典（moves コレクション）の key。フレームデータ・モダン入力の参照元。
+   * DR / DRC / 66 / (微歩き) など「技ではない操作」では省略する。
+   */
+  moveKey?: string;
   /** 直前の技からキャンセルで繋ぐか */
   cancel?: boolean;
   note?: string;
+}
+
+/** 技のカテゴリ */
+export type MoveCategory =
+  | 'normal' // 通常技
+  | 'unique' // 特殊技
+  | 'special' // 必殺技
+  | 'super' // スーパーアーツ
+  | 'throw' // 投げ
+  | 'common'; // 共通システム（ドライブ系など）
+
+/**
+ * 技ごとのフレームデータ辞典（4 層目）。1 技 1 レコード。
+ * データ元: 公式フレームデータ（https://www.streetfighter.com/6/ja-jp/character/manon/frame）。
+ * バランス調整で数値が変わるため verifiedVersion で確認時点を明示する。
+ */
+export interface Move {
+  /** 参照キー（例: "manon-5mp" "manon-ranversement-m"）。Step.moveKey と対応 */
+  key: string;
+  character: CharacterId;
+  /** 技名（公式表記。例: "立ち中P（ツリテ）"） */
+  name: string;
+  category: MoveCategory;
+
+  /** クラシックの numpad 正準表記 */
+  inputClassic: string;
+  /**
+   * モダンの入力（公式コマンドリスト準拠）。null = モダンに存在しない技。
+   * 例: 中ランヴェルセ → "2SP"（↓+SP）、レベランス → "4H"（←+強）
+   */
+  inputModern: string | null;
+  /** モダンでも通るクラシック式モーション入力（フルダメージ狙いなど）。任意 */
+  inputModernPrecise?: string;
+
+  /** 発生 F */
+  startup: number | null;
+  /** 持続（範囲表記があるため文字列。例 "4-6"） */
+  active: string | null;
+  /** 全体硬直 or 硬直 F（文字列許容。例 "着地後3"） */
+  recovery: string | null;
+  /** ヒット硬直差（例 "+4" "D"（ダウン）） */
+  onHit: string | null;
+  /** ガード硬直差 */
+  onBlock: string | null;
+  /** キャンセル可否（公式表記。例 "C" "SA" "SA3" "-"） */
+  cancel: string | null;
+  /** ダメージ（メダル Lv などで変動する技は代表値） */
+  damage: number | null;
+
+  /** コンボ補正値（例 "始動補正20%"） */
+  comboScaling?: string | null;
+  /** Dゲージ増加（ヒット） */
+  driveGainHit?: number | null;
+  /** Dゲージ減少（ガード） */
+  driveLossBlock?: number | null;
+  /** Dゲージ減少（パニッシュカウンター） */
+  driveLossPunishCounter?: number | null;
+  /** SAゲージ増加 */
+  superGain?: number | null;
+
+  /** 属性（例: ["上"] ["下"] ["投"]） */
+  attribute?: string[];
+  /** 備考（公式の「備考」列など） */
+  notes?: string;
+  /** この数値を確認したゲームバージョン */
+  verifiedVersion: string;
 }
 
 /** 択の特徴（フロー図・パーツ詳細で表示） */
@@ -85,10 +160,20 @@ export interface RouteProperties {
    */
   frameAdvantage?: string;
   /**
-   * 相手の起き上がり方（その場／前受け身／後ろ受け身）ごとの対応可否とフレーム差。
-   * 例: "その場・後ろ受け身どちらもOK（後ろ受け身時 +1）" / "その場のみ、後ろ受け身は届かない"
+   * 受け身の種類ごとの対応（A-2）。旧 vsWakeup（文字列）を構造化したもの。
+   * SOFT / HARD ダウンそのものは Situation.opponentState で判定する。
+   * knockdown_hard（受け身なし）に紐づく起き攻めは wakeup を持たない。
    */
-  vsWakeup?: string;
+  wakeup?: {
+    /** both＝両対応 / quick＝その場受け身のみ成立 / back＝後ろ受け身のみ成立 */
+    coverage: 'both' | 'quick' | 'back';
+    /** その場受け身に対するフレーム差・補足（成立する場合） */
+    quickRise?: string;
+    /** 後ろ受け身に対するフレーム差・補足（成立する場合） */
+    backTech?: string;
+    /** 補足（「動かないため起き上がり方に依存しない」等） */
+    note?: string;
+  };
   /** 有効な相手の行動・状況（例: パリィ／ガード継続、打撃暴れ） */
   strongVs?: string[];
   /** 弱い相手の行動（例: 垂直ジャンプ、無敵技） */

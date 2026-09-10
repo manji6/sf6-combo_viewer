@@ -6,7 +6,14 @@ import SystemMap from '../../../components/islands/SystemMap.tsx';
 import { getRoute, getSituation, routes } from '../../../data';
 import { combosUsingRoute, incomingRoutes, outgoingRoutes } from '../../../lib/graph/derive';
 import { neighborhood } from '../../../lib/graph/systemmap';
-import { driveLabel, POSITION_LABEL, RISK_VAR, ROUTE_KIND_LABEL, superLabel } from '../../../lib/ui';
+import {
+  driveLabel,
+  POSITION_LABEL,
+  RISK_VAR,
+  ROUTE_KIND_LABEL,
+  superLabel,
+  wakeupSummary,
+} from '../../../lib/ui';
 
 export function getStaticPaths() {
   return routes.map((r) => ({ params: { id: r.id } }));
@@ -56,7 +63,7 @@ const p = route.properties;
         }
       </div>
       <div class="pixel-box pad">
-        <StepList steps={route.steps} />
+        <StepList steps={route.steps} showFrames />
       </div>
       {route.constraints && <p class="constraints">制約: {route.constraints}</p>}
       {route.notes && <p class="notes">{route.notes}</p>}
@@ -102,10 +109,10 @@ const p = route.properties;
                   <dd>{p.frameAdvantage}</dd>
                 </>
               )}
-              {p.vsWakeup && (
+              {p.wakeup && (
                 <>
-                  <dt>相手の起き上がり方</dt>
-                  <dd>{p.vsWakeup}</dd>
+                  <dt>受け身への対応</dt>
+                  <dd>{wakeupSummary(p.wakeup)}</dd>
                 </>
               )}
               {p.useWhen && (
@@ -317,7 +324,7 @@ const p = route.properties;
     color: var(--risk-high);
   }
   .props dt.frame {
-    color: var(--btn-od);
+    color: var(--btn-dr);
     font-weight: 700;
   }
   .props dd {

@@ -4,8 +4,9 @@
 このドキュメントが現状の唯一の正。承認済みの元計画は `C:\Users\ryosu\.claude\plans\web-iridescent-flame.md`、
 レビュー用の短いガイドは `docs/PROTOTYPE.md`。
 
-> **A-1〜A-4（2026-09-10 決定）**: このドキュメントに反映済み。要約は §3.0。
-> スキーマ本体（`src/data/types.ts`）とダミーデータへの適用は本ドキュメント更新後に別途行う。
+> **A-1〜A-4（2026-09-10 決定・実装済み）**: 要約は §3.0。
+> スキーマ本体（`src/data/types.ts`）・ダミーデータ・描画への適用まで完了。
+> U-7（コマンド表記の公式配色・SP/AUTO/DR）も同時に反映済み。
 
 ---
 
@@ -78,13 +79,19 @@ Street Fighter 6 のコンボと**起き攻めセットプレイ（分岐択）*
 
 - 正準表記は **numpad**（236・214 等）で保存
 - **アイコン ⇄ テキスト**をヘッダーのトグルで切替（`data-notation`、localStorage `sf6cv:notation`、FOUC 回避の inline script）
+- **配色は公式 SF6 準拠（U-7）**: 弱＝シアン `--btn-l` / 中＝イエロー `--btn-m` / 強＝レッド `--btn-h`。
+  - **OD**（オーバードライブ）は色を付けず、`OD` の接頭ラベル ＋ ボタン2つ（PP/KK）で表す
+  - **DR / CDR** は緑 `--btn-dr`（`.nt-meta[data-m]` で着色）。「ドライブラッシュ＝緑」
+  - **SP**（モダン必殺技ボタン）はオレンジのベタ角丸 `--btn-sp`
+  - **AUTO**（モダンのアシスト）は濃グレーのピクセル調バッジ `--btn-auto`（旧 `AS`）
+  - ライトテーマは各色を暗めに再定義
 - **クラシック ⇄ モダン**は**コンボフロー単位**で切替（ヘッダーではない。コンボごとに可否が違うため）
   - `comboSupportsModern`（本線が全パーツ `controlType:'both'`）が真のコンボだけ「モダン」ボタンが有効。
     クラシックのみのコンボは「モダン」を disabled 表示
   - モダンにすると `controlType:'classic'` のパーツはグラフから**消える**（データ駆動。classic 版・modern 版の 2 グラフを持つ）
-  - モダン記法: `SP`＝必殺技ボタン、`AS`＝アシスト、単独 `L/M/H`＝モダン攻撃。
-    `commandModern` 未設定時は `deriveModern()` が推定（通常技は P/K を落とす、必殺技は 方向+SP、連続波動は `SP AS`）
-  - ルート詳細ページにも手順のクラシック/モダン小トグル（`controlType:'both'` のときだけ）
+  - モダン記法: 必殺技＝「方向 ＋ `SP`」、OD 必殺技＝「方向 ＋ `AUTO` ＋ `SP`」、通常/特殊技＝「方向 ＋ 弱中強（P/K なし）」。
+    技ごとの正確なモダン入力は `moves` 辞典の `inputModern`（§3.7）。未整備の技は `deriveModern()` の粗い推定にフォールバック
+  - ルート詳細ページにも手順のクラシック/モダン小トグル（`controlType:'both'` のときだけ）＋技辞典のフレーム（発生／ヒット／ガード）併記
 
 ### 2.4 相関グラフ（全体マップ）
 
@@ -116,21 +123,33 @@ Street Fighter 6 のコンボと**起き攻めセットプレイ（分岐択）*
 | **A-3** | 立ち位置バケットは**現状維持**（`midscreen` / `near_corner` / `corner` / `anywhere`）。スキーマ変更なし。運用ルールだけ明文化：多くは `midscreen` か `corner`。`near_corner`＝「端付近（多少の距離調整が効くが端限定ではない）」は一部のみ、乱用しない | §3.4 補足 / Phase 2 `CONTENT.md` |
 | **A-4** | セットプレイのフル一本は `Combo` レコードにしない（§2.1 参照）。ダミーの `manon-oki-degage-dr2mk-ranversement` は削除 | §2.1 / §3.3 |
 
-> 本セクションはこのドキュメントへの反映。`src/data/types.ts` とダミーデータへの適用は**このドキュメント更新後に別作業**。
+**実装済み**（型・ダミーデータ・描画）:
+- `src/data/dummy/moves.ts`（マノン 16 技）＋ `src/data/index.ts` の `getMove` / `moveByKey` / `stepModernCommand`
+- `Step` は `command`（クラシックの正）を保持しつつ `moveKey` で辞典を参照。モダン表記は
+  `stepModernCommand()` が「明示 `commandModern` > 辞典 `inputModern` > `deriveModern()` 推定」の順で解決
+- `RouteProperties.wakeup` → `src/lib/ui.ts` の `wakeupSummary()` が 1 行テキスト化、フロー枠／パーツ詳細／状況詳細で表示
+- パーツ詳細の「手順」に技辞典のフレーム（発生／ヒット／ガード）を併記
+- `validateAll()` に `moveKey` の実在チェックを追加
+
+**要検証（オーナー）**: モダンの通常技割り当て（`5M` / `2M` が「ツリテ／ヒキテ／ストゥニュー」のどれか）。
+`moves.ts` に仮値＋ notes を入れてある。`5MP`=ツリテ→`5M` は確実、`2MP`/`2MK` は未確認。
 
 ### 3.1 `Step` — 1 手（レシピの最小単位）
 
 ```ts
 interface Step {
-  move: string;            // 技名（表示用）
-  command: string;         // numpad 正準表記（"5MP" "236MP" "DR" "DRC" "66" "(投げ)" 等）
-  commandModern?: string;  // モダンのコマンド（未指定なら deriveModern() で推定）
+  move: string;            // 技名（表示用。moveKey があれば辞典 name を優先してよい）
+  command: string;         // numpad 正準表記（クラシックの正。"5MP" "DR" "66" "(投げ)" 等）
+  commandModern?: string;  // モダン入力の明示指定（通常は不要）
+  moveKey?: string;        // （A-1）moves 辞典の key。モダン入力・フレームの参照元。
+                           //        DR / DRC / 66 / (微歩き) など「技でない操作」では省略
   cancel?: boolean;        // 直前の技からキャンセルで繋ぐか
   note?: string;           // "最速重ね" 等の機能的メモ（ナレーション禁止）
-  moveKey?: string;        // （A-1）moves コレクションの key。フレームデータ辞典と紐付ける。
-                           //        コマンド操作（DR / DRC / 66 / 微歩き 等）や複合ステップでは省略可
 }
 ```
+
+- `command` はクラシック表記の正として常に持つ（辞典と二重持ちだが Phase 1 は許容。`moveKey` があれば辞典を裏取りに使える）
+- モダン表記は `stepModernCommand(step)` が「`commandModern` > `moves[moveKey].inputModern` > `deriveModern(command)`」の順で解決
 
 ### 3.2 `Route` — パーツ＝**レシピの実体**
 
@@ -243,43 +262,52 @@ interface Situation {
 
 ### 3.7 `Move` — 技ごとのフレームデータ辞典（4層目 / A-1）
 
-**決定（A-1）**: 技の発生・持続・硬直・ダメージ等を1技1レコードで持つ辞典コレクション `moves` を作る。
-`Step` は `moveKey` でここを参照し、フロー図・パーツ詳細でフレーム情報を出せるようにする。
+**決定（A-1・実装済み）**: 技の発生・硬直差・ダメージ等を1技1レコードで持つ辞典 `moves` を作る。
+本体は `src/data/dummy/moves.ts`（マノン 16 技）。`Step.moveKey` で参照し、モダン入力とフレームをここから引く。
 
 ```ts
+type MoveCategory = 'normal' | 'unique' | 'special' | 'super' | 'throw' | 'common';
+
 interface Move {
-  key: string;              // 参照キー（例 "manon-5mp" "manon-236mp" "manon-ranversement-m"）
+  key: string;              // 参照キー（例 "manon-5mp" "manon-ranversement-m"）
   character: 'manon';
-  name: string;             // 技名（公式表記）
-  category: 'normal' | 'unique' | 'special' | 'super' | 'throw' | 'common';
+  name: string;             // 技名（公式表記。例 "立ち中P（ツリテ）"）
+  category: MoveCategory;
+
   inputClassic: string;     // numpad 正準表記
-  inputModern?: string;
+  inputModern: string | null;      // モダン入力。null = モダンに存在しない技
+  inputModernPrecise?: string;     // モダンでも通るクラシック式モーション（フルダメージ狙い等）
 
   startup: number | null;   // 発生
-  active: string | null;    // 持続（"3" "2(3)2" など範囲表記があるので string）
-  recovery: number | null;  // 硬直
-  onHit: string | null;     // ヒット硬直差（"+4" "DOWN" など）
+  active: string | null;    // 持続（"4-6" など範囲表記のため string）
+  recovery: string | null;  // 全体/硬直（"着地後3" 等があるため string）
+  onHit: string | null;     // ヒット硬直差（"+4" "D"＝ダウン 等）
   onBlock: string | null;   // ガード硬直差
-  cancel: string | null;    // キャンセル可否（"sp" "su" "-" など公式の表記）
+  cancel: string | null;    // キャンセル可否（"C" "SA" "SA3" 等、公式表記）
   damage: number | null;
 
-  comboScaling?: string | null;         // コンボ補正値
-  driveGainHit?: number | null;         // Dゲージ増加（ヒット）
-  driveLossBlock?: number | null;       // Dゲージ減少（ガード）
-  driveLossPunishCounter?: number | null; // Dゲージ減少（パニッシュカウンター）
-  superGain?: number | null;            // SAゲージ増加
+  comboScaling?: string | null;           // コンボ補正値（"始動補正20%" 等）
+  driveGainHit?: number | null;
+  driveLossBlock?: number | null;
+  driveLossPunishCounter?: number | null;
+  superGain?: number | null;
 
-  attribute?: string[];     // 属性（"下段" "上段" "打撃投げ" など）
-  notes?: string;           // 備考
-  verifiedVersion: string;  // どのゲームバージョンで確認した値か（例 "Ver.2025.06 (Year3)"）
+  attribute?: string[];     // 属性（["上"] ["下"] ["投"] 等）
+  notes?: string;
+  verifiedVersion: string;  // この数値を確認したゲームバージョン
 }
 ```
 
-**データ元**: 公式フレームデータページ
-`https://www.streetfighter.com/6/ja-jp/character/manon/frame`（例: マノン）。
+**モダン入力の考え方（実装）**: モダン必殺技は「方向＋SP」、OD は「方向＋AUTO＋SP」で、
+クラシックの motion とは別物。技ごとに違い機械変換できないため `inputModern` に手入力する。
+`deriveModern()` は辞典に無い技だけの粗いフォールバックに格下げ。
+「モダンでも通る motion 入力」は `inputModernPrecise` に持つ（併記用、任意）。
+
+**データ元**: 公式フレームデータ／コマンドリスト
+`https://www.streetfighter.com/6/ja-jp/character/manon/frame` ・ `.../movelist`。
 列は 技名／発生・持続・硬直／ヒット硬直差・ガード硬直差／キャンセル／ダメージ／コンボ補正値／
 Dゲージ増減／SAゲージ増加／属性／備考。**WebFetch は 403（Cloudflare）で不可、ブラウザでは閲覧可**。
-コミュニティ製の抽出データも存在。IP は Capcom（dustloop / 対空 UFD と同じ非商用ファンツールのグレー領域として扱う）。
+コマンドリストは クラシック／モダン 切替あり。IP は Capcom（dustloop / 対空 UFD と同じ非商用ファンツールのグレー領域として扱う）。
 
 **バージョン管理**: バランス調整でフレームが変わるため各レコードに `verifiedVersion` を持たせ、
 パッチ時は差分だけ追随する（`CONTENT.md` に更新手順を書く）。
@@ -343,8 +371,7 @@ src/
   data/
     types.ts            ← ★ データ構造の仕様
     characters.ts
-    dummy/{situations,routes,combos}.ts   ← ダミーデータ（Phase 2 で JSON へ）
-                                          ← A-1 適用時に moves.ts（技辞典）を追加
+    dummy/{situations,routes,combos,moves}.ts   ← ダミーデータ（Phase 2 で JSON へ）。moves.ts＝技辞典（A-1）
     index.ts            re-export ＋ ID 索引（getRoute / getSituation / getCombo）
   lib/
     notation/{parse,tokens}.ts
@@ -389,33 +416,37 @@ docs/{SPEC.md, PROTOTYPE.md}
 | `cf44e28` | ヘッダーのキャラリンクを**ホバードロップダウン**へ（キャラ増加でヘッダーが伸びない） |
 | `c601841` | **コンボ一覧とセットプレイの区別を明確化**（コンボ＝始動技から／セットプレイ＝特定状況から）＋各タブに説明文 |
 | `936ac5c` | 仕様・設計・実装まとめ（`SPEC.md`）を追加、`PROTOTYPE.md` を更新 |
-| （次） | 用語「起き攻け」→「起き攻め」の統一。**スキーマ決定 A-1〜A-4 をドキュメントに反映**（`moves` 辞典 / `wakeup` 構造化 / `position` 運用ルール / セットプレイのフル一本は非 `Combo`）。型・データへの適用は次段 |
+| `f949987` | 用語「起き攻け」→「起き攻め」の統一。スキーマ決定 A-1〜A-4 をドキュメントに反映 |
+| （次） | **A-1〜A-4 を実装**: `moves` 技辞典（マノン16技、公式フレーム/コマンド）＋ `Step.moveKey` ＋ `stepModernCommand()`／`RouteProperties.wakeup` 構造化（`wakeupSummary()`）／`manon-oki-degage-dr2mk-ranversement` 削除。**U-7**: コマンド表記を公式配色へ（シアン/イエロー/レッド、OD 表記、DR 緑、SP オレンジ、AUTO バッジ）。パーツ詳細にフレーム併記 |
 
 ---
 
 ## 7. 未確定・Phase 2 TODO
 
-### 決定済み（A 項目 / 2026-09-10）→ §3.0
+### 決定・実装済み（A 項目 / U-7 / 2026-09-10）
 
-- **A-1** `moves` コレクション（4層目）を作る … §3.7
-- **A-2** 受け身を `RouteProperties.wakeup` に構造化（`vsWakeup` 文字列を廃止）… §3.2
+- **A-1** `moves` 技辞典（4層目）… §3.7・実装済み
+- **A-2** 受け身を `RouteProperties.wakeup` に構造化（`vsWakeup` 文字列を廃止）… §3.2・実装済み
 - **A-3** `position` はスキーマ現状維持、運用ルールを明文化 … §3.4
-- **A-4** セットプレイのフル一本は `Combo` にしない … §2.1 / §3.3
+- **A-4** セットプレイのフル一本は `Combo` にしない … §2.1 / §3.3・ダミー削除済み
+- **U-1〜U-3** ノードグラフの情報量・深さ・6択の見やすさ … 現状維持で OK
+- **U-4** 微歩き等の非コマンド操作 … （下記の残件へ）
+- **U-5** 相関グラフのスケール戦略 … 現状維持、方針は Phase 2
+- **U-6** ノード粒度の運用ルール … 既定「統合」、条件はルート `constraints` へ。詳細は Phase 2 `CONTENT.md`
+- **U-7** コマンド表記の公式配色（シアン/イエロー/レッド・OD 表記・DR 緑・SP オレンジ・AUTO）… 実装済み（§2.3）
 
 ### レビューで決めたいこと（Phase 1 の残り）
 
-- ノードグラフの情報量・深さ（`OKI_MAX_DEPTH_*`）・初期ズーム。択が多い状況（6択など）の見やすさ
+- **U-4** 微歩き・前ステップ・空振り・投げなど「コマンドではない操作」に専用の操作チップを用意するか（現状: 微歩き＝淡色メモ、前ステ＝`66` の矢印で混在）
 - 起き攻め枠に出す特徴項目の粒度（`frameAdvantage` / `wakeup` / `strongVs` / `weakVs` / `caution` / `onBlock` / `risk`）
-- 相関グラフのノード数が増えたときの表示戦略
-- ノード粒度の運用ルール（どこまでを同一ノードにまとめるか。補正・ジャンプ数など）
-- 微歩き・前ステップ・フレーム消費技などの「コマンドではない操作」の表記ルール
+- モダンの通常技割り当ての検証（`moves.ts` の `2MP` / `2MK` の `inputModern` 仮値）
 
 ### B 項目（Phase 2 の進め方。未決定）
 
 - **B-1** コンボ登録は Skill（`/register-combo`）で対話的に作るか、まとめて種データ投入するか
-- **B-2** モダン操作コマンドの表記ルール詳細（`deriveModern()` の精度と手動 `commandModern` の使い分け）
+- **B-2** `deriveModern()` の精度改善（方向→強度マッピング）と手動 `inputModern` の整備範囲
 - **B-3** フレームデータのパッチ追随フロー（`verifiedVersion` の運用、差分検知）
-- **B-4** id / slug の命名規則の確定（`kd_after_*` / `route_*` / `oki_*` / `manon-*`）
+- **B-4** id / slug の命名規則の確定（`kd_after_*` / `route_*` / `oki_*` / `manon-*` / `moveKey`）
 
 ### C 項目（インフラ。未決定）
 

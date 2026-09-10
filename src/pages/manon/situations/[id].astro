@@ -3,7 +3,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
 import Sequence from '../../../components/notation/Sequence.astro';
 import Stars from '../../../components/Stars.astro';
 import FlowCanvas from '../../../components/islands/FlowCanvas.tsx';
-import { getSituation, situations } from '../../../data';
+import { getSituation, situations, stepModernCommand } from '../../../data';
 import {
   combosThroughSituation,
   incomingRoutes,
@@ -16,6 +16,7 @@ import {
   RISK_VAR,
   ROUTE_KIND_LABEL,
   SITUATION_KIND_LABEL,
+  wakeupSummary,
 } from '../../../lib/ui';
 
 export function getStaticPaths() {
@@ -101,7 +102,7 @@ const hasClassicOnly = outs.some((r) => r.controlType === 'classic');
                     {r.steps.map((st, i) => (
                       <>
                         {i > 0 && <span class="j">›</span>}
-                        <Sequence command={st.command} commandModern={st.commandModern} />
+                        <Sequence command={st.command} commandModern={stepModernCommand(st)} />
                       </>
                     ))}
                   </div>
@@ -113,10 +114,10 @@ const hasClassicOnly = outs.some((r) => r.controlType === 'classic');
                           <dd>{p.frameAdvantage}</dd>
                         </>
                       )}
-                      {p.vsWakeup && (
+                      {p.wakeup && (
                         <>
-                          <dt>起き上がり</dt>
-                          <dd>{p.vsWakeup}</dd>
+                          <dt>受け身</dt>
+                          <dd>{wakeupSummary(p.wakeup)}</dd>
                         </>
                       )}
                       {p.useWhen && (
@@ -251,7 +252,7 @@ const hasClassicOnly = outs.some((r) => r.controlType === 'classic');
   .props dt { color: var(--text-faint); white-space: nowrap; }
   .props dt.s-good { color: var(--risk-low); }
   .props dt.s-bad { color: var(--risk-high); }
-  .props dt.s-frame { color: var(--btn-od); font-weight: 700; }
+  .props dt.s-frame { color: var(--btn-dr); font-weight: 700; }
   .props dd { margin: 0; color: var(--text-dim); }
   .bc-foot { display: flex; justify-content: space-between; align-items: center; margin-top: 0.5rem; flex-wrap: wrap; gap: 0.4rem; }
   .bc-foot .to { font-size: 0.8rem; color: var(--text-faint); }

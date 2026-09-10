@@ -3,6 +3,7 @@ import type {
   Position,
   Risk,
   RouteKind,
+  RouteProperties,
   SituationKind,
 } from '../data/types';
 
@@ -61,4 +62,21 @@ export function driveLabel(cost: number): string {
 export function superLabel(cost: number, saLevel: 1 | 2 | 3 | null): string {
   if (cost <= 0) return 'SA不使用';
   return saLevel ? `SA${saLevel}（${cost}本）` : `SAゲージ ${cost}`;
+}
+
+export const WAKEUP_COVERAGE_LABEL: Record<'both' | 'quick' | 'back', string> = {
+  both: '両対応',
+  quick: 'その場受け身のみ',
+  back: '後ろ受け身のみ',
+};
+
+/** RouteProperties.wakeup を 1 行のテキストにまとめる（フロー枠・一覧向け） */
+export function wakeupSummary(w: RouteProperties['wakeup']): string | undefined {
+  if (!w) return undefined;
+  const head = WAKEUP_COVERAGE_LABEL[w.coverage];
+  if (w.note) return `${head}（${w.note}）`;
+  const parts: string[] = [];
+  if (w.quickRise) parts.push(`その場: ${w.quickRise}`);
+  if (w.backTech) parts.push(`後ろ: ${w.backTech}`);
+  return parts.length ? `${head}／${parts.join('・')}` : head;
 }

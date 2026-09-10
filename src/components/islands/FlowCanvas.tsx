@@ -58,7 +58,7 @@ const OKI_MIN_W = 300; // 起き攻め枠の最小幅（特徴テキストが折
 const OKI_LINE_CHARS = 22;
 function okizemeHeaderHeight(g: FlowGroup): number {
   let lines = 1; // ヘッダ（種別＋有利F＋リスク＋詳細）
-  lines += wrapLines(g.vsWakeup, OKI_LINE_CHARS);
+  lines += wrapLines(g.wakeup, OKI_LINE_CHARS);
   lines += wrapLines(g.strongVs?.join('・'), OKI_LINE_CHARS);
   lines += wrapLines(g.weakVs?.join('・'), OKI_LINE_CHARS);
   lines += wrapLines(g.caution, OKI_LINE_CHARS);
@@ -395,8 +395,8 @@ export default function FlowCanvas({ graph, graphModern, height = 520 }: Props) 
                         詳細
                       </a>
                     </div>
-                    {gb.group.vsWakeup ? (
-                      <div class="gi-line gi-wake">起き上がり: {gb.group.vsWakeup}</div>
+                    {gb.group.wakeup ? (
+                      <div class="gi-line gi-wake">受け身: {gb.group.wakeup}</div>
                     ) : null}
                     {gb.group.strongVs?.length ? (
                       <div class="gi-line gi-good">◯ {gb.group.strongVs.join('・')}</div>
@@ -511,7 +511,7 @@ export default function FlowCanvas({ graph, graphModern, height = 520 }: Props) 
         .gi-risk.r-中 { color:var(--risk-mid); }
         .gi-risk.r-高 { color:var(--risk-high); }
         .gi-link { margin-left:auto; font-size:.66rem; color:var(--link); font-weight:700; }
-        .gi-frame { font-family:var(--font-pixel); font-size:.66rem; background:var(--btn-od); color:#08160c; padding:.05em .4em; font-weight:700; }
+        .gi-frame { font-family:var(--font-pixel); font-size:.66rem; background:var(--btn-dr); color:#08160c; padding:.05em .4em; font-weight:700; }
         :root[data-theme='light'] .gi-frame { color:#fff; }
         .gi-line { font-size:.68rem; line-height:1.3; color:var(--text); white-space:normal; overflow:hidden; }
         .gi-line b { font-weight:700; }
