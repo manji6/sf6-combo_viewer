@@ -2,12 +2,20 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import ComboExplorer from '../../components/ComboExplorer.astro';
 import { characterById } from '../../data/characters';
-import { combos, situations } from '../../data';
+import { combos, getSituation, situations } from '../../data';
 import { outgoingRoutes } from '../../lib/graph/derive';
 import { POSITION_LABEL } from '../../lib/ui';
 
 const character = characterById.get('manon')!;
-const manonCombos = combos.filter((c) => c.character === 'manon');
+
+// コンボ＝始動技から始まる経路（相手の状況を問わない）。
+// 始動が「特定状況（ダウン後・パリィ後など）」のものはセットプレイ側で扱う。
+const SITUATIONAL = new Set(['knockdown', 'okiStart', 'blockstring']);
+const manonCombos = combos.filter(
+  (c) => c.character === 'manon' && !SITUATIONAL.has(getSituation(c.startFrom).kind),
+);
+
+// セットプレイ＝特定状況から始まる読み合い（起き攻め起点のダウンなど）
 const setplayStarts = situations.filter(
   (s) => s.tags.includes('起き攻め開始') && outgoingRoutes(s.id).length > 0,
 );
@@ -34,12 +42,17 @@ const setplayStarts = situations.filter(
     </div>
 
     <section class="tab-panel" data-panel="combos">
+      <p class="tab-desc">
+        <strong>コンボ</strong>＝始動技から始まる伸ばし方。相手の状況を問わず「この技が当たったら
+        どこまで伸びるか」。フィルタ／ソートで探せます。
+      </p>
       <ComboExplorer combos={manonCombos} />
     </section>
 
     <section class="tab-panel" data-panel="setplay">
-      <p class="hint">
-        締めからの起き攻め起点。各ページで分岐択の樹形図（何に強い・弱い・いつ使う）を確認できます。
+      <p class="tab-desc">
+        <strong>セットプレイ</strong>＝特定の状況から始まる読み合い（○○締め後のダウン、△△をジャスト
+        パリィした後 など）。各起点で分岐択とその特徴・初回行動後の有利フレームを確認できます。
       </p>
       <ul class="sp-grid">
         {
@@ -124,6 +137,17 @@ const setplayStarts = situations.filter(
     display: block;
   }
 
+  .tab-desc {
+    font-size: 0.85rem;
+    color: var(--text-dim);
+    margin: 0 0 1rem;
+    border-left: 3px solid var(--accent);
+    padding: 0.3rem 0.7rem;
+    background: var(--bg-sunken);
+  }
+  .tab-desc strong {
+    color: var(--accent);
+  }
   .hint {
     font-size: 0.85rem;
     color: var(--text-faint);
