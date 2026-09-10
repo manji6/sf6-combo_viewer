@@ -1,8 +1,9 @@
-// drafts/ を現在の src/content にマージした状態で validateAll を回す（promote 前の確認）。
+// 既存の src/content ＋ drafts/ をマージした状態で validateAll を回す（promote 前の確認）。
 import { readFileSync, readdirSync } from 'node:fs';
 import { join } from 'node:path';
 import process from 'node:process';
 import { validateAll } from '../src/lib/graph/derive';
+import { situations, routes, combos, moves } from '../src/data';
 
 const d = 'drafts';
 const byColl: Record<string, any[]> = { situations: [], routes: [], combos: [], moves: [] };
@@ -11,10 +12,10 @@ for (const f of readdirSync(d).filter((x) => x.endsWith('.json'))) {
   if (m && byColl[m[1]]) byColl[m[1]].push(JSON.parse(readFileSync(join(d, f), 'utf8')));
 }
 const errs = validateAll({
-  situations: byColl.situations,
-  routes: byColl.routes,
-  combos: byColl.combos,
-  moves: byColl.moves,
+  situations: [...situations, ...byColl.situations],
+  routes: [...routes, ...byColl.routes],
+  combos: [...combos, ...byColl.combos],
+  moves: [...moves, ...byColl.moves],
 });
 if (errs.length === 0) {
   console.log('validateAll OK（下書きマージ時）');

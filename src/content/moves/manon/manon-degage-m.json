@@ -1,0 +1,25 @@
+{
+  "character": "manon",
+  "verifiedVersion": "Year3（公式フレームデータ参照。パッチ版数未確認）",
+  "key": "manon-degage-m",
+  "name": "中デガジェ",
+  "category": "special",
+  "inputClassic": "214MK",
+  "inputModern": "4SP",
+  "inputModernPrecise": "214M",
+  "startup": 16,
+  "active": "16-39",
+  "recovery": "22",
+  "onHit": "D",
+  "onBlock": "-13",
+  "cancel": null,
+  "damage": 1200,
+  "driveGainHit": 2000,
+  "driveLossBlock": -5000,
+  "driveLossPunishCounter": -8000,
+  "superGain": 800,
+  "attribute": [
+    "上"
+  ],
+  "notes": "15-39F 空中判定。確反・パニカンの〆に。豪鬼が黄色体力なら 強Kパニカン>中デガジェ で倒せる。モダンは強度自動選択"
+}

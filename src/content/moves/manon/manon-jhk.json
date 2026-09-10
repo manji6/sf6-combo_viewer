@@ -1,0 +1,24 @@
+{
+  "character": "manon",
+  "verifiedVersion": "Year3（公式フレームデータ参照。パッチ版数未確認）",
+  "key": "manon-jhk",
+  "name": "ジャンプ強K（カブリオール）",
+  "category": "normal",
+  "inputClassic": "j.HK",
+  "inputModern": "j.H",
+  "startup": 11,
+  "active": "11-15",
+  "recovery": "着地後3",
+  "onHit": null,
+  "onBlock": null,
+  "cancel": null,
+  "damage": 800,
+  "driveGainHit": 2000,
+  "driveLossBlock": -4000,
+  "driveLossPunishCounter": -5000,
+  "superGain": 1000,
+  "attribute": [
+    "中"
+  ],
+  "notes": "飛び込み。飛び道具読み前ジャンプが通った時のコンボ始動。ヒット/ガード硬直差は当てる高さで変動"
+}

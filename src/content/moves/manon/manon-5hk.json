@@ -1,0 +1,24 @@
+{
+  "character": "manon",
+  "verifiedVersion": "Year3（公式フレームデータ参照。パッチ版数未確認）",
+  "key": "manon-5hk",
+  "name": "立ち強K（ピエ・ドンジュ）",
+  "category": "normal",
+  "inputClassic": "5HK",
+  "inputModern": "5H",
+  "startup": 15,
+  "active": "15-17",
+  "recovery": "26",
+  "onHit": null,
+  "onBlock": "-6",
+  "cancel": null,
+  "damage": 900,
+  "driveGainHit": 3000,
+  "driveLossBlock": -6000,
+  "driveLossPunishCounter": -10000,
+  "superGain": 1000,
+  "attribute": [
+    "上"
+  ],
+  "notes": "リーチが長くゲージ削り良好。地上パニッシュカウンター時 +17F、空中パニカン時吹き飛びダウン。差し返しパニカンで追撃可。ヒット硬直差は要確認"
+}

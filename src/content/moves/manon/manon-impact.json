@@ -1,0 +1,25 @@
+{
+  "character": "manon",
+  "verifiedVersion": "Year3（公式フレームデータ参照。パッチ版数未確認）",
+  "key": "manon-impact",
+  "name": "ドライブインパクト（グリッサード）",
+  "category": "common",
+  "inputClassic": "DI",
+  "inputModern": "DI",
+  "startup": 26,
+  "active": "26-27",
+  "recovery": "35",
+  "onHit": "D",
+  "onBlock": "-3",
+  "cancel": null,
+  "damage": 800,
+  "comboScaling": "始動補正20%",
+  "driveGainHit": 800,
+  "driveLossBlock": -5000,
+  "driveLossPunishCounter": -15000,
+  "superGain": 0,
+  "attribute": [
+    "上"
+  ],
+  "notes": "1-27F アーマー判定（2回）。パニカン/アーマー成立後にヒットで 地上膝崩れ・SAゲージ3000増加。Dゲージ1本消費"
+}

@@ -1,0 +1,30 @@
+{
+  "character": "manon",
+  "notes": "出典: すこれるブログ（sukoreru.com/sf6-manon）。合計ダメージは各技の素点合計＝補正前の目安。難易度は推定。",
+  "id": "starter_di_corner",
+  "from": "neutral_corner",
+  "to": "wall_splat_corner",
+  "kind": "starter",
+  "label": "画面端 ドライブインパクト（壁貼りつき）",
+  "steps": [
+    {
+      "move": "ドライブインパクト",
+      "command": "DI",
+      "moveKey": "manon-impact",
+      "note": "画面端で当てると壁貼りつき"
+    }
+  ],
+  "resources": {
+    "driveCost": 1,
+    "superCost": 0,
+    "saLevel": null
+  },
+  "damage": 800,
+  "difficulty": 1,
+  "constraints": "画面端。アクセントで撃つ程度（コマ投げの方が強いことが多い）",
+  "controlType": "both",
+  "tags": [
+    "インパクト",
+    "画面端"
+  ]
+}

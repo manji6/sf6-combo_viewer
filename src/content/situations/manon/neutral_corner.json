@@ -1,0 +1,12 @@
+{
+  "tags": [
+    "始動"
+  ],
+  "id": "neutral_corner",
+  "label": "画面端・立ち回り",
+  "kind": "neutral",
+  "position": "corner",
+  "opponentState": "neutral",
+  "advantage": "±0",
+  "notes": "画面端は打撃択からのリターンが悪くない。ただしコマ投げが強いので端でインパクトを撃つならコマ投げの方が良いことが多い。"
+}

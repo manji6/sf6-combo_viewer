@@ -1,0 +1,25 @@
+{
+  "character": "manon",
+  "verifiedVersion": "Year3（公式フレームデータ参照。パッチ版数未確認）",
+  "key": "manon-ranversement-l",
+  "name": "弱ランヴェルセ",
+  "category": "special",
+  "inputClassic": "236LP",
+  "inputModern": "2SP",
+  "inputModernPrecise": "236L",
+  "startup": 22,
+  "active": "22-23",
+  "recovery": "37",
+  "onHit": "D",
+  "onBlock": "-23",
+  "cancel": "SA3",
+  "damage": 1350,
+  "driveGainHit": 2000,
+  "driveLossBlock": -2000,
+  "driveLossPunishCounter": -8000,
+  "superGain": 2150,
+  "attribute": [
+    "上"
+  ],
+  "notes": "ダメージはメダルLv1（Lvで上昇: Lv5 で1950）。3-23F 飛び道具無敵。SA3 に繋ぐならどのコンボでも弱ランヴェルセが最ダメージ。モダンは強度自動選択"
+}

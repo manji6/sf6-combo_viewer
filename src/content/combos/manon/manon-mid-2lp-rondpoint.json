@@ -1,0 +1,18 @@
+{
+  "character": "manon",
+  "slug": "manon-mid-2lp-rondpoint",
+  "name": "中央 2弱P始動 強ロン・ポワン〆",
+  "situationLabel": "中央・小技/4F暴れ始動",
+  "routeChain": [
+    "route_2lp_rondpoint_h"
+  ],
+  "startFrom": "neutral_mid",
+  "endAt": "kd_after_rondpoint_h_mid",
+  "difficulty": 1,
+  "tags": [
+    "とりこれ",
+    "ノーゲージ",
+    "起き攻め"
+  ],
+  "description": "小技・4F暴れから。2弱P からは デガジェ 不可、ロン・ポワンは可。迷ったら起き攻めもSA3も繋がる強ロン・ポワン。出典: すこれるブログ（sukoreru.com/sf6-manon）。合計ダメージは各技の素点合計＝補正前の目安。難易度は推定。"
+}

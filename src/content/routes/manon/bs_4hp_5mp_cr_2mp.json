@@ -1,0 +1,46 @@
+{
+  "character": "manon",
+  "notes": "出典: すこれるブログ（sukoreru.com/sf6-manon）。合計ダメージは各技の素点合計＝補正前の目安。難易度は推定。",
+  "id": "bs_4hp_5mp_cr_2mp",
+  "from": "blockstring_5mp_cr_2mp",
+  "to": "juggle_can_4hp_ranversement",
+  "kind": "okizeme",
+  "label": "4強P（ジャンプ確認）",
+  "steps": [
+    {
+      "move": "4強P",
+      "command": "4HP",
+      "moveKey": "manon-4hp",
+      "note": "ジャンプにヒット確認で 4強P→中ランヴェルセ。ガードでもホールドでフェイント派生"
+    }
+  ],
+  "resources": {
+    "driveCost": 0,
+    "superCost": 0,
+    "saLevel": null
+  },
+  "damage": 800,
+  "difficulty": 2,
+  "constraints": "2中P と同用途。打撃暴れには負ける",
+  "controlType": "both",
+  "properties": {
+    "frameAdvantage": {
+      "frames": "+3",
+      "note": "4強P ヒット時"
+    },
+    "strongVs": [
+      "前・バックジャンプ"
+    ],
+    "weakVs": [
+      "打撃暴れ"
+    ],
+    "useWhen": "ジャンプ潰し。ヒット確認で 4強P→中ランヴェルセ（メダル。2中P より高リターン）",
+    "onBlock": "+1",
+    "risk": "中"
+  },
+  "tags": [
+    "対の択",
+    "確認",
+    "メダル"
+  ]
+}

@@ -1,0 +1,43 @@
+{
+  "character": "manon",
+  "notes": "出典: すこれるブログ（sukoreru.com/sf6-manon）。合計ダメージは各技の素点合計＝補正前の目安。難易度は推定。",
+  "id": "route_maesute_4hp_ranversement",
+  "from": "juggle_di_pc",
+  "to": "kd_after_ranversement_mid",
+  "kind": "ender",
+  "label": "前ステ → 4強P → 中ランヴェルセ",
+  "steps": [
+    {
+      "move": "前ステップ",
+      "command": "66",
+      "action": "dash",
+      "note": "フレーム消費＋遠目で当たった時のケア"
+    },
+    {
+      "move": "4強P",
+      "command": "4HP",
+      "moveKey": "manon-4hp"
+    },
+    {
+      "move": "中ランヴェルセ",
+      "command": "236MP",
+      "moveKey": "manon-ranversement-m",
+      "cancel": true,
+      "note": "メダルLv+1"
+    }
+  ],
+  "resources": {
+    "driveCost": 0,
+    "superCost": 0,
+    "saLevel": null
+  },
+  "damage": 2200,
+  "difficulty": 2,
+  "constraints": "インパクト膝崩れから。メダル1枚しかない時用（2枚あればコマ投げでよい）。ノーゲージ",
+  "controlType": "both",
+  "tags": [
+    "インパクト返し",
+    "メダル",
+    "〆"
+  ]
+}

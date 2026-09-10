@@ -1,0 +1,37 @@
+{
+  "character": "manon",
+  "notes": "出典: すこれるブログ（sukoreru.com/sf6-manon）。合計ダメージは各技の素点合計＝補正前の目安。難易度は推定。",
+  "id": "route_di_wall_4hp_ranversement_l",
+  "from": "wall_splat_corner",
+  "to": "kd_after_ranversement_corner",
+  "kind": "ender",
+  "label": "4強P → 弱ランヴェルセ",
+  "steps": [
+    {
+      "move": "4強P",
+      "command": "4HP",
+      "moveKey": "manon-4hp"
+    },
+    {
+      "move": "弱ランヴェルセ",
+      "command": "236LP",
+      "moveKey": "manon-ranversement-l",
+      "cancel": true,
+      "note": "メダルLv+1"
+    }
+  ],
+  "resources": {
+    "driveCost": 0,
+    "superCost": 0,
+    "saLevel": null
+  },
+  "damage": 2150,
+  "difficulty": 1,
+  "constraints": "画面端インパクト壁貼りつきから。ノーゲージコンボと同ルート",
+  "controlType": "both",
+  "tags": [
+    "インパクト",
+    "画面端",
+    "〆"
+  ]
+}

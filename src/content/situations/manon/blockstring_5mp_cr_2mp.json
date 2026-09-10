@@ -1,0 +1,10 @@
+{
+  "tags": [],
+  "id": "blockstring_5mp_cr_2mp",
+  "label": "中P CDR 2中P ガード後・+3有利",
+  "kind": "blockstring",
+  "position": "midscreen",
+  "opponentState": "blockstun",
+  "advantage": "+3（連続ガード）",
+  "notes": "強コマ投げ / 2中P・4強P で2択。中P がヒットしていた場合は同ルートでランヴェルセまで（メダル）。相手はジャンプするか無敵技を撃つかだけ考えればよく、非常に有利な読み合い。"
+}

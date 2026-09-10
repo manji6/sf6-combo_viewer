@@ -1,0 +1,19 @@
+{
+  "character": "manon",
+  "slug": "manon-di-punish-ranversement",
+  "name": "インパクト返し 前ステ 4強P 中ランヴェルセ〆",
+  "situationLabel": "相手インパクトをパニカンで返した",
+  "routeChain": [
+    "route_di_pc",
+    "route_maesute_4hp_ranversement"
+  ],
+  "startFrom": "neutral_mid",
+  "endAt": "kd_after_ranversement_mid",
+  "difficulty": 2,
+  "tags": [
+    "インパクト返し",
+    "メダル",
+    "ノーゲージ"
+  ],
+  "description": "メダルが2枚あればコマ投げでよい。メダル1枚しかない時用のノーゲージコンボ。前ステはフレーム消費と遠目のケア。出典: すこれるブログ（sukoreru.com/sf6-manon）。合計ダメージは各技の素点合計＝補正前の目安。難易度は推定。"
+}

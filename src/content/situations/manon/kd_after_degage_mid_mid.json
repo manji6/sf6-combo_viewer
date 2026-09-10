@@ -1,0 +1,10 @@
+{
+  "tags": [],
+  "id": "kd_after_degage_mid_mid",
+  "label": "中デガジェ締め後・中央ダウン",
+  "kind": "knockdown",
+  "position": "midscreen",
+  "opponentState": "knockdown_soft",
+  "wakeupNote": "受け身可",
+  "notes": "確反・差し返しパニカンの〆。起き攻めルートはバッチ2では未整理（起き攻めは弱デガジェ〆の方が強い）。"
+}

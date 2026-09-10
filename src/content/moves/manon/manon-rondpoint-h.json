@@ -1,0 +1,25 @@
+{
+  "character": "manon",
+  "verifiedVersion": "Year3（公式フレームデータ参照。パッチ版数未確認）",
+  "key": "manon-rondpoint-h",
+  "name": "強ロン・ポワン",
+  "category": "special",
+  "inputClassic": "236HK",
+  "inputModern": "6SP",
+  "inputModernPrecise": "236H",
+  "startup": 14,
+  "active": "14-22",
+  "recovery": "24",
+  "onHit": "D",
+  "onBlock": "-11",
+  "cancel": "SA3",
+  "damage": 800,
+  "driveGainHit": 2000,
+  "driveLossBlock": -4000,
+  "driveLossPunishCounter": -4000,
+  "superGain": 1350,
+  "attribute": [
+    "上"
+  ],
+  "notes": "9-22F 上半身空中判定無敵。44-46F ヒット時 必殺技/SA キャンセル可。〆に使うとラッシュ2中K重ねの起き攻め（弱デガジェ〆と違い最速だとスカる）。モダンは強度自動選択"
+}

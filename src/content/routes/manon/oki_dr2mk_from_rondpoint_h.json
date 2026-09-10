@@ -1,0 +1,52 @@
+{
+  "character": "manon",
+  "notes": "出典: すこれるブログ（sukoreru.com/sf6-manon）。合計ダメージは各技の素点合計＝補正前の目安。難易度は推定。",
+  "id": "oki_dr2mk_from_rondpoint_h",
+  "from": "kd_after_rondpoint_h_mid",
+  "to": "juggle_can_4hp_ranversement",
+  "kind": "okizeme",
+  "label": "ラッシュ2中K 重ね",
+  "steps": [
+    {
+      "move": "ドライブラッシュ",
+      "command": "DR"
+    },
+    {
+      "move": "2中K",
+      "command": "2MK",
+      "moveKey": "manon-2mk",
+      "note": "持続重ね"
+    }
+  ],
+  "resources": {
+    "driveCost": 1,
+    "superCost": 0,
+    "saLevel": null
+  },
+  "damage": 600,
+  "difficulty": 4,
+  "constraints": "強ロン・ポワン〆から。弱デガジェ〆と違い最速だとスカる。タイミング要練習",
+  "controlType": "both",
+  "properties": {
+    "frameAdvantage": {
+      "frames": "+5",
+      "note": "2中K 持続ガード時（弱デガジェ〆基準の推定）"
+    },
+    "wakeup": {
+      "coverage": "both",
+      "note": "最速だとスカる。タイミング調整が必要"
+    },
+    "strongVs": [
+      "暴れ"
+    ],
+    "weakVs": [
+      "垂直ジャンプ",
+      "無敵技"
+    ],
+    "useWhen": "強ロン・ポワン〆の起き攻め。安定は弱デガジェ〆",
+    "risk": "低"
+  },
+  "tags": [
+    "持続重ね"
+  ]
+}

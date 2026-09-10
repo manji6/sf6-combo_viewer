@@ -1,0 +1,47 @@
+{
+  "character": "manon",
+  "notes": "出典: すこれるブログ（sukoreru.com/sf6-manon）。合計ダメージは各技の素点合計＝補正前の目安。難易度は推定。 モダンは強度自動選択。",
+  "id": "bs_grab_5mp_cr_2mp",
+  "from": "blockstring_5mp_cr_2mp",
+  "to": "kd_after_manege_dore_mid",
+  "kind": "okizeme",
+  "label": "強コマ投げ（本命）",
+  "steps": [
+    {
+      "move": "強マネージュ・ドレ",
+      "command": "63214HP",
+      "moveKey": "manon-manege-h"
+    }
+  ],
+  "resources": {
+    "driveCost": 0,
+    "superCost": 0,
+    "saLevel": null
+  },
+  "damage": 2000,
+  "difficulty": 2,
+  "constraints": "中P>CDR>2中P ガード後（+3）。本命択",
+  "controlType": "classic",
+  "properties": {
+    "frameAdvantage": {
+      "frames": "±0",
+      "note": "コマ投げ・メダル+1"
+    },
+    "strongVs": [
+      "暴れ",
+      "ガード継続"
+    ],
+    "weakVs": [
+      "前・バックジャンプ",
+      "無敵技"
+    ],
+    "useWhen": "本命。相手のジャンプと無敵技以外の全てに勝ち、メダルを溜められる",
+    "onBlock": "—（投げ）",
+    "risk": "中"
+  },
+  "tags": [
+    "本命",
+    "崩し",
+    "メダル"
+  ]
+}

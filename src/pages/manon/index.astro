@@ -15,9 +15,13 @@ const manonCombos = combos.filter(
   (c) => c.character === 'manon' && !SITUATIONAL.has(getSituation(c.startFrom).kind),
 );
 
-// セットプレイ＝特定状況から始まる読み合い（起き攻め起点のダウンなど）
+// セットプレイ＝特定状況から始まる読み合い。
+// ダウン／起き攻め起点／ガード連携で、okizeme パーツが出ているノードを起点とみなす。
+const SETPLAY_KINDS = new Set(['knockdown', 'okiStart', 'blockstring']);
 const setplayStarts = situations.filter(
-  (s) => s.tags.includes('起き攻め開始') && outgoingRoutes(s.id).length > 0,
+  (s) =>
+    SETPLAY_KINDS.has(s.kind) &&
+    outgoingRoutes(s.id).some((r) => r.kind === 'okizeme'),
 );
 ---
 

@@ -1,0 +1,10 @@
+{
+  "tags": [],
+  "id": "wall_splat_corner",
+  "label": "ドライブインパクト 壁貼りつき・画面端",
+  "kind": "juggle",
+  "position": "corner",
+  "opponentState": "wall_splat",
+  "advantage": "壁貼りつき",
+  "notes": "画面端インパクト。ノーゲージコンボと同ルート（4強P → 弱ランヴェルセ）。"
+}

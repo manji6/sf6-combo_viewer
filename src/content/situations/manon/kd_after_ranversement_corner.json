@@ -1,0 +1,10 @@
+{
+  "tags": [],
+  "id": "kd_after_ranversement_corner",
+  "label": "ランヴェルセ締め後・画面端ダウン",
+  "kind": "knockdown",
+  "position": "corner",
+  "opponentState": "knockdown_soft",
+  "wakeupNote": "受け身可",
+  "notes": "バッチ2では起き攻めルート未整理。"
+}

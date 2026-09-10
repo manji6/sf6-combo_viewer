@@ -1,0 +1,10 @@
+{
+  "tags": [],
+  "id": "juggle_di_pc",
+  "label": "ドライブインパクト パニッシュカウンター・浮き/膝崩れ",
+  "kind": "juggle",
+  "position": "midscreen",
+  "opponentState": "juggle",
+  "advantage": "膝崩れ",
+  "notes": "相手のインパクト/技をパニカンで返した、またはアーマー成立後にヒット。前ステで距離を調整して 4強P で拾う。"
+}

@@ -1,0 +1,25 @@
+{
+  "character": "manon",
+  "verifiedVersion": "Year3（公式フレームデータ参照。パッチ版数未確認）",
+  "key": "manon-2lp",
+  "name": "しゃがみ弱P（ソデキリ）",
+  "category": "normal",
+  "inputClassic": "2LP",
+  "inputModern": "2L",
+  "startup": 4,
+  "active": "4-5",
+  "recovery": "11",
+  "onHit": "+3",
+  "onBlock": "-2",
+  "cancel": "C",
+  "damage": 300,
+  "comboScaling": "始動補正20%",
+  "driveGainHit": 250,
+  "driveLossBlock": -500,
+  "driveLossPunishCounter": -2000,
+  "superGain": 300,
+  "attribute": [
+    "上"
+  ],
+  "notes": "連打キャンセル対応。2弱P からは デガジェ 不可・ロン・ポワンは可。モダンの弱攻撃割り当ては要検証"
+}

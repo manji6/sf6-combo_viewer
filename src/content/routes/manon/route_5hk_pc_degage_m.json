@@ -1,0 +1,38 @@
+{
+  "character": "manon",
+  "notes": "出典: すこれるブログ（sukoreru.com/sf6-manon）。合計ダメージは各技の素点合計＝補正前の目安。難易度は推定。",
+  "id": "route_5hk_pc_degage_m",
+  "from": "neutral_mid",
+  "to": "kd_after_degage_mid_mid",
+  "kind": "combo_route",
+  "label": "強K パニカン → 中デガジェ〆",
+  "steps": [
+    {
+      "move": "強K",
+      "command": "PC 5HK",
+      "moveKey": "manon-5hk",
+      "note": "遠めの差し返しがパニッシュカウンター"
+    },
+    {
+      "move": "中デガジェ",
+      "command": "214MK",
+      "moveKey": "manon-degage-m",
+      "cancel": true,
+      "note": "弱/中デガジェ or SA2（SA2は3800dmg＋Dゲージ2削り）"
+    }
+  ],
+  "resources": {
+    "driveCost": 0,
+    "superCost": 0,
+    "saLevel": null
+  },
+  "damage": 2100,
+  "difficulty": 2,
+  "constraints": "遠めの差し返し 強K がパニッシュカウンターした時",
+  "controlType": "both",
+  "tags": [
+    "パニカン",
+    "差し返し",
+    "〆"
+  ]
+}

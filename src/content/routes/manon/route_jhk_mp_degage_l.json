@@ -1,0 +1,44 @@
+{
+  "character": "manon",
+  "notes": "出典: すこれるブログ（sukoreru.com/sf6-manon）。合計ダメージは各技の素点合計＝補正前の目安。難易度は推定。",
+  "id": "route_jhk_mp_degage_l",
+  "from": "neutral_mid",
+  "to": "kd_after_degage_light_mid",
+  "kind": "combo_route",
+  "label": "J強K → 中P → 弱デガジェ〆",
+  "steps": [
+    {
+      "move": "J強K",
+      "command": "j.HK",
+      "moveKey": "manon-jhk",
+      "note": "飛び道具読み前ジャンプ"
+    },
+    {
+      "move": "中P",
+      "command": "5MP",
+      "moveKey": "manon-5mp",
+      "cancel": true
+    },
+    {
+      "move": "弱デガジェ",
+      "command": "214LK",
+      "moveKey": "manon-degage-l",
+      "cancel": true,
+      "note": "〆。起き攻めが強い"
+    }
+  ],
+  "resources": {
+    "driveCost": 0,
+    "superCost": 0,
+    "saLevel": null
+  },
+  "damage": 2400,
+  "difficulty": 2,
+  "constraints": "飛び道具読み前ジャンプが通った時。4強P が届かなそうならこちら。強ロン・ポワン>SA3 や ODロン・ポワン>SA2 も可",
+  "controlType": "classic",
+  "tags": [
+    "ジャンプ始動",
+    "起き攻め",
+    "〆"
+  ]
+}

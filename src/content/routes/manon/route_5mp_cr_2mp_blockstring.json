@@ -1,0 +1,39 @@
+{
+  "character": "manon",
+  "notes": "出典: すこれるブログ（sukoreru.com/sf6-manon）。合計ダメージは各技の素点合計＝補正前の目安。難易度は推定。",
+  "id": "route_5mp_cr_2mp_blockstring",
+  "from": "neutral_mid",
+  "to": "blockstring_5mp_cr_2mp",
+  "kind": "combo_route",
+  "label": "中P CDR 2中P（ガードさせ）",
+  "steps": [
+    {
+      "move": "中P",
+      "command": "5MP",
+      "moveKey": "manon-5mp",
+      "cancel": true
+    },
+    {
+      "move": "キャンセルドライブラッシュ",
+      "command": "DRC"
+    },
+    {
+      "move": "2中P",
+      "command": "2MP",
+      "moveKey": "manon-2mp"
+    }
+  ],
+  "resources": {
+    "driveCost": 3,
+    "superCost": 0,
+    "saLevel": null
+  },
+  "damage": 1200,
+  "difficulty": 3,
+  "constraints": "ガードさせて +3 有利（連続ガード）。ヒットしていれば同ルートで 4強P→中ランヴェルセ",
+  "controlType": "both",
+  "tags": [
+    "CDR",
+    "連携"
+  ]
+}

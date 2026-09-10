@@ -1,0 +1,17 @@
+{
+  "character": "manon",
+  "slug": "manon-jump-jhk-mp-degage",
+  "name": "ジャンプ始動 J強K 中P 弱デガジェ〆",
+  "situationLabel": "飛び道具読み前ジャンプが通った時",
+  "routeChain": [
+    "route_jhk_mp_degage_l"
+  ],
+  "startFrom": "neutral_mid",
+  "endAt": "kd_after_degage_light_mid",
+  "difficulty": 2,
+  "tags": [
+    "ジャンプ始動",
+    "起き攻め"
+  ],
+  "description": "飛び道具読み前ジャンプが通った時。4強P が届かなそうならこちら。締めの弱デガジェから起き攻め。出典: すこれるブログ（sukoreru.com/sf6-manon）。合計ダメージは各技の素点合計＝補正前の目安。難易度は推定。"
+}
