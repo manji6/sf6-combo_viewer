@@ -1,8 +1,8 @@
 ---
 import type { Combo } from '../data/types';
 import { getSituation } from '../data';
-import { flattenCombo } from '../lib/graph/derive';
-import { POSITION_LABEL, SITUATION_KIND_LABEL } from '../lib/ui';
+import { comboStarterMove, flattenCombo } from '../lib/graph/derive';
+import { POSITION_LABEL } from '../lib/ui';
 import ComboCard from './ComboCard.astro';
 
 interface Props {
@@ -13,11 +13,12 @@ const { combos } = Astro.props;
 const enriched = combos.map((combo) => {
   const flat = flattenCombo(combo);
   const start = getSituation(combo.startFrom);
-  return { combo, flat, start };
+  const starter = comboStarterMove(combo);
+  return { combo, flat, start, starter };
 });
 
 const positions = [...new Set(enriched.map((e) => e.start.position))];
-const startKinds = [...new Set(enriched.map((e) => e.start.kind))];
+const starterMoves = [...new Set(enriched.map((e) => e.starter?.label).filter(Boolean))] as string[];
 const allTags = [...new Set(enriched.flatMap((e) => e.combo.tags))].sort();
 
 function driveBucket(n: number) {
@@ -42,12 +43,12 @@ function driveBucket(n: number) {
     </div>
 
     <div class="fgroup">
-      <span class="flabel">始動</span>
+      <span class="flabel">始動技</span>
       {
-        startKinds.map((k) => (
+        starterMoves.map((m) => (
           <label class="chip">
-            <input type="checkbox" name="kind" value={k} />
-            {SITUATION_KIND_LABEL[k]}
+            <input type="checkbox" name="starter" value={m} />
+            {m}
           </label>
         ))
       }
@@ -99,12 +100,12 @@ function driveBucket(n: number) {
 
   <div class="grid" data-grid>
     {
-      enriched.map(({ combo, flat, start }) => (
+      enriched.map(({ combo, flat, start, starter }) => (
         <div
           class="grid-item"
           data-item
           data-pos={start.position}
-          data-kind={start.kind}
+          data-starter={starter?.label ?? ''}
           data-drive={driveBucket(flat.totalDrive)}
           data-sa={flat.totalSuper > 0 ? 'yes' : 'no'}
           data-modern={flat.supportsModern ? 'yes' : 'no'}
@@ -203,7 +204,7 @@ function driveBucket(n: number) {
     const countEl = root.querySelector<HTMLElement>('[data-count]')!;
     const emptyEl = root.querySelector<HTMLElement>('[data-empty]')!;
     const sortEl = form.querySelector<HTMLSelectElement>('[data-sort]')!;
-    const GROUPS = ['pos', 'kind', 'drive', 'sa', 'modern', 'tag'] as const;
+    const GROUPS = ['pos', 'starter', 'drive', 'sa', 'modern', 'tag'] as const;
 
     function readURL() {
       const q = new URLSearchParams(location.search);
@@ -226,7 +227,8 @@ function driveBucket(n: number) {
       });
       if (sortEl.value !== 'damage') q.set('sort', sortEl.value);
       const s = q.toString();
-      history.replaceState(null, '', s ? `?${s}` : location.pathname);
+      // タブの #hash は残す
+      history.replaceState(null, '', (s ? `?${s}` : location.pathname) + location.hash);
     }
 
     function selected(group: string): string[] {
@@ -237,13 +239,13 @@ function driveBucket(n: number) {
 
     function match(it: ItemEl): boolean {
       const pos = selected('pos');
-      const kind = selected('kind');
+      const starter = selected('starter');
       const drive = selected('drive');
       const sa = selected('sa');
       const modern = selected('modern');
       const tags = selected('tag');
       if (pos.length && !pos.includes(it.dataset.pos!)) return false;
-      if (kind.length && !kind.includes(it.dataset.kind!)) return false;
+      if (starter.length && !starter.includes(it.dataset.starter!)) return false;
       if (drive.length && !drive.includes(it.dataset.drive!)) return false;
       if (sa.length && !sa.includes(it.dataset.sa!)) return false;
       if (modern.length && it.dataset.modern !== 'yes') return false;

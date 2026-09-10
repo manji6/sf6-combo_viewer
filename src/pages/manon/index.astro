@@ -33,15 +33,36 @@ const setplayStarts = situations.filter(
     </p>
   </header>
 
-  <div class="tabs">
-    <input type="radio" name="tab" id="tab-combos" checked />
-    <input type="radio" name="tab" id="tab-setplay" />
-    <div class="tab-bar">
-      <label for="tab-combos">コンボ一覧（{manonCombos.length}）</label>
-      <label for="tab-setplay">セットプレイ（{setplayStarts.length}）</label>
+  <div class="tabs" data-tabs>
+    <div class="tab-bar" role="tablist" aria-label="コンボとセットプレイ">
+      <button
+        type="button"
+        role="tab"
+        id="tab-combos"
+        aria-controls="panel-combos"
+        aria-selected="true"
+      >
+        コンボ一覧（{manonCombos.length}）
+      </button>
+      <button
+        type="button"
+        role="tab"
+        id="tab-setplay"
+        aria-controls="panel-setplay"
+        aria-selected="false"
+        tabindex="-1"
+      >
+        セットプレイ（{setplayStarts.length}）
+      </button>
     </div>
 
-    <section class="tab-panel" data-panel="combos">
+    <section
+      class="tab-panel"
+      id="panel-combos"
+      role="tabpanel"
+      aria-labelledby="tab-combos"
+      tabindex="0"
+    >
       <p class="tab-desc">
         <strong>コンボ</strong>＝始動技から始まる伸ばし方。相手の状況を問わず「この技が当たったら
         どこまで伸びるか」。フィルタ／ソートで探せます。
@@ -49,7 +70,14 @@ const setplayStarts = situations.filter(
       <ComboExplorer combos={manonCombos} />
     </section>
 
-    <section class="tab-panel" data-panel="setplay">
+    <section
+      class="tab-panel"
+      id="panel-setplay"
+      role="tabpanel"
+      aria-labelledby="tab-setplay"
+      tabindex="0"
+      hidden
+    >
       <p class="tab-desc">
         <strong>セットプレイ</strong>＝特定の状況から始まる読み合い（○○締め後のダウン、△△をジャスト
         パリィした後 など）。各起点で分岐択とその特徴・初回行動後の有利フレームを確認できます。
@@ -83,6 +111,53 @@ const setplayStarts = situations.filter(
       </ul>
     </section>
   </div>
+
+  <script>
+    document.querySelectorAll<HTMLElement>('[data-tabs]').forEach((root) => {
+      const tabs = [...root.querySelectorAll<HTMLButtonElement>('[role="tab"]')];
+      const panels = new Map(
+        tabs.map((t) => [t, document.getElementById(t.getAttribute('aria-controls')!)!]),
+      );
+
+      function select(tab: HTMLButtonElement, focus = true) {
+        tabs.forEach((t) => {
+          const on = t === tab;
+          t.setAttribute('aria-selected', String(on));
+          t.tabIndex = on ? 0 : -1;
+          panels.get(t)!.hidden = !on;
+        });
+        if (focus) tab.focus();
+        const id = tab.id.replace(/^tab-/, '');
+        if ((location.hash.slice(1) || 'combos') !== id) {
+          history.pushState(null, '', id === 'combos' ? location.pathname + location.search : `#${id}`);
+        }
+      }
+
+      root.querySelector('[role="tablist"]')!.addEventListener('keydown', (e) => {
+        const ev = e as KeyboardEvent;
+        const i = tabs.indexOf(document.activeElement as HTMLButtonElement);
+        if (i < 0) return;
+        let next = -1;
+        if (ev.key === 'ArrowRight' || ev.key === 'ArrowDown') next = (i + 1) % tabs.length;
+        else if (ev.key === 'ArrowLeft' || ev.key === 'ArrowUp') next = (i - 1 + tabs.length) % tabs.length;
+        else if (ev.key === 'Home') next = 0;
+        else if (ev.key === 'End') next = tabs.length - 1;
+        if (next >= 0) {
+          ev.preventDefault();
+          select(tabs[next]);
+        }
+      });
+      tabs.forEach((t) => t.addEventListener('click', () => select(t, false)));
+
+      function syncFromHash() {
+        const id = location.hash.slice(1) || 'combos';
+        const tab = tabs.find((t) => t.id === `tab-${id}`);
+        if (tab && tab.getAttribute('aria-selected') !== 'true') select(tab, false);
+      }
+      window.addEventListener('hashchange', syncFromHash);
+      syncFromHash();
+    });
+  </script>
 </BaseLayout>
 
 <style>
@@ -103,16 +178,13 @@ const setplayStarts = situations.filter(
     font-size: 0.85rem;
   }
 
-  .tabs > input[type='radio'] {
-    display: none;
-  }
   .tab-bar {
     display: flex;
     gap: 0.4rem;
     border-bottom: 2px solid var(--border-strong);
     margin-bottom: 1.2rem;
   }
-  .tab-bar label {
+  .tab-bar [role='tab'] {
     font-family: var(--font-pixel);
     font-size: 0.85rem;
     padding: 0.5em 1em;
@@ -123,18 +195,17 @@ const setplayStarts = situations.filter(
     cursor: pointer;
     margin-bottom: -2px;
   }
-  #tab-combos:checked ~ .tab-bar label[for='tab-combos'],
-  #tab-setplay:checked ~ .tab-bar label[for='tab-setplay'] {
+  .tab-bar [role='tab'][aria-selected='true'] {
     background: var(--panel);
     color: var(--accent);
     border-color: var(--accent);
   }
-  .tab-panel {
-    display: none;
+  .tab-bar [role='tab']:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
   }
-  #tab-combos:checked ~ .tab-panel[data-panel='combos'],
-  #tab-setplay:checked ~ .tab-panel[data-panel='setplay'] {
-    display: block;
+  .tab-panel:focus-visible {
+    outline: none;
   }
 
   .tab-desc {

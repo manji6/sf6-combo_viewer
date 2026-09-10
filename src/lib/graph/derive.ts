@@ -34,6 +34,18 @@ export function comboSupportsModern(combo: Combo): boolean {
   return combo.routeChain.map(getRoute).every((r) => r.controlType === 'both');
 }
 
+/**
+ * コンボの始動技（RV-06）。先頭パーツの最初の「技」step から解決する。
+ * 先頭が操作 step（前ステップ等）なら次の技を見る。
+ */
+export function comboStarterMove(combo: Combo): { moveKey?: string; label: string } | null {
+  if (combo.routeChain.length === 0) return null;
+  const first = getRoute(combo.routeChain[0]);
+  const step = first.steps.find((s) => s.moveKey) ?? first.steps.find((s) => !s.action);
+  if (!step) return null;
+  return { moveKey: step.moveKey, label: step.move };
+}
+
 /** この状況ノードを経路上に含むコンボ */
 export function combosThroughSituation(situationId: string): Combo[] {
   return combos.filter((c) => {

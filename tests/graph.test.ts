@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { combos, getCombo } from '../src/data';
 import {
+  comboStarterMove,
   comboSupportsModern,
   flattenCombo,
   validateComboChain,
@@ -68,6 +69,19 @@ describe('flattenCombo', () => {
       const flat = flattenCombo(c);
       expect(flat.nodePath[0]).toBe(c.startFrom);
       expect(flat.nodePath[flat.nodePath.length - 1]).toBe(c.endAt);
+    }
+  });
+});
+
+describe('comboStarterMove（RV-06）', () => {
+  it('先頭パーツの最初の技を返す', () => {
+    expect(comboStarterMove(getCombo('manon-mid-2mk-bnb-degage'))?.label).toBe('2中K');
+    expect(comboStarterMove(getCombo('manon-mid-5mp-drc-ranversement'))?.label).toBe('中P');
+    expect(comboStarterMove(getCombo('manon-punish-5hp-rondpoint'))?.label).toBe('5強P');
+  });
+  it('全ダミーコンボで始動技が解決できる', () => {
+    for (const c of combos) {
+      expect(comboStarterMove(c)).not.toBeNull();
     }
   });
 });
