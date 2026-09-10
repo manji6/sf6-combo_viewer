@@ -34,7 +34,7 @@
   "damage": 1600,
   "difficulty": 1,
   "constraints": "立ち弱P 始動（2弱P 始動ではデガジェが繋がらない）",
-  "controlType": "classic",
+  "controlType": "both",
   "tags": [
     "とりこれ",
     "小技始動",

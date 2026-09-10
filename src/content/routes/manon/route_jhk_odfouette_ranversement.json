@@ -51,7 +51,7 @@
   "damage": 6150,
   "difficulty": 3,
   "constraints": "飛び道具読み前ジャンプが通った時。2ゲージ使用（コンボ中に回復し実質1本程度）。ノーゲージなら 4強P>中ランヴェルセ〆。実測: メダル1枚で 3,620dmg。",
-  "controlType": "classic",
+  "controlType": "both",
   "tags": [
     "ジャンプ始動",
     "メダル",

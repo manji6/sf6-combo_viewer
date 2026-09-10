@@ -5,7 +5,7 @@
   "name": "しゃがみ中P（ヒキテ）",
   "category": "normal",
   "inputClassic": "2MP",
-  "inputModern": "2M",
+  "inputModern": null,
   "startup": 7,
   "active": "7-9",
   "recovery": "11",
@@ -20,5 +20,5 @@
   "attribute": [
     "上"
   ],
-  "notes": "空振り時硬直4F増加。モダンの 2M 割り当ては要検証（ヒキテ/ストゥニュー）"
+  "notes": "空振り時硬直4F増加。しゃがみ中P（ヒキテ）はモダンには無い（モダンの ↓中 は しゃがみ中K）。"
 }

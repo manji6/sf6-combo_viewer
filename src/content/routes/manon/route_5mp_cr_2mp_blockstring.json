@@ -30,7 +30,7 @@
   "damage": 1200,
   "difficulty": 3,
   "constraints": "ガードさせて +3 有利（連続ガード）。ヒットしていれば同ルートで 4強P→中ランヴェルセ",
-  "controlType": "both",
+  "controlType": "classic",
   "tags": [
     "CDR",
     "連携"

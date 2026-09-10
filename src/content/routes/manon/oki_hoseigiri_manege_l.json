@@ -22,7 +22,7 @@
   "damage": 2000,
   "difficulty": 4,
   "constraints": "補正切りでコンボが切れているため 100% ダメージ。弱マネージュ・ドレはメダル保持数で変動（2,000〜3,700）。起き上がりへの重ねなので確定ではない。",
-  "controlType": "classic",
+  "controlType": "both",
   "properties": {
     "strongVs": [
       "ガード",

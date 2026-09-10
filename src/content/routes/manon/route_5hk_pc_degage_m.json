@@ -28,7 +28,7 @@
   "damage": 2100,
   "difficulty": 2,
   "constraints": "遠めの差し返し 強K がパニッシュカウンターした時",
-  "controlType": "both",
+  "controlType": "classic",
   "tags": [
     "パニカン",
     "差し返し",

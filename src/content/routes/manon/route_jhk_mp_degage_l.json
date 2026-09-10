@@ -34,7 +34,7 @@
   "damage": 2400,
   "difficulty": 2,
   "constraints": "飛び道具読み前ジャンプが通った時。4強P が届かなそうならこちら。強ロン・ポワン>SA3 や ODロン・ポワン>SA2 も可",
-  "controlType": "classic",
+  "controlType": "both",
   "tags": [
     "ジャンプ始動",
     "起き攻め",

@@ -6,7 +6,6 @@
   "category": "special",
   "inputClassic": "236HP",
   "inputModern": null,
-  "inputModernPrecise": "236H",
   "startup": 29,
   "active": "29-30",
   "recovery": "30",
@@ -21,5 +20,5 @@
   "attribute": [
     "上"
   ],
-  "notes": "ダメージはメダルLv1（Lvで上昇: Lv5 で2100）。3-30F 飛び道具無敵。ボタンホールドでフェイント。ヒット時メダルLv+1。"
+  "notes": "ダメージはメダルLv1（Lvで上昇: Lv5 で2100）。3-30F 飛び道具無敵。ボタンホールドでフェイント。ヒット時メダルLv+1。 モダンの ランヴェルセ は 弱・OD のみ。強は classic 限定"
 }

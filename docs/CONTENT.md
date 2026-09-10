@@ -112,10 +112,21 @@ src/content/
 
 ## 7. 技辞典（`moves`）（RV-02）
 
-- 出典 = 公式フレームデータ / コマンドリスト（`streetfighter.com/6/ja-jp/character/manon/frame` ・ `.../movelist`）
+- 出典 = 公式フレームデータ / コマンドリスト（`streetfighter.com/6/ja-jp/character/manon/frame` ・ `.../movelist`）。**モダンのタブがある**ので、モダンで出せる技かどうかは実機確認不要で判定できる
 - `verifiedVersion` に確認したゲームバージョンを必ず入れる
-- `inputModern`: モダンに存在しない技は `null`。モダンでも motion 入力が通る場合は `inputModernPrecise`
+- `inputModern`: モダンに存在しない技は `null`。モダンで motion 入力（手動）が通る技は `inputModernPrecise` に numpad 表記を入れる
 - **未確認の入力を架空の値で埋めない**。`null` ＋ `notes` で状態を残す
+- ルートの `controlType` は「全 step の技が `inputModern` か `inputModernPrecise` を持つか」で決まる。技辞典を直せば自動で反映される（`scripts/gen-*` は使わず、`validateAll` が整合を見る）
+
+### 7.1 マノンでモダンに無い技（＝ classic 限定）
+
+公式モダンのフレームデータ（Year3）で確認。これらを含むルートは `controlType: 'classic'`:
+
+- 通常技: **しゃがみ中P（ヒキテ）**、しゃがみ弱P（ソデキリ）、立ち強K（ピエ・ドンジュ）、しゃがみ強K（クロワゼ = 特殊技としては有り ↘強）
+- 必殺技: **中ランヴェルセ**、**強ランヴェルセ**（モダンの ランヴェルセ は 弱・OD のみ）
+
+モダンで出せる（＝ `both` 可）: SA1/2/3、グラン・フェッテ / OD グラン・フェッテ、OD デガジェ、弱/中/強ロン・ポワン、弱/中/強デガジェ、タン・リエ、アン・オー、レベランス(4強P)、弱ランヴェルセ、OD ランヴェルセ、マネージュ・ドレ全種。
+※ モダンの手動強版必殺技・SA は素点が約80%（`manon-*` の `damage` は classic 値のまま。モダン時の減算は将来対応）
 
 ## 8. 更新手順（技が変わったとき）（RV-07 / B-3）
 

@@ -53,7 +53,7 @@
   "damage": 2632,
   "difficulty": 5,
   "constraints": "画面端インパクト壁貼りつきから。生ドライブラッシュ 1 本。5強P>タン・リエ のタゲコンで相手を立ち状態にしつつコンボを切る。",
-  "controlType": "classic",
+  "controlType": "both",
   "tags": [
     "補正切り",
     "画面端",

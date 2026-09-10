@@ -30,7 +30,7 @@
   "damage": 1200,
   "difficulty": 3,
   "constraints": "中P がヒット確認できたら。中P>CDR>2中P はガードでも連続ガード＋3F有利",
-  "controlType": "both",
+  "controlType": "classic",
   "tags": [
     "頻出",
     "CDR"

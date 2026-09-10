@@ -37,7 +37,7 @@
   "damage": 1700,
   "difficulty": 3,
   "constraints": "アン・オーがヒット。起き攻めの4中K重ねから同ルート。ゲージ節約なら アン・オー>弱/中デガジェ〆",
-  "controlType": "both",
+  "controlType": "classic",
   "tags": [
     "起き攻め",
     "CDR",

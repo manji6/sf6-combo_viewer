@@ -20,7 +20,7 @@
   "damage": 2000,
   "difficulty": 2,
   "constraints": "打撃重ねを嫌ってガードで固まる相手に",
-  "controlType": "classic",
+  "controlType": "both",
   "notes": "モダンは強度自動選択のため弱指定は手動入力。",
   "properties": {
     "frameAdvantage": {

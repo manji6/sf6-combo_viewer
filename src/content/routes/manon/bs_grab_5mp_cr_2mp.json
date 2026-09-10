@@ -21,7 +21,7 @@
   "damage": 2000,
   "difficulty": 2,
   "constraints": "中P>CDR>2中P ガード後（+3）。本命択",
-  "controlType": "classic",
+  "controlType": "both",
   "properties": {
     "frameAdvantage": {
       "frames": "±0",

@@ -37,7 +37,7 @@
   "damage": 1700,
   "difficulty": 4,
   "constraints": "補正切り後の打撃択。この先は共有ハブ（4強P→中ランヴェルセ など）に合流する。CDR で Dゲージ 3 本。",
-  "controlType": "both",
+  "controlType": "classic",
   "properties": {
     "strongVs": [
       "ガード",

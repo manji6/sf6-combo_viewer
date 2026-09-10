@@ -21,7 +21,7 @@
   "damage": 2000,
   "difficulty": 5,
   "constraints": "補正切りでコンボが切れているため 100% ダメージ。中マネージュ・ドレはメダル保持数で変動（2,000〜3,700）。+8F あるので暴れ・多くの起き上がり行動に勝てるが、無敵技・ジャンプには弱い。",
-  "controlType": "classic",
+  "controlType": "both",
   "properties": {
     "strongVs": [
       "ガード",

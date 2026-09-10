@@ -5,8 +5,7 @@
   "name": "中ランヴェルセ",
   "category": "special",
   "inputClassic": "236MP",
-  "inputModern": "2SP",
-  "inputModernPrecise": "236M",
+  "inputModern": null,
   "startup": 25,
   "active": "25-26",
   "recovery": "34",
@@ -21,5 +20,5 @@
   "attribute": [
     "上"
   ],
-  "notes": "ダメージはメダルLv1（Lvで上昇: Lv5 で2000）。3-26F 飛び道具無敵。ボタンホールドでフェイント。ヒット時メダルLv+1"
+  "notes": "ダメージはメダルLv1（Lvで上昇: Lv5 で2000）。3-26F 飛び道具無敵。ボタンホールドでフェイント。ヒット時メダルLv+1 モダンの ランヴェルセ は 弱・OD のみ。中は classic 限定"
 }

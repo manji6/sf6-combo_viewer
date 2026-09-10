@@ -47,7 +47,7 @@
   "damage": 4550,
   "difficulty": 3,
   "constraints": "無敵技をガードした時のコンボ。名目Dゲージ2本だがコンボ中に回復するため実質1本消費。メダル4枚以上ならコマ投げの方が火力上。",
-  "controlType": "classic",
+  "controlType": "both",
   "tags": [
     "パニカン",
     "無敵技ガード",

@@ -33,7 +33,7 @@
   "damage": 2200,
   "difficulty": 2,
   "constraints": "インパクト膝崩れから。メダル1枚しかない時用（2枚あればコマ投げでよい）。ノーゲージ",
-  "controlType": "both",
+  "controlType": "classic",
   "tags": [
     "インパクト返し",
     "メダル",

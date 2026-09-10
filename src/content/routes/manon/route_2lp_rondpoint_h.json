@@ -34,7 +34,7 @@
   "damage": 1400,
   "difficulty": 1,
   "constraints": "小技/4F暴れ始動。2弱P からは デガジェ は繋がらない",
-  "controlType": "both",
+  "controlType": "classic",
   "tags": [
     "とりこれ",
     "小技始動",

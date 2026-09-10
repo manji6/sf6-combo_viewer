@@ -41,7 +41,7 @@
   "damage": 2500,
   "difficulty": 3,
   "constraints": "中P>CDR>2中P の2択で 2中P がヒットした時。ロン・ポワンは弱/中/強/OD どれでも可（OD なら追撃可）",
-  "controlType": "both",
+  "controlType": "classic",
   "tags": [
     "頻出",
     "CDR",

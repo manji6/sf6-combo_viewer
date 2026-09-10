@@ -21,7 +21,7 @@
   "damage": 600,
   "difficulty": 2,
   "constraints": "対の択。4F暴れには相打ち",
-  "controlType": "both",
+  "controlType": "classic",
   "properties": {
     "frameAdvantage": {
       "frames": "+6",
