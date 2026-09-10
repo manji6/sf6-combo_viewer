@@ -336,6 +336,17 @@ h3 {
   -webkit-overflow-scrolling: touch;
 }
 
+/* client:only 島のプレースホルダ（ハイドレート前の高さ確保・レイアウトシフト防止） */
+.island-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--border);
+  background: var(--bg-sunken);
+  color: var(--text-faint);
+  font-size: 0.85rem;
+}
+
 table.spec {
   border-collapse: collapse;
   width: 100%;

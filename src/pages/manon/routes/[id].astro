@@ -202,7 +202,9 @@ const p = route.properties;
 
     <section>
       <h2>周辺の相関</h2>
-      <SystemMap client:only="preact" elements={nbh} center={route.from} height={360} />
+      <SystemMap client:only="preact" elements={nbh} center={route.from} height={360}>
+        <div slot="fallback" class="island-loading" style="height:360px">周辺の相関を準備中…</div>
+      </SystemMap>
     </section>
   </article>
 </BaseLayout>

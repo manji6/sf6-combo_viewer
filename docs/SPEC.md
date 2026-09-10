@@ -27,7 +27,7 @@ Street Fighter 6 のコンボと**起き攻めセットプレイ（分岐択）*
 | データ | 素の TS 配列（`src/data/dummy/*.ts`）、マノンのみ、すべて仮 | Content Collections + Zod、実データ、複数キャラ |
 | 成果物 | 全画面が実物コンポーネントで動く Astro 最小アプリ | SEO・登録 Skill・デプロイまで |
 
-**現在地**: Phase 1 実装済み・レビュー中。`npm run build` 45 ページ、`astro check` 0 エラー。
+**現在地**: Phase 1 レビュー完了間近（A-1〜A-4 / U-4 / U-7 / R-1 / V-1〜V-6 決着）。`npm run build` 45 ページ、`astro check` 0 エラー。
 
 ### 決定事項
 
@@ -451,8 +451,8 @@ docs/{SPEC.md, PROTOTYPE.md}
 ### レビューで決めたいこと（Phase 1 の残り）
 
 - **R-1** 起き攻め枠の情報粒度 … 実装済み（枠＝triage、カード＝詳細）。有利F は `+2F` 表記に
-- **R-2** モダンの通常技割り当ての検証（`moves.ts` の `2MP` / `2MK` の `inputModern` 仮値。`5MP`→`5M` は確定）
-- **V-1〜V-6** 空/境界状態・モバイル幅・両テーマ・`about.astro` 文言・404/ちらつき・導線（`docs/ROADMAP.md` §1-B）
+- **R-2** モダンの通常技割り当て … プロト表示は現状の仮値で OK（実データ投入時に公式で確認）
+- **V-1〜V-6** 空/境界状態・モバイル幅・両テーマ・`about.astro` 文言・404/ちらつき・導線（`docs/ROADMAP.md` §1-B）← 私が点検・修正
 
 ### B 項目（Phase 2 の進め方。未決定）
 

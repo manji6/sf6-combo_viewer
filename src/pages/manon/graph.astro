@@ -22,7 +22,9 @@ const elements = fullGraph();
 
   <div class="full-bleed">
     <div class="full-bleed-inner">
-      <SystemMap client:only="preact" elements={elements} height={720} />
+      <SystemMap client:only="preact" elements={elements} height={720}>
+        <div slot="fallback" class="island-loading" style="height:720px">相関グラフを準備中…</div>
+      </SystemMap>
     </div>
   </div>
 

@@ -1,0 +1,49 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="ページが見つかりません" crumbs={[{ label: '404' }]}>
+  <section class="nf">
+    <p class="code">404</p>
+    <h1>ページが見つかりません</h1>
+    <p class="lead">URL が変わったか、まだ存在しないページです。</p>
+    <ul class="links">
+      <li><a href="/">トップ</a></li>
+      <li><a href="/manon/">マノン コンボ・セットプレイ</a></li>
+      <li><a href="/manon/graph/">相関グラフ</a></li>
+      <li><a href="/guide/notation/">コマンド表記の見方</a></li>
+    </ul>
+  </section>
+</BaseLayout>
+
+<style>
+  .nf {
+    text-align: center;
+    padding: 3rem 1rem;
+  }
+  .code {
+    font-family: var(--font-pixel);
+    font-size: clamp(2.5rem, 12vw, 5rem);
+    color: var(--accent);
+    margin: 0;
+    line-height: 1;
+  }
+  .nf h1 {
+    font-size: 1.1rem;
+    margin: 0.6rem 0 0.3rem;
+  }
+  .lead {
+    color: var(--text-dim);
+    font-size: 0.9rem;
+    margin: 0 0 1.4rem;
+  }
+  .links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: inline-flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    text-align: left;
+  }
+</style>

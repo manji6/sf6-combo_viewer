@@ -13,7 +13,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     </p>
 
     <h2>データの考え方</h2>
-    <p>コンボを次の 3 層の有向グラフで表現しています。</p>
+    <p>コンボ・セットプレイを次の有向グラフ（3 層）＋ 技辞典で表現しています。</p>
     <ul>
       <li>
         <strong>状況ノード</strong> — 「次に何ができるか」を決めるゲーム状況（立ち位置・相手のやられ状態・有利フレームなど）。
@@ -21,30 +21,36 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       </li>
       <li>
         <strong>パーツ</strong> — ある状況から別の状況へ移す技の連なり。再利用単位。
-        起き攻めの各択には「何に強い・弱い・いつ使う」を持たせます。
+        起き攻めの各択には「初回行動後の有利フレーム・受け身への対応・何に強い/弱い・いつ使う」を持たせます。
       </li>
       <li>
         <strong>コンボ</strong> — パーツを連結した「名前付きの経路」。頻出コンボの見せ方。
       </li>
+      <li>
+        <strong>技辞典</strong> — 技ごとの発生・硬直差・ダメージ・クラシック/モダン入力。手順の各技はここを参照します。
+      </li>
     </ul>
     <p>
       これにより、「起き攻めの DR2中K から入るパーツ」が「頻出コンボの一部」でもある、
-      といった<strong>連結</strong>を樹形図・相関グラフ・逆引きで追えます。
+      といった<strong>連結</strong>を、ノードグラフ・相関グラフ・逆引きで追えます。
     </p>
 
     <h2>Phase 1 で見てほしいところ</h2>
     <ul>
-      <li><a href="/manon/situations/kd_after_degage_light_mid/">起き攻めの樹形図</a>（分岐 4 択・各択の特徴・完全再帰）</li>
+      <li><a href="/manon/situations/kd_after_degage_light_mid/">起き攻めのノードグラフ</a>（分岐択・各択の特徴・再帰展開）</li>
       <li><a href="/manon/graph/">相関グラフ</a>（ノードとパーツのつながり・操作性）</li>
-      <li><a href="/guide/notation/">コマンド表記</a>（アイコン ⇄ テキスト切替）</li>
-      <li><a href="/manon/combos/manon-mid-5mp-drc-ranversement/">コンボ詳細</a>（パーツ境界・逆引き）</li>
+      <li><a href="/guide/notation/">コマンド表記</a>（アイコン ⇄ テキスト、クラシック ⇄ モダン）</li>
+      <li><a href="/manon/combos/manon-mid-5mp-drc-ranversement/">コンボ詳細</a>（コンボフロー・パーツ境界・逆引き）</li>
       <li><a href="/manon/">一覧のフィルタ・ソート</a>（URL 共有・リロード復元）</li>
     </ul>
 
     <h2>クレジット</h2>
     <p>
-      アイコンは <a href="https://pixelarticons.com/" rel="noopener">Pixelarticons</a>（MIT）を利用予定。
-      Street Fighter は株式会社カプコンの登録商標です。
+      方向の矢印は自作の SVG、攻撃ボタンは CSS で描画しています。汎用アイコンは
+      <a href="https://pixelarticons.com/" rel="noopener">Pixelarticons</a>（MIT）。
+      フレームデータは公式（
+      <a href="https://www.streetfighter.com/6/ja-jp/" rel="noopener">STREET FIGHTER 6</a>
+      ）を参照。Street Fighter は株式会社カプコンの登録商標です。
     </p>
   </article>
 </BaseLayout>

@@ -76,7 +76,11 @@ const hasClassicOnly = outs.some((r) => r.controlType === 'classic');
                 graph={flow}
                 graphModern={flowModern}
                 height={800}
-              />
+              >
+                <div slot="fallback" class="island-loading" style="height:800px">
+                  起き攻めフローを準備中…
+                </div>
+              </FlowCanvas>
             </div>
           </div>
         </section>
