@@ -1,0 +1,22 @@
+{
+  // Cloudflare Workers（Static Assets）でこの静的サイトを配信する設定。
+  // このサイトは output:'static'（SSR なし）なので、Worker スクリプト（main）は不要。
+  // dist/ をそのまま Cloudflare のエッジに配置する。
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "sf6-combo-viewer",
+  "compatibility_date": "2026-09-10",
+  "assets": {
+    "directory": "./dist",
+    // SPA ではなく静的多ページなので、無い URL は 404.html を返す。
+    "not_found_handling": "404-page"
+  },
+  // 公開ドメイン。zone(amanohashi.date) が同じ Cloudflare アカウントにある前提。
+  // wrangler deploy 時に DNS レコードと証明書を自動で用意する。
+  // ※ ダッシュボードで手動設定したい場合はこの routes ブロックを削除してよい。
+  "routes": [
+    {
+      "pattern": "sf6.amanohashi.date",
+      "custom_domain": true
+    }
+  ]
+}

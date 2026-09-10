@@ -7,9 +7,9 @@ import sitemap from '@astrojs/sitemap';
 
 import { validateData } from './src/integrations/validate-data.ts';
 
-// site は公開サブドメイン確定後に差し替える（C-2）。canonical / sitemap / OGP が参照する。
+// canonical / sitemap / OGP が参照する公開 URL。Cloudflare Workers の custom domain。
 export default defineConfig({
-  site: 'https://sf6-combo.example.com',
+  site: 'https://sf6.amanohashi.date',
   vite: {
     plugins: [tailwindcss()],
   },

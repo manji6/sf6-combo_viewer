@@ -2,4 +2,4 @@ User-agent: *
 Allow: /
 Disallow: /manon/preview/
 
-Sitemap: https://sf6-combo.example.com/sitemap-index.xml
+Sitemap: https://sf6.amanohashi.date/sitemap-index.xml

@@ -14,7 +14,9 @@
     "test:watch": "vitest",
     "validate": "vite-node scripts/validate.ts",
     "promote-draft": "vite-node scripts/promote-draft.ts",
-    "check": "npm run validate && npm run test && astro check"
+    "check": "npm run validate && npm run test && astro check",
+    "deploy": "astro build && wrangler deploy",
+    "cf:preview": "astro build && wrangler dev"
   },
   "dependencies": {
     "@astrojs/preact": "^6.0.5",
@@ -37,6 +39,7 @@
     "tsx": "^4.23.13",
     "typescript": "^6.0.3",
     "vite-node": "^6.0.0",
-    "vitest": "^5.0.0"
+    "vitest": "^5.0.0",
+    "wrangler": "^4.130.0"
   }
 }

@@ -64,9 +64,10 @@
 | # | 項目 | 状態 | メモ |
 |---|---|---|---|
 | C-1 | GitHub リポジトリ | ✅ | `github.com/manji6/sf6-combo_viewer`（`main`） |
-| **C-1.5** | **Cloudflare Pages 連携（プレビュー用）** | 🔲 | preset: Astro / build `npm run build` / output `dist`。**Phase 2 を待たず今やる**とレビューが共有 URL でできる（下記「進め方」参照） |
-| C-2 | 公開サブドメイン名の決定 | 🔲 | デザインには影響しない。C-1.5 の後でも可 |
-| C-3 | 本番ドメイン割当（既存 Cloudflare ドメインのサブドメイン） | ⏳ | C-1.5 ＋ C-2 の後 |
+| **C-1.5** | **Cloudflare Workers デプロイ設定（リポジトリ側）** | ✅ | `wrangler.jsonc`（Static Assets、`dist/` を配信、SSR なし）＋ `.github/workflows/deploy.yml`（`main` push → validate/test/build → `wrangler-action` で deploy）。`npm run deploy` も追加 |
+| **C-1.6** | **Cloudflare 側の連携作業（オーナー）** | 🔲 | ①API トークン発行 → GitHub Secrets に `CLOUDFLARE_API_TOKEN` `CLOUDFLARE_ACCOUNT_ID`。②`amanohashi.date` zone が対象アカウントにあることを確認。詳細は下記「C-1.6 手順」 |
+| C-2 | 公開サブドメイン名 | ✅ | `sf6.amanohashi.date` に決定。`wrangler.jsonc` の `routes[].custom_domain` と `astro.config.mjs` の `site`、`robots.txt` に反映済み |
+| C-3 | 本番ドメイン割当 | ⏳ | 初回 `wrangler deploy` 時に custom domain の DNS・証明書が自動作成される（C-1.6 完了後） |
 
 ---
 
@@ -183,3 +184,46 @@ Phase 1 クローズ後に着手。順序は第三者レビューの推奨（§2
 - [ ] 検証 CLI・重要テスト・型チェック・公開ビルドが通る（RV-08）
 - [ ] 本番 URL・リンク・404・メタ情報・プレビューとの差異を確認済み
 - [ ] 更新手順・再確認対象の抽出・誤り報告の入口がある（RV-07）
+
+---
+
+## 6. C-1.6 手順（Cloudflare 側の連携 ― オーナー作業）
+
+デプロイの仕組み: `main` に push → GitHub Actions（`.github/workflows/deploy.yml`）が
+`npm ci` → `npm run validate` → `npm test` → `npm run build` → `wrangler-action` で
+Cloudflare Workers（Static Assets）へ deploy。初回 deploy で `sf6.amanohashi.date` の
+custom domain（DNS ＋ 証明書）が自動作成される。
+
+### やること
+
+1. **Cloudflare アカウント ID を控える**
+   ダッシュボード右サイドバー、または任意の Workers ページの URL（`dash.cloudflare.com/<account_id>/...`）。
+
+2. **API トークンを発行**（Cloudflare ダッシュボード → My Profile → API Tokens → Create Token）
+   - テンプレートではなく **Custom token**。権限:
+     - Account / **Workers Scripts** / Edit
+     - Account / **Workers KV Storage** / Edit（Static Assets のアップロードで使用）
+     - Zone / **Workers Routes** / Edit（custom domain 用）
+     - Zone / **DNS** / Edit（custom domain の DNS レコード自動作成用）
+   - Account Resources: 対象アカウント / Zone Resources: `amanohashi.date`
+   - 生成された値をコピー（再表示不可）。
+
+3. **GitHub リポジトリの Secrets に登録**
+   （`github.com/manji6/sf6-combo_viewer` → Settings → Secrets and variables → Actions → New repository secret）
+   - `CLOUDFLARE_API_TOKEN` = 手順 2 の値
+   - `CLOUDFLARE_ACCOUNT_ID` = 手順 1 の値
+
+4. **`amanohashi.date` が対象アカウントの zone にあることを確認**
+   （別アカウント管理なら custom domain 自動作成が失敗する。その場合は zone 移管 or 手動 CNAME 設定）
+
+5. **初回デプロイ**
+   上記完了後に `main` へ push（or Actions タブから `Deploy to Cloudflare Workers` を手動実行）。
+   `sf6.amanohashi.date` が有効になるまで証明書発行で数分かかることがある。
+
+### 代替案（ダッシュボード Git 連携 = Workers Builds）
+
+GitHub Actions を使わず、Cloudflare ダッシュボードで直接リポジトリを接続する方式もある
+（Workers & Pages → Create → Connect to Git）。この場合 API トークン／Secrets は不要で、
+Cloudflare の GitHub App を認可し、Build command `npm run build` / Deploy command
+`npx wrangler deploy` を設定する。`.github/workflows/deploy.yml` は削除してよい。
+**どちらか一方**にすること（両方だと二重デプロイ）。
