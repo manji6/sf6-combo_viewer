@@ -49,12 +49,12 @@ const SIT_KIND_COLOR: Record<string, string> = {
   okiStart: '#ff5a5a',
 };
 
-/** 起き攻けの枠に出す特徴テキストの行数から高さを見積もる */
+/** 起き攻めの枠に出す特徴テキストの行数から高さを見積もる */
 function wrapLines(text: string | undefined, perLine = 30): number {
   if (!text) return 0;
   return Math.max(1, Math.ceil(text.length / perLine));
 }
-const OKI_MIN_W = 300; // 起き攻け枠の最小幅（特徴テキストが折り返しても読める幅）
+const OKI_MIN_W = 300; // 起き攻め枠の最小幅（特徴テキストが折り返しても読める幅）
 const OKI_LINE_CHARS = 22;
 function okizemeHeaderHeight(g: FlowGroup): number {
   let lines = 1; // ヘッダ（種別＋有利F＋リスク＋詳細）
@@ -80,7 +80,7 @@ function layout(graph: FlowGraph, sizes: Map<string, { w: number; h: number }>) 
     headerHOf.set(grp.id, grp.variant === 'okizeme' ? okizemeHeaderHeight(grp) : 14);
   }
 
-  // 起き攻けグループの先頭ノードは、上にヘッダ余白・幅は特徴テキストが読める最小幅を dagre に確保させる
+  // 起き攻めグループの先頭ノードは、上にヘッダ余白・幅は特徴テキストが読める最小幅を dagre に確保させる
   const inflate = (nodeId: string) => {
     const grp = firstOfGroup.get(nodeId);
     if (!grp) return { top: 0, extraW: 0 };
@@ -123,7 +123,7 @@ function layout(graph: FlowGraph, sizes: Map<string, { w: number; h: number }>) 
     const maxY = Math.max(...members.map((m) => m.y + m.h));
     const headerH = headerHOf.get(group.id)!;
     let w = maxX - minX + GROUP_PAD * 2;
-    // 起き攻け枠は特徴テキストが読める幅を確保（dagre 側で先頭ノード幅を水増し済み）
+    // 起き攻め枠は特徴テキストが読める幅を確保（dagre 側で先頭ノード幅を水増し済み）
     if (group.variant === 'okizeme') w = Math.max(w, OKI_MIN_W + GROUP_PAD * 2);
     return {
       group,
@@ -467,7 +467,7 @@ export default function FlowCanvas({ graph, graphModern, height = 520 }: Props) 
         )}
       </div>
       <p class="fc-hint">
-        ドラッグで移動・ホイールで拡大縮小。起き攻けの枠にその択の特徴を表示。ノードのクリックで詳細へ。
+        ドラッグで移動・ホイールで拡大縮小。起き攻めの枠にその択の特徴を表示。ノードのクリックで詳細へ。
       </p>
 
       <style>{`
