@@ -1,6 +1,7 @@
 // batch1: すこれるブログ https://www.sukoreru.com/sf6-manon をもとにした
 // コア6コンボ ＋ 弱デガジェ〆の起き攻め。drafts/ に <collection>__<id>.json を書く。
 // フレームは公式（streetfighter.com/6/ja-jp/character/manon/frame）。
+// Dゲージ: CDR（キャンセルドライブラッシュ）=3本 / 生DR=1本 / OD技=2本
 // 合計ダメージは各技の素点合計（補正前の目安）。難易度は推定。
 //
 // `npx vite-node scripts/gen-drafts-batch1.ts`
@@ -203,7 +204,7 @@ add('routes', 'route_5mp_cr_2mp', R({
     { move: 'キャンセルドライブラッシュ', command: 'DRC' },
     { move: '2中P', command: '2MP', moveKey: 'manon-2mp' },
   ],
-  resources: { driveCost: 1, superCost: 0, saLevel: null },
+  resources: { driveCost: 3, superCost: 0, saLevel: null },
   damage: 1200, difficulty: 3,
   constraints: '中P がヒット確認できたら。中P>CDR>2中P はガードでも連続ガード＋3F有利',
   controlType: 'both',
@@ -234,7 +235,7 @@ add('routes', 'route_5mp_cr_2mp_5lk_rondpoint', R({
     { move: '弱K', command: '5LK', moveKey: 'manon-5lk' },
     { move: '中ロン・ポワン', command: '236MK', moveKey: 'manon-rondpoint-m', cancel: true },
   ],
-  resources: { driveCost: 1, superCost: 0, saLevel: null },
+  resources: { driveCost: 3, superCost: 0, saLevel: null },
   damage: 2500, difficulty: 3,
   constraints: '中P>CDR>2中P の2択で 2中P がヒットした時。ロン・ポワンは弱/中/強/OD どれでも可（OD なら追撃可）',
   controlType: 'both',
@@ -250,7 +251,7 @@ add('routes', 'route_enhaut_cr_2mp', R({
     { move: 'キャンセルドライブラッシュ', command: 'DRC' },
     { move: '2中P', command: '2MP', moveKey: 'manon-2mp' },
   ],
-  resources: { driveCost: 1, superCost: 0, saLevel: null },
+  resources: { driveCost: 3, superCost: 0, saLevel: null },
   damage: 1700, difficulty: 3,
   constraints: 'アン・オーがヒット。起き攻めの4中K重ねから同ルート。ゲージ節約なら アン・オー>弱/中デガジェ〆',
   controlType: 'both',
@@ -265,7 +266,7 @@ add('routes', 'route_5lk_cr_5lp', R({
     { move: 'キャンセルドライブラッシュ', command: 'DRC' },
     { move: '弱P', command: '5LP', moveKey: 'manon-5lp' },
   ],
-  resources: { driveCost: 1, superCost: 0, saLevel: null },
+  resources: { driveCost: 3, superCost: 0, saLevel: null },
   damage: 600, difficulty: 3,
   constraints: '遠めの 5F/6F 確定反撃（例: マリーザ 弱クアトリガ ガード時）。弱K>CDR でコンボに行けるのはマノンの強み',
   controlType: 'both',
@@ -295,11 +296,11 @@ add('routes', 'route_pc_odrondpoint_dr5lp_ranversement', R({
     { move: '弱P', command: '5LP', moveKey: 'manon-5lp' },
     { move: '中ランヴェルセ', command: '236MP', moveKey: 'manon-ranversement-m', cancel: true, note: 'メダルLv+1' },
   ],
-  resources: { driveCost: 5, superCost: 0, saLevel: null },
+  resources: { driveCost: 3, superCost: 0, saLevel: null },
   damage: 2500, difficulty: 3,
-  constraints: 'ゲージ内訳: OD ロン・ポワン 2 ＋ 生ドライブラッシュ 3（要確認）。メダルを溜める貴重なコンボ',
+  constraints: 'ゲージ内訳: OD ロン・ポワン 2 ＋ 生ドライブラッシュ 1 ＝ 3 本。メダルを溜める貴重なコンボ',
   controlType: 'both',
-  notes: SRC + ' ラッシュがキャンセル/生のどちらかは要確認。',
+  notes: SRC + '',
   tags: ['パニカン', 'メダル', '〆'],
 }));
 
@@ -311,9 +312,9 @@ add('routes', 'oki_dr2mk_from_degage', R({
     { move: 'ドライブラッシュ', command: 'DR' },
     { move: '2中K', command: '2MK', moveKey: 'manon-2mk', note: '最速で持続重ね' },
   ],
-  resources: { driveCost: 3, superCost: 0, saLevel: null },
+  resources: { driveCost: 1, superCost: 0, saLevel: null },
   damage: 600, difficulty: 3,
-  constraints: '弱デガジェ〆から最速で持続重ね。生ドライブラッシュ 3 本消費',
+  constraints: '弱デガジェ〆から最速で持続重ね。生ドライブラッシュ 1 本消費',
   controlType: 'both',
   notes: SRC,
   properties: {
@@ -334,7 +335,7 @@ add('routes', 'oki_dr4hp_from_degage', R({
     { move: 'ドライブラッシュ', command: 'DR' },
     { move: '4強P', command: '4HP', moveKey: 'manon-4hp', note: '持続重ね。ヒット確認で再度4強P' },
   ],
-  resources: { driveCost: 3, superCost: 0, saLevel: null },
+  resources: { driveCost: 1, superCost: 0, saLevel: null },
   damage: 800, difficulty: 3,
   constraints: '弱デガジェ〆から最速で持続重ね',
   controlType: 'both',

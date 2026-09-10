@@ -18,7 +18,7 @@
     }
   ],
   "resources": {
-    "driveCost": 3,
+    "driveCost": 1,
     "superCost": 0,
     "saLevel": null
   },

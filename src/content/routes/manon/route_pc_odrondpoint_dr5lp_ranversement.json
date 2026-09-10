@@ -31,15 +31,15 @@
     }
   ],
   "resources": {
-    "driveCost": 5,
+    "driveCost": 3,
     "superCost": 0,
     "saLevel": null
   },
   "damage": 2500,
   "difficulty": 3,
-  "constraints": "ゲージ内訳: OD ロン・ポワン 2 ＋ 生ドライブラッシュ 3（要確認）。メダルを溜める貴重なコンボ",
+  "constraints": "ゲージ内訳: OD ロン・ポワン 2 ＋ 生ドライブラッシュ 1 ＝ 3 本。メダルを溜める貴重なコンボ",
   "controlType": "both",
-  "notes": "出典: すこれるブログ（sukoreru.com/sf6-manon）。合計ダメージは各技の素点合計＝補正前の目安。難易度は推定。 ラッシュがキャンセル/生のどちらかは要確認。",
+  "notes": "出典: すこれるブログ（sukoreru.com/sf6-manon）。合計ダメージは各技の素点合計＝補正前の目安。難易度は推定。",
   "tags": [
     "パニカン",
     "メダル",
