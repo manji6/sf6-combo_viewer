@@ -2,7 +2,7 @@
 
 最終更新: 2026-09-10（Phase 1 プロトタイプ、レビュー反映後。スキーマ決定 A-1〜A-4 を反映）
 このドキュメントが現状の唯一の正。承認済みの元計画は `C:\Users\ryosu\.claude\plans\web-iridescent-flame.md`、
-レビュー用の短いガイドは `docs/PROTOTYPE.md`。
+レビュー用の短いガイドは `docs/PROTOTYPE.md`、作業一覧と進捗は `docs/ROADMAP.md`。
 
 > **A-1〜A-4（2026-09-10 決定・実装済み）**: 要約は §3.0。
 > スキーマ本体（`src/data/types.ts`）・ダミーデータ・描画への適用まで完了。
@@ -449,10 +449,13 @@ docs/{SPEC.md, PROTOTYPE.md}
 - **B-3** フレームデータのパッチ追随フロー（`verifiedVersion` の運用、差分検知）
 - **B-4** id / slug の命名規則の確定（`kd_after_*` / `route_*` / `oki_*` / `manon-*` / `moveKey`）
 
-### C 項目（インフラ。未決定）
+### C 項目（インフラ）
 
-- **C-1** GitHub リポジトリ作成 → Cloudflare Pages 連携の手順
-- **C-2** 公開サブドメイン名の決定
+- **C-1** GitHub リポジトリ … ✅ `github.com/manji6/sf6-combo_viewer`（`main`）
+- **C-1.5** Cloudflare Pages 連携（preset: Astro / build `npm run build` / output `dist`）… 未
+- **C-2** 公開サブドメイン名の決定 … 未
+
+> 作業リスト・進捗は **`docs/ROADMAP.md`**。
 
 ### Phase 2 実装項目（承認済み計画）
 
@@ -470,7 +473,6 @@ docs/{SPEC.md, PROTOTYPE.md}
 ### オーナー作業（ブロッカーではない）
 
 - 実データ投入（正しいレシピ・ダメージ・起き攻め分岐・フレーム・受け身・難易度）
-- マノンの正式技名一覧（公式表記に合わせる）
-- 攻撃ボタン配色規約の最終確認（現状 L=青 / M=黄 / H=赤 / OD=緑 / SP=紫 / AS=青緑）
+- マノンの正式技名一覧（`moves` に全技。現状はダミー登場分の16技のみ）
+- モダンの通常技割り当ての検証（`moves.ts` の `2MP` / `2MK` の `inputModern` 仮値）
 - 公開サブドメイン名の決定
-- モダン操作コマンドの表記ルール詳細（凡例で確定）
