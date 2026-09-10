@@ -9,11 +9,10 @@
   "startFrom": "neutral_mid",
   "endAt": "kd_after_degage_mid_mid",
   "damageOverride": 2280,
-  "damageNote": "実測 2,280",
   "difficulty": 2,
   "tags": [
     "パニカン",
     "差し返し"
   ],
-  "description": "遠めの差し返し 強K がパニカンした時。中デガジェ or SA2（SA2は3800dmg＋Dゲージ2削りで強力）。出典: すこれるブログ（sukoreru.com/sf6-manon）。合計ダメージは各技の素点合計＝補正前の目安。難易度は推定。"
+  "description": "遠めの差し返し 強K がパニカンした時。中デガジェ or SA2（SA2は3800dmg＋Dゲージ2削りで強力）。"
 }

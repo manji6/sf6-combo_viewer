@@ -1,6 +1,6 @@
 {
   "character": "manon",
-  "notes": "出典: すこれるブログ（sukoreru.com/sf6-manon）。合計ダメージは各技の素点合計＝補正前の目安。難易度は推定。 モダンは強度自動選択。",
+  "notes": "モダンは強度自動選択。",
   "id": "bs_grab_5mp_cr_2mp",
   "from": "blockstring_5mp_cr_2mp",
   "to": "kd_after_manege_dore_mid",

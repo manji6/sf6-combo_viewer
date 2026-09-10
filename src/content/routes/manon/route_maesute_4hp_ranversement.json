@@ -1,6 +1,5 @@
 {
   "character": "manon",
-  "notes": "出典: すこれるブログ（sukoreru.com/sf6-manon）。合計ダメージは各技の素点合計＝補正前の目安。難易度は推定。",
   "id": "route_maesute_4hp_ranversement",
   "from": "juggle_di_pc",
   "to": "kd_after_ranversement_mid",

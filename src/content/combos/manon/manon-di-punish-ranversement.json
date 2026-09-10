@@ -10,12 +10,12 @@
   "startFrom": "neutral_mid",
   "endAt": "kd_after_ranversement_mid",
   "damageOverride": 2580,
-  "damageNote": "実測 2,580（メダルLv 未確認）。中ランヴェルセ〆のためメダル保持数で変動",
+  "damageNote": "メダル保持数でダメージが変動",
   "difficulty": 2,
   "tags": [
     "インパクト返し",
     "メダル",
     "ノーゲージ"
   ],
-  "description": "メダルが2枚あればコマ投げでよい。メダル1枚しかない時用のノーゲージコンボ。前ステはフレーム消費と遠目のケア。出典: すこれるブログ（sukoreru.com/sf6-manon）。合計ダメージは各技の素点合計＝補正前の目安。難易度は推定。"
+  "description": "メダルが2枚あればコマ投げでよい。メダル1枚しかない時用のノーゲージコンボ。前ステはフレーム消費と遠目のケア。"
 }

@@ -73,14 +73,15 @@ export const STEP_ACTION: Record<StepAction, { tag: string; label: string }> = {
   dash: { tag: '走', label: '前ステップ' },
   dash_back: { tag: '走', label: 'バックステップ' },
   whiff: { tag: '空', label: '空振り' },
+  feint: { tag: '偽', label: 'フェイント' },
   wait: { tag: '見', label: '様子見' },
 };
 
-/** 操作チップの本文。whiff は「<技名> 空振り」、それ以外は固定ラベル */
+/** 操作チップの本文。whiff / feint は「<技名> <ラベル>」、それ以外は固定ラベル */
 export function stepActionLabel(step: Step): string {
   if (!step.action) return step.move;
   const a = STEP_ACTION[step.action];
-  return step.action === 'whiff' ? `${step.move} 空振り` : a.label;
+  return step.action === 'whiff' || step.action === 'feint' ? `${step.move} ${a.label}` : a.label;
 }
 
 export const WAKEUP_COVERAGE_LABEL: Record<'both' | 'quick' | 'back', string> = {

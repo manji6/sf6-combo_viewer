@@ -9,7 +9,7 @@
   "startFrom": "neutral_mid",
   "endAt": "kd_after_ranversement_mid",
   "damageOverride": 3380,
-  "damageNote": "実測 3,380（メダル1枚）。メダル保持数で弱ランヴェルセ分が変動",
+  "damageNote": "メダル保持数でダメージが変動",
   "driveCostOverride": 1,
   "difficulty": 3,
   "tags": [
@@ -17,5 +17,5 @@
     "メダル",
     "OD"
   ],
-  "description": "飛びが通った時に2ゲージ使って伸ばすコンボ。J強K→4強P→ODグランフェッテ→4強P→強ロン・ポワン→弱ランヴェルセ。ODグランフェッテを中ランヴェルセに置換してもOK。ノーゲージなら 4強P>中ランヴェルセ〆。出典: すこれるブログ（sukoreru.com/sf6-manon）＋実機確認。難易度は推定。"
+  "description": "飛びが通った時に2ゲージ使って伸ばすコンボ。J強K→4強P→ODグランフェッテ→4強P→強ロン・ポワン→弱ランヴェルセ。ODグランフェッテを中ランヴェルセに置換してもOK。ノーゲージなら 4強P>中ランヴェルセ〆。"
 }

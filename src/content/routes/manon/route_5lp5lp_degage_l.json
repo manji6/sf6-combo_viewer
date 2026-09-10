@@ -35,7 +35,6 @@
   "difficulty": 1,
   "constraints": "立ち弱P 始動（2弱P 始動ではデガジェが繋がらない）",
   "controlType": "classic",
-  "notes": "出典: すこれるブログ（sukoreru.com/sf6-manon）。合計ダメージは各技の素点合計＝補正前の目安。難易度は推定。",
   "tags": [
     "とりこれ",
     "小技始動",

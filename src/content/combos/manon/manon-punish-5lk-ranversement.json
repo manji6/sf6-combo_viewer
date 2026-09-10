@@ -10,11 +10,11 @@
   "startFrom": "neutral_mid",
   "endAt": "kd_after_ranversement_mid",
   "damageOverride": 1690,
-  "damageNote": "実測 1,690（メダルLv 未確認）。中ランヴェルセ〆のためメダル保持数で変動",
+  "damageNote": "メダル保持数でダメージが変動",
   "difficulty": 3,
   "tags": [
     "確定反撃",
     "CDR"
   ],
-  "description": "弱K>CDR でコンボに行けるのはマノンの強み。遠めの 5F/6F 確反で使用。ノーゲージなら 弱K>中ロン・ポワン。出典: すこれるブログ（sukoreru.com/sf6-manon）。合計ダメージは各技の素点合計＝補正前の目安。難易度は推定。"
+  "description": "弱K>CDR でコンボに行けるのはマノンの強み。遠めの 5F/6F 確反で使用。ノーゲージなら 弱K>中ロン・ポワン。"
 }

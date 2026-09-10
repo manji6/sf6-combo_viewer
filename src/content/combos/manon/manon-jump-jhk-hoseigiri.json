@@ -1,0 +1,22 @@
+{
+  "character": "manon",
+  "slug": "manon-jump-jhk-hoseigiri",
+  "name": "ジャンプ始動 補正切り 弱マネージュ・ドレ / アン・オー2択",
+  "situationLabel": "飛び道具読み前ジャンプが通った時（リーサル・補正切り）",
+  "routeChain": [
+    "route_jhk_hoseigiri_setup"
+  ],
+  "startFrom": "neutral_mid",
+  "endAt": "kd_after_hoseigiri_mid",
+  "damageOverride": 5272,
+  "damageNote": "メダル保持数でダメージが変動",
+  "difficulty": 4,
+  "tags": [
+    "補正切り",
+    "ジャンプ始動",
+    "リーサル",
+    "メダル",
+    "OD"
+  ],
+  "description": "補正切り連携。強ランヴェルセをあえて空振りしてコンボを切り、コンボ補正をリセットしてから相手の起き上がりに重ねる。切れた後の単発は補正がかからず、伸ばすより火力が出る。起き上がりから 投げ択（弱マネージュ・ドレ）と 打撃択（アン・オー→中ランヴェルセ）の2択。垂直ジャンプ・無敵技・ドライブインパクトに弱く、確定ではない読み合い。"
+}

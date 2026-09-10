@@ -1,0 +1,45 @@
+{
+  "character": "manon",
+  "notes": "補正切りで弱マネージュ・ドレが 100%（2,000）で入る。",
+  "id": "oki_hoseigiri_manege_l",
+  "from": "kd_after_hoseigiri_mid",
+  "to": "kd_after_manege_dore_mid",
+  "kind": "okizeme",
+  "label": "起き上がりに 弱マネージュ・ドレ重ね（補正切り）",
+  "steps": [
+    {
+      "move": "弱マネージュ・ドレ",
+      "command": "63214LP",
+      "moveKey": "manon-manege-l",
+      "note": "相手の起き上がりに重ねる。補正切りで 100% ダメージ"
+    }
+  ],
+  "resources": {
+    "driveCost": 0,
+    "superCost": 0,
+    "saLevel": null
+  },
+  "damage": 2000,
+  "difficulty": 4,
+  "constraints": "補正切りでコンボが切れているため 100% ダメージ。弱マネージュ・ドレはメダル保持数で変動（2,000〜3,700）。起き上がりへの重ねなので確定ではない。",
+  "controlType": "classic",
+  "properties": {
+    "strongVs": [
+      "ガード",
+      "遅らせ打撃暴れ",
+      "その場受け身から動かない相手"
+    ],
+    "weakVs": [
+      "垂直・バックジャンプ",
+      "無敵技（リバーサルSA / ドライブリバーサル）",
+      "ドライブインパクト"
+    ],
+    "useWhen": "リーサル。読み合いで通れば単発 2,000〜3,700 を上乗せ",
+    "risk": "高"
+  },
+  "tags": [
+    "補正切り",
+    "コマ投げ",
+    "リーサル"
+  ]
+}

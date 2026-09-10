@@ -37,7 +37,15 @@ export const routeKindSchema = z.enum([
 
 export const riskSchema = z.enum(['低', '中', '高']);
 export const controlTypeSchema = z.enum(['classic', 'both']);
-export const stepActionSchema = z.enum(['walk', 'walk_back', 'dash', 'dash_back', 'whiff', 'wait']);
+export const stepActionSchema = z.enum([
+  'walk',
+  'walk_back',
+  'dash',
+  'dash_back',
+  'whiff',
+  'feint',
+  'wait',
+]);
 export const moveCategorySchema = z.enum(['normal', 'unique', 'special', 'super', 'throw', 'common']);
 
 export const videoSchema = z

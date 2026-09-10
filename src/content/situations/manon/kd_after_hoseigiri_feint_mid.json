@@ -1,0 +1,12 @@
+{
+  "tags": [
+    "補正切り"
+  ],
+  "id": "kd_after_hoseigiri_feint_mid",
+  "label": "補正切り +1F（中ランヴェルセ フェイント後）",
+  "kind": "hit",
+  "position": "midscreen",
+  "opponentState": "neutral",
+  "advantage": "+1",
+  "notes": "中ランヴェルセのコマンド最後の P をホールドしてフェイントに派生させ、フレーム消費でコンボを切った状態。相手が硬直から抜けたところに +1F。ここから 強マネージュ・ドレ（発生5F）が読み合いで入る。"
+}

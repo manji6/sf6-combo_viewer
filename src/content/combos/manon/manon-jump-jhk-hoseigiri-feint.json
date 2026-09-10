@@ -1,0 +1,23 @@
+{
+  "character": "manon",
+  "slug": "manon-jump-jhk-hoseigiri-feint",
+  "name": "ジャンプ始動 補正切り（中ランヴェルセ フェイント）強マネージュ・ドレ",
+  "situationLabel": "飛び道具読み前ジャンプが通った時（リーサル・補正切り）",
+  "routeChain": [
+    "route_jhk_hoseigiri_feint_setup",
+    "oki_hoseigiri_manege_h"
+  ],
+  "startFrom": "neutral_mid",
+  "endAt": "kd_after_manege_dore_mid",
+  "damageOverride": 4680,
+  "damageNote": "メダル保持数でダメージが変動",
+  "difficulty": 5,
+  "tags": [
+    "補正切り",
+    "ジャンプ始動",
+    "リーサル",
+    "メダル",
+    "OD"
+  ],
+  "description": "補正切り連携。中ランヴェルセをフェイント派生（コマンド最後の P をホールド）させてコンボを切り、+1F の状態を作ってから強マネージュ・ドレ（発生5F）を重ねる。切れた後の単発は補正がかからず 100%。+1F あるので相手の 4F 暴れにも勝てるが、垂直ジャンプ・無敵技・DI には弱い。"
+}

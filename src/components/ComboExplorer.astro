@@ -130,17 +130,34 @@ function driveBucket(n: number) {
     gap: 0.6rem;
   }
   .fgroup {
+    position: relative;
+    padding-left: 6.2em;
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    gap: 0.4rem;
+    align-content: flex-start;
+    gap: 0.35rem;
+    min-height: 1.9em;
   }
   .flabel {
+    position: absolute;
+    left: 0;
+    top: 0.35em;
+    width: 5.8em;
     font-family: var(--font-pixel);
     font-size: 0.78rem;
     color: var(--text-faint);
-    width: 5.5em;
-    flex: none;
+    line-height: 1.3;
+  }
+  @media (max-width: 480px) {
+    .fgroup {
+      padding-left: 0;
+    }
+    .flabel {
+      position: static;
+      width: 100%;
+      margin-bottom: 0.1rem;
+    }
   }
   .chip {
     display: inline-flex;

@@ -9,12 +9,11 @@
   "startFrom": "neutral_mid",
   "endAt": "kd_after_super_mid",
   "damageOverride": 3880,
-  "damageNote": "実測 3,880（SA2 はメダル非依存で固定）",
   "difficulty": 2,
   "tags": [
     "パニカン",
     "差し返し",
     "SA"
   ],
-  "description": "遠めの差し返し 強K がパニカンした時、SA2 がノーキャンセルで繋がる。実測 3,880dmg＋Dゲージを合計2削るので非常に強力。出典: すこれるブログ（sukoreru.com/sf6-manon）＋実機確認。難易度は推定。"
+  "description": "遠めの差し返し 強K がパニカンした時、SA2 がノーキャンセルで繋がる。3,880dmg＋Dゲージを合計2削るので非常に強力。"
 }

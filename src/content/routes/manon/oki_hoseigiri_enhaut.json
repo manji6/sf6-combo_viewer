@@ -1,0 +1,58 @@
+{
+  "character": "manon",
+  "notes": "補正切り後の打撃択。補正がリセットされているためこの後のコンボ火力は通常より高い。",
+  "id": "oki_hoseigiri_enhaut",
+  "from": "kd_after_hoseigiri_mid",
+  "to": "juggle_can_4hp_ranversement",
+  "kind": "okizeme",
+  "label": "起き上がりに アン・オー重ね（打撃択）→ CDR → 2中P",
+  "steps": [
+    {
+      "move": "アン・オー",
+      "command": "4MK",
+      "moveKey": "manon-enhaut",
+      "note": "起き上がりに重ねる。＞中K は大きく遅らせ可（暴れ潰し）"
+    },
+    {
+      "move": "派生 中K",
+      "command": "~MK",
+      "moveKey": "manon-enhaut-2",
+      "cancel": true
+    },
+    {
+      "move": "キャンセルドライブラッシュ",
+      "command": "DRC"
+    },
+    {
+      "move": "2中P",
+      "command": "2MP",
+      "moveKey": "manon-2mp"
+    }
+  ],
+  "resources": {
+    "driveCost": 3,
+    "superCost": 0,
+    "saLevel": null
+  },
+  "damage": 1700,
+  "difficulty": 4,
+  "constraints": "補正切り後の打撃択。この先は共有ハブ（4強P→中ランヴェルセ など）に合流する。CDR で Dゲージ 3 本。",
+  "controlType": "both",
+  "properties": {
+    "strongVs": [
+      "ガード",
+      "遅らせ暴れ"
+    ],
+    "weakVs": [
+      "垂直・バックジャンプ",
+      "無敵技"
+    ],
+    "useWhen": "投げ択（弱マネージュ・ドレ）との2択。ガードされてもメダル始動の連携に移行できる",
+    "risk": "中"
+  },
+  "tags": [
+    "補正切り",
+    "打撃択",
+    "中段重ね"
+  ]
+}

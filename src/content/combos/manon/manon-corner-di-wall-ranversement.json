@@ -10,12 +10,12 @@
   "startFrom": "neutral_corner",
   "endAt": "kd_after_ranversement_corner",
   "damageOverride": 2490,
-  "damageNote": "実測 2,490（メダルLv 未確認）。弱ランヴェルセ〆のためメダル保持数で変動",
+  "damageNote": "メダル保持数でダメージが変動",
   "difficulty": 1,
   "tags": [
     "インパクト",
     "画面端",
     "ノーゲージ"
   ],
-  "description": "ノーゲージインパクトコンボと同ルート。マノンはコマ投げが強いので、端でインパクトを撃つくらいならコマ投げの方が良いことが多い。出典: すこれるブログ（sukoreru.com/sf6-manon）。合計ダメージは各技の素点合計＝補正前の目安。難易度は推定。"
+  "description": "ノーゲージインパクトコンボと同ルート。マノンはコマ投げが強いので、端でインパクトを撃つくらいならコマ投げの方が良いことが多い。"
 }

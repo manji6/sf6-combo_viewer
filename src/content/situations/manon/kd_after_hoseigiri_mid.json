@@ -1,0 +1,13 @@
+{
+  "tags": [
+    "補正切り"
+  ],
+  "id": "kd_after_hoseigiri_mid",
+  "label": "補正切りダウン（強ランヴェルセ空振り後）",
+  "kind": "knockdown",
+  "position": "midscreen",
+  "opponentState": "knockdown_hard",
+  "advantage": "起き上がりに重ね",
+  "wakeupNote": "起き上がりに技を重ねる（受け身タイミングは要確認）",
+  "notes": "強ランヴェルセをあえて空振り（フレーム消費）してコンボを終わらせ、コンボ補正をリセットした状態。ここから起き上がりに単発を重ねると 100% ダメージで入る。"
+}

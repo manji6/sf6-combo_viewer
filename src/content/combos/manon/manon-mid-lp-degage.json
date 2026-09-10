@@ -9,12 +9,11 @@
   "startFrom": "neutral_mid",
   "endAt": "kd_after_degage_light_mid",
   "damageOverride": 1240,
-  "damageNote": "実測 1,240",
   "difficulty": 1,
   "tags": [
     "とりこれ",
     "ノーゲージ",
     "起き攻め"
   ],
-  "description": "まず覚える小技始動。弱デガジェ〆から最速で持続重ねの起き攻めに行ける。出典: すこれるブログ（sukoreru.com/sf6-manon）。合計ダメージは各技の素点合計＝補正前の目安。難易度は推定。"
+  "description": "まず覚える小技始動。弱デガジェ〆から最速で持続重ねの起き攻めに行ける。"
 }

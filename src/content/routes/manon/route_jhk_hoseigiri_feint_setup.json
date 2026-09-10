@@ -1,0 +1,56 @@
+{
+  "character": "manon",
+  "id": "route_jhk_hoseigiri_feint_setup",
+  "from": "neutral_mid",
+  "to": "kd_after_hoseigiri_feint_mid",
+  "kind": "combo_route",
+  "label": "J強K → 4強P → ODグランフェッテ → 5中P → 中ランヴェルセ フェイント",
+  "steps": [
+    {
+      "move": "J強K",
+      "command": "j.HK",
+      "moveKey": "manon-jhk",
+      "note": "飛び道具読み前ジャンプ"
+    },
+    {
+      "move": "4強P",
+      "command": "4HP",
+      "moveKey": "manon-4hp"
+    },
+    {
+      "move": "ODグランフェッテ",
+      "command": "236PP~K",
+      "moveKey": "manon-grandfouette-od",
+      "cancel": true
+    },
+    {
+      "move": "5中P",
+      "command": "5MP",
+      "moveKey": "manon-5mp",
+      "cancel": true,
+      "note": "ここまで 2,680"
+    },
+    {
+      "move": "中ランヴェルセ",
+      "command": "236MP",
+      "moveKey": "manon-ranversement-m",
+      "action": "feint",
+      "note": "コマンド最後の P をホールドしてフェイント派生（全体32F）。フレーム消費でコンボを切り +1F を作る"
+    }
+  ],
+  "resources": {
+    "driveCost": 2,
+    "superCost": 0,
+    "saLevel": null
+  },
+  "damage": 2680,
+  "difficulty": 5,
+  "constraints": "飛びが通った時のリーサル用。ODグランフェッテ（名目2本、スピン中に回復）。中ランヴェルセはフェイントに派生させてコンボを切る。",
+  "controlType": "classic",
+  "tags": [
+    "補正切り",
+    "ジャンプ始動",
+    "OD",
+    "メダル"
+  ]
+}

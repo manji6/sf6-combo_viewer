@@ -1,0 +1,70 @@
+{
+  "character": "manon",
+  "id": "route_jhk_hoseigiri_setup",
+  "from": "neutral_mid",
+  "to": "kd_after_hoseigiri_mid",
+  "kind": "combo_route",
+  "label": "J強K → 4強P → ODグランフェッテ → 4強P → 強ロン・ポワン → ラッシュ4強P → 強ランヴェルセ空振り",
+  "steps": [
+    {
+      "move": "J強K",
+      "command": "j.HK",
+      "moveKey": "manon-jhk",
+      "note": "飛び道具読み前ジャンプ"
+    },
+    {
+      "move": "4強P",
+      "command": "4HP",
+      "moveKey": "manon-4hp"
+    },
+    {
+      "move": "ODグランフェッテ",
+      "command": "236PP~K",
+      "moveKey": "manon-grandfouette-od",
+      "cancel": true
+    },
+    {
+      "move": "4強P",
+      "command": "4HP",
+      "moveKey": "manon-4hp"
+    },
+    {
+      "move": "強ロン・ポワン",
+      "command": "236HK",
+      "moveKey": "manon-rondpoint-h",
+      "cancel": true
+    },
+    {
+      "move": "ドライブラッシュ",
+      "command": "DR"
+    },
+    {
+      "move": "4強P",
+      "command": "4HP",
+      "moveKey": "manon-4hp",
+      "note": "ラッシュから。ここまで 3,272"
+    },
+    {
+      "move": "強ランヴェルセ",
+      "command": "236HP",
+      "moveKey": "manon-ranversement-h",
+      "action": "whiff",
+      "note": "あえて当てずにスカす。フレーム消費でコンボを終わらせ、コンボ補正をリセットする（補正切り）"
+    }
+  ],
+  "resources": {
+    "driveCost": 3,
+    "superCost": 0,
+    "saLevel": null
+  },
+  "damage": 3272,
+  "difficulty": 4,
+  "constraints": "飛びが通った時のリーサル用。ODグランフェッテ（名目2本、スピン中に回復）＋ 生ドライブラッシュ 1 本。強ランヴェルセは当てずに空振りしてコンボを切る。",
+  "controlType": "classic",
+  "tags": [
+    "補正切り",
+    "ジャンプ始動",
+    "OD",
+    "メダル"
+  ]
+}

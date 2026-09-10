@@ -31,7 +31,6 @@
   "difficulty": 3,
   "constraints": "遠めの 5F/6F 確定反撃（例: マリーザ 弱クアトリガ ガード時）。弱K>CDR でコンボに行けるのはマノンの強み",
   "controlType": "both",
-  "notes": "出典: すこれるブログ（sukoreru.com/sf6-manon）。合計ダメージは各技の素点合計＝補正前の目安。難易度は推定。",
   "tags": [
     "確定反撃",
     "CDR"

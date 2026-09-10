@@ -9,11 +9,10 @@
   "startFrom": "neutral_mid",
   "endAt": "kd_after_rondpoint_mid",
   "damageOverride": 1904,
-  "damageNote": "実測 1,904",
   "difficulty": 3,
   "tags": [
     "CDR",
     "2択確認"
   ],
-  "description": "中P>CDR>2中P の2択で 2中P がヒットした時。ロン・ポワンは弱/中/強/OD どれでも可。OD なら デガジェ・SA で追撃。出典: すこれるブログ（sukoreru.com/sf6-manon）。合計ダメージは各技の素点合計＝補正前の目安。難易度は推定。"
+  "description": "中P>CDR>2中P の2択で 2中P がヒットした時。ロン・ポワンは弱/中/強/OD どれでも可。OD なら デガジェ・SA で追撃。"
 }

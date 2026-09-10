@@ -9,13 +9,13 @@
   ],
   "startFrom": "neutral_mid",
   "endAt": "kd_after_ranversement_mid",
-  "damageOverride": 4689,
-  "damageNote": "メダルLv1: 4,689 / Lv5: 4,989（メダル保持数で中ランヴェルセ分が変動）",
+  "damageOverride": 2914,
+  "damageNote": "メダル保持数でダメージが変動",
   "difficulty": 3,
   "tags": [
     "起き攻め",
     "CDR",
     "中段重ね"
   ],
-  "description": "アン・オー（4中K＞K）始動。中P始動と同じルート。起き攻めで アン・オー を重ねられる場面で使う（＞中K は遅らせて暴れ潰し）。ゲージ節約なら アン・オー>弱/中デガジェ〆。出典: すこれるブログ（sukoreru.com/sf6-manon）。合計ダメージは各技の素点合計＝補正前の目安。難易度は推定。"
+  "description": "アン・オー（4中K＞K）始動。中P始動と同じルート。起き攻めで アン・オー を重ねられる場面で使う（＞中K は遅らせて暴れ潰し）。ゲージ節約なら アン・オー>弱/中デガジェ〆。"
 }

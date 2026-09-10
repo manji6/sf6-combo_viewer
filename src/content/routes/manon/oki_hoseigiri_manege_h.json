@@ -1,0 +1,43 @@
+{
+  "character": "manon",
+  "id": "oki_hoseigiri_manege_h",
+  "from": "kd_after_hoseigiri_feint_mid",
+  "to": "kd_after_manege_dore_mid",
+  "kind": "okizeme",
+  "label": "+1F から 強マネージュ・ドレ（補正切り）",
+  "steps": [
+    {
+      "move": "強マネージュ・ドレ",
+      "command": "63214HP",
+      "moveKey": "manon-manege-h",
+      "note": "+1F 状態から。発生5F。補正切りで 100% ダメージ"
+    }
+  ],
+  "resources": {
+    "driveCost": 0,
+    "superCost": 0,
+    "saLevel": null
+  },
+  "damage": 2000,
+  "difficulty": 5,
+  "constraints": "補正切りでコンボが切れているため 100% ダメージ。強マネージュ・ドレはメダル保持数で変動（2,000〜3,700）。+1F からの読み合いで確定ではない。",
+  "controlType": "classic",
+  "properties": {
+    "strongVs": [
+      "ガード",
+      "遅らせ打撃暴れ"
+    ],
+    "weakVs": [
+      "垂直・バックジャンプ",
+      "無敵技",
+      "ドライブインパクト"
+    ],
+    "useWhen": "リーサル。+1F あるので 5F の強マネージュ・ドレが相手の 4F 暴れに勝てる",
+    "risk": "高"
+  },
+  "tags": [
+    "補正切り",
+    "コマ投げ",
+    "リーサル"
+  ]
+}
