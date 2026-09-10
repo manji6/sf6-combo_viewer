@@ -64,8 +64,8 @@
 | # | 項目 | 状態 | メモ |
 |---|---|---|---|
 | C-1 | GitHub リポジトリ | ✅ | `github.com/manji6/sf6-combo_viewer`（`main`） |
-| **C-1.5** | **Cloudflare Workers デプロイ設定（リポジトリ側）** | ✅ | `wrangler.jsonc`（Static Assets、`dist/` を配信、SSR なし）＋ `.github/workflows/deploy.yml`（`main` push → validate/test/build → `wrangler-action` で deploy）。`npm run deploy` も追加 |
-| **C-1.6** | **Cloudflare 側の連携作業（オーナー）** | 🔲 | ①API トークン発行 → GitHub Secrets に `CLOUDFLARE_API_TOKEN` `CLOUDFLARE_ACCOUNT_ID`。②`amanohashi.date` zone が対象アカウントにあることを確認。詳細は下記「C-1.6 手順」 |
+| **C-1.5** | **Cloudflare Workers デプロイ設定（リポジトリ側）** | ✅ | `wrangler.jsonc`（Static Assets、`dist/` を配信、SSR なし、custom domain = `sf6.amanohashi.date`）。デプロイは **Workers Builds**（ダッシュボードの Git 連携）方式に決定。API トークン／GitHub Actions は不要 |
+| **C-1.6** | **Workers Builds のビルド設定（オーナー）** | 🔲 | リポジトリ登録済み。ダッシュボードで Build command = `npm run build`、Deploy command = `npx wrangler deploy`、Branch = `main` を設定。詳細は下記「C-1.6 手順」 |
 | C-2 | 公開サブドメイン名 | ✅ | `sf6.amanohashi.date` に決定。`wrangler.jsonc` の `routes[].custom_domain` と `astro.config.mjs` の `site`、`robots.txt` に反映済み |
 | C-3 | 本番ドメイン割当 | ⏳ | 初回 `wrangler deploy` 時に custom domain の DNS・証明書が自動作成される（C-1.6 完了後） |
 
@@ -187,43 +187,38 @@ Phase 1 クローズ後に着手。順序は第三者レビューの推奨（§2
 
 ---
 
-## 6. C-1.6 手順（Cloudflare 側の連携 ― オーナー作業）
+## 6. C-1.6 手順（Workers Builds ― オーナー作業）
 
-デプロイの仕組み: `main` に push → GitHub Actions（`.github/workflows/deploy.yml`）が
-`npm ci` → `npm run validate` → `npm test` → `npm run build` → `wrangler-action` で
-Cloudflare Workers（Static Assets）へ deploy。初回 deploy で `sf6.amanohashi.date` の
-custom domain（DNS ＋ 証明書）が自動作成される。
+デプロイ方式は **Workers Builds**（Cloudflare ダッシュボードの Git 連携）。
+`main` に push → Cloudflare が自動で clone → Build command 実行 → Deploy command 実行。
+API トークン・GitHub Secrets・GitHub Actions は不要（Cloudflare の GitHub App が認証を持つ）。
+リポジトリ（`manji6/sf6-combo_viewer`）は登録済み。
 
-### やること
+### ダッシュボードで設定する項目
 
-1. **Cloudflare アカウント ID を控える**
-   ダッシュボード右サイドバー、または任意の Workers ページの URL（`dash.cloudflare.com/<account_id>/...`）。
+Workers & Pages → 対象プロジェクト → Settings → Build:
 
-2. **API トークンを発行**（Cloudflare ダッシュボード → My Profile → API Tokens → Create Token）
-   - テンプレートではなく **Custom token**。権限:
-     - Account / **Workers Scripts** / Edit
-     - Account / **Workers KV Storage** / Edit（Static Assets のアップロードで使用）
-     - Zone / **Workers Routes** / Edit（custom domain 用）
-     - Zone / **DNS** / Edit（custom domain の DNS レコード自動作成用）
-   - Account Resources: 対象アカウント / Zone Resources: `amanohashi.date`
-   - 生成された値をコピー（再表示不可）。
+| 項目 | 値 |
+|---|---|
+| Git repository | `manji6/sf6-combo_viewer`（登録済み） |
+| Production branch | `main` |
+| Build command | `npm run build` |
+| Deploy command | `npx wrangler deploy` |
+| Root directory | `/`（デフォルト） |
+| Build variables | 不要（`NODE_VERSION` は `.nvmrc` 相当が無ければ `22` を指定推奨） |
 
-3. **GitHub リポジトリの Secrets に登録**
-   （`github.com/manji6/sf6-combo_viewer` → Settings → Secrets and variables → Actions → New repository secret）
-   - `CLOUDFLARE_API_TOKEN` = 手順 2 の値
-   - `CLOUDFLARE_ACCOUNT_ID` = 手順 1 の値
+- 依存インストール（`npm ci`）は Workers Builds が自動で行う。
+- `npm run build` は `astro:build:start` フックで `validateAll` を走らせるので、壊れた
+  データ（存在しない参照・chain 不連続など）はデプロイ前に落ちる。
+- テストも回したい場合は Build command を `npm test && npm run build` にする。
 
-4. **`amanohashi.date` が対象アカウントの zone にあることを確認**
-   （別アカウント管理なら custom domain 自動作成が失敗する。その場合は zone 移管 or 手動 CNAME 設定）
+### custom domain（`sf6.amanohashi.date`）
 
-5. **初回デプロイ**
-   上記完了後に `main` へ push（or Actions タブから `Deploy to Cloudflare Workers` を手動実行）。
-   `sf6.amanohashi.date` が有効になるまで証明書発行で数分かかることがある。
+`wrangler.jsonc` の `routes[].custom_domain` に定義済み。初回 `wrangler deploy` 実行時に
+Cloudflare が DNS レコードと証明書を自動作成する（`amanohashi.date` zone が同じアカウント
+にある前提。証明書発行に数分）。ダッシュボードで手動設定したい場合は `wrangler.jsonc` の
+`routes` ブロックを削除し、Workers プロジェクトの Settings → Domains & Routes から追加。
 
-### 代替案（ダッシュボード Git 連携 = Workers Builds）
+### 初回デプロイ
 
-GitHub Actions を使わず、Cloudflare ダッシュボードで直接リポジトリを接続する方式もある
-（Workers & Pages → Create → Connect to Git）。この場合 API トークン／Secrets は不要で、
-Cloudflare の GitHub App を認可し、Build command `npm run build` / Deploy command
-`npx wrangler deploy` を設定する。`.github/workflows/deploy.yml` は削除してよい。
-**どちらか一方**にすること（両方だと二重デプロイ）。
+上記設定後、`main` に push（or ダッシュボードの Deployments → Retry / Create deployment）。
