@@ -1,0 +1,55 @@
+{
+  "character": "manon",
+  "id": "oki_dr2mk_from_degage",
+  "from": "kd_after_degage_light_mid",
+  "to": "juggle_can_4hp_ranversement",
+  "kind": "okizeme",
+  "label": "ラッシュ2中K 重ね",
+  "steps": [
+    {
+      "move": "ドライブラッシュ",
+      "command": "DR"
+    },
+    {
+      "move": "2中K",
+      "command": "2MK",
+      "moveKey": "manon-2mk",
+      "note": "最速で持続重ね"
+    }
+  ],
+  "resources": {
+    "driveCost": 3,
+    "superCost": 0,
+    "saLevel": null
+  },
+  "damage": 600,
+  "difficulty": 3,
+  "constraints": "弱デガジェ〆から最速で持続重ね。生ドライブラッシュ 3 本消費",
+  "controlType": "both",
+  "notes": "出典: すこれるブログ（sukoreru.com/sf6-manon）。合計ダメージは各技の素点合計＝補正前の目安。難易度は推定。",
+  "properties": {
+    "frameAdvantage": {
+      "frames": "+5",
+      "note": "2中K 持続をガードさせた時"
+    },
+    "wakeup": {
+      "coverage": "both",
+      "note": "弱デガジェ〆は最速で持続重ね可"
+    },
+    "strongVs": [
+      "コパン暴れ（弱P 4F）",
+      "遅らせ暴れ"
+    ],
+    "weakVs": [
+      "垂直・バックジャンプ",
+      "無敵技"
+    ],
+    "useWhen": "基本択。ヒットで 4強P→中ランヴェルセ、ガードで +5 から OD コマ投げ / 4強P の2択",
+    "onBlock": "+5（OD コマ投げ / 4強P で2択。中版コマ投げは届かない・弱版はコパンに負ける）",
+    "risk": "低"
+  },
+  "tags": [
+    "基本択",
+    "持続重ね"
+  ]
+}

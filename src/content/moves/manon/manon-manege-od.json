@@ -1,0 +1,24 @@
+{
+  "character": "manon",
+  "verifiedVersion": "Year3（公式フレームデータ参照。パッチ版数未確認）",
+  "key": "manon-manege-od",
+  "name": "OD マネージュ・ドレ（コマ投げ）",
+  "category": "special",
+  "inputClassic": "63214PP",
+  "inputModern": "5AS SP",
+  "startup": 8,
+  "active": "8-9",
+  "recovery": "51",
+  "onHit": "D",
+  "onBlock": null,
+  "cancel": null,
+  "damage": 2000,
+  "driveGainHit": 0,
+  "driveLossBlock": 0,
+  "driveLossPunishCounter": -10000,
+  "superGain": 3000,
+  "attribute": [
+    "投"
+  ],
+  "notes": "ダメージはメダルLv1（Lvで上昇）。弱デガジェ〆の DR2中K ガード時（+5）の2択に使える（中版は届かない）"
+}

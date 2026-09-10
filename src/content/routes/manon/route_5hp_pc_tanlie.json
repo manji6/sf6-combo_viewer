@@ -1,0 +1,37 @@
+{
+  "character": "manon",
+  "id": "route_5hp_pc_tanlie",
+  "from": "neutral_mid",
+  "to": "juggle_pc_5hp",
+  "kind": "starter",
+  "label": "5強P パニカン → 強P（タン・リエ）",
+  "steps": [
+    {
+      "move": "5強P",
+      "command": "PC 5HP",
+      "moveKey": "manon-5hp",
+      "note": "差し返しパニッシュカウンター"
+    },
+    {
+      "move": "強P（タン・リエ）",
+      "command": "~HP",
+      "moveKey": "manon-tanlie",
+      "cancel": true,
+      "note": "PC時は吹き飛び、引き寄せながら浮く"
+    }
+  ],
+  "resources": {
+    "driveCost": 0,
+    "superCost": 0,
+    "saLevel": null
+  },
+  "damage": 1400,
+  "difficulty": 2,
+  "constraints": "5強P がパニッシュカウンター（差し返し）した時",
+  "controlType": "both",
+  "notes": "出典: すこれるブログ（sukoreru.com/sf6-manon）。合計ダメージは各技の素点合計＝補正前の目安。難易度は推定。",
+  "tags": [
+    "パニカン",
+    "差し返し"
+  ]
+}

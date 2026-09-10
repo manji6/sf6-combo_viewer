@@ -1,0 +1,24 @@
+{
+  "character": "manon",
+  "verifiedVersion": "Year3（公式フレームデータ参照。パッチ版数未確認）",
+  "key": "manon-enhaut-2",
+  "name": "アン・オー（2段目）",
+  "category": "unique",
+  "inputClassic": "4MK~MK",
+  "inputModern": "4M~M",
+  "startup": 14,
+  "active": "14-18",
+  "recovery": "21",
+  "onHit": "-3",
+  "onBlock": "-11",
+  "cancel": "C",
+  "damage": 500,
+  "driveGainHit": 1000,
+  "driveLossBlock": -2500,
+  "driveLossPunishCounter": -4000,
+  "superGain": 700,
+  "attribute": [
+    "中"
+  ],
+  "notes": "中段。空中ヒット時床バウンド。＞中K は大きく遅らせ可（理論上9F遅らせ弱Pまで暴れ潰し）"
+}

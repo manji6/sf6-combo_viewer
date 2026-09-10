@@ -1,0 +1,12 @@
+{
+  "tags": [
+    "起き攻め開始"
+  ],
+  "id": "kd_after_degage_light_mid",
+  "label": "弱デガジェ締め後・中央ダウン",
+  "kind": "knockdown",
+  "position": "midscreen",
+  "opponentState": "knockdown_soft",
+  "wakeupNote": "受け身可（最速で持続重ね可）",
+  "notes": "マノンの主力起き攻め。最速で ラッシュ2中K / ラッシュ4強P を持続重ねできる。"
+}

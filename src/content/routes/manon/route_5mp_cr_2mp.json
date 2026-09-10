@@ -1,0 +1,39 @@
+{
+  "character": "manon",
+  "id": "route_5mp_cr_2mp",
+  "from": "neutral_mid",
+  "to": "juggle_can_4hp_ranversement",
+  "kind": "starter",
+  "label": "中P キャンセルラッシュ 2中P",
+  "steps": [
+    {
+      "move": "中P",
+      "command": "5MP",
+      "moveKey": "manon-5mp",
+      "cancel": true
+    },
+    {
+      "move": "キャンセルドライブラッシュ",
+      "command": "DRC"
+    },
+    {
+      "move": "2中P",
+      "command": "2MP",
+      "moveKey": "manon-2mp"
+    }
+  ],
+  "resources": {
+    "driveCost": 1,
+    "superCost": 0,
+    "saLevel": null
+  },
+  "damage": 1200,
+  "difficulty": 3,
+  "constraints": "中P がヒット確認できたら。中P>CDR>2中P はガードでも連続ガード＋3F有利",
+  "controlType": "both",
+  "notes": "出典: すこれるブログ（sukoreru.com/sf6-manon）。合計ダメージは各技の素点合計＝補正前の目安。難易度は推定。",
+  "tags": [
+    "頻出",
+    "CDR"
+  ]
+}

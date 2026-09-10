@@ -1,0 +1,19 @@
+{
+  "character": "manon",
+  "slug": "manon-punish-5hp-pc-ranversement",
+  "name": "パニカン 5強P タン・リエ ODロン・ポワン 中ランヴェルセ〆",
+  "situationLabel": "中央・5強P パニッシュカウンター（差し返し）",
+  "routeChain": [
+    "route_5hp_pc_tanlie",
+    "route_pc_odrondpoint_dr5lp_ranversement"
+  ],
+  "startFrom": "neutral_mid",
+  "endAt": "kd_after_ranversement_mid",
+  "difficulty": 3,
+  "tags": [
+    "パニカン",
+    "差し返し",
+    "メダル"
+  ],
+  "description": "強P 差し返しがパニカン → 強P タゲコン で吹き飛ばして OD ロン・ポワンで拾う。メダルを溜める貴重なコンボ。リーサルは SA3〆も可。出典: すこれるブログ（sukoreru.com/sf6-manon）。合計ダメージは各技の素点合計＝補正前の目安。難易度は推定。"
+}

@@ -1,0 +1,24 @@
+{
+  "character": "manon",
+  "verifiedVersion": "Year3（公式フレームデータ参照。パッチ版数未確認）",
+  "key": "manon-4hp",
+  "name": "4強P（レベランス）",
+  "category": "unique",
+  "inputClassic": "4HP",
+  "inputModern": "4H",
+  "startup": 8,
+  "active": "8-13",
+  "recovery": "17",
+  "onHit": "+3",
+  "onBlock": "+1",
+  "cancel": "C",
+  "damage": 800,
+  "driveGainHit": 2000,
+  "driveLossBlock": -5000,
+  "driveLossPunishCounter": -8000,
+  "superGain": 1000,
+  "attribute": [
+    "上"
+  ],
+  "notes": "引き強P。空中ヒット時吹き飛びダウン。ボタンホールドでフェイント派生（ガード時の反確回避）"
+}

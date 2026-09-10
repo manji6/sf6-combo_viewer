@@ -1,0 +1,13 @@
+{
+  "tags": [
+    "メダル"
+  ],
+  "id": "kd_after_manege_dore_mid",
+  "label": "マネージュ・ドレ後・中央ダウン",
+  "kind": "knockdown",
+  "position": "midscreen",
+  "opponentState": "knockdown_hard",
+  "advantage": "メダル獲得 +1",
+  "wakeupNote": "受け身不可（コマ投げ）",
+  "notes": "コマ投げ後。バッチ1では起き攻めルート未整理。"
+}

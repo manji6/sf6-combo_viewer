@@ -1,0 +1,25 @@
+{
+  "character": "manon",
+  "verifiedVersion": "Year3（公式フレームデータ参照。パッチ版数未確認）",
+  "key": "manon-5lp",
+  "name": "立ち弱P（ハジメ）",
+  "category": "normal",
+  "inputClassic": "5LP",
+  "inputModern": "5L",
+  "startup": 4,
+  "active": "4-6",
+  "recovery": "10",
+  "onHit": "+4",
+  "onBlock": "-1",
+  "cancel": "C",
+  "damage": 300,
+  "comboScaling": "始動補正20%",
+  "driveGainHit": 250,
+  "driveLossBlock": -500,
+  "driveLossPunishCounter": -2000,
+  "superGain": 300,
+  "attribute": [
+    "上"
+  ],
+  "notes": "連打キャンセル対応"
+}

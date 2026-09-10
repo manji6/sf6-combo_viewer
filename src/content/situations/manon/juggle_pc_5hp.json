@@ -1,0 +1,12 @@
+{
+  "tags": [
+    "パニカン"
+  ],
+  "id": "juggle_pc_5hp",
+  "label": "5強P パニッシュカウンター・浮き",
+  "kind": "juggle",
+  "position": "midscreen",
+  "opponentState": "juggle",
+  "advantage": "パニカン誘発",
+  "notes": "強P 差し返しがパニカン → 強P（タン・リエ）派生で吹き飛び、引き寄せながら浮く。OD ロン・ポワンで拾える。"
+}

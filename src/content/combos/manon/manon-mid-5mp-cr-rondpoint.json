@@ -1,0 +1,17 @@
+{
+  "character": "manon",
+  "slug": "manon-mid-5mp-cr-rondpoint",
+  "name": "中央 中P CDR 2中P確認 中ロン・ポワン〆",
+  "situationLabel": "中央・2中P ヒット確認",
+  "routeChain": [
+    "route_5mp_cr_2mp_5lk_rondpoint"
+  ],
+  "startFrom": "neutral_mid",
+  "endAt": "kd_after_rondpoint_mid",
+  "difficulty": 3,
+  "tags": [
+    "CDR",
+    "2択確認"
+  ],
+  "description": "中P>CDR>2中P の2択で 2中P がヒットした時。ロン・ポワンは弱/中/強/OD どれでも可。OD なら デガジェ・SA で追撃。出典: すこれるブログ（sukoreru.com/sf6-manon）。合計ダメージは各技の素点合計＝補正前の目安。難易度は推定。"
+}

@@ -1,0 +1,48 @@
+{
+  "character": "manon",
+  "id": "route_pc_odrondpoint_dr5lp_ranversement",
+  "from": "juggle_pc_5hp",
+  "to": "kd_after_ranversement_mid",
+  "kind": "ender",
+  "label": "OD ロン・ポワン → ラッシュ弱P → 中ランヴェルセ",
+  "steps": [
+    {
+      "move": "OD ロン・ポワン",
+      "command": "236KK",
+      "moveKey": "manon-rondpoint-od",
+      "cancel": true,
+      "note": "浮きを拾う"
+    },
+    {
+      "move": "ドライブラッシュ",
+      "command": "DR"
+    },
+    {
+      "move": "弱P",
+      "command": "5LP",
+      "moveKey": "manon-5lp"
+    },
+    {
+      "move": "中ランヴェルセ",
+      "command": "236MP",
+      "moveKey": "manon-ranversement-m",
+      "cancel": true,
+      "note": "メダルLv+1"
+    }
+  ],
+  "resources": {
+    "driveCost": 5,
+    "superCost": 0,
+    "saLevel": null
+  },
+  "damage": 2500,
+  "difficulty": 3,
+  "constraints": "ゲージ内訳: OD ロン・ポワン 2 ＋ 生ドライブラッシュ 3（要確認）。メダルを溜める貴重なコンボ",
+  "controlType": "both",
+  "notes": "出典: すこれるブログ（sukoreru.com/sf6-manon）。合計ダメージは各技の素点合計＝補正前の目安。難易度は推定。 ラッシュがキャンセル/生のどちらかは要確認。",
+  "tags": [
+    "パニカン",
+    "メダル",
+    "〆"
+  ]
+}

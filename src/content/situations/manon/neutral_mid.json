@@ -1,0 +1,12 @@
+{
+  "tags": [
+    "始動"
+  ],
+  "id": "neutral_mid",
+  "label": "中央・立ち回り",
+  "kind": "neutral",
+  "position": "midscreen",
+  "opponentState": "neutral",
+  "advantage": "±0",
+  "notes": "中P・中K を軸に地上戦。中P>CDR>2中P の連携をガード/ヒットさせて 強コマ投げ / 打撃 の2択。"
+}

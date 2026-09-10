@@ -1,0 +1,24 @@
+{
+  "character": "manon",
+  "verifiedVersion": "Year3（公式フレームデータ参照。パッチ版数未確認）",
+  "key": "manon-5mp",
+  "name": "立ち中P（ツリテ）",
+  "category": "normal",
+  "inputClassic": "5MP",
+  "inputModern": "5M",
+  "startup": 7,
+  "active": "7-10",
+  "recovery": "15",
+  "onHit": "+2",
+  "onBlock": "-2",
+  "cancel": "C",
+  "damage": 600,
+  "driveGainHit": 1500,
+  "driveLossBlock": -3000,
+  "driveLossPunishCounter": -4000,
+  "superGain": 500,
+  "attribute": [
+    "上"
+  ],
+  "notes": "主力牽制。中P>CDR>2中P は連続ガード＋3F有利"
+}

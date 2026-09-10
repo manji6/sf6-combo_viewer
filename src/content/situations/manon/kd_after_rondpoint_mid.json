@@ -1,0 +1,10 @@
+{
+  "tags": [],
+  "id": "kd_after_rondpoint_mid",
+  "label": "中ロン・ポワン締め後・中央ダウン",
+  "kind": "knockdown",
+  "position": "midscreen",
+  "opponentState": "knockdown_soft",
+  "wakeupNote": "受け身可",
+  "notes": "2中P確認コンボの締め。強ロン・ポワン〆ならラッシュ2中K重ねが可能（最速だとスカる）。"
+}

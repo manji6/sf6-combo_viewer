@@ -1,0 +1,25 @@
+{
+  "character": "manon",
+  "verifiedVersion": "Year3（公式フレームデータ参照。パッチ版数未確認）",
+  "key": "manon-rondpoint-od",
+  "name": "OD ロン・ポワン",
+  "category": "special",
+  "inputClassic": "236KK",
+  "inputModern": "6AS SP",
+  "inputModernPrecise": "236KK",
+  "startup": 8,
+  "active": "8-16",
+  "recovery": "30",
+  "onHit": "D",
+  "onBlock": "-19",
+  "cancel": "SA2",
+  "damage": 800,
+  "driveGainHit": 0,
+  "driveLossBlock": -4000,
+  "driveLossPunishCounter": -4000,
+  "superGain": 1350,
+  "attribute": [
+    "上"
+  ],
+  "notes": "4-16F 空中判定の打撃・空弾に無敵。ヒット後 デガジェ・SA1/2 で追撃可。対空や強Pパニカンコンボの拾いに使う"
+}

@@ -1,0 +1,37 @@
+{
+  "character": "manon",
+  "id": "route_4hp_ranversement_mid",
+  "from": "juggle_can_4hp_ranversement",
+  "to": "kd_after_ranversement_mid",
+  "kind": "ender",
+  "label": "4強P → 中ランヴェルセ",
+  "steps": [
+    {
+      "move": "4強P",
+      "command": "4HP",
+      "moveKey": "manon-4hp"
+    },
+    {
+      "move": "中ランヴェルセ",
+      "command": "236MP",
+      "moveKey": "manon-ranversement-m",
+      "cancel": true,
+      "note": "メダルLv+1"
+    }
+  ],
+  "resources": {
+    "driveCost": 0,
+    "superCost": 0,
+    "saLevel": null
+  },
+  "damage": 2200,
+  "difficulty": 2,
+  "constraints": "「4強P → 中ランヴェルセ が繋がる浮き」からのみ。ヒット確認できるなら 4強P>弱ランヴェルセ の方が有利F高い",
+  "controlType": "both",
+  "notes": "出典: すこれるブログ（sukoreru.com/sf6-manon）。合計ダメージは各技の素点合計＝補正前の目安。難易度は推定。",
+  "tags": [
+    "〆",
+    "連結",
+    "メダル"
+  ]
+}

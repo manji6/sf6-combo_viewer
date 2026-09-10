@@ -1,0 +1,18 @@
+{
+  "character": "manon",
+  "slug": "manon-mid-lp-degage",
+  "name": "中央 弱P始動 弱デガジェ〆（とりこれ）",
+  "situationLabel": "中央・小技始動",
+  "routeChain": [
+    "route_5lp5lp_degage_l"
+  ],
+  "startFrom": "neutral_mid",
+  "endAt": "kd_after_degage_light_mid",
+  "difficulty": 1,
+  "tags": [
+    "とりこれ",
+    "ノーゲージ",
+    "起き攻め"
+  ],
+  "description": "まず覚える小技始動。弱デガジェ〆から最速で持続重ねの起き攻めに行ける。出典: すこれるブログ（sukoreru.com/sf6-manon）。合計ダメージは各技の素点合計＝補正前の目安。難易度は推定。"
+}

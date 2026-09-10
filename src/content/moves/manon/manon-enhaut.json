@@ -1,0 +1,24 @@
+{
+  "character": "manon",
+  "verifiedVersion": "Year3（公式フレームデータ参照。パッチ版数未確認）",
+  "key": "manon-enhaut",
+  "name": "アン・オー（1段目）",
+  "category": "unique",
+  "inputClassic": "4MK",
+  "inputModern": "4M",
+  "startup": 10,
+  "active": "10-13",
+  "recovery": "19",
+  "onHit": "-1",
+  "onBlock": "-3",
+  "cancel": null,
+  "damage": 600,
+  "driveGainHit": 2000,
+  "driveLossBlock": -4000,
+  "driveLossPunishCounter": -4000,
+  "superGain": 700,
+  "attribute": [
+    "上"
+  ],
+  "notes": "空中ヒット時吹き飛びダウン。起き攻め重ねに使う"
+}

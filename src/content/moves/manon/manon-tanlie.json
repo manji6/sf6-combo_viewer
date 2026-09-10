@@ -1,0 +1,25 @@
+{
+  "character": "manon",
+  "verifiedVersion": "Year3（公式フレームデータ参照。パッチ版数未確認）",
+  "key": "manon-tanlie",
+  "name": "タン・リエ（強P → 強P）",
+  "category": "unique",
+  "inputClassic": "5HP~HP",
+  "inputModern": "5H~H",
+  "startup": 5,
+  "active": "5-9",
+  "recovery": "17",
+  "onHit": "+3",
+  "onBlock": "-8",
+  "cancel": null,
+  "damage": 600,
+  "comboScaling": "コンボ補正20%",
+  "driveGainHit": 2000,
+  "driveLossBlock": -5000,
+  "driveLossPunishCounter": -7000,
+  "superGain": 1000,
+  "attribute": [
+    "上"
+  ],
+  "notes": "立ち強Pがパニッシュカウンター時に派生すると吹き飛びダウン（浮かせて引き寄せ）。※ガード時硬直2F増加"
+}

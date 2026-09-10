@@ -1,0 +1,25 @@
+{
+  "character": "manon",
+  "verifiedVersion": "Year3（公式フレームデータ参照。パッチ版数未確認）",
+  "key": "manon-degage-l",
+  "name": "弱デガジェ",
+  "category": "special",
+  "inputClassic": "214LK",
+  "inputModern": null,
+  "inputModernPrecise": "214L",
+  "startup": 16,
+  "active": "16-31",
+  "recovery": "36",
+  "onHit": "D",
+  "onBlock": "-24",
+  "cancel": null,
+  "damage": 1000,
+  "driveGainHit": 1500,
+  "driveLossBlock": -4000,
+  "driveLossPunishCounter": -8000,
+  "superGain": 800,
+  "attribute": [
+    "下"
+  ],
+  "notes": "締めに使うと最速で持続重ねの起き攻めが可能。モダンは強度自動選択のため弱指定は手動入力（214L）"
+}

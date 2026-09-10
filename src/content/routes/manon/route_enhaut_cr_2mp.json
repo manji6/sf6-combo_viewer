@@ -1,0 +1,47 @@
+{
+  "character": "manon",
+  "id": "route_enhaut_cr_2mp",
+  "from": "neutral_mid",
+  "to": "juggle_can_4hp_ranversement",
+  "kind": "starter",
+  "label": "アン・オー CDR 2中P",
+  "steps": [
+    {
+      "move": "アン・オー",
+      "command": "4MK",
+      "moveKey": "manon-enhaut",
+      "note": "起き攻め重ね"
+    },
+    {
+      "move": "派生 中K",
+      "command": "~MK",
+      "moveKey": "manon-enhaut-2",
+      "cancel": true,
+      "note": "＞中K は大きく遅らせ可（暴れ潰し）"
+    },
+    {
+      "move": "キャンセルドライブラッシュ",
+      "command": "DRC"
+    },
+    {
+      "move": "2中P",
+      "command": "2MP",
+      "moveKey": "manon-2mp"
+    }
+  ],
+  "resources": {
+    "driveCost": 1,
+    "superCost": 0,
+    "saLevel": null
+  },
+  "damage": 1700,
+  "difficulty": 3,
+  "constraints": "アン・オーがヒット。起き攻めの4中K重ねから同ルート。ゲージ節約なら アン・オー>弱/中デガジェ〆",
+  "controlType": "both",
+  "notes": "出典: すこれるブログ（sukoreru.com/sf6-manon）。合計ダメージは各技の素点合計＝補正前の目安。難易度は推定。",
+  "tags": [
+    "起き攻め",
+    "CDR",
+    "中段重ね"
+  ]
+}

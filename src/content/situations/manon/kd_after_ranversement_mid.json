@@ -1,0 +1,12 @@
+{
+  "tags": [
+    "起き攻め開始"
+  ],
+  "id": "kd_after_ranversement_mid",
+  "label": "中ランヴェルセ締め後・中央ダウン",
+  "kind": "knockdown",
+  "position": "midscreen",
+  "opponentState": "knockdown_soft",
+  "wakeupNote": "受け身可",
+  "notes": "メダルLv+1。詳しい起き攻めはバッチ2以降で整理（記事では 弱デガジェ〆・強ロン・ポワン〆 が主）。"
+}

@@ -1,0 +1,25 @@
+{
+  "character": "manon",
+  "verifiedVersion": "Year3（公式フレームデータ参照。パッチ版数未確認）",
+  "key": "manon-rondpoint-m",
+  "name": "中ロン・ポワン",
+  "category": "special",
+  "inputClassic": "236MK",
+  "inputModern": "6SP",
+  "inputModernPrecise": "236M",
+  "startup": 11,
+  "active": "11-19",
+  "recovery": "27",
+  "onHit": "D",
+  "onBlock": "-14",
+  "cancel": "SA3",
+  "damage": 1000,
+  "driveGainHit": 2000,
+  "driveLossBlock": -4000,
+  "driveLossPunishCounter": -4000,
+  "superGain": 1350,
+  "attribute": [
+    "上"
+  ],
+  "notes": "7-19F 上半身空中判定に無敵。コンボは弱/中/強/OD どれでも繋がる。モダンは強度自動選択"
+}

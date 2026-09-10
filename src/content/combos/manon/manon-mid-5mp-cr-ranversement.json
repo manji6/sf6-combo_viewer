@@ -1,0 +1,20 @@
+{
+  "character": "manon",
+  "slug": "manon-mid-5mp-cr-ranversement",
+  "name": "中央 中P CDR 中ランヴェルセ〆（最頻出）",
+  "situationLabel": "中央・地上ヒット確認",
+  "routeChain": [
+    "route_5mp_cr_2mp",
+    "route_4hp_ranversement_mid"
+  ],
+  "startFrom": "neutral_mid",
+  "endAt": "kd_after_ranversement_mid",
+  "difficulty": 3,
+  "tags": [
+    "頻出",
+    "CDR",
+    "メダル",
+    "実戦"
+  ],
+  "description": "マノンの主力。中P>CDR>2中P はガードでも連続ガード＋3F有利で、そこから 強コマ投げ / 打撃 の2択。後半 4強P→中ランヴェルセ は他始動と共有パーツ。出典: すこれるブログ（sukoreru.com/sf6-manon）。合計ダメージは各技の素点合計＝補正前の目安。難易度は推定。"
+}

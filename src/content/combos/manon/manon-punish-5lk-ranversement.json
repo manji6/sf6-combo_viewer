@@ -1,0 +1,18 @@
+{
+  "character": "manon",
+  "slug": "manon-punish-5lk-ranversement",
+  "name": "遠め確反 弱K CDR 中ランヴェルセ〆",
+  "situationLabel": "遠めの 5F/6F 確定反撃",
+  "routeChain": [
+    "route_5lk_cr_5lp",
+    "route_4hp_ranversement_mid"
+  ],
+  "startFrom": "neutral_mid",
+  "endAt": "kd_after_ranversement_mid",
+  "difficulty": 3,
+  "tags": [
+    "確定反撃",
+    "CDR"
+  ],
+  "description": "弱K>CDR でコンボに行けるのはマノンの強み。遠めの 5F/6F 確反で使用。ノーゲージなら 弱K>中ロン・ポワン。出典: すこれるブログ（sukoreru.com/sf6-manon）。合計ダメージは各技の素点合計＝補正前の目安。難易度は推定。"
+}

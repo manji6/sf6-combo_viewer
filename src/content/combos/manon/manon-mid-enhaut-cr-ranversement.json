@@ -1,0 +1,19 @@
+{
+  "character": "manon",
+  "slug": "manon-mid-enhaut-cr-ranversement",
+  "name": "中央 アン・オー CDR 中ランヴェルセ〆",
+  "situationLabel": "中央・アン・オー ヒット確認（起き攻め重ねからも）",
+  "routeChain": [
+    "route_enhaut_cr_2mp",
+    "route_4hp_ranversement_mid"
+  ],
+  "startFrom": "neutral_mid",
+  "endAt": "kd_after_ranversement_mid",
+  "difficulty": 3,
+  "tags": [
+    "起き攻め",
+    "CDR",
+    "中段重ね"
+  ],
+  "description": "アン・オー（4中K＞K）始動。中P始動と同じルート。起き攻めで アン・オー を重ねられる場面で使う（＞中K は遅らせて暴れ潰し）。ゲージ節約なら アン・オー>弱/中デガジェ〆。出典: すこれるブログ（sukoreru.com/sf6-manon）。合計ダメージは各技の素点合計＝補正前の目安。難易度は推定。"
+}

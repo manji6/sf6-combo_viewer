@@ -1,0 +1,50 @@
+{
+  "character": "manon",
+  "id": "oki_grab_from_degage",
+  "from": "kd_after_degage_light_mid",
+  "to": "kd_after_manege_dore_mid",
+  "kind": "okizeme",
+  "label": "弱コマ投げ",
+  "steps": [
+    {
+      "move": "弱マネージュ・ドレ",
+      "command": "63214LP",
+      "moveKey": "manon-manege-l"
+    }
+  ],
+  "resources": {
+    "driveCost": 0,
+    "superCost": 0,
+    "saLevel": null
+  },
+  "damage": 2000,
+  "difficulty": 2,
+  "constraints": "打撃重ねを嫌ってガードで固まる相手に",
+  "controlType": "classic",
+  "notes": "出典: すこれるブログ（sukoreru.com/sf6-manon）。合計ダメージは各技の素点合計＝補正前の目安。難易度は推定。 モダンは強度自動選択のため弱指定は手動入力。",
+  "properties": {
+    "frameAdvantage": {
+      "frames": "±0",
+      "note": "コマ投げ・メダル+1"
+    },
+    "wakeup": {
+      "coverage": "both"
+    },
+    "strongVs": [
+      "ガード継続",
+      "しゃがみっぱ"
+    ],
+    "weakVs": [
+      "前・バックジャンプ",
+      "打撃暴れ",
+      "投げ抜け"
+    ],
+    "useWhen": "打撃重ねを嫌ってガードで固まる相手に",
+    "onBlock": "—（投げ）",
+    "risk": "中"
+  },
+  "tags": [
+    "崩し",
+    "メダル"
+  ]
+}

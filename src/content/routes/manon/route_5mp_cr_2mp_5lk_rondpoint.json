@@ -1,0 +1,51 @@
+{
+  "character": "manon",
+  "id": "route_5mp_cr_2mp_5lk_rondpoint",
+  "from": "neutral_mid",
+  "to": "kd_after_rondpoint_mid",
+  "kind": "combo_route",
+  "label": "中P CDR 2中P → 弱K → 中ロン・ポワン",
+  "steps": [
+    {
+      "move": "中P",
+      "command": "5MP",
+      "moveKey": "manon-5mp",
+      "cancel": true
+    },
+    {
+      "move": "キャンセルドライブラッシュ",
+      "command": "DRC"
+    },
+    {
+      "move": "2中P",
+      "command": "2MP",
+      "moveKey": "manon-2mp"
+    },
+    {
+      "move": "弱K",
+      "command": "5LK",
+      "moveKey": "manon-5lk"
+    },
+    {
+      "move": "中ロン・ポワン",
+      "command": "236MK",
+      "moveKey": "manon-rondpoint-m",
+      "cancel": true
+    }
+  ],
+  "resources": {
+    "driveCost": 1,
+    "superCost": 0,
+    "saLevel": null
+  },
+  "damage": 2500,
+  "difficulty": 3,
+  "constraints": "中P>CDR>2中P の2択で 2中P がヒットした時。ロン・ポワンは弱/中/強/OD どれでも可（OD なら追撃可）",
+  "controlType": "both",
+  "notes": "出典: すこれるブログ（sukoreru.com/sf6-manon）。合計ダメージは各技の素点合計＝補正前の目安。難易度は推定。",
+  "tags": [
+    "頻出",
+    "CDR",
+    "2択確認"
+  ]
+}

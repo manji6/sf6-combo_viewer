@@ -1,0 +1,39 @@
+{
+  "character": "manon",
+  "id": "route_5lk_cr_5lp",
+  "from": "neutral_mid",
+  "to": "juggle_can_4hp_ranversement",
+  "kind": "starter",
+  "label": "弱K キャンセルラッシュ 弱P",
+  "steps": [
+    {
+      "move": "弱K",
+      "command": "5LK",
+      "moveKey": "manon-5lk",
+      "cancel": true
+    },
+    {
+      "move": "キャンセルドライブラッシュ",
+      "command": "DRC"
+    },
+    {
+      "move": "弱P",
+      "command": "5LP",
+      "moveKey": "manon-5lp"
+    }
+  ],
+  "resources": {
+    "driveCost": 1,
+    "superCost": 0,
+    "saLevel": null
+  },
+  "damage": 600,
+  "difficulty": 3,
+  "constraints": "遠めの 5F/6F 確定反撃（例: マリーザ 弱クアトリガ ガード時）。弱K>CDR でコンボに行けるのはマノンの強み",
+  "controlType": "both",
+  "notes": "出典: すこれるブログ（sukoreru.com/sf6-manon）。合計ダメージは各技の素点合計＝補正前の目安。難易度は推定。",
+  "tags": [
+    "確定反撃",
+    "CDR"
+  ]
+}
