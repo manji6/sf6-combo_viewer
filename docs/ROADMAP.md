@@ -24,7 +24,9 @@
   P2-3（検証ゲート）/ P2-5（CONTENT.md 草案）/ P2-8（SEO 土台）/ P2-9（テスト 57 件）/ RV-05・RV-06・RV-07
 - テスト green・`astro check` 0エラー・build 45 ページ（検証ゲート込み）
 
-**残るオーナー作業**: P2-2a（初回公開対象の選定）→ P2-4a（実機確認）／ C-1.5（Cloudflare 連携）／ C-2（サブドメイン）。
+**テストサイト公開済み**: https://sf6.amanohashi.date （Cloudflare Workers Builds、`main` push で自動デプロイ）。
+
+**残るオーナー作業**: P2-2a（初回公開対象の選定）→ P2-4a（実機確認）。
 **残る開発**: RV-02〜04 の確認状態フィールド（P2-4a の結果待ち）／ P2-6 拡張（画像・動画・フルプレビュー）／ P2-10 UX 実機検証 ／ P2-11 deriveModern ／ P2-12 公開ゲート。
 
 ---
@@ -67,7 +69,7 @@
 | **C-1.5** | **Cloudflare Workers デプロイ設定（リポジトリ側）** | ✅ | `wrangler.jsonc`（Static Assets、`dist/` を配信、SSR なし、custom domain = `sf6.amanohashi.date`）。デプロイは **Workers Builds**（ダッシュボードの Git 連携）方式に決定。API トークン／GitHub Actions は不要 |
 | **C-1.6** | **Workers Builds のビルド設定** | ✅ | cloudflare-api MCP で設定完了。Worker `sf6-combo-viewer` / repo connection / build config（`main` → `npm run build` → `npx wrangler deploy` / `NODE_VERSION=22`）。あとは `main` push で初回ビルド |
 | C-2 | 公開サブドメイン名 | ✅ | `sf6.amanohashi.date` に決定。`wrangler.jsonc` の `routes[].custom_domain` と `astro.config.mjs` の `site`、`robots.txt` に反映済み |
-| C-3 | 本番ドメイン割当 | ⏳ | 初回 `wrangler deploy` 時に custom domain の DNS・証明書が自動作成される（C-1.6 完了後） |
+| C-3 | 本番ドメイン割当 | ✅ | **`https://sf6.amanohashi.date` 稼働中**（2026-09-10 初回デプロイ、commit `5f5e52f`）。custom domain の DNS・証明書は初回 `wrangler deploy` で自動作成 |
 
 ---
 
