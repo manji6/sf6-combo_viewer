@@ -2,7 +2,8 @@
 
 最終更新: 2026-09-10（Phase 1 プロトタイプ、レビュー反映後。スキーマ決定 A-1〜A-4 を反映）
 このドキュメントが現状の唯一の正。承認済みの元計画は `C:\Users\ryosu\.claude\plans\web-iridescent-flame.md`、
-レビュー用の短いガイドは `docs/PROTOTYPE.md`、作業一覧と進捗は `docs/ROADMAP.md`。
+レビュー用の短いガイドは `docs/PROTOTYPE.md`、作業一覧と進捗は `docs/ROADMAP.md`、
+第三者レビューと対応方針は `docs/REVIEW-2026-09-10.md`。
 
 > **A-1〜A-4（2026-09-10 決定・実装済み）**: 要約は §3.0。
 > スキーマ本体（`src/data/types.ts`）・ダミーデータ・描画への適用まで完了。
@@ -91,8 +92,10 @@ Street Fighter 6 のコンボと**起き攻めセットプレイ（分岐択）*
   - ライトテーマは各色を暗めに再定義
 - **モダン入力の型（実装）**: 必殺技＝方向＋`SP`、**OD 必殺技＝方向＋`AUTO`＋`SP`**（`moves.inputModern` は `"6AS SP"` 形式）、SA＝方向＋`SP`＋`強`（`"2SP H"`）、通常/特殊技＝方向＋弱中強
 - **クラシック ⇄ モダン**は**コンボフロー単位**で切替（ヘッダーではない。コンボごとに可否が違うため）
-  - `comboSupportsModern`（本線が全パーツ `controlType:'both'`）が真のコンボだけ「モダン」ボタンが有効。
+  - `comboSupportsModern`（本線が全パーツ `controlType:'both'` かつ `routeChain` が非空）が真のコンボだけ「モダン」ボタンが有効。
     クラシックのみのコンボは「モダン」を disabled 表示
+  - **一覧の「モダン可」バッジ／フィルタも同じ `comboSupportsModern` を使う**（`FlatCombo.supportsModern`。
+    「一部の手にモダン入力がある」を意味していた旧 `usesModern` は RV-01 で廃止）
   - モダンにすると `controlType:'classic'` のパーツはグラフから**消える**（データ駆動。classic 版・modern 版の 2 グラフを持つ）
   - モダン記法: 必殺技＝「方向 ＋ `SP`」、OD 必殺技＝「方向 ＋ `AUTO` ＋ `SP`」、通常/特殊技＝「方向 ＋ 弱中強（P/K なし）」。
     技ごとの正確なモダン入力は `moves` 辞典の `inputModern`（§3.7）。未整備の技は `deriveModern()` の粗い推定にフォールバック
