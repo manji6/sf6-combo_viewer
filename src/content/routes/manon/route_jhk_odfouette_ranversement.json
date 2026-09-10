@@ -5,7 +5,7 @@
   "from": "neutral_mid",
   "to": "kd_after_ranversement_mid",
   "kind": "combo_route",
-  "label": "J強K → 4強P → ODグランフェッテ → 4強P → 強ランヴェルセ〆",
+  "label": "J強K → 4強P → ODグランフェッテ → 4強P → 強ロン・ポワン → 弱ランヴェルセ〆",
   "steps": [
     {
       "move": "J強K",
@@ -31,9 +31,15 @@
       "moveKey": "manon-4hp"
     },
     {
-      "move": "強ランヴェルセ",
-      "command": "236HP",
-      "moveKey": "manon-ranversement-h",
+      "move": "強ロン・ポワン",
+      "command": "236HK",
+      "moveKey": "manon-rondpoint-h",
+      "cancel": true
+    },
+    {
+      "move": "弱ランヴェルセ",
+      "command": "236LP",
+      "moveKey": "manon-ranversement-l",
       "cancel": true,
       "note": "メダルLv+1"
     }
@@ -43,9 +49,9 @@
     "superCost": 0,
     "saLevel": null
   },
-  "damage": 4700,
+  "damage": 6150,
   "difficulty": 3,
-  "constraints": "飛び道具読み前ジャンプが通った時。2ゲージ使用（コンボ中に回復し実質1本程度）。ノーゲージなら 4強P>中ランヴェルセ〆。",
+  "constraints": "飛び道具読み前ジャンプが通った時。2ゲージ使用（コンボ中に回復し実質1本程度）。ノーゲージなら 4強P>中ランヴェルセ〆。実測: メダル1枚で 3,620dmg。",
   "controlType": "classic",
   "tags": [
     "ジャンプ始動",

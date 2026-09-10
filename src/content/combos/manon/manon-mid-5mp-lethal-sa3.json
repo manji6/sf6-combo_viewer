@@ -9,6 +9,8 @@
   ],
   "startFrom": "neutral_mid",
   "endAt": "kd_after_super_mid",
+  "damageOverride": 4508,
+  "damageNote": "メダルLv1: 4,508 / Lv5: 4,808（メダル保持数で SA3 分が変動）",
   "difficulty": 4,
   "tags": [
     "リーサル",

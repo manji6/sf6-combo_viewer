@@ -44,7 +44,11 @@ const endOki = outgoingRoutes(end.id).filter((r) => r.kind === 'okizeme');
       <p class="sit">{combo.situationLabel}</p>
       {combo.description && <p class="desc">{combo.description}</p>}
       <div class="stat-row">
-        <div class="stat"><span class="k">ダメージ</span><span class="v">{flat.totalDamage.toLocaleString()}</span></div>
+        <div class="stat">
+          <span class="k">ダメージ</span>
+          <span class="v">{flat.totalDamage.toLocaleString()}</span>
+          {combo.damageNote && <span class="sub">{combo.damageNote}</span>}
+        </div>
         <div class="stat"><span class="k">難易度</span><span class="v"><Stars value={combo.difficulty} showNumber /></span></div>
         <div class="stat"><span class="k">Dゲージ</span><span class="v">{driveLabel(flat.totalDrive)}</span></div>
         <div class="stat"><span class="k">SA</span><span class="v">{superLabel(flat.totalSuper, flat.maxSaLevel)}</span></div>
@@ -149,6 +153,7 @@ const endOki = outgoingRoutes(end.id).filter((r) => r.kind === 'okizeme');
   .stat { border: 1px solid var(--border-strong); background: var(--bg-sunken); padding: 0.35rem 0.7rem; min-width: 6rem; }
   .stat .k { display: block; font-size: 0.68rem; color: var(--text-faint); }
   .stat .v { font-family: var(--font-pixel); color: var(--text); }
+  .stat .sub { display: block; margin-top: 0.15rem; font-size: 0.68rem; color: var(--text-faint); max-width: 16rem; }
   h2 { font-size: 1rem; border-bottom: 2px solid var(--border-strong); padding-bottom: 0.25rem; margin: 0 0 0.6rem; }
   .lead { font-size: 0.83rem; color: var(--text-faint); margin: 0 0 0.8rem; }
   .text-recipe > summary { cursor: pointer; font-family: var(--font-pixel); font-size: 0.85rem; color: var(--text-dim); }

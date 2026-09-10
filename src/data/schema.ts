@@ -145,6 +145,9 @@ export const comboSchema = z.object({
   startFrom: z.string(),
   endAt: z.string(),
   damageOverride: z.number().nullable().optional(),
+  // マノン特有: メダル保持数(Lv1〜5)で マネージュ・ドレ／ランヴェルセ／SA3・CA のダメージが変動する。
+  // damageOverride にはメダルLv1（下限）の実測値を入れ、変動幅をこの注記で示す。
+  damageNote: z.string().optional(),
   driveCostOverride: z.number().nullable().optional(),
   difficulty: z.number(),
   tags: z.array(z.string()),

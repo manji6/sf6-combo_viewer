@@ -8,6 +8,7 @@
   ],
   "startFrom": "neutral_mid",
   "endAt": "kd_after_ranversement_mid",
+  "damageNote": "3,000 はメダル1枚時の出典値。メダル保持数で弱ランヴェルセ分が変動",
   "damageOverride": 3000,
   "driveCostOverride": 1,
   "difficulty": 3,

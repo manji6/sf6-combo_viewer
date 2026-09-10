@@ -1,13 +1,15 @@
 {
   "character": "manon",
   "slug": "manon-jump-jhk-odfouette",
-  "name": "ジャンプ始動 J強K 4強P ODグランフェッテ 強ランヴェルセ〆",
+  "name": "ジャンプ始動 J強K ODグランフェッテ 弱ランヴェルセ〆",
   "situationLabel": "飛び道具読み前ジャンプが通った時",
   "routeChain": [
     "route_jhk_odfouette_ranversement"
   ],
   "startFrom": "neutral_mid",
   "endAt": "kd_after_ranversement_mid",
+  "damageOverride": 3620,
+  "damageNote": "3,620 はメダル1枚時の実測値。メダル保持数で弱ランヴェルセ分が変動",
   "driveCostOverride": 1,
   "difficulty": 3,
   "tags": [
@@ -15,5 +17,5 @@
     "メダル",
     "OD"
   ],
-  "description": "飛びが通った時に2ゲージ使って伸ばすコンボ。ODグランフェッテを中ランヴェルセに置換してもOK。ノーゲージなら 4強P>中ランヴェルセ〆。出典: すこれるブログ（sukoreru.com/sf6-manon）。合計ダメージは各技の素点合計＝補正前の目安。難易度は推定。"
+  "description": "飛びが通った時に2ゲージ使って伸ばすコンボ。J強K→4強P→ODグランフェッテ→4強P→強ロン・ポワン→弱ランヴェルセ。ODグランフェッテを中ランヴェルセに置換してもOK。ノーゲージなら 4強P>中ランヴェルセ〆。出典: すこれるブログ（sukoreru.com/sf6-manon）＋実機確認。難易度は推定。"
 }

@@ -18,8 +18,12 @@ const end = getSituation(combo.endAt);
 <a class="combo-card pixel-box" href={`/manon/combos/${combo.slug}/`}>
   <div class="head">
     <h3>{combo.name}</h3>
-    <span class="dmg">{flat.totalDamage.toLocaleString()}<small>dmg</small></span>
+    <span class="dmg">
+      {flat.totalDamage.toLocaleString()}<small>dmg</small>
+      {combo.damageNote && <small class="var">±</small>}
+    </span>
   </div>
+  {combo.damageNote && <p class="dmg-note">{combo.damageNote}</p>}
 
   <div class="recipe scroll-x">
     {
@@ -78,6 +82,15 @@ const end = getSituation(combo.endAt);
     font-size: 0.6em;
     color: var(--text-faint);
     margin-left: 0.2em;
+  }
+  .dmg .var {
+    color: var(--accent);
+    font-size: 0.8em;
+  }
+  .dmg-note {
+    margin: 0.1rem 0 0;
+    font-size: 0.72rem;
+    color: var(--text-faint);
   }
   .recipe {
     display: flex;

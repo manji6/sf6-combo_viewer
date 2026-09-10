@@ -9,6 +9,7 @@
   ],
   "startFrom": "neutral_mid",
   "endAt": "kd_after_ranversement_mid",
+  "damageNote": "メダル保持数で〆のランヴェルセ分が変動（表示値は素点合計＝実測前）",
   "difficulty": 3,
   "tags": [
     "確定反撃",
