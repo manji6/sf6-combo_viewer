@@ -120,7 +120,11 @@ Street Fighter 6 のコンボと**起き攻めセットプレイ（分岐択）*
 
 ## 3. データモデル（3層グラフ ＋ キャラ）
 
-型定義: **`src/data/types.ts`（これが仕様の正）**。データ本体: `src/data/dummy/{characters,situations,routes,combos}.ts`（Phase 2 で JSON + Zod へ）。
+形状の正: **`src/data/schema.ts`（Zod。型は `z.infer` で導出、`src/data/types.ts` は再エクスポート）**。
+データ本体: **`src/content/{characters,situations,routes,combos,moves}/manon/*.json`（1 レコード 1 ファイル）**。
+`src/data/index.ts` が `import.meta.glob`（同期）で読み込み、Zod 検証してから Map を組む
+（`getCollection` の非同期をこの境界で吸収し、下流の導出関数・各ページは同期のまま）。
+`src/content.config.ts` は Astro コレクション登録（同じスキーマ・JSON。`getCollection` 用）。
 
 ### 3.0 スキーマ決定（A-1〜A-4 / 2026-09-10）
 
@@ -374,33 +378,40 @@ Dゲージ増減／SAゲージ増加／属性／備考。**WebFetch は 403（Cl
 - Astro `^7.3` / TypeScript strict / Tailwind v4（`@tailwindcss/vite`）/ Preact（`@astrojs/preact`）
 - `@dagrejs/dagre` … グラフレイアウト（FlowCanvas・SystemMap 共通）
 - 静的出力（`output` 未指定＝static）。インタラクティブ部分だけ Preact 島（`client:only="preact"`）
-- 検証: `npm run build`（45 ページ）＋ `npx astro check`（0 エラー）
+- 検証: `npm run check`（= `validate` ＋ `test` ＋ `astro check`）／`npm run build`（45 ページ、検証ゲート込み）
+- テスト: `vitest`（`tests/*.test.ts`、57 件）
 - 開発: `npm run dev`（CLAUDE.md 記載どおり `astro dev --background` 推奨）
 
 ### ディレクトリ
 
 ```
 src/
+  content/{characters,situations,routes,combos,moves}/manon/*.json   ← ★ データ本体（1 レコード 1 ファイル）
+  content.config.ts   Astro コレクション登録（getCollection 用。同じ schema・JSON）
   data/
-    types.ts            ← ★ データ構造の仕様
-    characters.ts
-    dummy/{situations,routes,combos,moves}.ts   ← ダミーデータ（Phase 2 で JSON へ）。moves.ts＝技辞典（A-1）
-    index.ts            re-export ＋ ID 索引（getRoute / getSituation / getCombo）
+    schema.ts          ← ★ 形状の正（Zod）。型は z.infer
+    types.ts           schema.ts の再エクスポート（互換）
+    characters.ts       index.ts の再エクスポート（互換）
+    index.ts            import.meta.glob で JSON 読み込み＋Zod 検証＋ID 索引＋stepModernCommand
+  integrations/validate-data.ts   astro:build:start でデータ検証しビルド中止（RV-08）
   lib/
     notation/{parse,tokens}.ts
     graph/
-      derive.ts         outgoing/incoming・combosUsingRoute 逆引き・flattenCombo・validateAll・comboSupportsModern
+      derive.ts         逆引き・flattenCombo・comboStarterMove・comboSupportsModern・validateAll(data?)
       flow.ts           buildComboFlow / buildSituationFlow（step 単位 DAG、expandFrom 完全再帰）
       systemmap.ts      fullGraph() / neighborhood()（相関グラフ用データ）
-    ui.ts               ラベル・Stars・driveLabel など
+    ui.ts               ラベル・frameAdvLabel・wakeupSummary・stepActionLabel など
   components/
-    notation/{Tokens,Sequence,Arrow}.astro
+    notation/{Tokens,Sequence,StepCmd,Arrow}.astro
     islands/{FlowCanvas,SystemMap,Notation}.tsx
     {ComboCard,ComboExplorer,StepList,Stars,NotationToggle,ThemeToggle}.astro
-  layouts/BaseLayout.astro    ヘッダー（キャラドロップダウン・トグル）・フッター・テーマ/表記の inline 初期化
-  pages/…                     §4 参照
-  styles/global.css           テーマトークン（ダーク基準＋light 上書き）・ピクセル調・notation の CSS
-docs/{SPEC.md, PROTOTYPE.md}
+  layouts/BaseLayout.astro    ヘッダー・フッター（誤り報告リンク）・SEO メタ・テーマ/表記の inline 初期化
+  pages/…                     §4 参照（＋ 404.astro）
+  styles/global.css
+scripts/validate.ts           npm run validate（vite-node）
+tests/*.test.ts               vitest
+public/robots.txt
+docs/{SPEC, PROTOTYPE, ROADMAP, CONTENT, REVIEW-2026-09-10}.md
 ```
 
 ### localStorage / DOM フラグ
@@ -433,7 +444,15 @@ docs/{SPEC.md, PROTOTYPE.md}
 | `565dea7` | **A-1〜A-4 を実装**: `moves` 技辞典（マノン16技）＋ `Step.moveKey` ＋ `stepModernCommand()`／`RouteProperties.wakeup` 構造化／`manon-oki-degage-dr2mk-ranversement` 削除。**U-7**: コマンド表記を公式配色へ。パーツ詳細にフレーム併記 |
 | `90a948f` | U-7 追従: OD 表記の重複解消、OD/SA のモダン入力を「方向＋AUTO＋SP」「方向＋SP＋強」に修正 |
 | `4e0cded` | `docs/ROADMAP.md` 追加（作業一覧・進捗・進め方レビュー） |
-| （次） | **U-4** 実装: `Step.action`（walk / walk_back / dash / dash_back / whiff / wait）＋ 操作チップ（`StepCmd.astro` / FlowCanvas）。`whiff` はフレーム非表示。`通常投げ` を `LPLK` 正規表記に |
+| `357b1ac` | **U-4**: `Step.action`（walk/dash/whiff/wait）＋ 操作チップ（`StepCmd.astro`）。`whiff` はフレーム非表示 |
+| `72116f1` `c7da257` | **R-1**: 有利F を `{frames, note}` に構造化・表示 `+2F`。起き攻め枠は triage（受け身はバッジ）、詳細はカード送り |
+| `946c6d1` | **V-1〜V-6**: 文言（樹形図→ノードグラフ）、`404.astro`、`client:only` 島に `slot="fallback"` |
+| `d65ad5b` | **RV-01**（第三者レビュー P0）: 「モダン可」判定を `comboSupportsModern` に統一（`usesModern` 廃止、空 chain ガード） |
+| `20f08e2` | **P2-0 / RV-08**: vitest / 検証 CLI（`npm run validate`）／`validateAll(data?)` 注入可能化＋ルール追加（重複・空・宣言と入力の矛盾）／`validate-data` 統合でビルド中止 |
+| `fdec884` | **P2-9**: 安定ロジックの vitest（57 件。RV-01 回帰・notation・graph 再帰打ち切り 等） |
+| `c5014d5` | **RV-05**: マノンハブのタブを ARIA タブに（キーボード対応・#hash 同期）。**RV-06**: 「始動」フィルタを始動技ベースに |
+| `3a3d81e` | **P2-1 / P2-2**: Zod スキーマ（`src/data/schema.ts`）＋ データを `src/content/**/*.json`（55 件）へ移行。`import.meta.glob` 同期読み込み＋Zod 検証。`content.config.ts` 登録 |
+| `1726125` | **P2-8 / RV-07**: `@astrojs/sitemap`・`robots.txt`・SEO メタ（canonical/OGP）。フッターに GitHub Issues 報告リンク |
 
 ---
 
@@ -472,22 +491,32 @@ docs/{SPEC.md, PROTOTYPE.md}
 
 > 作業リスト・進捗は **`docs/ROADMAP.md`**。
 
-### Phase 2 実装項目（承認済み計画）
+### Phase 2 実装状況 → 詳細は `docs/ROADMAP.md` §3
 
-1. スキーマ確定: `src/content.config.ts`（Zod、**4コレクション**＝situations / routes / combos / moves）。
-   `src/data/dummy` → `src/content/{situations,routes,combos,moves}/manon/*.json`（1レコード1ファイル）。
-   構造は A-1〜A-4 反映後のもの（`Step.moveKey` / `RouteProperties.wakeup` / `Move`）
-2. ビルド時導出・検証（`validateAll` を content 由来に接続、mermaid ダンプ）
-3. SEO（`@astrojs/sitemap`、OGP/meta、コンボ詳細に JSON-LD、`robots.txt`、Lighthouse）
-4. **コンボ登録支援 Skill `/register-combo`**: Web ページ・画像・YouTube・テキストから JSON を作成／更新。
-   `drafts/` ＋ dev 限定 `/manon/_preview/` で「アプリと同じ見た目」プレビュー ＋ ターミナルダイジェスト ＋ 承認後 promote
-5. テスト（`vitest`：notation パーサ・graph 導出・再帰打ち切り）
-6. `CONTENT.md`（ノード設計ガイド「後続が同じなら同一ノード」）＋ scaffolding スクリプト。オーナーが実データ投入
-7. デプロイ（GitHub → Cloudflare Pages → カスタムドメイン）
+| 項目 | 状態 |
+|---|---|
+| P2-0 検証 CLI・ビルドゲート（RV-08） | ✅ |
+| P2-1 Zod スキーマ確定 | ✅（RV-02〜04 の確認状態フィールドは実例検証後に追加） |
+| P2-2 Content Collections 移行 | ✅（`import.meta.glob` 同期方式。async 回避） |
+| P2-3 ビルド時検証ゲート | ✅（`validate-data` 統合） |
+| P2-8 SEO 土台 | ✅（sitemap / robots / メタ。JSON-LD は未） |
+| P2-9 テスト（vitest 57 件） | ✅（拡充は継続） |
+| RV-05 タブのキーボード対応 / RV-06 始動技フィルタ / RV-07 報告リンク | ✅ |
+| P2-5 `CONTENT.md` | ✅ 草案（`docs/CONTENT.md`） |
+| P2-6 `/register-combo` Skill | ⬜（最小版から） |
+| P2-4a 代表実例の検証 / P2-7 実データ投入 | ⏳ オーナー作業 |
+| P2-10 UX 実機検証 / P2-11 deriveModern 精度 / P2-12 公開ゲート | ⏳ |
+
+### 実装メモ（RV-09 留意）
+
+- **Content Collections は `import.meta.glob` 同期方式を採用**。`getCollection` の非同期が
+  `getStaticPaths` / 各ページ frontmatter / 導出関数に波及するのを避けるため。JSON ＋ Zod 検証は達成。
+  `content.config.ts` も置いてあり `getCollection` は使えるが、現状アプリは同期パスのみ。
+- 検証は2層: ① Zod（形状。読み込み時 throw）② `validateAll`（参照・chain・重複・宣言と入力の矛盾。ビルド中止）
 
 ### オーナー作業（ブロッカーではない）
 
 - 実データ投入（正しいレシピ・ダメージ・起き攻め分岐・フレーム・受け身・難易度）
-- マノンの正式技名一覧（`moves` に全技。現状はダミー登場分の16技のみ）
-- モダンの通常技割り当ての検証（`moves.ts` の `2MP` / `2MK` の `inputModern` 仮値）
-- 公開サブドメイン名の決定
+- マノンの正式技名一覧（`moves` に全技。現状はダミー登場分の15技のみ）
+- モダンの通常技割り当ての検証（`manon-2mp` / `manon-2mk` の `inputModern` 仮値）
+- 公開サブドメイン名の決定（C-2）

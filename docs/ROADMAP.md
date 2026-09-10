@@ -17,10 +17,15 @@
 
 ## 現在地
 
-**Phase 1（UI/UX プロトタイプ、ダミーデータ）** — レビュー項目は全て決着。
-主要 UI ＋ スキーマ確定（A-1〜A-4）＋ コマンド表記の公式配色（U-7）＋ 操作チップ（U-4）＋
-起き攻め枠の情報粒度（R-1）＋ V-1〜V-6 の点検・修正まで完了。
-**次は「Phase 1 完了」を宣言 → Phase 2（本開発）着手。** 並行で C-1.5（Cloudflare Pages 連携）推奨。
+**Phase 1 のレビュー項目は全て決着。Phase 2（本開発）の基盤も一通り完了。**
+
+- Phase 1: A-1〜A-4 / U-4 / U-7 / R-1 / V-1〜V-6 / 第三者レビュー RV-01
+- Phase 2 基盤: P2-0（検証CLI・ビルドゲート）/ P2-1（Zod）/ P2-2（Content Collections 移行）/
+  P2-3（検証ゲート）/ P2-5（CONTENT.md 草案）/ P2-8（SEO 土台）/ P2-9（テスト 57 件）/ RV-05・RV-06・RV-07
+- テスト green・`astro check` 0エラー・build 45 ページ（検証ゲート込み）
+
+**残るオーナー作業**: P2-2a（初回公開対象の選定）→ P2-4a（実機確認）／ C-1.5（Cloudflare 連携）／ C-2（サブドメイン）。
+**残る開発**: P2-6（`/register-combo` Skill）／ P2-10〜12。
 
 ---
 
@@ -91,22 +96,26 @@ Codex による設計レビュー。全体評価は「方向性は妥当、少�
 
 Phase 1 クローズ後に着手。順序は第三者レビューの推奨（§2.5）を反映。
 
-| # | 項目 | 状態 | 依存 | 内容 |
-|---|---|---|---|---|
-| P2-0 | 検証 CLI を実行可能に（RV-08） | ⬜ | なし（今すぐ可） | `scripts/validate.mjs` を tsx 等で動くように＋`npm run validate`。Map 化前の重複検出・空 steps/chain・宣言と入力の矛盾を検証項目に |
-| P2-2a | **初回公開対象と代表実例の選定**（RV-09） | 🔲 | なし | オーナーが「初回に載せるコンボ・起き攻め」を具体列挙。入力担当を決める。中央/端・通常/条件付き始動・共通の締め・受け身別・classic限定/両対応 を種類で網羅 |
-| P2-4a | 現行 TS で代表実例を検証（RV-02〜04） | ⏳ | P2-2a | 移行前に 5〜10 本を今の TS 形式で登録。接続の成立条件・ダメージの測定条件・モダン入力の確認状態 の**不足と対応方針を記録** |
-| P2-1 | スキーマを Zod 化＋型方針の確定 | ⬜ | P2-4a | `src/content.config.ts`（4コレクション）。RV-02〜04 の型（確認状態・測定条件・接続条件、`frameAdvantage.frames` は number 化検討）を P2-4a の結果で決める |
-| P2-2 | データを Content Collections へ移行 | ⏳ | P2-1 | 非同期取得・content ID と業務 ID の二系統・参照解決・既存 URL 維持・下書き除外・検証タイミング を含む（RV-09。「TS→JSON だけ」ではない）。取得後に索引を作って既存の同期導出関数へ渡す境界を設ける |
-| P2-3 | ビルド時検証を強化（RV-08） | ⏳ | P2-2, P2-0 | `validateAll` を content に接続し**壊れたデータでビルド失敗**。ID 重複・参照欠落・空 steps/chain・chain 連続性・キャラ不一致・宣言と入力の矛盾。下書きの未接続は公開ビルドを妨げない |
-| P2-5 | `CONTENT.md`（コンテンツ作成ガイド） | ⏳ | P2-4a | ノード共有基準（RV-03 の分割/共有の判断例）、id/slug 命名（B-4）、`near_corner` 運用（A-3）、確認バージョン更新手順「変更候補抽出→影響一覧→再確認→公開」（RV-07/B-3） |
-| P2-6 | コンボ登録支援 Skill `/register-combo` | ⏳ | P2-4a, P2-5 | **初期はテキスト入力・正規化・既存パーツ候補・差分プレビュー・確認後反映に絞る**（画像/動画解析は後続。RV-09）。`drafts/` ＋ dev 限定 `/manon/_preview/` |
-| P2-7 | 実データ整備（初回公開一覧） | ⏳ | P2-6 | 「全技・全コンボ」でなく P2-2a の掲載一覧。Skill に依存せず手入力でも進める |
-| P2-8 | SEO | ⬜ | P2-2（並行可） | 実 URL・canonical・OGP／sitemap／`robots.txt`。JSON-LD は表現対象を決めてから。Lighthouse |
-| P2-9 | テスト（`vitest`） | ⬜ | RV-01 済・P2-3 と並行 | **RV-01 と既存 graph の重要ロジックから**：notation パーサ・graph 導出・ループ/既出/深さ打ち切り・`stepModernCommand` / `wakeupSummary` / `comboSupportsModern`（classic限定 route を含む本線ケース必須） |
-| P2-10 | UX 実機検証（RV-05） | ⬜ | P2-7・共有 URL | スマホ＋キーボードで「検索→レシピ→起き攻め選択」完遂。想定利用者 3〜5 人。タブのキーボード対応・全画面フォーカス管理・横はみ出し確認 |
-| P2-11 | `deriveModern()` の精度改善（B-2） | ⬜ | 低優先 | ほぼ `moves.inputModern` 手入力前提。ただし RV-02 の未確認表示方針は公開前 |
-| P2-12 | 初回公開ゲート確認 → 本番公開（RV-09） | ⏳ | §5 の全項目 | プレビューでゲート確認後、`main` push で本番・カスタムドメイン割当 |
+| # | 項目 | 状態 | 内容 |
+|---|---|---|---|
+| P2-0 | 検証 CLI・ビルドゲート（RV-08） | ✅ `20f08e2` | `scripts/validate.ts`（vite-node）＋`npm run validate` / `check`。`validateAll(data?)` 注入可能化＋ルール追加（重複・空・キャラ不一致・宣言と入力の矛盾）。`validate-data` 統合で `astro:build:start` にてビルド中止。dev は警告のみ |
+| P2-9 | テスト（`vitest` 57 件） | ✅ `fdec884` `c5014d5` | RV-01 回帰（classic限定 route を含む本線）・notation パーサ・graph 導出・再帰打ち切り・`stepModernCommand` / `wakeupSummary` / `frameAdvLabel` / `comboStarterMove`。拡充は継続 |
+| P2-1 | Zod スキーマ | ✅ `3a3d81e` | `src/data/schema.ts`（形状の正）。型は `z.infer`。`types.ts` は再エクスポート。RV-02〜04 の確認状態フィールドは P2-4a の実例検証後に追加 |
+| P2-2 | Content Collections 移行 | ✅ `3a3d81e` | `src/data/dummy/*.ts` → `src/content/**/*.json`（55 件）。`src/data/index.ts` が `import.meta.glob`（**同期**）で読み Zod 検証。`getCollection` の非同期を避け導出関数・各ページは同期のまま。`content.config.ts` も登録済み（getCollection 用） |
+| P2-3 | ビルド時検証ゲート | ✅ `20f08e2` `3a3d81e` | Zod（形状。読み込み時 throw）＋ `validateAll`（参照・chain・重複・矛盾。ビルド中止）の2層 |
+| P2-5 | `CONTENT.md` | ✅ 草案 `docs/CONTENT.md` | 置き場所・命名規則（B-4）・コマンド表記・ノード粒度（U-6/RV-03）・有利F/ダメージ（RV-04/06）・技辞典（RV-02）・更新手順（RV-07/B-3）・チェック |
+| P2-8 | SEO 土台 | ✅ `1726125` | `@astrojs/sitemap`・`public/robots.txt`・canonical/OGP メタ。JSON-LD・Lighthouse は実データ後 |
+| RV-05 | タブのキーボード対応 | ✅ `c5014d5` | radio+label → ARIA タブ。roving tabindex・矢印/Home/End・`:focus-visible`・#hash 同期（pushState/hashchange） |
+| RV-06 | 始動技フィルタ | ✅ `c5014d5` | `始動` を `start.kind` → 始動技（`comboStarterMove`）。ComboExplorer の #hash 保持 |
+| RV-07 | 誤り報告の受け口 | ✅ `1726125` | フッターに GitHub Issues リンク（対象 URL・確認バージョン・再現条件を促す） |
+| — | | | |
+| P2-2a | **初回公開対象と代表実例の選定** | 🔲 オーナー | 「初回に載せるコンボ・起き攻め」を具体列挙。中央/端・通常/条件付き始動・共通の締め・受け身別・classic限定/両対応 を種類で網羅 |
+| P2-4a | 代表実例の検証（RV-02〜04） | ⏳ P2-2a | 5〜10 本を JSON で登録し実機確認。接続の成立条件・ダメージの測定条件・モダン入力の確認状態 の不足と型方針を記録 → P2-1 に確認状態フィールド追加 |
+| P2-6 | `/register-combo` Skill | ⬜ | 最小版：テキスト入力・正規化・既存パーツ候補・差分プレビュー・承認後反映。`drafts/` ＋ dev 限定 `/manon/_preview/`。画像/動画解析は後続 |
+| P2-7 | 実データ整備（初回公開一覧） | ⏳ P2-6 | Skill に依存せず手入力でも進める |
+| P2-10 | UX 実機検証（RV-05 の残り） | ⏳ P2-7・共有 URL | スマホ＋キーボードで主要導線を完遂。想定利用者 3〜5 人。全画面フォーカス管理・320/375/390px の横はみ出し |
+| P2-11 | `deriveModern()` の精度改善（B-2） | ⬜ 低優先 | ほぼ `moves.inputModern` 手入力前提 |
+| P2-12 | 初回公開ゲート確認 → 本番公開 | ⏳ §5 | プレビューでゲート確認後、本番・カスタムドメイン |
 
 ### Phase 2 の未決事項（B 項目）
 
