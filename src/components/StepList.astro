@@ -1,7 +1,7 @@
 ---
 import type { Step } from '../data/types';
-import { moveByKey, stepModernCommand } from '../data';
-import Sequence from './notation/Sequence.astro';
+import { moveByKey } from '../data';
+import StepCmd from './notation/StepCmd.astro';
 
 interface Props {
   steps: Step[];
@@ -14,15 +14,15 @@ const { steps, showFrames = false } = Astro.props;
 <ol class="steps">
   {
     steps.map((st) => {
-      const mv = st.moveKey ? moveByKey.get(st.moveKey) : undefined;
+      const mv = !st.action && st.moveKey ? moveByKey.get(st.moveKey) : undefined;
       return (
         <li class="step">
           <span class="idx">{st.cancel ? '›' : ''}</span>
           <span class="body">
             <span class="cmd">
-              <Sequence command={st.command} commandModern={stepModernCommand(st)} />
+              <StepCmd step={st} />
             </span>
-            <span class="move">{st.move}</span>
+            {!st.action && <span class="move">{st.move}</span>}
             {st.note && <span class="note">— {st.note}</span>}
             {showFrames && mv && (mv.startup != null || mv.onHit || mv.onBlock) && (
               <span class="frames">
@@ -73,12 +73,6 @@ const { steps, showFrames = false } = Astro.props;
   .move {
     color: var(--text-dim);
     font-size: 0.9rem;
-  }
-  .modern {
-    font-size: 0.78rem;
-    color: var(--text-faint);
-    border: 1px solid var(--border);
-    padding: 0 0.35em;
   }
   .note {
     font-size: 0.82rem;

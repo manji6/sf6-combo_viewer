@@ -5,6 +5,8 @@ import type {
   RouteKind,
   RouteProperties,
   SituationKind,
+  Step,
+  StepAction,
 } from '../data/types';
 
 export const POSITION_LABEL: Record<Position, string> = {
@@ -62,6 +64,23 @@ export function driveLabel(cost: number): string {
 export function superLabel(cost: number, saLevel: 1 | 2 | 3 | null): string {
   if (cost <= 0) return 'SA不使用';
   return saLevel ? `SA${saLevel}（${cost}本）` : `SAゲージ ${cost}`;
+}
+
+/** 技コマンドでない操作の表示。tag＝チップ左の1文字、label＝チップ本文 */
+export const STEP_ACTION: Record<StepAction, { tag: string; label: string }> = {
+  walk: { tag: '歩', label: '微歩き' },
+  walk_back: { tag: '歩', label: '微後ろ歩き' },
+  dash: { tag: '走', label: '前ステップ' },
+  dash_back: { tag: '走', label: 'バックステップ' },
+  whiff: { tag: '空', label: '空振り' },
+  wait: { tag: '見', label: '様子見' },
+};
+
+/** 操作チップの本文。whiff は「<技名> 空振り」、それ以外は固定ラベル */
+export function stepActionLabel(step: Step): string {
+  if (!step.action) return step.move;
+  const a = STEP_ACTION[step.action];
+  return step.action === 'whiff' ? `${step.move} 空振り` : a.label;
 }
 
 export const WAKEUP_COVERAGE_LABEL: Record<'both' | 'quick' | 'back', string> = {

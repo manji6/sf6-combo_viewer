@@ -63,12 +63,27 @@ export interface Situation {
   notes?: string;
 }
 
+/**
+ * 技コマンドでない操作（起き攻めの初手など）。
+ * これが付いた step は技アイコンではなく「操作チップ」で表示し、フレームは出さない
+ * （walk/dash 系は技ではない。whiff は当てないため硬直差が無意味）。
+ */
+export type StepAction =
+  | 'walk' // 微歩き（前）
+  | 'walk_back' // 微後ろ歩き（様子見・シミー）
+  | 'dash' // 前ステップ（66）
+  | 'dash_back' // バックステップ（44）
+  | 'whiff' // 技を当てずに空振り（フレーム消費）。command は実際の技
+  | 'wait'; // 何もしない／ガード継続
+
 /** コンボ 1 手 */
 export interface Step {
   /** 技名（表示用）。moveKey があれば辞典の name を優先してよい */
   move: string;
   /** numpad 正準表記（例: 236MP, 2MK, DR, DRC）。クラシックの正 */
   command: string;
+  /** 技コマンドでない操作。付くと操作チップ表示になりフレームは出さない */
+  action?: StepAction;
   /**
    * モダン操作のコマンド（明示指定）。
    * 未指定かつ moveKey があれば moves 辞典の inputModern を使う。

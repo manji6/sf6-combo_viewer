@@ -49,6 +49,16 @@ const SIT_KIND_COLOR: Record<string, string> = {
   okiStart: '#ff5a5a',
 };
 
+/** 操作チップ左の 1 文字（lib/ui.ts の STEP_ACTION と対応） */
+const STEP_ACTION_TAG: Record<string, string> = {
+  walk: '歩',
+  walk_back: '歩',
+  dash: '走',
+  dash_back: '走',
+  whiff: '空',
+  wait: '見',
+};
+
 /** 起き攻めの枠に出す特徴テキストの行数から高さを見積もる */
 function wrapLines(text: string | undefined, perLine = 30): number {
   if (!text) return 0;
@@ -526,6 +536,10 @@ export default function FlowCanvas({ graph, graphModern, height = 520 }: Props) 
 
         .fc-node { background:var(--panel); border:2px solid var(--border-strong); box-shadow:3px 3px 0 rgba(0,0,0,.3); display:flex; flex-direction:column; overflow:hidden; }
         .fc-node-cmd { padding:.35rem .6rem; font-size:1.02rem; white-space:nowrap; display:flex; align-items:center; justify-content:center; flex:1; }
+        .fc-node.n-action { border-style:dashed; }
+        .fc-action { display:inline-flex; align-items:center; gap:.4em; font-size:.82rem; color:var(--text-dim); font-family:var(--font-body); }
+        .fc-action-tag { display:inline-flex; align-items:center; justify-content:center; width:1.6em; height:1.6em; border-radius:3px; background:var(--border-strong); color:var(--bg); font-family:var(--font-pixel); font-size:.8em; font-weight:700; }
+        .fc-action[data-a='whiff'] .fc-action-tag { background:var(--text-faint); }
         .fc-node-move { font-size:.66rem; color:var(--text-dim); background:var(--bg-sunken); padding:.12rem .45rem; border-top:1px solid var(--border); text-align:center; white-space:nowrap; }
         .fc-node-note { font-size:.62rem; color:var(--accent); background:var(--bg-sunken); padding:0 .45rem .16rem; text-align:center; white-space:nowrap; }
         .fc-node.n-cancel { border-left-width:5px; border-left-color:var(--accent); }
@@ -544,11 +558,18 @@ export default function FlowCanvas({ graph, graphModern, height = 520 }: Props) 
 function NodeInner({ node: n }: { node: FlowNode }) {
   if (n.type === 'step') {
     return (
-      <div class={`fc-node n-step ${n.cancel ? 'n-cancel' : ''}`}>
+      <div class={`fc-node n-step ${n.cancel ? 'n-cancel' : ''} ${n.action ? 'n-action' : ''}`}>
         <div class="fc-node-cmd">
-          <Notation command={n.command!} commandModern={n.commandModern} />
+          {n.action ? (
+            <span class="fc-action" data-a={n.action}>
+              <span class="fc-action-tag">{STEP_ACTION_TAG[n.action]}</span>
+              {n.actionLabel}
+            </span>
+          ) : (
+            <Notation command={n.command!} commandModern={n.commandModern} />
+          )}
         </div>
-        {n.move && <div class="fc-node-move">{n.move}</div>}
+        {!n.action && n.move && <div class="fc-node-move">{n.move}</div>}
         {n.note && <div class="fc-node-note">{n.note}</div>}
       </div>
     );

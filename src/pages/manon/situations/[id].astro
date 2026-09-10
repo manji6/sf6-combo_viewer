@@ -1,9 +1,9 @@
 ---
 import BaseLayout from '../../../layouts/BaseLayout.astro';
-import Sequence from '../../../components/notation/Sequence.astro';
+import StepCmd from '../../../components/notation/StepCmd.astro';
 import Stars from '../../../components/Stars.astro';
 import FlowCanvas from '../../../components/islands/FlowCanvas.tsx';
-import { getSituation, situations, stepModernCommand } from '../../../data';
+import { getSituation, situations } from '../../../data';
 import {
   combosThroughSituation,
   incomingRoutes,
@@ -102,7 +102,7 @@ const hasClassicOnly = outs.some((r) => r.controlType === 'classic');
                     {r.steps.map((st, i) => (
                       <>
                         {i > 0 && <span class="j">›</span>}
-                        <Sequence command={st.command} commandModern={stepModernCommand(st)} />
+                        <StepCmd step={st} />
                       </>
                     ))}
                   </div>
@@ -173,7 +173,7 @@ const hasClassicOnly = outs.some((r) => r.controlType === 'classic');
                   {r.steps.map((st, i) => (
                     <>
                       {i > 0 && <span class="j">›</span>}
-                      <Sequence command={st.command} commandModern={st.commandModern} />
+                      <StepCmd step={st} />
                     </>
                   ))}
                 </div>
@@ -202,7 +202,7 @@ const hasClassicOnly = outs.some((r) => r.controlType === 'classic');
                   {r.steps.map((st, i) => (
                     <>
                       {i > 0 && <span class="j">›</span>}
-                      <Sequence command={st.command} commandModern={st.commandModern} />
+                      <StepCmd step={st} />
                     </>
                   ))}
                 </div>

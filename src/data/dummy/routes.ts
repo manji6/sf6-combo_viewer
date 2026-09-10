@@ -277,7 +277,7 @@ export const routes: Route[] = [
     kind: 'okizeme',
     label: '微歩き 2中K 重ね',
     steps: [
-      { move: '微歩き', command: '(微歩き)', note: '起き上がりに密着を微調整' },
+      { move: '微歩き', command: '(微歩き)', action: 'walk', note: '起き上がりに密着を微調整' },
       { move: '2中K', command: '2MK', moveKey: 'manon-2mk', note: '最速重ね' },
     ],
     resources: { driveCost: 0, superCost: 0, saLevel: null },
@@ -308,8 +308,8 @@ export const routes: Route[] = [
     kind: 'okizeme',
     label: '前ステップ 通常投げ',
     steps: [
-      { move: '前ステップ', command: '66' },
-      { move: '通常投げ', command: '(投げ)', moveKey: 'manon-throw', note: '前ステの慣性で密着' },
+      { move: '前ステップ', command: '66', action: 'dash' },
+      { move: '通常投げ', command: 'LPLK', moveKey: 'manon-throw', note: '前ステの慣性で密着' },
     ],
     resources: { driveCost: 0, superCost: 0, saLevel: null },
     damage: 1200,
@@ -339,7 +339,7 @@ export const routes: Route[] = [
     kind: 'okizeme',
     label: '様子見（シミー）',
     steps: [
-      { move: '微後ろ歩き', command: '(様子見)', note: '相手の暴れ・バクステを釣る' },
+      { move: '微後ろ歩き', command: '(様子見)', action: 'walk_back', note: '相手の暴れ・バクステを釣る' },
     ],
     resources: { driveCost: 0, superCost: 0, saLevel: null },
     damage: 0,
@@ -420,8 +420,8 @@ export const routes: Route[] = [
     kind: 'okizeme',
     label: '5弱P 空振り → 前ステップ マネージュ・ドレ',
     steps: [
-      { move: '5弱P', command: '5LP', moveKey: 'manon-5lp', note: '当てない・フレーム消費' },
-      { move: '前ステップ', command: '66' },
+      { move: '5弱P', command: '5LP', moveKey: 'manon-5lp', action: 'whiff', note: '当てない・フレーム消費' },
+      { move: '前ステップ', command: '66', action: 'dash' },
       { move: 'マネージュ・ドレ', command: '63214P', moveKey: 'manon-manege-dore' },
     ],
     resources: { driveCost: 0, superCost: 0, saLevel: null },

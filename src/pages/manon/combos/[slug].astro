@@ -1,6 +1,6 @@
 ---
 import BaseLayout from '../../../layouts/BaseLayout.astro';
-import Sequence from '../../../components/notation/Sequence.astro';
+import StepCmd from '../../../components/notation/StepCmd.astro';
 import Stars from '../../../components/Stars.astro';
 import FlowCanvas from '../../../components/islands/FlowCanvas.tsx';
 import { combos, getRoute, getSituation } from '../../../data';
@@ -76,7 +76,7 @@ const endOki = outgoingRoutes(end.id).filter((r) => r.kind === 'okizeme');
           flat.steps.map((st, i) => (
             <>
               {i > 0 && <span class="j">{st.boundary ? '»' : '›'}</span>}
-              <Sequence command={st.command} commandModern={st.commandModern} />
+              <StepCmd step={st} />
             </>
           ))
         }

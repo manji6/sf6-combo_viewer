@@ -5,11 +5,12 @@ import type {
   Situation,
   SituationKind,
   Step,
+  StepAction,
 } from '../../data/types';
 import { getCombo, getRoute, getSituation, stepModernCommand } from '../../data';
 import { outgoingRoutes } from './derive';
 import { commandToText } from '../notation/parse';
-import { wakeupSummary } from '../ui';
+import { stepActionLabel, wakeupSummary } from '../ui';
 
 export type FlowNodeType = 'step' | 'outcome' | 'start';
 
@@ -19,6 +20,10 @@ export interface FlowNode {
   command?: string;
   commandModern?: string;
   move?: string;
+  /** 技コマンドでない操作。セットされていれば操作チップで描画 */
+  action?: StepAction;
+  /** action チップの本文（"前ステップ" "5弱P 空振り" など） */
+  actionLabel?: string;
   note?: string;
   cancel?: boolean;
   situationId?: string;
@@ -73,7 +78,7 @@ const NODE_MIN_W = 118;
 const NODE_MAX_W = 240;
 
 function stepSize(st: Step): { w: number; h: number } {
-  const text = commandToText(st.command) || st.command;
+  const text = st.action ? stepActionLabel(st) : commandToText(st.command) || st.command;
   const base = 44 + text.length * 11;
   const w = Math.max(NODE_MIN_W, Math.min(NODE_MAX_W, base));
   const h = 64 + (st.note ? 15 : 0);
@@ -93,6 +98,8 @@ function stepNode(id: string, st: Step, groupId: string): FlowNode {
     command: st.command,
     commandModern: stepModernCommand(st),
     move: st.move,
+    action: st.action,
+    actionLabel: st.action ? stepActionLabel(st) : undefined,
     note: st.note,
     cancel: st.cancel,
     groupId,

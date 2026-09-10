@@ -70,7 +70,7 @@ Street Fighter 6 のコンボと**起き攻めセットプレイ（分岐択）*
   - `strongVs` / `weakVs` … 有効・苦手な相手の行動
   - `caution` … 注意点（例「ドライブインパクトで割り込まれる」「先端当てないと反確」）
   - `onBlock` / `useWhen` / `risk`（低/中/高）
-- 起き攻めの初回行動は **DR 以外も表現可能**: 微歩き `(微歩き)` / 前ステップ `66` / フレーム消費技（5弱P 空振り、`note` に「当てない」）
+- 起き攻めの初回行動は **DR 以外も表現可能**: 微歩き・前ステップ・空振り・様子見は `Step.action`（U-4）で「操作チップ」表示
 - 状況ノード側は `advantage`（相手が動けるまでの有利F）と `wakeupNote`（そのダウンで相手が取れる受け身、後ろ受け身可否）を持つ
 - **SOFT / HARD ダウンの区別は状況ノードの `opponentState`** で表す（`knockdown_soft`＝受け身可／`knockdown_hard`＝強制ダウン・受け身不可）。
   `wakeup` は「受け身が取れるダウン（soft）」で受け身の種類ごとの成否を、`opponentState` は「そもそも受け身が取れるか」を担当する
@@ -138,12 +138,15 @@ Street Fighter 6 のコンボと**起き攻めセットプレイ（分岐択）*
 ### 3.1 `Step` — 1 手（レシピの最小単位）
 
 ```ts
+type StepAction = 'walk' | 'walk_back' | 'dash' | 'dash_back' | 'whiff' | 'wait';
+
 interface Step {
   move: string;            // 技名（表示用。moveKey があれば辞典 name を優先してよい）
-  command: string;         // numpad 正準表記（クラシックの正。"5MP" "DR" "66" "(投げ)" 等）
+  command: string;         // numpad 正準表記（クラシックの正。"5MP" "DR" "66" "LPLK" 等）
+  action?: StepAction;     // （U-4）技コマンドでない操作。付くと「操作チップ」表示・フレーム非表示
   commandModern?: string;  // モダン入力の明示指定（通常は不要）
   moveKey?: string;        // （A-1）moves 辞典の key。モダン入力・フレームの参照元。
-                           //        DR / DRC / 66 / (微歩き) など「技でない操作」では省略
+                           //        DR / DRC / 66 / action 付き step では省略
   cancel?: boolean;        // 直前の技からキャンセルで繋ぐか
   note?: string;           // "最速重ね" 等の機能的メモ（ナレーション禁止）
 }
@@ -151,6 +154,8 @@ interface Step {
 
 - `command` はクラシック表記の正として常に持つ（辞典と二重持ちだが Phase 1 は許容。`moveKey` があれば辞典を裏取りに使える）
 - モダン表記は `stepModernCommand(step)` が「`commandModern` > `moves[moveKey].inputModern` > `deriveModern(command)`」の順で解決
+- **`action`（U-4）**: `walk`＝微歩き / `walk_back`＝微後ろ歩き（様子見） / `dash`＝前ステップ / `dash_back`＝バックステップ / `whiff`＝技の空振り（`command` は実際の技だがフレームは出さない） / `wait`＝様子見・ガード継続。
+  表示は共通コンポーネント `src/components/notation/StepCmd.astro`（技は `Sequence`、操作は破線チップ ＋ `歩`/`走`/`空`/`見` タグ）。フローは `FlowCanvas` が同等のチップを描画。`whiff` はフレーム欄を出さない
 
 ### 3.2 `Route` — パーツ＝**レシピの実体**
 
@@ -418,7 +423,10 @@ docs/{SPEC.md, PROTOTYPE.md}
 | `c601841` | **コンボ一覧とセットプレイの区別を明確化**（コンボ＝始動技から／セットプレイ＝特定状況から）＋各タブに説明文 |
 | `936ac5c` | 仕様・設計・実装まとめ（`SPEC.md`）を追加、`PROTOTYPE.md` を更新 |
 | `f949987` | 用語「起き攻け」→「起き攻め」の統一。スキーマ決定 A-1〜A-4 をドキュメントに反映 |
-| （次） | **A-1〜A-4 を実装**: `moves` 技辞典（マノン16技、公式フレーム/コマンド）＋ `Step.moveKey` ＋ `stepModernCommand()`／`RouteProperties.wakeup` 構造化（`wakeupSummary()`）／`manon-oki-degage-dr2mk-ranversement` 削除。**U-7**: コマンド表記を公式配色へ（シアン/イエロー/レッド、OD 表記、DR 緑、SP オレンジ、AUTO バッジ）。パーツ詳細にフレーム併記 |
+| `565dea7` | **A-1〜A-4 を実装**: `moves` 技辞典（マノン16技）＋ `Step.moveKey` ＋ `stepModernCommand()`／`RouteProperties.wakeup` 構造化／`manon-oki-degage-dr2mk-ranversement` 削除。**U-7**: コマンド表記を公式配色へ。パーツ詳細にフレーム併記 |
+| `90a948f` | U-7 追従: OD 表記の重複解消、OD/SA のモダン入力を「方向＋AUTO＋SP」「方向＋SP＋強」に修正 |
+| `4e0cded` | `docs/ROADMAP.md` 追加（作業一覧・進捗・進め方レビュー） |
+| （次） | **U-4** 実装: `Step.action`（walk / walk_back / dash / dash_back / whiff / wait）＋ 操作チップ（`StepCmd.astro` / FlowCanvas）。`whiff` はフレーム非表示。`通常投げ` を `LPLK` 正規表記に |
 
 ---
 
@@ -431,16 +439,16 @@ docs/{SPEC.md, PROTOTYPE.md}
 - **A-3** `position` はスキーマ現状維持、運用ルールを明文化 … §3.4
 - **A-4** セットプレイのフル一本は `Combo` にしない … §2.1 / §3.3・ダミー削除済み
 - **U-1〜U-3** ノードグラフの情報量・深さ・6択の見やすさ … 現状維持で OK
-- **U-4** 微歩き等の非コマンド操作 … （下記の残件へ）
+- **U-4** 微歩き等の非コマンド操作 … `Step.action` ＋ 操作チップで実装済み（§3.1 / §2.2）
 - **U-5** 相関グラフのスケール戦略 … 現状維持、方針は Phase 2
 - **U-6** ノード粒度の運用ルール … 既定「統合」、条件はルート `constraints` へ。詳細は Phase 2 `CONTENT.md`
 - **U-7** コマンド表記の公式配色（シアン/イエロー/レッド・OD 表記・DR 緑・SP オレンジ・AUTO）… 実装済み（§2.3）
 
 ### レビューで決めたいこと（Phase 1 の残り）
 
-- **U-4** 微歩き・前ステップ・空振り・投げなど「コマンドではない操作」に専用の操作チップを用意するか（現状: 微歩き＝淡色メモ、前ステ＝`66` の矢印で混在）
-- 起き攻め枠に出す特徴項目の粒度（`frameAdvantage` / `wakeup` / `strongVs` / `weakVs` / `caution` / `onBlock` / `risk`）
-- モダンの通常技割り当ての検証（`moves.ts` の `2MP` / `2MK` の `inputModern` 仮値）
+- **R-1** 起き攻め枠に**常時**出す特徴項目の粒度（`frameAdvantage` / `wakeup` / `strongVs` / `weakVs` / `caution` / `onBlock` / `risk`）
+- **R-2** モダンの通常技割り当ての検証（`moves.ts` の `2MP` / `2MK` の `inputModern` 仮値。`5MP`→`5M` は確定）
+- **V-1〜V-6** 空/境界状態・モバイル幅・両テーマ・`about.astro` 文言・404/ちらつき・導線（`docs/ROADMAP.md` §1-B）
 
 ### B 項目（Phase 2 の進め方。未決定）
 

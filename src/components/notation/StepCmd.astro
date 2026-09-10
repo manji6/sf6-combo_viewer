@@ -1,0 +1,58 @@
+---
+// 1 手のコマンド表示。技コマンドでない操作（action）は「操作チップ」、
+// それ以外は Sequence（アイコン/テキスト・クラシック/モダン）で描画する。
+import type { Step } from '../../data/types';
+import { stepModernCommand } from '../../data';
+import { STEP_ACTION, stepActionLabel } from '../../lib/ui';
+import Sequence from './Sequence.astro';
+
+interface Props {
+  step: Step;
+}
+const { step } = Astro.props;
+const act = step.action ? STEP_ACTION[step.action] : undefined;
+---
+
+{
+  act ? (
+    <span class="step-action" data-a={step.action}>
+      <span class="sa-tag">{act.tag}</span>
+      <span class="sa-label">{stepActionLabel(step)}</span>
+    </span>
+  ) : (
+    <Sequence command={step.command} commandModern={stepModernCommand(step)} />
+  )
+}
+
+<style>
+  .step-action {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35em;
+    border: 1px dashed var(--border-strong);
+    border-radius: 4px;
+    padding: 0.1em 0.5em 0.1em 0.15em;
+    background: var(--bg-sunken);
+    font-size: 0.9em;
+    color: var(--text-dim);
+  }
+  .sa-tag {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.5em;
+    height: 1.5em;
+    border-radius: 3px;
+    background: var(--border-strong);
+    color: var(--bg);
+    font-family: var(--font-pixel);
+    font-size: 0.85em;
+    font-weight: 700;
+  }
+  .step-action[data-a='whiff'] .sa-tag {
+    background: var(--text-faint);
+  }
+  .sa-label {
+    font-family: var(--font-body);
+  }
+</style>
