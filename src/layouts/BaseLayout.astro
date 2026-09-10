@@ -15,6 +15,7 @@ const fullTitle = title === 'SF6 コンボビューア' ? title : `${title} — 
 const desc =
   description ??
   'Street Fighter 6 のコンボと起き攻めセットプレイを、ノードグラフとコマンドアイコンで見られるビューア。';
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
 ---
 
 <!doctype html>
@@ -25,9 +26,15 @@ const desc =
     <meta name="generator" content={Astro.generator} />
     <title>{fullTitle}</title>
     <meta name="description" content={desc} />
+    <link rel="canonical" href={canonical} />
     <meta property="og:title" content={fullTitle} />
     <meta property="og:description" content={desc} />
     <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:site_name" content="SF6 コンボ・セットプレイビューア" />
+    <meta property="og:locale" content="ja_JP" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="robots" content="index, follow" />
     <link
       rel="preconnect"
       href="https://fonts.gstatic.com"
@@ -102,6 +109,11 @@ const desc =
       <div class="wrap">
         <p>
           SF6 コンボ・セットプレイビューア — <strong>Phase 1 プロトタイプ</strong>（表示データはすべてダミーです）
+        </p>
+        <p class="fine">
+          誤り・要望の報告:
+          <a href="https://github.com/manji6/sf6-combo_viewer/issues" rel="noopener">GitHub Issues</a>
+          （対象 URL・確認バージョン・再現条件を添えてください）
         </p>
         <p class="fine">
           Street Fighter は株式会社カプコンの登録商標です。本サイトは非公式のファンツールです。
