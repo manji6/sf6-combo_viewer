@@ -1,0 +1,23 @@
+{
+  "key": "manon-5mp",
+  "character": "manon",
+  "name": "立ち中P（ツリテ）",
+  "category": "normal",
+  "inputClassic": "5MP",
+  "inputModern": "5M",
+  "startup": 7,
+  "active": "7-10",
+  "recovery": "15",
+  "onHit": "+2",
+  "onBlock": "-2",
+  "cancel": "C",
+  "damage": 600,
+  "driveGainHit": 1500,
+  "driveLossBlock": -3000,
+  "driveLossPunishCounter": -4000,
+  "superGain": 500,
+  "attribute": [
+    "上"
+  ],
+  "verifiedVersion": "Ver.2025.xx（Phase 1・要再確認）"
+}

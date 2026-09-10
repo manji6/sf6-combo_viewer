@@ -1,0 +1,35 @@
+{
+  "id": "route_corner_medal_loop",
+  "character": "manon",
+  "from": "juggle_corner_medal",
+  "to": "kd_after_rondpoint_corner",
+  "kind": "ender",
+  "label": "5強P → OD ロン・ポワン",
+  "steps": [
+    {
+      "move": "5強P",
+      "command": "5HP",
+      "moveKey": "manon-5hp",
+      "cancel": true
+    },
+    {
+      "move": "OD ロン・ポワン",
+      "command": "236KK",
+      "moveKey": "manon-rondpoint-od",
+      "note": "メダル+2・強制ダウン"
+    }
+  ],
+  "resources": {
+    "driveCost": 2,
+    "superCost": 0,
+    "saLevel": null
+  },
+  "damage": 1500,
+  "difficulty": 3,
+  "controlType": "both",
+  "tags": [
+    "画面端",
+    "メダル",
+    "〆"
+  ]
+}

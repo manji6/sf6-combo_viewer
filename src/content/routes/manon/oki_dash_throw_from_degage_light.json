@@ -1,0 +1,57 @@
+{
+  "id": "oki_dash_throw_from_degage_light",
+  "character": "manon",
+  "from": "kd_after_degage_light_mid",
+  "to": "neutral_mid_plus",
+  "kind": "okizeme",
+  "label": "前ステップ 通常投げ",
+  "steps": [
+    {
+      "move": "前ステップ",
+      "command": "66",
+      "action": "dash"
+    },
+    {
+      "move": "通常投げ",
+      "command": "LPLK",
+      "moveKey": "manon-throw",
+      "note": "前ステの慣性で密着"
+    }
+  ],
+  "resources": {
+    "driveCost": 0,
+    "superCost": 0,
+    "saLevel": null
+  },
+  "damage": 1200,
+  "difficulty": 2,
+  "controlType": "both",
+  "properties": {
+    "strongVs": [
+      "ガード継続",
+      "しゃがみっぱ"
+    ],
+    "weakVs": [
+      "前・バックジャンプ",
+      "打撃暴れ",
+      "投げ抜け"
+    ],
+    "caution": "前ステ硬直に暴れを合わせられると被カウンター。読まれたら危険",
+    "frameAdvantage": {
+      "frames": "+3",
+      "note": "前ステの慣性で最速投げ"
+    },
+    "wakeup": {
+      "coverage": "both",
+      "quickRise": "前ステで投げ間合い",
+      "backTech": "前ステで投げ間合い"
+    },
+    "useWhen": "メダルを使いたくない、投げ間合いを速く作りたいとき",
+    "onBlock": "—（投げ）",
+    "risk": "中"
+  },
+  "tags": [
+    "崩し",
+    "ノーゲージ"
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "id": "neutral_mid_plus",
+  "label": "中央・微有利（様子見後）",
+  "kind": "neutral",
+  "position": "midscreen",
+  "opponentState": "neutral",
+  "advantage": "+2 前後",
+  "tags": [
+    "読み合い"
+  ],
+  "notes": "ドライブラッシュで近づいて様子見した状態。シミー・投げ・打撃の三択。"
+}

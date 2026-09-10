@@ -1,0 +1,57 @@
+{
+  "id": "oki_walk_2mk_from_degage_light",
+  "character": "manon",
+  "from": "kd_after_degage_light_mid",
+  "to": "juggle_can_4hp_ranversement",
+  "kind": "okizeme",
+  "label": "微歩き 2中K 重ね",
+  "steps": [
+    {
+      "move": "微歩き",
+      "command": "(微歩き)",
+      "action": "walk",
+      "note": "起き上がりに密着を微調整"
+    },
+    {
+      "move": "2中K",
+      "command": "2MK",
+      "moveKey": "manon-2mk",
+      "note": "最速重ね"
+    }
+  ],
+  "resources": {
+    "driveCost": 0,
+    "superCost": 0,
+    "saLevel": null
+  },
+  "damage": 600,
+  "difficulty": 3,
+  "controlType": "both",
+  "properties": {
+    "strongVs": [
+      "打撃暴れ",
+      "ドライブリバーサル（ガード可）"
+    ],
+    "weakVs": [
+      "垂直ジャンプ",
+      "無敵技"
+    ],
+    "caution": "Dゲージを使わない代わりに歩き量の目測がシビア",
+    "frameAdvantage": {
+      "frames": "+2",
+      "note": "歩き量で微増減"
+    },
+    "wakeup": {
+      "coverage": "both",
+      "quickRise": "そのまま重ねOK",
+      "backTech": "歩き量を増やす必要あり"
+    },
+    "useWhen": "ゲージ温存したいとき。DR2中K の下位互換だが 0 ゲージ",
+    "onBlock": "概ね安全（-2 前後）",
+    "risk": "低"
+  },
+  "tags": [
+    "基本択",
+    "ノーゲージ"
+  ]
+}

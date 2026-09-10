@@ -1,0 +1,12 @@
+{
+  "id": "kd_after_ranversement_mid",
+  "label": "中ランヴェルセ締め後・中央ダウン",
+  "kind": "knockdown",
+  "position": "midscreen",
+  "opponentState": "knockdown_soft",
+  "advantage": "+30 前後",
+  "wakeupNote": "受け身可。後ろ受け身されると距離が離れ一部の重ねが届かない",
+  "tags": [
+    "起き攻め開始"
+  ]
+}

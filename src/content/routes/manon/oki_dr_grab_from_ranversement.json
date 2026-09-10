@@ -1,0 +1,53 @@
+{
+  "id": "oki_dr_grab_from_ranversement",
+  "character": "manon",
+  "from": "kd_after_ranversement_mid",
+  "to": "kd_after_manege_dore_mid",
+  "kind": "okizeme",
+  "label": "ドライブラッシュ マネージュ・ドレ（ランヴェルセ後）",
+  "steps": [
+    {
+      "move": "ドライブラッシュ",
+      "command": "DR"
+    },
+    {
+      "move": "マネージュ・ドレ",
+      "command": "63214P",
+      "moveKey": "manon-manege-dore"
+    }
+  ],
+  "resources": {
+    "driveCost": 1,
+    "superCost": 0,
+    "saLevel": null
+  },
+  "damage": 1400,
+  "difficulty": 2,
+  "controlType": "both",
+  "properties": {
+    "strongVs": [
+      "ガード継続",
+      "パリィ仕込み"
+    ],
+    "weakVs": [
+      "前ジャンプ",
+      "打撃暴れ"
+    ],
+    "caution": "ジャンプで透かされる。ループを嫌った相手の暴れにも注意",
+    "frameAdvantage": {
+      "frames": "±0",
+      "note": "コマ投げ"
+    },
+    "wakeup": {
+      "coverage": "both",
+      "quickRise": "確定",
+      "backTech": "歩き足しが必要"
+    },
+    "useWhen": "ループを嫌ってガードで固まる相手に",
+    "risk": "中"
+  },
+  "tags": [
+    "崩し",
+    "メダル"
+  ]
+}

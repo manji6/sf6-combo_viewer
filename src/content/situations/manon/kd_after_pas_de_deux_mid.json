@@ -1,0 +1,11 @@
+{
+  "id": "kd_after_pas_de_deux_mid",
+  "label": "SA3 パ・ド・ドゥ後・中央ダウン",
+  "kind": "knockdown",
+  "position": "midscreen",
+  "opponentState": "knockdown_hard",
+  "advantage": "距離遠め",
+  "wakeupNote": "受け身不可（強制ダウン）だが距離が遠く強い起き攻めは無い",
+  "tags": [],
+  "notes": "SA3 締め。距離が離れるため強い起き攻めは無く、体力リードを活かす展開になりやすい。"
+}

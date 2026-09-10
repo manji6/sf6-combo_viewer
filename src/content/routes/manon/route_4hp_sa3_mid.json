@@ -1,0 +1,35 @@
+{
+  "id": "route_4hp_sa3_mid",
+  "character": "manon",
+  "from": "juggle_can_4hp_ranversement",
+  "to": "kd_after_pas_de_deux_mid",
+  "kind": "ender",
+  "label": "4強P → SA3 パ・ド・ドゥ",
+  "steps": [
+    {
+      "move": "4強P",
+      "command": "4HP",
+      "moveKey": "manon-revelance"
+    },
+    {
+      "move": "SA3 パ・ド・ドゥ",
+      "command": "236236P",
+      "moveKey": "manon-pas-de-deux",
+      "cancel": true,
+      "note": "メダル最大で最大火力"
+    }
+  ],
+  "resources": {
+    "driveCost": 0,
+    "superCost": 3,
+    "saLevel": 3
+  },
+  "damage": 3200,
+  "difficulty": 3,
+  "controlType": "both",
+  "tags": [
+    "〆",
+    "SA3",
+    "とどめ"
+  ]
+}

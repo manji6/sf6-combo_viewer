@@ -1,0 +1,34 @@
+{
+  "id": "route_2mk_confirm_degage",
+  "character": "manon",
+  "from": "hit_2mk_mid",
+  "to": "kd_after_degage_light_mid",
+  "kind": "combo_route",
+  "label": "中P → 弱デガジェ",
+  "steps": [
+    {
+      "move": "中P",
+      "command": "5MP",
+      "moveKey": "manon-5mp",
+      "cancel": true
+    },
+    {
+      "move": "弱デガジェ",
+      "command": "214LK",
+      "moveKey": "manon-degage-l",
+      "cancel": true
+    }
+  ],
+  "resources": {
+    "driveCost": 0,
+    "superCost": 0,
+    "saLevel": null
+  },
+  "damage": 900,
+  "difficulty": 2,
+  "controlType": "both",
+  "tags": [
+    "基本",
+    "〆"
+  ]
+}

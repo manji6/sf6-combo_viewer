@@ -1,0 +1,38 @@
+{
+  "id": "starter_5mp_drc_2mp_mid",
+  "character": "manon",
+  "from": "neutral_mid",
+  "to": "juggle_can_4hp_ranversement",
+  "kind": "starter",
+  "label": "5中P キャンセルドライブラッシュ 2中P",
+  "steps": [
+    {
+      "move": "中P",
+      "command": "5MP",
+      "moveKey": "manon-5mp",
+      "cancel": true
+    },
+    {
+      "move": "キャンセルドライブラッシュ",
+      "command": "DRC"
+    },
+    {
+      "move": "2中P",
+      "command": "2MP",
+      "moveKey": "manon-2mp"
+    }
+  ],
+  "resources": {
+    "driveCost": 3,
+    "superCost": 0,
+    "saLevel": null
+  },
+  "damage": 1100,
+  "difficulty": 3,
+  "constraints": "5中Pヒット時のみ。DRC の受付が短い。",
+  "controlType": "both",
+  "tags": [
+    "頻出",
+    "DRC"
+  ]
+}

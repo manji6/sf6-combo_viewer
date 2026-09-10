@@ -12,7 +12,7 @@
     "astro": "astro",
     "test": "vitest run",
     "test:watch": "vitest",
-    "validate": "tsx scripts/validate.ts",
+    "validate": "vite-node scripts/validate.ts",
     "check": "npm run validate && npm run test && astro check"
   },
   "dependencies": {
@@ -23,7 +23,8 @@
     "astro": "^7.3.2",
     "astro-icon": "^1.2.0",
     "preact": "^10.29.8",
-    "tailwindcss": "^4.3.3"
+    "tailwindcss": "^4.3.3",
+    "zod": "^4.6.1"
   },
   "allowScripts": {
     "esbuild": true
@@ -33,6 +34,7 @@
     "@types/node": "^22.20.2",
     "tsx": "^4.23.13",
     "typescript": "^6.0.3",
+    "vite-node": "^6.0.0",
     "vitest": "^5.0.0"
   }
 }

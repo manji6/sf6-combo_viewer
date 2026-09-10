@@ -1,0 +1,20 @@
+{
+  "slug": "manon-corner-2mk-medal",
+  "character": "manon",
+  "name": "画面端 2中K メダル回収 ODロン・ポワン〆",
+  "situationLabel": "画面端・下段始動",
+  "routeChain": [
+    "starter_corner_2mk",
+    "route_corner_medal_loop"
+  ],
+  "startFrom": "neutral_corner",
+  "endAt": "kd_after_rondpoint_corner",
+  "difficulty": 3,
+  "tags": [
+    "画面端",
+    "メダル",
+    "ゲージ",
+    "実戦"
+  ],
+  "description": "画面端でメダルを一気に稼ぐルート。締めの強制ダウンから強力な起き攻め。"
+}

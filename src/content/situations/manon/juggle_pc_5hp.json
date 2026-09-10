@@ -1,0 +1,11 @@
+{
+  "id": "juggle_pc_5hp",
+  "label": "5強P パニッシュカウンター・浮き",
+  "kind": "juggle",
+  "position": "midscreen",
+  "opponentState": "juggle",
+  "advantage": "パニカン誘発",
+  "tags": [
+    "パニカン"
+  ]
+}

@@ -1,0 +1,45 @@
+{
+  "id": "oki_dr2mk_from_manege",
+  "character": "manon",
+  "from": "kd_after_manege_dore_mid",
+  "to": "juggle_can_4hp_ranversement",
+  "kind": "okizeme",
+  "label": "ドライブラッシュ 2中K 重ね（コマ投げ後）",
+  "steps": [
+    {
+      "move": "ドライブラッシュ",
+      "command": "DR"
+    },
+    {
+      "move": "2中K",
+      "command": "2MK",
+      "moveKey": "manon-2mk"
+    }
+  ],
+  "resources": {
+    "driveCost": 1,
+    "superCost": 0,
+    "saLevel": null
+  },
+  "damage": 600,
+  "difficulty": 2,
+  "controlType": "both",
+  "properties": {
+    "strongVs": [
+      "打撃暴れ"
+    ],
+    "weakVs": [
+      "ジャンプ"
+    ],
+    "caution": "コマ投げダウンは受け身なし・間合いが常に一定なので目測は楽",
+    "frameAdvantage": {
+      "frames": "+2",
+      "note": "2中K持続当て"
+    },
+    "useWhen": "コマ投げ後も距離が近いので同じ連結へ",
+    "risk": "低"
+  },
+  "tags": [
+    "基本択"
+  ]
+}

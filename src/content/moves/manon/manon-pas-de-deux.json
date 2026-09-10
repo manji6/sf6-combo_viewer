@@ -1,0 +1,24 @@
+{
+  "key": "manon-pas-de-deux",
+  "character": "manon",
+  "name": "SA3 パ・ド・ドゥ",
+  "category": "super",
+  "inputClassic": "236236P",
+  "inputModern": "2SP H",
+  "startup": 7,
+  "active": "7-8",
+  "recovery": "72",
+  "onHit": "D",
+  "onBlock": null,
+  "cancel": null,
+  "damage": 4000,
+  "driveGainHit": 0,
+  "driveLossBlock": 0,
+  "driveLossPunishCounter": 0,
+  "superGain": 0,
+  "attribute": [
+    "投"
+  ],
+  "notes": "ダメージはメダルLv1（Lvで上昇）。1-8F 完全無敵。最低保障ダメージ50%。近距離限定",
+  "verifiedVersion": "Ver.2025.xx（Phase 1・要再確認）"
+}

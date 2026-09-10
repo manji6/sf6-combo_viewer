@@ -1,0 +1,25 @@
+{
+  "key": "manon-ranversement-m",
+  "character": "manon",
+  "name": "中ランヴェルセ",
+  "category": "special",
+  "inputClassic": "236MP",
+  "inputModern": "2SP",
+  "inputModernPrecise": "236M",
+  "startup": 25,
+  "active": "25-26",
+  "recovery": "34",
+  "onHit": "D",
+  "onBlock": "-20",
+  "cancel": "SA3",
+  "damage": 1400,
+  "driveGainHit": 2000,
+  "driveLossBlock": -2000,
+  "driveLossPunishCounter": -8000,
+  "superGain": 2150,
+  "attribute": [
+    "上"
+  ],
+  "notes": "ダメージはメダルLv1（Lvで上昇）。3-26F 飛び道具無敵。ボタンホールドでフェイント",
+  "verifiedVersion": "Ver.2025.xx（Phase 1・要再確認）"
+}

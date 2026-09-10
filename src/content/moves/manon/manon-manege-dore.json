@@ -1,0 +1,24 @@
+{
+  "key": "manon-manege-dore",
+  "character": "manon",
+  "name": "マネージュ・ドレ（コマ投げ）",
+  "category": "special",
+  "inputClassic": "63214P",
+  "inputModern": "5SP",
+  "startup": 10,
+  "active": "10-12",
+  "recovery": "48",
+  "onHit": "D",
+  "onBlock": null,
+  "cancel": null,
+  "damage": 2000,
+  "driveGainHit": 5000,
+  "driveLossBlock": 0,
+  "driveLossPunishCounter": -10000,
+  "superGain": 3000,
+  "attribute": [
+    "投"
+  ],
+  "notes": "ダメージ・SAゲージはメダルLv1（Lvで上昇）。ヒット時メダルLv+1。強度でモーション（発生10/8/5F）が変化、モダンは (N)+SP",
+  "verifiedVersion": "Ver.2025.xx（Phase 1・要再確認）"
+}

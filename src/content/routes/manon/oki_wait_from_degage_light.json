@@ -1,0 +1,50 @@
+{
+  "id": "oki_wait_from_degage_light",
+  "character": "manon",
+  "from": "kd_after_degage_light_mid",
+  "to": "neutral_mid_plus",
+  "kind": "okizeme",
+  "label": "様子見（シミー）",
+  "steps": [
+    {
+      "move": "微後ろ歩き",
+      "command": "(様子見)",
+      "action": "walk_back",
+      "note": "相手の暴れ・バクステを釣る"
+    }
+  ],
+  "resources": {
+    "driveCost": 0,
+    "superCost": 0,
+    "saLevel": null
+  },
+  "damage": 0,
+  "difficulty": 1,
+  "controlType": "both",
+  "properties": {
+    "strongVs": [
+      "打撃暴れ",
+      "バックステップ",
+      "遅らせグラップ"
+    ],
+    "weakVs": [
+      "何もしない相手（手番を返す）"
+    ],
+    "caution": "相手が動かないと手番が返る。多用すると読まれる",
+    "frameAdvantage": {
+      "frames": "+38",
+      "note": "動かず手番キープ"
+    },
+    "wakeup": {
+      "coverage": "both",
+      "note": "動かないため起き上がり方に依存しない"
+    },
+    "useWhen": "相手が暴れ・投げ抜けを多用するとき",
+    "onBlock": "—",
+    "risk": "低"
+  },
+  "tags": [
+    "読み合い",
+    "シミー"
+  ]
+}

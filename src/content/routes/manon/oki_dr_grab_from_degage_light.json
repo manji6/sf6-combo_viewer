@@ -1,0 +1,55 @@
+{
+  "id": "oki_dr_grab_from_degage_light",
+  "character": "manon",
+  "from": "kd_after_degage_light_mid",
+  "to": "kd_after_manege_dore_mid",
+  "kind": "okizeme",
+  "label": "ドライブラッシュ マネージュ・ドレ",
+  "steps": [
+    {
+      "move": "ドライブラッシュ",
+      "command": "DR"
+    },
+    {
+      "move": "マネージュ・ドレ",
+      "command": "63214P",
+      "moveKey": "manon-manege-dore"
+    }
+  ],
+  "resources": {
+    "driveCost": 1,
+    "superCost": 0,
+    "saLevel": null
+  },
+  "damage": 1400,
+  "difficulty": 2,
+  "controlType": "both",
+  "properties": {
+    "strongVs": [
+      "パリィ仕込み",
+      "ガード継続",
+      "しゃがみっぱ"
+    ],
+    "weakVs": [
+      "前・バックジャンプ",
+      "打撃暴れ"
+    ],
+    "caution": "ジャンプで透かされたら着地に確定。透かし確認を用意",
+    "frameAdvantage": {
+      "frames": "±0",
+      "note": "コマ投げ・択の起点"
+    },
+    "wakeup": {
+      "coverage": "both",
+      "quickRise": "確定間合い",
+      "backTech": "歩き足しが必要"
+    },
+    "useWhen": "ガードで固まる相手に",
+    "onBlock": "—（投げ）",
+    "risk": "中"
+  },
+  "tags": [
+    "崩し",
+    "メダル"
+  ]
+}

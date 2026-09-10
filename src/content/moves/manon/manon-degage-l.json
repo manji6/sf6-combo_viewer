@@ -1,0 +1,24 @@
+{
+  "key": "manon-degage-l",
+  "character": "manon",
+  "name": "弱デガジェ",
+  "category": "special",
+  "inputClassic": "214LK",
+  "inputModern": "4SP",
+  "inputModernPrecise": "214L",
+  "startup": 16,
+  "active": "16-31",
+  "recovery": "36",
+  "onHit": "D",
+  "onBlock": "-24",
+  "cancel": null,
+  "damage": 1000,
+  "driveGainHit": 1500,
+  "driveLossBlock": -4000,
+  "driveLossPunishCounter": -8000,
+  "superGain": 800,
+  "attribute": [
+    "下"
+  ],
+  "verifiedVersion": "Ver.2025.xx（Phase 1・要再確認）"
+}

@@ -1,0 +1,12 @@
+{
+  "id": "neutral_mid",
+  "label": "中央・立ち回り",
+  "kind": "neutral",
+  "position": "midscreen",
+  "opponentState": "neutral",
+  "advantage": "±0",
+  "tags": [
+    "始動"
+  ],
+  "notes": "ニュートラル。差し込み・確認からコンボへ。"
+}

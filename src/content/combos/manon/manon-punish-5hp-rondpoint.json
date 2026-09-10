@@ -1,0 +1,18 @@
+{
+  "slug": "manon-punish-5hp-rondpoint",
+  "character": "manon",
+  "name": "パニカン 5強P ロン・ポワン〆",
+  "situationLabel": "中央・パニッシュカウンター",
+  "routeChain": [
+    "starter_5hp_pc_mid",
+    "route_pc_5hp_rondpoint"
+  ],
+  "startFrom": "neutral_mid",
+  "endAt": "kd_after_rondpoint_mid",
+  "difficulty": 2,
+  "tags": [
+    "パニカン",
+    "ノーゲージ"
+  ],
+  "description": "差し返し・ぶっ放しへのパニッシュカウンター確認。"
+}

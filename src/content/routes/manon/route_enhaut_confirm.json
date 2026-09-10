@@ -1,0 +1,33 @@
+{
+  "id": "route_enhaut_confirm",
+  "character": "manon",
+  "from": "hit_enhaut_mid",
+  "to": "kd_after_ranversement_mid",
+  "kind": "combo_route",
+  "label": "アン・オー派生 → 中ランヴェルセ",
+  "steps": [
+    {
+      "move": "アン・オー派生中K",
+      "command": "4MK~MK",
+      "moveKey": "manon-enhaut-2",
+      "cancel": true
+    },
+    {
+      "move": "中ランヴェルセ",
+      "command": "236MP",
+      "moveKey": "manon-ranversement-m"
+    }
+  ],
+  "resources": {
+    "driveCost": 0,
+    "superCost": 0,
+    "saLevel": null
+  },
+  "damage": 900,
+  "difficulty": 2,
+  "controlType": "both",
+  "tags": [
+    "確認",
+    "〆"
+  ]
+}

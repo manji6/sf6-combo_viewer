@@ -1,5 +1,5 @@
 // データ整合性チェック（CLI）。`npm run validate`
-// tsx で実行する（TS ＋ ディレクトリ import を解決するため）。
+// vite-node で実行する（import.meta.glob と TS 解決のため）。
 import process from 'node:process';
 import { validateAll } from '../src/lib/graph/derive';
 

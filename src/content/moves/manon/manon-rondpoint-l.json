@@ -1,0 +1,25 @@
+{
+  "key": "manon-rondpoint-l",
+  "character": "manon",
+  "name": "弱ロン・ポワン",
+  "category": "special",
+  "inputClassic": "236LK",
+  "inputModern": null,
+  "inputModernPrecise": "236L",
+  "startup": 9,
+  "active": "9-15",
+  "recovery": "29",
+  "onHit": "+3",
+  "onBlock": "-15",
+  "cancel": "SA3",
+  "damage": 900,
+  "driveGainHit": 2000,
+  "driveLossBlock": -4000,
+  "driveLossPunishCounter": -4000,
+  "superGain": 1350,
+  "attribute": [
+    "上"
+  ],
+  "notes": "モダンの →+SP は強度自動選択のため弱指定は不可（手動入力 236L なら可）。5-15F 上半身空中判定に無敵",
+  "verifiedVersion": "Ver.2025.xx（Phase 1・要再確認）"
+}

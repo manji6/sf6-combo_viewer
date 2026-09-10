@@ -1,0 +1,24 @@
+{
+  "key": "manon-5hp",
+  "character": "manon",
+  "name": "立ち強P（ランドリ）",
+  "category": "normal",
+  "inputClassic": "5HP",
+  "inputModern": "5H",
+  "startup": 10,
+  "active": "10-13",
+  "recovery": "20",
+  "onHit": "0",
+  "onBlock": "-3",
+  "cancel": "SA",
+  "damage": 800,
+  "driveGainHit": 3000,
+  "driveLossBlock": -6000,
+  "driveLossPunishCounter": -10000,
+  "superGain": 1000,
+  "attribute": [
+    "上"
+  ],
+  "notes": "空中ヒット時吹き飛びダウン",
+  "verifiedVersion": "Ver.2025.xx（Phase 1・要再確認）"
+}

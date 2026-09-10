@@ -1,0 +1,27 @@
+{
+  "id": "starter_5hp_pc_mid",
+  "character": "manon",
+  "from": "neutral_mid",
+  "to": "juggle_pc_5hp",
+  "kind": "starter",
+  "label": "5強P パニッシュカウンター",
+  "steps": [
+    {
+      "move": "5強P",
+      "command": "PC 5HP",
+      "moveKey": "manon-5hp"
+    }
+  ],
+  "resources": {
+    "driveCost": 0,
+    "superCost": 0,
+    "saLevel": null
+  },
+  "damage": 800,
+  "difficulty": 1,
+  "constraints": "パニッシュカウンター時。",
+  "controlType": "both",
+  "tags": [
+    "パニカン"
+  ]
+}

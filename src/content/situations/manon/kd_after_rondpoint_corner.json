@@ -1,0 +1,13 @@
+{
+  "id": "kd_after_rondpoint_corner",
+  "label": "ロン・ポワン締め後・画面端ダウン",
+  "kind": "knockdown",
+  "position": "corner",
+  "opponentState": "knockdown_hard",
+  "advantage": "+34 前後",
+  "wakeupNote": "受け身不可（画面端の強制ダウン）。最も強い起き攻め",
+  "tags": [
+    "起き攻め開始",
+    "画面端"
+  ]
+}

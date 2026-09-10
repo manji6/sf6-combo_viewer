@@ -1,0 +1,13 @@
+{
+  "id": "kd_after_manege_dore_mid",
+  "label": "マネージュ・ドレ後・中央ダウン",
+  "kind": "knockdown",
+  "position": "midscreen",
+  "opponentState": "knockdown_hard",
+  "advantage": "メダル獲得 +1",
+  "wakeupNote": "受け身不可（コマ投げ）。受け身方向による距離変化なし",
+  "tags": [
+    "起き攻め開始",
+    "メダル"
+  ]
+}

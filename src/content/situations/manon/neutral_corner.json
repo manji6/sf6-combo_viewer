@@ -1,0 +1,11 @@
+{
+  "id": "neutral_corner",
+  "label": "画面端・立ち回り",
+  "kind": "neutral",
+  "position": "corner",
+  "opponentState": "neutral",
+  "advantage": "±0",
+  "tags": [
+    "始動"
+  ]
+}

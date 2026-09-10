@@ -1,0 +1,64 @@
+{
+  "id": "oki_framekill_grab_from_ranversement",
+  "character": "manon",
+  "from": "kd_after_ranversement_mid",
+  "to": "kd_after_manege_dore_mid",
+  "kind": "okizeme",
+  "label": "5弱P 空振り → 前ステップ マネージュ・ドレ",
+  "steps": [
+    {
+      "move": "5弱P",
+      "command": "5LP",
+      "moveKey": "manon-5lp",
+      "action": "whiff",
+      "note": "当てない・フレーム消費"
+    },
+    {
+      "move": "前ステップ",
+      "command": "66",
+      "action": "dash"
+    },
+    {
+      "move": "マネージュ・ドレ",
+      "command": "63214P",
+      "moveKey": "manon-manege-dore"
+    }
+  ],
+  "resources": {
+    "driveCost": 0,
+    "superCost": 0,
+    "saLevel": null
+  },
+  "damage": 1400,
+  "difficulty": 4,
+  "controlType": "classic",
+  "constraints": "5弱P 空振りのフレーム調整がシビアなためクラシックのみ。",
+  "properties": {
+    "strongVs": [
+      "最速暴れ（空振りが暴れを誘発）",
+      "ガード継続"
+    ],
+    "weakVs": [
+      "遅らせ打撃",
+      "ジャンプ"
+    ],
+    "caution": "5弱P を当ててしまうと連携が崩れる。あくまで空振りでタイミングを作る技",
+    "frameAdvantage": {
+      "frames": "+1",
+      "note": "空振り→前ステでずらし"
+    },
+    "wakeup": {
+      "coverage": "both",
+      "quickRise": "空振りで調整",
+      "backTech": "空振りで調整"
+    },
+    "useWhen": "相手の暴れタイミングをずらして投げを通したいとき",
+    "onBlock": "—（投げ）",
+    "risk": "中"
+  },
+  "tags": [
+    "崩し",
+    "フレーム消費",
+    "ノーゲージ"
+  ]
+}

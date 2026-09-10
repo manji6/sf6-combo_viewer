@@ -1,0 +1,12 @@
+{
+  "id": "kd_after_rondpoint_mid",
+  "label": "ロン・ポワン締め後・中央ダウン",
+  "kind": "knockdown",
+  "position": "midscreen",
+  "opponentState": "knockdown_soft",
+  "advantage": "+20 前後",
+  "wakeupNote": "後ろ受け身可（受け身時は有利減）",
+  "tags": [
+    "起き攻め開始"
+  ]
+}

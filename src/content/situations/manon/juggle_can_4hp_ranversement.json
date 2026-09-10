@@ -1,0 +1,12 @@
+{
+  "id": "juggle_can_4hp_ranversement",
+  "label": "4強P → 中ランヴェルセ が繋がる浮き",
+  "kind": "juggle",
+  "position": "midscreen",
+  "opponentState": "juggle",
+  "advantage": "限定浮き",
+  "tags": [
+    "連結ハブ"
+  ],
+  "notes": "起き攻めの DR2中K ヒット後と、頻出コンボ 5中P DRC 2中P 後の両方がここに到達する共有ノード。"
+}

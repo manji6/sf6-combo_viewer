@@ -1,0 +1,19 @@
+{
+  "slug": "manon-mid-5mp-drc-ranversement",
+  "character": "manon",
+  "name": "中央 5中P DRC 中ランヴェルセ〆（頻出）",
+  "situationLabel": "中央・地上ヒット確認",
+  "routeChain": [
+    "starter_5mp_drc_2mp_mid",
+    "route_4hp_ranversement_mid"
+  ],
+  "startFrom": "neutral_mid",
+  "endAt": "kd_after_ranversement_mid",
+  "difficulty": 3,
+  "tags": [
+    "頻出",
+    "DRC",
+    "実戦"
+  ],
+  "description": "5中P ヒット確認からキャンセルドライブラッシュで火力を伸ばす主力コンボ。後半の「4強P → 中ランヴェルセ」は起き攻め DR2中K からのルートと共有パーツ。"
+}

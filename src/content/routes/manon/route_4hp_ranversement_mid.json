@@ -1,0 +1,34 @@
+{
+  "id": "route_4hp_ranversement_mid",
+  "character": "manon",
+  "from": "juggle_can_4hp_ranversement",
+  "to": "kd_after_ranversement_mid",
+  "kind": "ender",
+  "label": "4強P → 中ランヴェルセ",
+  "steps": [
+    {
+      "move": "4強P",
+      "command": "4HP",
+      "moveKey": "manon-revelance"
+    },
+    {
+      "move": "中ランヴェルセ",
+      "command": "236MP",
+      "moveKey": "manon-ranversement-m",
+      "cancel": true
+    }
+  ],
+  "resources": {
+    "driveCost": 0,
+    "superCost": 0,
+    "saLevel": null
+  },
+  "damage": 1200,
+  "difficulty": 3,
+  "constraints": "「4強P → 中ランヴェルセ が繋がる浮き」からのみ。",
+  "controlType": "both",
+  "tags": [
+    "〆",
+    "連結"
+  ]
+}

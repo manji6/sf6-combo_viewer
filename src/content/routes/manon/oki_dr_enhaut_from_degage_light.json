@@ -1,0 +1,57 @@
+{
+  "id": "oki_dr_enhaut_from_degage_light",
+  "character": "manon",
+  "from": "kd_after_degage_light_mid",
+  "to": "hit_enhaut_mid",
+  "kind": "okizeme",
+  "label": "ドライブラッシュ アン・オー",
+  "steps": [
+    {
+      "move": "ドライブラッシュ",
+      "command": "DR"
+    },
+    {
+      "move": "アン・オー",
+      "command": "4MK",
+      "moveKey": "manon-enhaut",
+      "note": "中段"
+    }
+  ],
+  "resources": {
+    "driveCost": 1,
+    "superCost": 0,
+    "saLevel": null
+  },
+  "damage": 700,
+  "difficulty": 2,
+  "controlType": "classic",
+  "constraints": "アン・オー始動の DR 中段択はクラシック前提の連携。モダンでは扱わない。",
+  "properties": {
+    "strongVs": [
+      "しゃがみガード",
+      "離れた相手"
+    ],
+    "weakVs": [
+      "垂直ジャンプ",
+      "打撃暴れ",
+      "ジャストパリィ"
+    ],
+    "caution": "ドライブインパクトで割り込まれる。ガード -8 で反確",
+    "frameAdvantage": {
+      "frames": "+1",
+      "note": "中段ヒット時（ガード時 -8）"
+    },
+    "wakeup": {
+      "coverage": "both",
+      "quickRise": "中段が届く",
+      "backTech": "中段が届く"
+    },
+    "useWhen": "コマ投げが届かない距離で",
+    "onBlock": "-8 前後（要ケア）",
+    "risk": "高"
+  },
+  "tags": [
+    "中段",
+    "クラシック限定"
+  ]
+}

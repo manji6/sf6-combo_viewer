@@ -1,0 +1,27 @@
+{
+  "id": "starter_2mk_mid",
+  "character": "manon",
+  "from": "neutral_mid",
+  "to": "hit_2mk_mid",
+  "kind": "starter",
+  "label": "2中K 差し込み",
+  "steps": [
+    {
+      "move": "2中K",
+      "command": "2MK",
+      "moveKey": "manon-2mk"
+    }
+  ],
+  "resources": {
+    "driveCost": 0,
+    "superCost": 0,
+    "saLevel": null
+  },
+  "damage": 500,
+  "difficulty": 1,
+  "controlType": "both",
+  "tags": [
+    "下段",
+    "差し込み"
+  ]
+}

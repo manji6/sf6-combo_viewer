@@ -1,0 +1,11 @@
+{
+  "id": "hit_2mk_mid",
+  "label": "2中K ヒット・中央",
+  "kind": "hit",
+  "position": "midscreen",
+  "opponentState": "standing_hit",
+  "advantage": "ヒット確認可",
+  "tags": [
+    "確認"
+  ]
+}

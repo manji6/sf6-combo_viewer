@@ -1,0 +1,40 @@
+{
+  "id": "starter_corner_2mk",
+  "character": "manon",
+  "from": "neutral_corner",
+  "to": "juggle_corner_medal",
+  "kind": "starter",
+  "label": "画面端 2中K 始動 メダル回収",
+  "steps": [
+    {
+      "move": "2中K",
+      "command": "2MK",
+      "moveKey": "manon-2mk",
+      "cancel": true
+    },
+    {
+      "move": "中P",
+      "command": "5MP",
+      "moveKey": "manon-5mp",
+      "cancel": true
+    },
+    {
+      "move": "中ランヴェルセ",
+      "command": "236MP",
+      "moveKey": "manon-ranversement-m",
+      "note": "メダル+1"
+    }
+  ],
+  "resources": {
+    "driveCost": 0,
+    "superCost": 0,
+    "saLevel": null
+  },
+  "damage": 1400,
+  "difficulty": 2,
+  "controlType": "both",
+  "tags": [
+    "画面端",
+    "メダル"
+  ]
+}

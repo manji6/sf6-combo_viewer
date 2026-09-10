@@ -1,0 +1,11 @@
+{
+  "id": "juggle_corner_medal",
+  "label": "画面端・メダル回収中の浮き",
+  "kind": "juggle",
+  "position": "corner",
+  "opponentState": "juggle",
+  "tags": [
+    "メダル",
+    "画面端"
+  ]
+}

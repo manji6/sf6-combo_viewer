@@ -1,0 +1,35 @@
+{
+  "id": "route_pc_5hp_rondpoint",
+  "character": "manon",
+  "from": "juggle_pc_5hp",
+  "to": "kd_after_rondpoint_mid",
+  "kind": "ender",
+  "label": "2中P → 弱ロン・ポワン",
+  "steps": [
+    {
+      "move": "2中P",
+      "command": "2MP",
+      "moveKey": "manon-2mp",
+      "cancel": true
+    },
+    {
+      "move": "弱ロン・ポワン",
+      "command": "236LK",
+      "moveKey": "manon-rondpoint-l",
+      "note": "弱で低ダメ・高有利"
+    }
+  ],
+  "resources": {
+    "driveCost": 0,
+    "superCost": 0,
+    "saLevel": null
+  },
+  "damage": 1000,
+  "difficulty": 2,
+  "controlType": "classic",
+  "constraints": "弱ロン・ポワンの弱指定はモダンでは出せないためクラシックのみ。",
+  "tags": [
+    "〆",
+    "クラシック限定"
+  ]
+}

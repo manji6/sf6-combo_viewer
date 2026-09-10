@@ -1,0 +1,54 @@
+{
+  "id": "oki_dr2mk_from_degage_light",
+  "character": "manon",
+  "from": "kd_after_degage_light_mid",
+  "to": "juggle_can_4hp_ranversement",
+  "kind": "okizeme",
+  "label": "ドライブラッシュ 2中K 重ね",
+  "steps": [
+    {
+      "move": "ドライブラッシュ",
+      "command": "DR"
+    },
+    {
+      "move": "2中K",
+      "command": "2MK",
+      "moveKey": "manon-2mk",
+      "note": "最速重ね"
+    }
+  ],
+  "resources": {
+    "driveCost": 1,
+    "superCost": 0,
+    "saLevel": null
+  },
+  "damage": 600,
+  "difficulty": 2,
+  "controlType": "both",
+  "properties": {
+    "strongVs": [
+      "打撃暴れ",
+      "ドライブリバーサル（ガード可）"
+    ],
+    "weakVs": [
+      "垂直ジャンプ",
+      "無敵技"
+    ],
+    "caution": "先端気味に当てないと OD 無敵に反確。持続当てを徹底",
+    "frameAdvantage": {
+      "frames": "+2",
+      "note": "2中K持続当て"
+    },
+    "wakeup": {
+      "coverage": "both",
+      "quickRise": "密着でOK",
+      "backTech": "最速だと少し遠い（半歩足す）"
+    },
+    "useWhen": "基本択",
+    "onBlock": "概ね安全（-2 前後）",
+    "risk": "低"
+  },
+  "tags": [
+    "基本択"
+  ]
+}

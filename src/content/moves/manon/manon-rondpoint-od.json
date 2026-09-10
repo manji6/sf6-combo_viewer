@@ -1,0 +1,25 @@
+{
+  "key": "manon-rondpoint-od",
+  "character": "manon",
+  "name": "OD ロン・ポワン",
+  "category": "special",
+  "inputClassic": "236KK",
+  "inputModern": "6AS SP",
+  "inputModernPrecise": "236KK",
+  "startup": 8,
+  "active": "8-16",
+  "recovery": "30",
+  "onHit": "D",
+  "onBlock": "-19",
+  "cancel": "SA2",
+  "damage": 800,
+  "driveGainHit": 0,
+  "driveLossBlock": -4000,
+  "driveLossPunishCounter": -4000,
+  "superGain": 1350,
+  "attribute": [
+    "上"
+  ],
+  "notes": "モダンは →+AUTO+SP。4-16F 空中判定の打撃・飛び道具に無敵",
+  "verifiedVersion": "Ver.2025.xx（Phase 1・要再確認）"
+}

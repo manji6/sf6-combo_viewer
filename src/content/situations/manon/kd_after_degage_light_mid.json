@@ -1,0 +1,13 @@
+{
+  "id": "kd_after_degage_light_mid",
+  "label": "弱デガジェ締め後・中央ダウン",
+  "kind": "knockdown",
+  "position": "midscreen",
+  "opponentState": "knockdown_soft",
+  "advantage": "+38 前後",
+  "wakeupNote": "受け身可（その場・後ろどちらも取れる。基本は後ろ受け身）",
+  "tags": [
+    "起き攻め開始"
+  ],
+  "notes": "マノンの基本的な起き攻め開始点。ドライブラッシュから四択を仕掛ける。"
+}

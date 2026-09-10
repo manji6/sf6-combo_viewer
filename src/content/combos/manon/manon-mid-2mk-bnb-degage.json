@@ -1,0 +1,19 @@
+{
+  "slug": "manon-mid-2mk-bnb-degage",
+  "character": "manon",
+  "name": "中央 2中K始動 弱デガジェ〆（基本）",
+  "situationLabel": "中央・下段差し込みから",
+  "routeChain": [
+    "starter_2mk_mid",
+    "route_2mk_confirm_degage"
+  ],
+  "startFrom": "neutral_mid",
+  "endAt": "kd_after_degage_light_mid",
+  "difficulty": 2,
+  "tags": [
+    "基本",
+    "ノーゲージ",
+    "実戦"
+  ],
+  "description": "まず覚える基本コンボ。締めの弱デガジェ後は「弱デガジェ締め後・中央ダウン」から起き攻め四択に移行できる。"
+}

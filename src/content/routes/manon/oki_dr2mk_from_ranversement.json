@@ -1,0 +1,54 @@
+{
+  "id": "oki_dr2mk_from_ranversement",
+  "character": "manon",
+  "from": "kd_after_ranversement_mid",
+  "to": "juggle_can_4hp_ranversement",
+  "kind": "okizeme",
+  "label": "ドライブラッシュ 2中K 重ね（ランヴェルセ後）",
+  "steps": [
+    {
+      "move": "ドライブラッシュ",
+      "command": "DR"
+    },
+    {
+      "move": "2中K",
+      "command": "2MK",
+      "moveKey": "manon-2mk",
+      "note": "最速重ね"
+    }
+  ],
+  "resources": {
+    "driveCost": 1,
+    "superCost": 0,
+    "saLevel": null
+  },
+  "damage": 600,
+  "difficulty": 2,
+  "controlType": "both",
+  "properties": {
+    "strongVs": [
+      "打撃暴れ"
+    ],
+    "weakVs": [
+      "垂直ジャンプ",
+      "無敵技"
+    ],
+    "caution": "同じループを繰り返すと 2中K に的を絞られる。時々崩しを混ぜる",
+    "frameAdvantage": {
+      "frames": "+2",
+      "note": "2中K持続当て"
+    },
+    "wakeup": {
+      "coverage": "both",
+      "quickRise": "密着で持続当て",
+      "backTech": "2中Kが先端当てになり弱い"
+    },
+    "useWhen": "ランヴェルセ後も同じ 4強P 連結ループへ",
+    "onBlock": "概ね安全",
+    "risk": "低"
+  },
+  "tags": [
+    "基本択",
+    "ループ"
+  ]
+}

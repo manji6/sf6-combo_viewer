@@ -1,0 +1,25 @@
+{
+  "key": "manon-throw",
+  "character": "manon",
+  "name": "通常投げ（オーウチガリ）",
+  "category": "throw",
+  "inputClassic": "5LPLK",
+  "inputModern": "5LM",
+  "startup": 5,
+  "active": "5-7",
+  "recovery": "23",
+  "onHit": "D",
+  "onBlock": null,
+  "cancel": null,
+  "damage": 1200,
+  "comboScaling": "即時補正20%",
+  "driveGainHit": 2000,
+  "driveLossBlock": 0,
+  "driveLossPunishCounter": -10000,
+  "superGain": 2000,
+  "attribute": [
+    "投"
+  ],
+  "notes": "パニッシュカウンター時ダメージ2040・ハードノックダウン",
+  "verifiedVersion": "Ver.2025.xx（Phase 1・要再確認）"
+}

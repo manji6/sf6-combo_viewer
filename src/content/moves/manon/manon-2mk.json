@@ -1,0 +1,25 @@
+{
+  "key": "manon-2mk",
+  "character": "manon",
+  "name": "しゃがみ中K（ストゥニュー）",
+  "category": "normal",
+  "inputClassic": "2MK",
+  "inputModern": "2M",
+  "startup": 8,
+  "active": "8-11",
+  "recovery": "16",
+  "onHit": "+4",
+  "onBlock": "-2",
+  "cancel": null,
+  "damage": 600,
+  "comboScaling": "始動補正20%",
+  "driveGainHit": 2000,
+  "driveLossBlock": -4000,
+  "driveLossPunishCounter": -6000,
+  "superGain": 600,
+  "attribute": [
+    "下"
+  ],
+  "notes": "モダンの通常技割り当ては要検証",
+  "verifiedVersion": "Ver.2025.xx（Phase 1・要再確認）"
+}
