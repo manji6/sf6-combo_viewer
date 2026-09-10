@@ -8,6 +8,8 @@
   ],
   "startFrom": "neutral_mid",
   "endAt": "kd_after_rondpoint_mid",
+  "damageOverride": 1904,
+  "damageNote": "実測 1,904",
   "difficulty": 3,
   "tags": [
     "CDR",

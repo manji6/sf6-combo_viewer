@@ -8,6 +8,8 @@
   ],
   "startFrom": "neutral_mid",
   "endAt": "kd_after_degage_light_mid",
+  "damageOverride": 2200,
+  "damageNote": "実測 2,200",
   "difficulty": 2,
   "tags": [
     "ジャンプ始動",

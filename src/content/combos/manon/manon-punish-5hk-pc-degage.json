@@ -8,6 +8,8 @@
   ],
   "startFrom": "neutral_mid",
   "endAt": "kd_after_degage_mid_mid",
+  "damageOverride": 2280,
+  "damageNote": "実測 2,280",
   "difficulty": 2,
   "tags": [
     "パニカン",

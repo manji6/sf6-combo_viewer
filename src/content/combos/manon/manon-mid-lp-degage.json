@@ -8,6 +8,8 @@
   ],
   "startFrom": "neutral_mid",
   "endAt": "kd_after_degage_light_mid",
+  "damageOverride": 1240,
+  "damageNote": "実測 1,240",
   "difficulty": 1,
   "tags": [
     "とりこれ",

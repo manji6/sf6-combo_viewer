@@ -148,20 +148,8 @@ add('routes', 'route_2lp_rondpoint_h', R({
   controlType: 'both',
   tags: ['とりこれ', '小技始動', 'ノーゲージ', '〆'],
 }));
-add('routes', 'route_lp_mp_degage_m', R({
-  id: 'route_lp_mp_degage_m', from: 'neutral_mid', to: 'kd_after_degage_mid_mid',
-  kind: 'combo_route', label: '弱P → 中P → 中デガジェ〆',
-  steps: [
-    { move: '弱P', command: '5LP', moveKey: 'manon-5lp' },
-    { move: '中P', command: '5MP', moveKey: 'manon-5mp', cancel: true },
-    { move: '中デガジェ', command: '214MK', moveKey: 'manon-degage-m', cancel: true, note: '弱デガジェでも可（起き攻めは弱の方が強い）。中P始動コンボに繋いでもよい' },
-  ],
-  resources: { driveCost: 0, superCost: 0, saLevel: null },
-  damage: 2100, difficulty: 2,
-  constraints: '4F 確定反撃。弱P>4強P は離れると当たらないので 中P 経由を手癖に。強コマ投げでも4F確反は取れない',
-  controlType: 'both',
-  tags: ['確定反撃', 'ノーゲージ', '〆'],
-}));
+// route_lp_mp_degage_m / manon-punish-lp-mp-degage（弱P>中P>中デガジェ）は
+// オーナー実機確認で「実戦で使えない」と判断され削除（2026-09-11）。
 add('routes', 'route_5hk_pc_degage_m', R({
   id: 'route_5hk_pc_degage_m', from: 'neutral_mid', to: 'kd_after_degage_mid_mid',
   kind: 'combo_route', label: '強K パニカン → 中デガジェ〆',
@@ -325,13 +313,7 @@ add('combos', 'manon-mid-2lp-rondpoint', C({
   tags: ['とりこれ', 'ノーゲージ', '起き攻め'],
   description: '小技・4F暴れから。2弱P からは デガジェ 不可、ロン・ポワンは可。迷ったら起き攻めもSA3も繋がる強ロン・ポワン。' + SRC,
 }));
-add('combos', 'manon-punish-lp-mp-degage', C({
-  slug: 'manon-punish-lp-mp-degage', name: '4F確反 弱P 中P 中デガジェ〆',
-  situationLabel: '4F 確定反撃', routeChain: ['route_lp_mp_degage_m'],
-  startFrom: 'neutral_mid', endAt: 'kd_after_degage_mid_mid', difficulty: 2,
-  tags: ['確定反撃', 'ノーゲージ'],
-  description: '4F 確反では 弱P>中P が繋がる。そこから中P始動コンボへ行ってもよい。困ったらコマ投げでOK。' + SRC,
-}));
+// manon-punish-lp-mp-degage は削除（上記コメント参照）。
 add('combos', 'manon-punish-5hk-pc-degage', C({
   slug: 'manon-punish-5hk-pc-degage', name: '差し返し 強K パニカン 中デガジェ〆',
   situationLabel: '遠めの差し返し（強K パニカン）', routeChain: ['route_5hk_pc_degage_m'],
