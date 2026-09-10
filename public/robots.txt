@@ -1,4 +1,5 @@
 User-agent: *
 Allow: /
+Disallow: /manon/preview/
 
 Sitemap: https://sf6-combo.example.com/sitemap-index.xml

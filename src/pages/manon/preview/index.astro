@@ -1,0 +1,96 @@
+---
+// dev 限定: drafts/*.json の検証結果とダイジェストを表示する（register-combo Skill 用）。
+// 本番ビルドでは 404。
+import { existsSync, readFileSync, readdirSync } from 'node:fs';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import {
+  characterSchema,
+  comboSchema,
+  moveSchema,
+  routeSchema,
+  situationSchema,
+} from '../../../data/schema';
+
+if (!import.meta.env.DEV) {
+  return new Response(null, { status: 404 });
+}
+
+const schemas: Record<string, { safeParse: (v: unknown) => { success: boolean; error?: any } }> = {
+  characters: characterSchema,
+  situations: situationSchema,
+  routes: routeSchema,
+  combos: comboSchema,
+  moves: moveSchema,
+};
+
+const dir = new URL('../../../../drafts/', import.meta.url).pathname.replace(/^\/([A-Za-z]:)/, '$1');
+const files = existsSync(dir) ? readdirSync(dir).filter((f) => f.endsWith('.json')) : [];
+
+type Entry = { file: string; collection?: string; id?: string; ok: boolean; issues: string[]; json: string };
+const entries: Entry[] = files.map((file) => {
+  const m = file.match(/^([a-z]+)__(.+)\.json$/);
+  let raw: unknown;
+  try {
+    raw = JSON.parse(readFileSync(dir + file, 'utf8'));
+  } catch (e) {
+    return { file, ok: false, issues: [`JSON パース失敗: ${e}`], json: '' };
+  }
+  const json = JSON.stringify(raw, null, 2);
+  if (!m) return { file, ok: false, issues: ['ファイル名が <collection>__<id>.json ではない'], json };
+  const [, collection, id] = m;
+  const schema = schemas[collection];
+  if (!schema) return { file, collection, id, ok: false, issues: [`未知のコレクション: ${collection}`], json };
+  const parsed = schema.safeParse(raw);
+  const issues = parsed.success
+    ? []
+    : (parsed.error.issues as { path: (string | number)[]; message: string }[]).map(
+        (i) => `${i.path.join('.') || '(root)'}: ${i.message}`,
+      );
+  return { file, collection, id, ok: parsed.success, issues, json };
+});
+---
+
+<BaseLayout title="ドラフトプレビュー（dev）" crumbs={[{ label: 'マノン', href: '/manon/' }, { label: 'preview' }]}>
+  <h1>ドラフトプレビュー</h1>
+  <p class="note">
+    <code>drafts/*.json</code>（{entries.length} 件）の検証結果。承認後
+    <code>npm run promote-draft</code> で <code>src/content/</code> へ移動。
+  </p>
+  {entries.length === 0 && <p class="empty">drafts/ に JSON がありません。</p>}
+  {
+    entries.map((e) => (
+      <section class={`draft ${e.ok ? 'ok' : 'ng'}`}>
+        <h2>
+          <span class="badge">{e.ok ? 'OK' : 'NG'}</span>
+          {e.collection ?? '?'} / {e.id ?? e.file}
+        </h2>
+        {e.issues.length > 0 && (
+          <ul class="issues">
+            {e.issues.map((i) => (
+              <li>{i}</li>
+            ))}
+          </ul>
+        )}
+        <details>
+          <summary>JSON</summary>
+          <pre>{e.json}</pre>
+        </details>
+      </section>
+    ))
+  }
+</BaseLayout>
+
+<style>
+  h1 { color: var(--accent); }
+  .note { color: var(--text-dim); font-size: 0.9rem; }
+  .empty { color: var(--text-faint); padding: 2rem 0; }
+  .draft { border: 1px solid var(--border); border-left: 4px solid var(--border-strong); padding: 0.6rem 0.9rem; margin: 0.8rem 0; }
+  .draft.ok { border-left-color: var(--risk-low); }
+  .draft.ng { border-left-color: var(--risk-high); }
+  .draft h2 { font-size: 0.95rem; display: flex; gap: 0.5rem; align-items: center; margin: 0 0 0.4rem; }
+  .badge { font-family: var(--font-pixel); font-size: 0.7rem; padding: 0 0.4em; background: var(--border-strong); color: var(--bg); }
+  .draft.ok .badge { background: var(--risk-low); }
+  .draft.ng .badge { background: var(--risk-high); }
+  .issues { margin: 0.3rem 0; color: var(--risk-high); font-size: 0.85rem; }
+  pre { overflow-x: auto; font-size: 0.78rem; background: var(--bg-sunken); padding: 0.6rem; }
+</style>

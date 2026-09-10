@@ -13,6 +13,7 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "validate": "vite-node scripts/validate.ts",
+    "promote-draft": "vite-node scripts/promote-draft.ts",
     "check": "npm run validate && npm run test && astro check"
   },
   "dependencies": {

@@ -13,5 +13,9 @@ export default defineConfig({
   vite: {
     plugins: [tailwindcss()],
   },
-  integrations: [preact(), validateData(), sitemap()],
+  integrations: [
+    preact(),
+    validateData(),
+    sitemap({ filter: (page) => !page.includes('/manon/preview') }),
+  ],
 });
