@@ -1,0 +1,24 @@
+{
+  "character": "manon",
+  "slug": "manon-corner-di-hoseigiri",
+  "name": "画面端 インパクト壁貼りつき 補正切り 中マネージュ・ドレ",
+  "situationLabel": "画面端・ドライブインパクト（リーサル・補正切り）",
+  "routeChain": [
+    "starter_di_corner",
+    "route_di_wall_hoseigiri_setup",
+    "oki_hoseigiri_manege_m"
+  ],
+  "startFrom": "neutral_corner",
+  "endAt": "kd_after_manege_dore_corner",
+  "damageOverride": 4448,
+  "damageNote": "メダル保持数でダメージが変動",
+  "difficulty": 5,
+  "tags": [
+    "補正切り",
+    "画面端",
+    "インパクト",
+    "リーサル",
+    "メダル"
+  ],
+  "description": "画面端インパクト壁貼りつきからの補正切りリーサル。ラッシュ4強Pから弱グランフェッテを2回、2回目でコンボが切れる。ヒット後 +50F あるので前ステップ2回でフレームを消費して +8F を作り、中マネージュ・ドレを補正切り（100%）で当てる。無敵技・ジャンプには弱い読み合い。"
+}

@@ -1,0 +1,25 @@
+{
+  "character": "manon",
+  "verifiedVersion": "Year3（公式フレームデータ参照。パッチ版数未確認）",
+  "key": "manon-grandfouette",
+  "name": "グラン・フェッテ",
+  "category": "special",
+  "inputClassic": "236P~K",
+  "inputModern": null,
+  "startup": 11,
+  "active": "11-16",
+  "recovery": "20",
+  "onHit": "D",
+  "onBlock": "-3",
+  "cancel": "SA3",
+  "damage": 800,
+  "comboScaling": "始動補正20% / 即時補正10%",
+  "driveGainHit": 2500,
+  "driveLossBlock": -5000,
+  "driveLossPunishCounter": -10000,
+  "superGain": 1150,
+  "attribute": [
+    "上"
+  ],
+  "notes": "ランヴェルセ中に K 派生。強度は直前のランヴェルセに従う（弱は 236LP~K）。回っている間は飛び道具無敵。飛び道具読みでパニカンを取ってメダルコンボへ。モダンの派生入力は要検証。"
+}

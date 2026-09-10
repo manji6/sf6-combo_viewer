@@ -1,0 +1,13 @@
+{
+  "tags": [
+    "補正切り",
+    "画面端"
+  ],
+  "id": "kd_after_hoseigiri_corner",
+  "label": "補正切り +8F（画面端・弱グランフェッテ2回後 前ステ×2）",
+  "kind": "hit",
+  "position": "corner",
+  "opponentState": "neutral",
+  "advantage": "+8",
+  "notes": "画面端。弱グランフェッテ2回目でコンボが切れ、ヒット後 +50F。前ステップ2回のフレーム消費で +8F の状態。ここから 中マネージュ・ドレを補正切りで重ねる。"
+}

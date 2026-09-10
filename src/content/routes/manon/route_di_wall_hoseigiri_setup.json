@@ -1,0 +1,62 @@
+{
+  "character": "manon",
+  "id": "route_di_wall_hoseigiri_setup",
+  "from": "wall_splat_corner",
+  "to": "kd_after_hoseigiri_corner",
+  "kind": "combo_route",
+  "label": "ラッシュ → 4強P → 弱グランフェッテ → 4強P → 弱グランフェッテ → 前ステップ×2",
+  "steps": [
+    {
+      "move": "ドライブラッシュ",
+      "command": "DR"
+    },
+    {
+      "move": "4強P",
+      "command": "4HP",
+      "moveKey": "manon-4hp"
+    },
+    {
+      "move": "弱グランフェッテ",
+      "command": "236LP~K",
+      "moveKey": "manon-grandfouette",
+      "cancel": true
+    },
+    {
+      "move": "4強P",
+      "command": "4HP",
+      "moveKey": "manon-4hp"
+    },
+    {
+      "move": "弱グランフェッテ",
+      "command": "236LP~K",
+      "moveKey": "manon-grandfouette",
+      "cancel": true,
+      "note": "2回目でコンボが切れる。ヒット後 +50F"
+    },
+    {
+      "move": "前ステップ",
+      "command": "66",
+      "action": "dash"
+    },
+    {
+      "move": "前ステップ",
+      "command": "66",
+      "action": "dash",
+      "note": "フレーム消費。前ステ2回で +8F の状態"
+    }
+  ],
+  "resources": {
+    "driveCost": 1,
+    "superCost": 0,
+    "saLevel": null
+  },
+  "damage": 2448,
+  "difficulty": 5,
+  "constraints": "画面端インパクト壁貼りつきから。生ドライブラッシュ 1 本。弱グランフェッテ2回目でコンボを切る。",
+  "controlType": "classic",
+  "tags": [
+    "補正切り",
+    "画面端",
+    "インパクト"
+  ]
+}

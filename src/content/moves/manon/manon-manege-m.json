@@ -1,0 +1,24 @@
+{
+  "character": "manon",
+  "verifiedVersion": "Year3（公式フレームデータ参照。パッチ版数未確認）",
+  "key": "manon-manege-m",
+  "name": "中マネージュ・ドレ（コマ投げ）",
+  "category": "special",
+  "inputClassic": "63214MP",
+  "inputModern": "5SP",
+  "startup": 8,
+  "active": "8-10",
+  "recovery": "50",
+  "onHit": "D",
+  "onBlock": null,
+  "cancel": null,
+  "damage": 2000,
+  "driveGainHit": 5000,
+  "driveLossBlock": 0,
+  "driveLossPunishCounter": -10000,
+  "superGain": 3000,
+  "attribute": [
+    "投"
+  ],
+  "notes": "ダメージ・SAゲージはメダルLv1（Lv5 で 3700）。ヒット時メダルLv+1。モダンは強度自動選択。"
+}

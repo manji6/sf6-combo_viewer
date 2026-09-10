@@ -1,0 +1,14 @@
+{
+  "tags": [
+    "メダル",
+    "画面端"
+  ],
+  "id": "kd_after_manege_dore_corner",
+  "label": "マネージュ・ドレ後・画面端ダウン",
+  "kind": "knockdown",
+  "position": "corner",
+  "opponentState": "knockdown_hard",
+  "advantage": "メダル獲得 +1",
+  "wakeupNote": "受け身不可（コマ投げ）",
+  "notes": "コマ投げ後・画面端。起き攻めルートは未整理。"
+}

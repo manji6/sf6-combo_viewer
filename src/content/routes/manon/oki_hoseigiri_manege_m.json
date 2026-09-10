@@ -1,0 +1,45 @@
+{
+  "character": "manon",
+  "id": "oki_hoseigiri_manege_m",
+  "from": "kd_after_hoseigiri_corner",
+  "to": "kd_after_manege_dore_corner",
+  "kind": "okizeme",
+  "label": "+8F から 中マネージュ・ドレ（補正切り）",
+  "steps": [
+    {
+      "move": "中マネージュ・ドレ",
+      "command": "63214MP",
+      "moveKey": "manon-manege-m",
+      "note": "+8F 状態から。補正切りで 100% ダメージ"
+    }
+  ],
+  "resources": {
+    "driveCost": 0,
+    "superCost": 0,
+    "saLevel": null
+  },
+  "damage": 2000,
+  "difficulty": 5,
+  "constraints": "補正切りでコンボが切れているため 100% ダメージ。中マネージュ・ドレはメダル保持数で変動（2,000〜3,700）。+8F あるので暴れ・多くの起き上がり行動に勝てるが、無敵技・ジャンプには弱い。",
+  "controlType": "classic",
+  "properties": {
+    "strongVs": [
+      "ガード",
+      "各種暴れ",
+      "遅らせ行動"
+    ],
+    "weakVs": [
+      "垂直・バックジャンプ",
+      "無敵技",
+      "ドライブインパクト"
+    ],
+    "useWhen": "リーサル。+8F あるので中マネージュ・ドレが多くの起き上がり行動に勝てる",
+    "risk": "中"
+  },
+  "tags": [
+    "補正切り",
+    "コマ投げ",
+    "画面端",
+    "リーサル"
+  ]
+}
