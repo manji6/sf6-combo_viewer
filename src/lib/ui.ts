@@ -89,6 +89,13 @@ export const WAKEUP_COVERAGE_LABEL: Record<'both' | 'quick' | 'back', string> = 
   back: '後ろ受け身のみ',
 };
 
+/** バッジ用の短い表記 */
+export const WAKEUP_COVERAGE_SHORT: Record<'both' | 'quick' | 'back', string> = {
+  both: '両対応',
+  quick: 'その場のみ',
+  back: '後ろのみ',
+};
+
 /** RouteProperties.frameAdvantage を表示文字列にする。数値に "F" を付ける */
 export function frameAdvLabel(
   fa: RouteProperties['frameAdvantage'],

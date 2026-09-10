@@ -10,7 +10,7 @@ import type {
 import { getCombo, getRoute, getSituation, stepModernCommand } from '../../data';
 import { outgoingRoutes } from './derive';
 import { commandToText } from '../notation/parse';
-import { frameAdvLabel, stepActionLabel, wakeupSummary } from '../ui';
+import { frameAdvLabel, stepActionLabel } from '../ui';
 
 export type FlowNodeType = 'step' | 'outcome' | 'start';
 
@@ -52,8 +52,8 @@ export interface FlowGroup {
   routeId: string;
   /** 初回行動後の有利フレーム（"+2F" など、表示用に整形済み） */
   frameAdvantage?: string;
-  /** RouteProperties.wakeup を 1 行にまとめた文字列（受け身対応） */
-  wakeup?: string;
+  /** 受け身への対応（バッジ表示用）。詳細は各択カード／パーツ詳細で */
+  wakeupCoverage?: 'both' | 'quick' | 'back';
   strongVs?: string[];
   weakVs?: string[];
   caution?: string;
@@ -173,7 +173,7 @@ function emitRouteSteps(
     nodeIds: [],
     routeId: route.id,
     frameAdvantage: frameAdvLabel(p?.frameAdvantage),
-    wakeup: wakeupSummary(p?.wakeup),
+    wakeupCoverage: p?.wakeup?.coverage,
     strongVs: p?.strongVs,
     weakVs: p?.weakVs,
     caution: p?.caution,

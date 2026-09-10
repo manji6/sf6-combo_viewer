@@ -2,6 +2,7 @@
 import { useEffect, useLayoutEffect, useRef, useState } from 'preact/hooks';
 import * as dagreNS from '@dagrejs/dagre';
 import type { FlowEdge, FlowGraph, FlowGroup, FlowNode } from '../../lib/graph/flow';
+import { WAKEUP_COVERAGE_SHORT } from '../../lib/ui';
 import Notation from './Notation';
 
 const dagre: typeof import('@dagrejs/dagre') =
@@ -67,8 +68,7 @@ function wrapLines(text: string | undefined, perLine = 30): number {
 const OKI_MIN_W = 300; // 起き攻め枠の最小幅（特徴テキストが折り返しても読める幅）
 const OKI_LINE_CHARS = 22;
 function okizemeHeaderHeight(g: FlowGroup): number {
-  let lines = 1; // ヘッダ（種別＋有利F＋リスク＋詳細）
-  lines += wrapLines(g.wakeup, OKI_LINE_CHARS);
+  let lines = 1; // ヘッダ（種別＋有利F＋受け身＋リスク＋詳細）
   lines += wrapLines(g.strongVs?.join('・'), OKI_LINE_CHARS);
   lines += wrapLines(g.weakVs?.join('・'), OKI_LINE_CHARS);
   lines += wrapLines(g.caution, OKI_LINE_CHARS);
@@ -398,6 +398,11 @@ export default function FlowCanvas({ graph, graphModern, height = 520 }: Props) 
                       {gb.group.frameAdvantage && (
                         <span class="gi-frame">初回行動後 {gb.group.frameAdvantage}</span>
                       )}
+                      {gb.group.wakeupCoverage && (
+                        <span class="gi-wake-badge">
+                          受け身:{WAKEUP_COVERAGE_SHORT[gb.group.wakeupCoverage]}
+                        </span>
+                      )}
                       {gb.group.risk && (
                         <span class={`gi-risk r-${gb.group.risk}`}>リスク{gb.group.risk}</span>
                       )}
@@ -405,9 +410,6 @@ export default function FlowCanvas({ graph, graphModern, height = 520 }: Props) 
                         詳細
                       </a>
                     </div>
-                    {gb.group.wakeup ? (
-                      <div class="gi-line gi-wake">受け身: {gb.group.wakeup}</div>
-                    ) : null}
                     {gb.group.strongVs?.length ? (
                       <div class="gi-line gi-good">◯ {gb.group.strongVs.join('・')}</div>
                     ) : null}
@@ -523,12 +525,12 @@ export default function FlowCanvas({ graph, graphModern, height = 520 }: Props) 
         .gi-link { margin-left:auto; font-size:.66rem; color:var(--link); font-weight:700; }
         .gi-frame { font-family:var(--font-pixel); font-size:.66rem; background:var(--btn-dr); color:#08160c; padding:.05em .4em; font-weight:700; }
         :root[data-theme='light'] .gi-frame { color:#fff; }
+        .gi-wake-badge { font-size:.63rem; border:1px solid var(--border-strong); color:var(--text-dim); padding:0 .3em; border-radius:3px; white-space:nowrap; }
         .gi-line { font-size:.68rem; line-height:1.3; color:var(--text); white-space:normal; overflow:hidden; }
         .gi-line b { font-weight:700; }
         .gi-good { color:var(--risk-low); }
         .gi-bad { color:var(--risk-high); }
         .gi-warn { color:var(--risk-mid); }
-        .gi-wake { color:var(--text-dim); }
 
         .fc-pnode { position:absolute; }
         .fc-pnode > .fc-node { width:100%; height:100%; }
