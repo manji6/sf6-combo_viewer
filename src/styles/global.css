@@ -216,11 +216,6 @@ h3 {
 }
 
 /* ボタン */
-.nt-btnwrap {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.12em;
-}
 .nt-btn {
   --c: var(--btn-none);
   display: inline-flex;
@@ -263,18 +258,6 @@ h3 {
   letter-spacing: 0.06em;
   min-width: 0;
 }
-/* OD（オーバードライブ）: ボタン2つの前に付く小さな接頭ラベル */
-.nt-od {
-  font-size: 0.68em;
-  font-weight: 700;
-  letter-spacing: 0.04em;
-  color: var(--text-dim);
-  border: 1px solid var(--btn-none);
-  border-radius: 3px;
-  padding: 0 0.25em;
-  margin-right: 0.1em;
-}
-
 /* メタ（DR / SA など） */
 .nt-meta {
   display: inline-flex;

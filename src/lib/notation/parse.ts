@@ -254,17 +254,19 @@ export function commandToText(input: string): string {
  * クラシックのコマンドからモダンのコマンドを推定する（commandModern 未指定時のフォールバック）。
  *  - 通常技: 方向 + 弱中強（P/K を落とす）  例 5MP → 5M, 2MK → 2M, 4HP → 4H
  *  - 必殺技: 方向連番 3 桁以上 → 方向 + SP    例 236MP → 236SP, 214LK → 214SP
- *  - SA: 236236x / 214214x → SP AS
+ *  - OD 必殺技: 方向 + AUTO + SP           例 236KK → 236AS SP
+ *  - SA: 方向 + SP + 強                     例 236236P → 236SP H
  *  - DR / DRC / PC / CH / DI / ため / j. などはそのまま
+ * 正確なモダン入力は技辞典（moves.inputModern）から。これはそれが無い技の粗い推定。
  */
 export function deriveModern(classic: string): string {
   let s = classic.trim();
   if (/\b(SP|AS)\b/.test(s) || /[1-9](L|M|H)(?![PK])/.test(s)) return s; // すでにモダン表記
 
-  // SA（連続波動・昇龍）
-  s = s.replace(/(236236|214214)([LMH]?)([PK]|PP|KK)/g, () => 'SP AS');
+  // SA（連続波動・昇龍系）
+  s = s.replace(/(236236|214214|632146)([LMH]?)([PK]|PP|KK)/g, (_m, motion) => `${motion}SP H`);
   // OD 必殺技（方向 3 桁以上 ＋ PP/KK）
-  s = s.replace(/([1-9]{3,})(PP|KK)/g, (_m, motion) => `${motion}SP`);
+  s = s.replace(/([1-9]{3,})(PP|KK)/g, (_m, motion) => `${motion}AS SP`);
   // 必殺技（方向 3 桁以上）
   s = s.replace(/([1-9]{3,})([LMH]?)([PK])/g, (_m, motion) => `${motion}SP`);
   // 通常技（方向 0〜2 桁 ＋ 弱中強 ＋ P/K）

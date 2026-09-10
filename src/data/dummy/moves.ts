@@ -269,7 +269,7 @@ export const moves: Move[] = [
     name: 'OD ロン・ポワン',
     category: 'special',
     inputClassic: '236KK',
-    inputModern: '6SP',
+    inputModern: '6AS SP', // モダンの OD 必殺技 = 方向 ＋ AUTO（アシスト） ＋ SP
     inputModernPrecise: '236KK',
     startup: 8,
     active: '8-16',
@@ -317,7 +317,7 @@ export const moves: Move[] = [
     name: 'SA3 パ・ド・ドゥ',
     category: 'super',
     inputClassic: '236236P',
-    inputModern: '2SP',
+    inputModern: '2SP H', // モダンの SA = 方向 ＋ SP ＋ 強（SA レベルはボタン強度で選択）
     startup: 7,
     active: '7-8',
     recovery: '72',
@@ -331,7 +331,7 @@ export const moves: Move[] = [
     superGain: 0,
     attribute: ['投'],
     notes:
-      'ダメージはメダルLv1（Lvで上昇）。モダンは ↓+SP+強。1-8F 完全無敵。最低保障ダメージ50%。近距離限定',
+      'ダメージはメダルLv1（Lvで上昇）。1-8F 完全無敵。最低保障ダメージ50%。近距離限定',
     verifiedVersion: VERIFIED,
   },
 

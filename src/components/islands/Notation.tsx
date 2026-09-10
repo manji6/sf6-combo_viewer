@@ -47,13 +47,11 @@ function Tokens({ command }: { command: string }) {
             );
           }
           if (t.kind === 'button') {
+            // OD はボタン2つ（PP/KK）の表記と技名（「OD ○○」）で伝わるので専用ラベルは付けない
             const label = t.buttons[0] === 'AS' ? 'AUTO' : t.text.replace(/^OD/, '');
             return (
-              <span class="nt-btnwrap" key={i}>
-                {t.od && <span class="nt-od">OD</span>}
-                <span class="nt-btn" data-s={btnStrength(t)}>
-                  {label}
-                </span>
+              <span class="nt-btn" data-s={btnStrength(t)} key={i}>
+                {label}
               </span>
             );
           }
