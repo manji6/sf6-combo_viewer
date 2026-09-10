@@ -8,8 +8,8 @@
   ],
   "startFrom": "neutral_mid",
   "endAt": "kd_after_ranversement_mid",
-  "damageNote": "3,000 はメダル1枚時の出典値。メダル保持数で弱ランヴェルセ分が変動",
-  "damageOverride": 3000,
+  "damageNote": "実測 3,155（メダル1枚）。メダル保持数で弱ランヴェルセ分が変動",
+  "damageOverride": 3155,
   "driveCostOverride": 1,
   "difficulty": 3,
   "tags": [
@@ -18,5 +18,5 @@
     "メダル",
     "OD"
   ],
-  "description": "無敵技をガードした時のコンボ。メダル1枚でも3000dmg超。名目2ゲージだがコンボ中に回復するため実質1消費。メダル3枚以下なら積極的にこちら、4枚からはコマ投げの方が火力が高い。出典: すこれるブログ（sukoreru.com/sf6-manon）。合計ダメージは各技の素点合計＝補正前の目安。難易度は推定。"
+  "description": "無敵技をガードした時のコンボ。メダル1枚で実測 3,155。名目2ゲージだがコンボ中に回復するため実質1消費。メダル3枚以下なら積極的にこちら、4枚からはコマ投げの方が火力が高い。出典: すこれるブログ（sukoreru.com/sf6-manon）＋実機確認。難易度は推定。"
 }
