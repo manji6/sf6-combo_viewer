@@ -65,7 +65,7 @@
 |---|---|---|---|
 | C-1 | GitHub リポジトリ | ✅ | `github.com/manji6/sf6-combo_viewer`（`main`） |
 | **C-1.5** | **Cloudflare Workers デプロイ設定（リポジトリ側）** | ✅ | `wrangler.jsonc`（Static Assets、`dist/` を配信、SSR なし、custom domain = `sf6.amanohashi.date`）。デプロイは **Workers Builds**（ダッシュボードの Git 連携）方式に決定。API トークン／GitHub Actions は不要 |
-| **C-1.6** | **Workers Builds のビルド設定（オーナー）** | 🔲 | リポジトリ登録済み。ダッシュボードで Build command = `npm run build`、Deploy command = `npx wrangler deploy`、Branch = `main` を設定。詳細は下記「C-1.6 手順」 |
+| **C-1.6** | **Workers Builds のビルド設定** | ✅ | cloudflare-api MCP で設定完了。Worker `sf6-combo-viewer` / repo connection / build config（`main` → `npm run build` → `npx wrangler deploy` / `NODE_VERSION=22`）。あとは `main` push で初回ビルド |
 | C-2 | 公開サブドメイン名 | ✅ | `sf6.amanohashi.date` に決定。`wrangler.jsonc` の `routes[].custom_domain` と `astro.config.mjs` の `site`、`robots.txt` に反映済み |
 | C-3 | 本番ドメイン割当 | ⏳ | 初回 `wrangler deploy` 時に custom domain の DNS・証明書が自動作成される（C-1.6 完了後） |
 
@@ -187,38 +187,36 @@ Phase 1 クローズ後に着手。順序は第三者レビューの推奨（§2
 
 ---
 
-## 6. C-1.6 手順（Workers Builds ― オーナー作業）
+## 6. Workers Builds デプロイ（設定済み）
 
-デプロイ方式は **Workers Builds**（Cloudflare ダッシュボードの Git 連携）。
-`main` に push → Cloudflare が自動で clone → Build command 実行 → Deploy command 実行。
+デプロイ方式は **Workers Builds**（Cloudflare の Git 連携）。
+`main` に push → Cloudflare が clone → `npm ci` → `npm run build` → `npx wrangler deploy`。
 API トークン・GitHub Secrets・GitHub Actions は不要（Cloudflare の GitHub App が認証を持つ）。
-リポジトリ（`manji6/sf6-combo_viewer`）は登録済み。
 
-### ダッシュボードで設定する項目
-
-Workers & Pages → 対象プロジェクト → Settings → Build:
+### 設定済みの内容（cloudflare-api MCP で作成、2026-09-10）
 
 | 項目 | 値 |
 |---|---|
-| Git repository | `manji6/sf6-combo_viewer`（登録済み） |
+| Worker 名 | `sf6-combo-viewer`（script_tag `baecde0b317b4a008a603a151a5d3f3b`）※初回ビルドまではプレースホルダ |
+| Repo connection | `manji6/sf6-combo_viewer`（GitHub App `manji6`） |
 | Production branch | `main` |
 | Build command | `npm run build` |
 | Deploy command | `npx wrangler deploy` |
-| Root directory | `/`（デフォルト） |
-| Build variables | 不要（`NODE_VERSION` は `.nvmrc` 相当が無ければ `22` を指定推奨） |
+| Root directory | `/` |
+| Build variables | `NODE_VERSION=22` |
+| Build caching | 有効 |
 
-- 依存インストール（`npm ci`）は Workers Builds が自動で行う。
 - `npm run build` は `astro:build:start` フックで `validateAll` を走らせるので、壊れた
   データ（存在しない参照・chain 不連続など）はデプロイ前に落ちる。
-- テストも回したい場合は Build command を `npm test && npm run build` にする。
+- テストも回したい場合は build command を `npm test && npm run build` に変更（MCP or ダッシュボード）。
 
 ### custom domain（`sf6.amanohashi.date`）
 
 `wrangler.jsonc` の `routes[].custom_domain` に定義済み。初回 `wrangler deploy` 実行時に
-Cloudflare が DNS レコードと証明書を自動作成する（`amanohashi.date` zone が同じアカウント
-にある前提。証明書発行に数分）。ダッシュボードで手動設定したい場合は `wrangler.jsonc` の
-`routes` ブロックを削除し、Workers プロジェクトの Settings → Domains & Routes から追加。
+Cloudflare が DNS レコードと証明書を自動作成する（zone `amanohashi.date` は同一アカウントで
+active 確認済み。証明書発行に数分）。
 
 ### 初回デプロイ
 
-上記設定後、`main` に push（or ダッシュボードの Deployments → Retry / Create deployment）。
+`main` に push すれば Workers Builds が走る。ビルド状況は
+`GET /accounts/{account_id}/builds/workers/{script_tag}/builds` or ダッシュボードで確認。
