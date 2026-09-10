@@ -1,0 +1,71 @@
+import { describe, expect, it } from 'vitest';
+import { stepModernCommand } from '../src/data';
+import { frameAdvLabel, stepActionLabel, wakeupSummary } from '../src/lib/ui';
+
+describe('wakeupSummary', () => {
+  it('coverage を先頭に、その場/後ろを併記', () => {
+    expect(
+      wakeupSummary({ coverage: 'both', quickRise: '密着', backTech: '半歩足す' }),
+    ).toBe('両対応／その場: 密着・後ろ: 半歩足す');
+  });
+  it('note があれば note を使う', () => {
+    expect(wakeupSummary({ coverage: 'both', note: '受け身なし' })).toBe('両対応（受け身なし）');
+  });
+  it('quick のみ', () => {
+    expect(wakeupSummary({ coverage: 'quick', quickRise: '密着' })).toBe('その場受け身のみ／その場: 密着');
+  });
+  it('undefined は undefined', () => {
+    expect(wakeupSummary(undefined)).toBeUndefined();
+  });
+});
+
+describe('frameAdvLabel', () => {
+  it('数値に F を付ける', () => {
+    expect(frameAdvLabel({ frames: '+2' })).toBe('+2F');
+    expect(frameAdvLabel({ frames: '±0' })).toBe('±0F');
+    expect(frameAdvLabel({ frames: '-8' })).toBe('-8F');
+  });
+  it('withNote で条件を括弧書き', () => {
+    expect(frameAdvLabel({ frames: '+2', note: '2中K持続当て' }, { withNote: true })).toBe(
+      '+2F（2中K持続当て）',
+    );
+  });
+  it('note があっても withNote 無しなら数値だけ', () => {
+    expect(frameAdvLabel({ frames: '+2', note: 'x' })).toBe('+2F');
+  });
+  it('undefined は undefined', () => {
+    expect(frameAdvLabel(undefined)).toBeUndefined();
+  });
+});
+
+describe('stepActionLabel', () => {
+  it('action なしは move 名', () => {
+    expect(stepActionLabel({ move: '2中K', command: '2MK' })).toBe('2中K');
+  });
+  it('dash は固定ラベル', () => {
+    expect(stepActionLabel({ move: '前ステップ', command: '66', action: 'dash' })).toBe('前ステップ');
+  });
+  it('whiff は「<技名> 空振り」', () => {
+    expect(stepActionLabel({ move: '5弱P', command: '5LP', action: 'whiff' })).toBe('5弱P 空振り');
+  });
+});
+
+describe('stepModernCommand（優先順位）', () => {
+  it('明示 commandModern が最優先', () => {
+    expect(
+      stepModernCommand({ move: 'x', command: '5MP', commandModern: '5L', moveKey: 'manon-5mp' }),
+    ).toBe('5L');
+  });
+  it('明示なしなら技辞典 inputModern', () => {
+    expect(stepModernCommand({ move: 'x', command: '5MP', moveKey: 'manon-5mp' })).toBe('5M');
+  });
+  it('どちらも無ければ undefined（呼び出し側で deriveModern にフォールバック）', () => {
+    expect(stepModernCommand({ move: 'x', command: 'DR' })).toBeUndefined();
+  });
+  it('moveKey の技が inputModern:null なら undefined', () => {
+    // manon-rondpoint-l は inputModern: null
+    expect(
+      stepModernCommand({ move: 'x', command: '236LK', moveKey: 'manon-rondpoint-l' }),
+    ).toBeUndefined();
+  });
+});

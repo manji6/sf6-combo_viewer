@@ -263,8 +263,11 @@ export function deriveModern(classic: string): string {
   let s = classic.trim();
   if (/\b(SP|AS)\b/.test(s) || /[1-9](L|M|H)(?![PK])/.test(s)) return s; // すでにモダン表記
 
-  // SA（連続波動・昇龍系）
-  s = s.replace(/(236236|214214|632146)([LMH]?)([PK]|PP|KK)/g, (_m, motion) => `${motion}SP H`);
+  // SA（連続波動・昇龍系）→ 方向1つ + SP + 強（正確な方向は技辞典 inputModern から。ここは代表方向）
+  s = s.replace(
+    /(236236|214214|632146)([LMH]?)([PK]|PP|KK)/g,
+    (_m, motion: string) => `${motion[0]}SP H`,
+  );
   // OD 必殺技（方向 3 桁以上 ＋ PP/KK）
   s = s.replace(/([1-9]{3,})(PP|KK)/g, (_m, motion) => `${motion}AS SP`);
   // 必殺技（方向 3 桁以上）
