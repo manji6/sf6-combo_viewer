@@ -1,11 +1,8 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { characters, combos, situations } from '../data';
-import { validateAll } from '../lib/graph/derive';
 
-// Phase 1: データ整合性をビルドログに出す
-const errors = validateAll();
-if (errors.length) console.warn('[データ検証]\n' + errors.map((e) => ' - ' + e).join('\n'));
+// データ整合性の検証は astro.config の validateData 統合で行う（ビルドを止める）
 
 const setplayStarts = situations.filter((s) => s.tags.includes('起き攻め開始'));
 ---

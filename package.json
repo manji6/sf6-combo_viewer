@@ -9,7 +9,11 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "validate": "tsx scripts/validate.ts",
+    "check": "npm run validate && npm run test && astro check"
   },
   "dependencies": {
     "@astrojs/preact": "^6.0.5",
@@ -26,6 +30,9 @@
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.10",
-    "typescript": "^6.0.3"
+    "@types/node": "^22.20.2",
+    "tsx": "^4.23.13",
+    "typescript": "^6.0.3",
+    "vitest": "^5.0.0"
   }
 }

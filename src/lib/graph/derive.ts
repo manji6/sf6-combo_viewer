@@ -3,12 +3,12 @@ import {
   getCombo,
   getRoute,
   getSituation,
-  moveByKey,
+  moves,
   routes,
   situations,
   stepModernCommand,
 } from '../../data';
-import type { Combo, Route, Situation, Step } from '../../data/types';
+import type { Combo, Move, Route, Situation, Step } from '../../data/types';
 
 /** 状況ノードから出ていくパーツ */
 export function outgoingRoutes(situationId: string): Route[] {
@@ -103,50 +103,124 @@ export function flattenCombo(comboOrSlug: Combo | string): FlatCombo {
   };
 }
 
+export interface DataSet {
+  situations: Situation[];
+  routes: Route[];
+  combos: Combo[];
+  moves: Move[];
+}
+
+/** 引数省略時は本番（現状ダミー）データを使う */
+function resolveDataSet(data?: Partial<DataSet>): DataSet {
+  return {
+    situations: data?.situations ?? situations,
+    routes: data?.routes ?? routes,
+    combos: data?.combos ?? combos,
+    moves: data?.moves ?? moves,
+  };
+}
+
+function pushDuplicates(ids: string[], kind: string, errors: string[]): void {
+  const seen = new Set<string>();
+  for (const id of ids) {
+    if (seen.has(id)) errors.push(`${kind}: ID 重複「${id}」`);
+    seen.add(id);
+  }
+}
+
 /** routeChain が連続しているか検証（route[i].to === route[i+1].from） */
-export function validateComboChain(combo: Combo): string[] {
+export function validateComboChain(combo: Combo, routeById?: Map<string, Route>): string[] {
   const errors: string[] = [];
-  const chain = combo.routeChain.map(getRoute);
-  if (chain.length === 0) {
+  const lookup = routeById ?? new Map(routes.map((r) => [r.id, r]));
+  if (combo.routeChain.length === 0) {
     errors.push(`${combo.slug}: routeChain が空`);
     return errors;
   }
-  if (chain[0].from !== combo.startFrom) {
-    errors.push(`${combo.slug}: startFrom(${combo.startFrom}) が先頭パーツの from(${chain[0].from}) と不一致`);
+  const chain = combo.routeChain.map((id) => lookup.get(id));
+  if (chain.some((r) => !r)) {
+    combo.routeChain
+      .filter((id) => !lookup.has(id))
+      .forEach((id) => errors.push(`${combo.slug}: routeChain のパーツ「${id}」が存在しない`));
+    return errors;
   }
-  if (chain[chain.length - 1].to !== combo.endAt) {
+  const rs = chain as Route[];
+  if (rs[0].from !== combo.startFrom) {
+    errors.push(`${combo.slug}: startFrom(${combo.startFrom}) が先頭パーツの from(${rs[0].from}) と不一致`);
+  }
+  if (rs[rs.length - 1].to !== combo.endAt) {
     errors.push(`${combo.slug}: endAt(${combo.endAt}) が末尾パーツの to と不一致`);
   }
-  for (let i = 0; i < chain.length - 1; i++) {
-    if (chain[i].to !== chain[i + 1].from) {
+  for (let i = 0; i < rs.length - 1; i++) {
+    if (rs[i].to !== rs[i + 1].from) {
       errors.push(
-        `${combo.slug}: パーツ ${chain[i].id}.to(${chain[i].to}) と ${chain[i + 1].id}.from(${chain[i + 1].from}) が不連続`,
+        `${combo.slug}: パーツ ${rs[i].id}.to(${rs[i].to}) と ${rs[i + 1].id}.from(${rs[i + 1].from}) が不連続`,
       );
     }
   }
   return errors;
 }
 
-/** データ全体の整合性チェック（Phase 1 はコンソール警告に使う） */
-export function validateAll(): string[] {
+/**
+ * データ全体の整合性チェック。壊れたデータを返す（ビルド時の失敗ゲートに使う）。
+ * `data` を渡すとその集合を検証する（テスト・下書き検証用）。
+ */
+export function validateAll(data?: Partial<DataSet>): string[] {
+  const ds = resolveDataSet(data);
   const errors: string[] = [];
-  const ids = new Set(situations.map((s) => s.id));
-  for (const r of routes) {
-    if (!ids.has(r.from)) errors.push(`route ${r.id}: from(${r.from}) が存在しない`);
-    if (!ids.has(r.to)) errors.push(`route ${r.id}: to(${r.to}) が存在しない`);
+
+  // ID 重複（Map 化で上書きされる前に検出）
+  pushDuplicates(ds.situations.map((s) => s.id), 'situation', errors);
+  pushDuplicates(ds.routes.map((r) => r.id), 'route', errors);
+  pushDuplicates(ds.combos.map((c) => c.slug), 'combo', errors);
+  pushDuplicates(ds.moves.map((m) => m.key), 'move', errors);
+
+  const sitIds = new Set(ds.situations.map((s) => s.id));
+  const routeById = new Map(ds.routes.map((r) => [r.id, r]));
+  const moveKeys = new Set(ds.moves.map((m) => m.key));
+  const moveByKeyLocal = new Map(ds.moves.map((m) => [m.key, m]));
+
+  for (const r of ds.routes) {
+    if (!sitIds.has(r.from)) errors.push(`route ${r.id}: from(${r.from}) が存在しない`);
+    if (!sitIds.has(r.to)) errors.push(`route ${r.id}: to(${r.to}) が存在しない`);
+    if (r.steps.length === 0) errors.push(`route ${r.id}: steps が空`);
     for (const st of r.steps) {
-      if (st.moveKey && !moveByKey.has(st.moveKey)) {
+      if (st.moveKey && !moveKeys.has(st.moveKey)) {
         errors.push(`route ${r.id}: step の moveKey(${st.moveKey}) が技辞典に存在しない`);
+      }
+      // RV-02: 'both' 宣言なのに、この手のモダン入力が未確認（辞典 inputModern:null かつ手動指定なし）
+      if (r.controlType === 'both' && !st.action && st.moveKey && !st.commandModern) {
+        const mv = moveByKeyLocal.get(st.moveKey);
+        if (mv && mv.inputModern === null && !mv.inputModernPrecise) {
+          errors.push(
+            `route ${r.id}: controlType:'both' だが step「${st.move}」のモダン入力が未確認（技辞典 inputModern が null）`,
+          );
+        }
       }
     }
   }
-  for (const c of combos) errors.push(...validateComboChain(c));
-  // 孤立ノード
-  for (const s of situations) {
-    if (outgoingRoutes(s.id).length === 0 && incomingRoutes(s.id).length === 0) {
-      errors.push(`situation ${s.id}: 孤立ノード（接続パーツなし）`);
+
+  for (const c of ds.combos) {
+    errors.push(...validateComboChain(c, routeById));
+    for (const rid of c.routeChain) {
+      const r = routeById.get(rid);
+      if (r && r.character !== c.character) {
+        errors.push(
+          `combo ${c.slug}: パーツ ${rid} の character(${r.character}) が combo(${c.character}) と不一致`,
+        );
+      }
     }
   }
+
+  // 孤立ノード（接続パーツなし）
+  const connected = new Set<string>();
+  for (const r of ds.routes) {
+    connected.add(r.from);
+    connected.add(r.to);
+  }
+  for (const s of ds.situations) {
+    if (!connected.has(s.id)) errors.push(`situation ${s.id}: 孤立ノード（接続パーツなし）`);
+  }
+
   return errors;
 }
 

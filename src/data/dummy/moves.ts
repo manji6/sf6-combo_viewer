@@ -64,7 +64,7 @@ export const moves: Move[] = [
     name: 'しゃがみ中P（ヒキテ）',
     category: 'normal',
     inputClassic: '2MP',
-    inputModern: null,
+    inputModern: '2M', // 仮値（要検証: モダンの 2M がヒキテ/ストゥニューのどちらか未確認）
     startup: 7,
     active: '7-9',
     recovery: '11',

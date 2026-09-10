@@ -1,5 +1,7 @@
-// データ整合性チェック（Phase 1 版）。`node scripts/validate.mjs`
-import { validateAll } from '../src/lib/graph/derive.ts';
+// データ整合性チェック（CLI）。`npm run validate`
+// tsx で実行する（TS ＋ ディレクトリ import を解決するため）。
+import process from 'node:process';
+import { validateAll } from '../src/lib/graph/derive';
 
 const errors = validateAll();
 if (errors.length === 0) {
