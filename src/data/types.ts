@@ -171,9 +171,14 @@ export interface RouteProperties {
   /**
    * 起き攻めの初回行動を重ねた（or 前ステ・微歩き等をした）後の有利フレーム。
    * このアプリで一番見たいフレーム情報。基本は後ろ受け身を想定した値。
-   * 例: "+3", "+2（2中K持続当て）", "-1"
+   * `frames` は符号付きの数値部分のみ（表示側で "F" を付ける）。`note` は当て方の条件。
    */
-  frameAdvantage?: string;
+  frameAdvantage?: {
+    /** "+2" "±0" "-8" "+38" 等。表示は "+2F" になる */
+    frames: string;
+    /** "2中K持続当て" 等、その値になる条件（任意） */
+    note?: string;
+  };
   /**
    * 受け身の種類ごとの対応（A-2）。旧 vsWakeup（文字列）を構造化したもの。
    * SOFT / HARD ダウンそのものは Situation.opponentState で判定する。

@@ -11,6 +11,7 @@ import {
 } from '../../../lib/graph/derive';
 import { buildSituationFlow } from '../../../lib/graph/flow';
 import {
+  frameAdvLabel,
   OPPONENT_STATE_LABEL,
   POSITION_LABEL,
   RISK_VAR,
@@ -111,7 +112,7 @@ const hasClassicOnly = outs.some((r) => r.controlType === 'classic');
                       {p.frameAdvantage && (
                         <>
                           <dt class="s-frame">初回行動後</dt>
-                          <dd>{p.frameAdvantage}</dd>
+                          <dd>{frameAdvLabel(p.frameAdvantage, { withNote: true })}</dd>
                         </>
                       )}
                       {p.wakeup && (

@@ -89,6 +89,16 @@ export const WAKEUP_COVERAGE_LABEL: Record<'both' | 'quick' | 'back', string> = 
   back: '後ろ受け身のみ',
 };
 
+/** RouteProperties.frameAdvantage を表示文字列にする。数値に "F" を付ける */
+export function frameAdvLabel(
+  fa: RouteProperties['frameAdvantage'],
+  opts: { withNote?: boolean } = {},
+): string | undefined {
+  if (!fa) return undefined;
+  const head = `${fa.frames}F`;
+  return opts.withNote && fa.note ? `${head}（${fa.note}）` : head;
+}
+
 /** RouteProperties.wakeup を 1 行のテキストにまとめる（フロー枠・一覧向け） */
 export function wakeupSummary(w: RouteProperties['wakeup']): string | undefined {
   if (!w) return undefined;

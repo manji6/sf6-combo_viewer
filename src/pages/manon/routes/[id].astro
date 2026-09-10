@@ -8,6 +8,7 @@ import { combosUsingRoute, incomingRoutes, outgoingRoutes } from '../../../lib/g
 import { neighborhood } from '../../../lib/graph/systemmap';
 import {
   driveLabel,
+  frameAdvLabel,
   POSITION_LABEL,
   RISK_VAR,
   ROUTE_KIND_LABEL,
@@ -106,7 +107,7 @@ const p = route.properties;
               {p.frameAdvantage && (
                 <>
                   <dt class="frame">初回行動後の有利F</dt>
-                  <dd>{p.frameAdvantage}</dd>
+                  <dd>{frameAdvLabel(p.frameAdvantage, { withNote: true })}</dd>
                 </>
               )}
               {p.wakeup && (

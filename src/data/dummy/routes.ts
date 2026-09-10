@@ -194,7 +194,7 @@ export const routes: Route[] = [
       strongVs: ['打撃暴れ', 'ドライブリバーサル（ガード可）'],
       weakVs: ['垂直ジャンプ', '無敵技'],
       caution: '先端気味に当てないと OD 無敵に反確。持続当てを徹底',
-      frameAdvantage: '+2（2中K持続当て）',
+      frameAdvantage: { frames: '+2', note: '2中K持続当て' },
       wakeup: {
         coverage: 'both',
         quickRise: '密着でOK',
@@ -225,7 +225,7 @@ export const routes: Route[] = [
       strongVs: ['パリィ仕込み', 'ガード継続', 'しゃがみっぱ'],
       weakVs: ['前・バックジャンプ', '打撃暴れ'],
       caution: 'ジャンプで透かされたら着地に確定。透かし確認を用意',
-      frameAdvantage: '±0（コマ投げ・択の起点）',
+      frameAdvantage: { frames: '±0', note: 'コマ投げ・択の起点' },
       wakeup: {
         coverage: 'both',
         quickRise: '確定間合い',
@@ -257,7 +257,7 @@ export const routes: Route[] = [
       strongVs: ['しゃがみガード', '離れた相手'],
       weakVs: ['垂直ジャンプ', '打撃暴れ', 'ジャストパリィ'],
       caution: 'ドライブインパクトで割り込まれる。ガード -8 で反確',
-      frameAdvantage: '中段ヒットで +1／ガード -8',
+      frameAdvantage: { frames: '+1', note: '中段ヒット時（ガード時 -8）' },
       wakeup: {
         coverage: 'both',
         quickRise: '中段が届く',
@@ -288,7 +288,7 @@ export const routes: Route[] = [
       strongVs: ['打撃暴れ', 'ドライブリバーサル（ガード可）'],
       weakVs: ['垂直ジャンプ', '無敵技'],
       caution: 'Dゲージを使わない代わりに歩き量の目測がシビア',
-      frameAdvantage: '+2（歩き量で微増減）',
+      frameAdvantage: { frames: '+2', note: '歩き量で微増減' },
       wakeup: {
         coverage: 'both',
         quickRise: 'そのまま重ねOK',
@@ -319,7 +319,7 @@ export const routes: Route[] = [
       strongVs: ['ガード継続', 'しゃがみっぱ'],
       weakVs: ['前・バックジャンプ', '打撃暴れ', '投げ抜け'],
       caution: '前ステ硬直に暴れを合わせられると被カウンター。読まれたら危険',
-      frameAdvantage: '+3（前ステの慣性で最速投げ）',
+      frameAdvantage: { frames: '+3', note: '前ステの慣性で最速投げ' },
       wakeup: {
         coverage: 'both',
         quickRise: '前ステで投げ間合い',
@@ -349,7 +349,7 @@ export const routes: Route[] = [
       strongVs: ['打撃暴れ', 'バックステップ', '遅らせグラップ'],
       weakVs: ['何もしない相手（手番を返す）'],
       caution: '相手が動かないと手番が返る。多用すると読まれる',
-      frameAdvantage: '+38 維持（動かないぶん手番キープ）',
+      frameAdvantage: { frames: '+38', note: '動かず手番キープ' },
       wakeup: {
         coverage: 'both',
         note: '動かないため起き上がり方に依存しない',
@@ -400,7 +400,7 @@ export const routes: Route[] = [
       strongVs: ['打撃暴れ'],
       weakVs: ['垂直ジャンプ', '無敵技'],
       caution: '同じループを繰り返すと 2中K に的を絞られる。時々崩しを混ぜる',
-      frameAdvantage: '+2（2中K持続当て）',
+      frameAdvantage: { frames: '+2', note: '2中K持続当て' },
       wakeup: {
         coverage: 'both',
         quickRise: '密着で持続当て',
@@ -433,7 +433,7 @@ export const routes: Route[] = [
       strongVs: ['最速暴れ（空振りが暴れを誘発）', 'ガード継続'],
       weakVs: ['遅らせ打撃', 'ジャンプ'],
       caution: '5弱P を当ててしまうと連携が崩れる。あくまで空振りでタイミングを作る技',
-      frameAdvantage: '+1（空振り→前ステでタイミングずらし）',
+      frameAdvantage: { frames: '+1', note: '空振り→前ステでずらし' },
       wakeup: {
         coverage: 'both',
         quickRise: '空振りで調整',
@@ -464,7 +464,7 @@ export const routes: Route[] = [
       strongVs: ['ガード継続', 'パリィ仕込み'],
       weakVs: ['前ジャンプ', '打撃暴れ'],
       caution: 'ジャンプで透かされる。ループを嫌った相手の暴れにも注意',
-      frameAdvantage: '±0（コマ投げ）',
+      frameAdvantage: { frames: '±0', note: 'コマ投げ' },
       wakeup: {
         coverage: 'both',
         quickRise: '確定',
@@ -497,7 +497,7 @@ export const routes: Route[] = [
       strongVs: ['打撃暴れ'],
       weakVs: ['ジャンプ'],
       caution: 'コマ投げダウンは受け身なし・間合いが常に一定なので目測は楽',
-      frameAdvantage: '+2（2中K持続当て）',
+      frameAdvantage: { frames: '+2', note: '2中K持続当て' },
       useWhen: 'コマ投げ後も距離が近いので同じ連結へ',
       risk: '低',
     },

@@ -62,7 +62,7 @@ Street Fighter 6 のコンボと**起き攻めセットプレイ（分岐択）*
 - 起点（状況ノード）ごとに、**分岐択を破線で扇状表示**（ComfyUI 風フロー）。
   ヒット後はコンボ継続を実線でたどり、次のダウンでまた扇状展開（＝完全再帰。ループ／既出／深さで打ち切り）
 - 各択について次を持てる・表示する（`RouteProperties`）:
-  - **`frameAdvantage`** … 起き攻めの初回行動を重ねた後の有利フレーム（このアプリで一番見たい値。基本は後ろ受け身想定）
+  - **`frameAdvantage`** … 起き攻めの初回行動を重ねた後の有利フレーム。`{ frames, note? }`（`frames` は符号付き数値、表示は `+2F`。`note` は当て方の条件）。このアプリで一番見たい値。基本は後ろ受け身想定
   - **`wakeup`（A-2）** … 受け身の種類ごとの対応を**構造化して**持つ。
     `coverage: 'both' | 'quick' | 'back'`（両対応／その場受け身のみ／後ろ受け身のみ）＋
     `quickRise?` / `backTech?`（それぞれの受け身に対するフレーム差・補足テキスト）。
@@ -182,7 +182,7 @@ interface Route {
 }
 
 interface RouteProperties {
-  frameAdvantage?: string;  // 起き攻め初回行動後の有利F（例 "+2（2中K持続当て）"）
+  frameAdvantage?: { frames: string; note?: string };  // 例 { frames: "+2", note: "2中K持続当て" } → 表示 "+2F"
   wakeup?: {                // （A-2）受け身の種類ごとの対応。旧 vsWakeup（文字列）を置き換え
     coverage: 'both' | 'quick' | 'back';  // 両対応 / その場受け身のみ / 後ろ受け身のみ
     quickRise?: string;    // その場受け身に対するフレーム差・補足（例 "+1、密着"）
