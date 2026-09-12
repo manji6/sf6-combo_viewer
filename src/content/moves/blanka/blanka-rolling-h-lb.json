@@ -1,0 +1,25 @@
+{
+  "character": "blanka",
+  "verifiedVersion": "Year3（公式フレームデータ参照。パッチ版数未確認）",
+  "key": "blanka-rolling-h-lb",
+  "name": "強ローリングアタック（ライトニングビースト中）",
+  "category": "special",
+  "inputClassic": "[4]6HP",
+  "inputModern": null,
+  "inputModernPrecise": "[4]6HP",
+  "startup": 22,
+  "active": "22-41",
+  "recovery": "26",
+  "onHit": "D",
+  "onBlock": "-21",
+  "cancel": null,
+  "damage": 1400,
+  "driveGainHit": 2000,
+  "driveLossBlock": -6000,
+  "driveLossPunishCounter": -5000,
+  "superGain": 0,
+  "attribute": [
+    "上"
+  ],
+  "notes": "SA2（ライトニングビースト）中は溜め無しで即時発動可能。公式フレームデータには本技自体にも「始動補正20%／即時補正10%」の記載があるが、実測（2026-09-13、840ダメージ=60%）は SA2（ライトニングビースト）発動自体が持つ「即時補正10%」だけで説明でき、本技側に別途 即時補正 を足すと二重適用になり合わなくなる。そのためこの技辞典には comboScaling を設定していない（要継続確認）。SA2タイマー100消費。ヒット・ガード時ローリングキャノンへ派生可。"
+}

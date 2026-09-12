@@ -9,7 +9,7 @@
     {
       "move": "強ローリングアタック",
       "command": "[4]6HP",
-      "moveKey": "blanka-rolling-h",
+      "moveKey": "blanka-rolling-h-lb",
       "note": "ライトニングビースト中は溜め無しで即発動可能"
     },
     {
@@ -38,9 +38,10 @@
     "superCost": 0,
     "saLevel": null
   },
-  "damage": 2500,
+  "damage": 1320,
+  "damageConfidence": "measured",
   "difficulty": 4,
-  "constraints": "SA2（ライトニングビースト）発動中のみ。運び・削りが強力。ガードされ続けるとパリィを合わせられやすいので、下記のパリー読み投げと使い分ける。",
+  "constraints": "SA2（ライトニングビースト）発動中のみ。運び・削りが強力。ガードされ続けるとパリィを合わせられやすいので、下記のパリー読み投げと使い分ける。実測（2026-09-13）: 強ローリング840・前ローリングキャノン200・後ろローリングキャノン160・前ローリングキャノン120。",
   "controlType": "classic",
   "tags": [
     "SA",
