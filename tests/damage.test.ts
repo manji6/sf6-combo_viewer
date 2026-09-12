@@ -57,4 +57,14 @@ describe('calculateComboDamage', () => {
     expect(result.hits[0].appliedRules.some((r) => r.includes('DR'))).toBe(false);
     expect(result.hits[1].appliedRules.some((r) => r.includes('DR'))).toBe(true);
   });
+
+  it('弱攻撃始動は段が1つ前進した状態（stage=2）から始まる（2026-09-13 オーナー実測で確認）', () => {
+    const combo = getCombo('manon-test-light-starter');
+    const result = calculateComboDamage(combo);
+    expect(result.status).toBe('calculated');
+    // 弱P(300,stage2=100%)=300 → 弱デガジェ(1000,stage3=80%)=800
+    expect(result.hits[0].stage).toBe(2);
+    expect(result.hits.map((h) => h.damage)).toEqual([300, 800]);
+    expect(result.totalDamage).toBe(1100);
+  });
 });

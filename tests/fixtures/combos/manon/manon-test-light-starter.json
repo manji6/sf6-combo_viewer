@@ -1,0 +1,11 @@
+{
+  "slug": "manon-test-light-starter",
+  "character": "manon",
+  "name": "（テスト用）弱P始動",
+  "situationLabel": "テスト用",
+  "routeChain": ["route_5lp_degage_light_test"],
+  "startFrom": "neutral_mid",
+  "endAt": "kd_after_degage_light_mid",
+  "difficulty": 1,
+  "tags": []
+}

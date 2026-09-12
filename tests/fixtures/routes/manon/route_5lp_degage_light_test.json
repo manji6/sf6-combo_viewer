@@ -1,0 +1,31 @@
+{
+  "id": "route_5lp_degage_light_test",
+  "character": "manon",
+  "from": "neutral_mid",
+  "to": "kd_after_degage_light_mid",
+  "kind": "combo_route",
+  "label": "（テスト用）弱P → 弱デガジェ",
+  "steps": [
+    {
+      "move": "弱P",
+      "command": "5LP",
+      "moveKey": "manon-5lp",
+      "cancel": true
+    },
+    {
+      "move": "弱デガジェ",
+      "command": "214LK",
+      "moveKey": "manon-degage-l",
+      "cancel": true
+    }
+  ],
+  "resources": {
+    "driveCost": 0,
+    "superCost": 0,
+    "saLevel": null
+  },
+  "damage": 1300,
+  "difficulty": 1,
+  "controlType": "both",
+  "tags": []
+}
