@@ -8,7 +8,7 @@ import {
   situations,
   stepModernCommand,
 } from '../../data';
-import type { Combo, Move, Route, Situation, Step } from '../../data/types';
+import type { CharacterId, Combo, DamageConfidence, Move, Route, Situation, Step } from '../../data/types';
 
 /** 状況ノードから出ていくパーツ */
 export function outgoingRoutes(situationId: string): Route[] {
@@ -23,6 +23,19 @@ export function incomingRoutes(situationId: string): Route[] {
 /** このパーツを routeChain に含むコンボ */
 export function combosUsingRoute(routeId: string): Combo[] {
   return combos.filter((c) => c.routeChain.includes(routeId));
+}
+
+/**
+ * セットプレイ（起き攻め等）の入口となる状況ノード（R04: 2026-09-12 レビュー）。
+ * kind やタグでは判定しない — 「outgoing に okizeme パーツが実在するか」だけを基準にする
+ * 唯一の問い合わせ。トップページ・キャラクターページはこれを共通で使う。
+ */
+export function getSetplayStarts(characterId?: CharacterId): Situation[] {
+  return situations.filter(
+    (s) =>
+      (!characterId || s.character === characterId) &&
+      outgoingRoutes(s.id).some((r) => r.kind === 'okizeme'),
+  );
 }
 
 /**
@@ -75,6 +88,12 @@ export interface FlatCombo {
   maxSaLevel: 1 | 2 | 3 | null;
   /** 本線をモダン操作で通しで実行できるか（= comboSupportsModern）。一覧バッジ／フィルタ用 */
   supportsModern: boolean;
+  /**
+   * totalDamage の確からしさ（R05: 2026-09-12 レビュー）。chain 中に 1 つでも
+   * damageConfidence:'estimated' の route があれば 'estimated'。combo.damageConfidence を
+   * 明示すればそれを優先する（実測 override で確定させた場合など）。
+   */
+  damageConfidence: DamageConfidence;
 }
 
 /** コンボを 1 本の手順へ平坦化し、合計値を算出する */
@@ -103,6 +122,9 @@ export function flattenCombo(comboOrSlug: Combo | string): FlatCombo {
     nodePath.push(r.to);
   }
 
+  const damageConfidence: DamageConfidence =
+    combo.damageConfidence ?? (chain.some((r) => r.damageConfidence === 'estimated') ? 'estimated' : 'measured');
+
   return {
     combo,
     steps,
@@ -112,6 +134,7 @@ export function flattenCombo(comboOrSlug: Combo | string): FlatCombo {
     totalSuper,
     maxSaLevel,
     supportsModern: comboSupportsModern(combo),
+    damageConfidence,
   };
 }
 
@@ -207,6 +230,15 @@ export function validateAll(data?: Partial<DataSet>): string[] {
     for (const st of r.steps) {
       if (st.moveKey && !moveKeys.has(st.moveKey)) {
         errors.push(`route ${r.id}: step の moveKey(${st.moveKey}) が技辞典に存在しない`);
+      }
+      // R07: moveKey の技が別キャラのものになっていないか（存在確認だけでは検出できない）
+      if (st.moveKey) {
+        const mv = moveByKeyLocal.get(st.moveKey);
+        if (mv && mv.character !== r.character) {
+          errors.push(
+            `route ${r.id}: step の moveKey(${st.moveKey}) は character(${mv.character}) の技だが route は character(${r.character})`,
+          );
+        }
       }
       // RV-02: 'both' 宣言なのに、この手のモダン入力が未確認（辞典 inputModern:null かつ手動指定なし）
       if (r.controlType === 'both' && !st.action && st.moveKey && !st.commandModern) {

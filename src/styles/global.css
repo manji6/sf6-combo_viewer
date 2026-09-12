@@ -126,6 +126,11 @@ h3 {
   color: var(--text-dim);
   white-space: nowrap;
 }
+/* 報酬（メダル獲得等）はフレーム有利と別概念なので視覚的にも区別する（R03） */
+.pixel-chip.chip-reward {
+  border-color: var(--accent);
+  color: var(--accent);
+}
 
 .btn {
   font-family: var(--font-pixel);

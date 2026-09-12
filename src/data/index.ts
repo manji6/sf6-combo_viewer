@@ -90,14 +90,20 @@ export function getMove(key: string): Move {
 }
 
 /**
- * step のモダン表記を解決する。
- * 優先度: 明示 commandModern > 技辞典 inputModern > undefined（Sequence 側で deriveModern にフォールバック）
+ * step のモダン表記を解決する（R01: 2026-09-12 レビュー）。
+ * 優先度: 明示 step.commandModern > 技辞典の簡易入力 inputModern > 技辞典の精密入力
+ * inputModernPrecise > undefined（Sequence 側で deriveModern の汎用推定にフォールバック）。
+ * 以前は inputModern が null の技で inputModernPrecise を無視し、Sequence 側の汎用変換
+ * （例: 214LK → 214SP）に戻ってしまい、登録済みの精密入力が画面に出ない不具合があった。
  */
 export function stepModernCommand(step: Step): string | undefined {
   if (step.commandModern) return step.commandModern;
   if (step.moveKey) {
     const m = moveByKey.get(step.moveKey);
-    if (m && m.inputModern) return m.inputModern;
+    if (m) {
+      if (m.inputModern) return m.inputModern;
+      if (m.inputModernPrecise) return m.inputModernPrecise;
+    }
   }
   return undefined;
 }

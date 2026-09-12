@@ -1,10 +1,16 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { characters, combos, situations } from '../data';
+import { getSetplayStarts } from '../lib/graph/derive';
+import { situationAdvantageText } from '../lib/ui';
 
 // データ整合性の検証は astro.config の validateData 統合で行う（ビルドを止める）
 
-const setplayStarts = situations.filter((s) => s.tags.includes('起き攻め開始'));
+// R04: タグではなく「outgoing に okizeme パーツが実在するか」で判定する共通問い合わせを使う。
+// トップは抜粋のみ表示し、全件数と抜粋件数を区別する（残りは各キャラクターページで見られる）。
+const allSetplayStarts = getSetplayStarts();
+const SETPLAY_PREVIEW_MAX = 8;
+const setplayPreview = allSetplayStarts.slice(0, SETPLAY_PREVIEW_MAX);
 ---
 
 <BaseLayout title="SF6 コンボビューア">
@@ -46,17 +52,28 @@ const setplayStarts = situations.filter((s) => s.tags.includes('起き攻め開�
   </section>
 
   <section class="setplay-preview">
-    <h2>起き攻め起点（全キャラ・{situations.length}ノード・{combos.length}コンボ）</h2>
+    <h2>
+      セットプレイ起点の抜粋（{setplayPreview.length}／全{allSetplayStarts.length}件。全キャラ・{situations.length}ノード・{combos.length}コンボ）
+    </h2>
     <ul class="sp-list">
       {
-        setplayStarts.map((s) => (
-          <li>
-            <a href={`/${s.character}/situations/${s.id}/`}>{s.label}</a>
-            {s.advantage && <span class="adv">{s.advantage}</span>}
-          </li>
-        ))
+        setplayPreview.map((s) => {
+          const advText = situationAdvantageText(s);
+          return (
+            <li>
+              <a href={`/${s.character}/situations/${s.id}/`}>{s.label}</a>
+              {advText && <span class="adv">{advText}</span>}
+              {s.reward && <span class="adv">報酬: {s.reward}</span>}
+            </li>
+          );
+        })
       }
     </ul>
+    {
+      allSetplayStarts.length > setplayPreview.length && (
+        <p class="sp-more">残りはキャラクターページの「セットプレイ」タブで確認できます。</p>
+      )
+    }
   </section>
 </BaseLayout>
 
@@ -143,5 +160,10 @@ const setplayStarts = situations.filter((s) => s.tags.includes('起き攻め開�
     font-family: var(--font-pixel);
     font-size: 0.8rem;
     color: var(--accent);
+  }
+  .sp-more {
+    margin: 0.6rem 0 0;
+    font-size: 0.82rem;
+    color: var(--text-faint);
   }
 </style>

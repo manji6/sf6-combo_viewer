@@ -2,7 +2,7 @@
 import { useEffect, useLayoutEffect, useRef, useState } from 'preact/hooks';
 import * as dagreNS from '@dagrejs/dagre';
 import type { FlowEdge, FlowGraph, FlowGroup, FlowNode } from '../../lib/graph/flow';
-import { WAKEUP_COVERAGE_SHORT } from '../../lib/ui';
+import { STEP_ACTION, WAKEUP_COVERAGE_SHORT } from '../../lib/ui';
 import Notation from './Notation';
 
 const dagre: typeof import('@dagrejs/dagre') =
@@ -50,16 +50,6 @@ const SIT_KIND_COLOR: Record<string, string> = {
   knockdown: '#ff7a59',
   blockstring: '#5bd1c9',
   okiStart: '#ff5a5a',
-};
-
-/** 操作チップ左の 1 文字（lib/ui.ts の STEP_ACTION と対応） */
-const STEP_ACTION_TAG: Record<string, string> = {
-  walk: '歩',
-  walk_back: '歩',
-  dash: '走',
-  dash_back: '走',
-  whiff: '空',
-  wait: '見',
 };
 
 /** 起き攻めの枠に出す特徴テキストの行数から高さを見積もる */
@@ -211,6 +201,7 @@ function edgePath(a: Placed, b: Placed): string {
 type LayoutState = ReturnType<typeof layout> | null;
 
 export default function FlowCanvas({ graph, graphModern, height = 520, characterId }: Props) {
+  const rootRef = useRef<HTMLDivElement>(null);
   const viewportRef = useRef<HTMLDivElement>(null);
   const measureRef = useRef<HTMLDivElement>(null);
   const [lay, setLay] = useState<LayoutState>(null);
@@ -278,6 +269,14 @@ export default function FlowCanvas({ graph, graphModern, height = 520, character
     return () => window.removeEventListener('keydown', onKey);
   }, []);
 
+  // R10: 図の操作方式（クラシック/モダン）切替を、ページ内の他の表示（テキストレシピ等）へ
+  // 伝える。data-ctl-sync を持つ祖先が [data-ctl-root] と同じ仕組みで data-control を追従させる。
+  useEffect(() => {
+    rootRef.current?.dispatchEvent(
+      new CustomEvent('sf6-control', { bubbles: true, detail: { mode: modern ? 'modern' : 'classic' } }),
+    );
+  }, [modern]);
+
   useEffect(() => {
     const vp = viewportRef.current;
     if (!vp) return;
@@ -316,6 +315,7 @@ export default function FlowCanvas({ graph, graphModern, height = 520, character
 
   return (
     <div
+      ref={rootRef}
       class={`fc ${full ? 'fc-full' : ''}`}
       data-control={modern ? 'modern' : 'classic'}
       style={full ? undefined : { height: `${height}px` }}
@@ -543,7 +543,7 @@ export default function FlowCanvas({ graph, graphModern, height = 520, character
         .fc-node.n-action { border-style:dashed; }
         .fc-action { display:inline-flex; align-items:center; gap:.4em; font-size:.82rem; color:var(--text-dim); font-family:var(--font-body); }
         .fc-action-tag { display:inline-flex; align-items:center; justify-content:center; width:1.6em; height:1.6em; border-radius:3px; background:var(--border-strong); color:var(--bg); font-family:var(--font-pixel); font-size:.8em; font-weight:700; }
-        .fc-action[data-a='whiff'] .fc-action-tag { background:var(--text-faint); }
+        .fc-action[data-a='whiff'] .fc-action-tag, .fc-action[data-a='feint'] .fc-action-tag { background:var(--text-faint); }
         .fc-node-move { font-size:.66rem; color:var(--text-dim); background:var(--bg-sunken); padding:.12rem .45rem; border-top:1px solid var(--border); text-align:center; white-space:nowrap; }
         .fc-node-note { font-size:.62rem; color:var(--accent); background:var(--bg-sunken); padding:0 .45rem .16rem; text-align:center; white-space:nowrap; }
         .fc-node.n-cancel { border-left-width:5px; border-left-color:var(--accent); }
@@ -553,6 +553,7 @@ export default function FlowCanvas({ graph, graphModern, height = 520, character
         .fc-oc-strip { font-size:.6rem; font-family:var(--font-pixel); text-align:center; padding:.08em 0; border-bottom:1px solid var(--border); background:var(--accent); color:var(--accent-ink); white-space:nowrap; }
         .fc-oc-strip.s-dim { background:var(--border-strong); color:var(--text); }
         .fc-oc-adv { font-size:.62rem; font-family:var(--font-pixel); color:var(--text-dim); background:var(--bg-sunken); border-top:1px solid var(--border); padding:.1em .3em; text-align:center; white-space:nowrap; }
+        .fc-oc-reward { font-size:.62rem; font-family:var(--font-pixel); color:var(--accent-ink); background:var(--accent); border-top:1px solid var(--border); padding:.1em .3em; text-align:center; white-space:nowrap; }
         .fc-hint { margin:0; padding:.45rem .7rem; font-size:.7rem; color:var(--text-faint); border-top:1px solid var(--border); background:var(--bg-raised); }
       `}</style>
     </div>
@@ -566,7 +567,7 @@ function NodeInner({ node: n, characterId }: { node: FlowNode; characterId: stri
         <div class="fc-node-cmd">
           {n.action ? (
             <span class="fc-action" data-a={n.action}>
-              <span class="fc-action-tag">{STEP_ACTION_TAG[n.action]}</span>
+              <span class="fc-action-tag">{STEP_ACTION[n.action].tag}</span>
               {n.actionLabel}
             </span>
           ) : (
@@ -593,7 +594,8 @@ function NodeInner({ node: n, characterId }: { node: FlowNode; characterId: stri
     >
       {strip && <div class={`fc-oc-strip ${strip.cls}`}>{strip.text}</div>}
       <a href={`/${characterId}/situations/${n.situationId}/`}>{n.label}</a>
-      {n.advantage && <div class="fc-oc-adv">相手復帰まで {n.advantage}</div>}
+      {n.reward && <div class="fc-oc-reward">報酬: {n.reward}</div>}
+      {n.advantage && <div class="fc-oc-adv">{n.advantage}</div>}
     </div>
   );
 }

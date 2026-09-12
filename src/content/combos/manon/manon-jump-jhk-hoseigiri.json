@@ -8,8 +8,7 @@
   ],
   "startFrom": "neutral_mid",
   "endAt": "kd_after_hoseigiri_mid",
-  "damageOverride": 5272,
-  "damageNote": "メダル保持数でダメージが変動",
+  "damageNote": "表示は補正切りセットアップ分（起き攻め前）。弱マネージュ・ドレの投げ択が通ると+2000（メダル保持数で変動）",
   "difficulty": 4,
   "tags": [
     "補正切り",

@@ -4,6 +4,7 @@ import type {
   Risk,
   RouteKind,
   RouteProperties,
+  Situation,
   SituationKind,
   Step,
   StepAction,
@@ -82,6 +83,58 @@ export function stepActionLabel(step: Step): string {
   if (!step.action) return step.move;
   const a = STEP_ACTION[step.action];
   return step.action === 'whiff' || step.action === 'feint' ? `${step.move} ${a.label}` : a.label;
+}
+
+export interface ParsedAdvantage {
+  /** 数値フレーム値（"+8" "±0" 等）。無ければ数値化できない自由記述 */
+  frame?: string;
+  /** フレームの計測条件（元テキストの数値の前にある語。例:「前ステ後」）。無指定なら呼び出し側で既定文言を補ってよい */
+  basis?: string;
+  /** 元テキストの括弧内注記（例:「連続ガード」） */
+  note?: string;
+  /** 数値化できない自由記述（例:「パニカン誘発」）。そのまま表示する */
+  freeform?: string;
+}
+
+const FRAME_ADVANTAGE_RE = /^(.*?)\s*([+\-±]\d+)\s*(?:（([^）]*)）)?$/;
+
+/**
+ * situation.advantage の生テキストを解析する。
+ * 「+8」「±0」のような数値フレームと、「パニカン誘発」等の自由記述を区別する。
+ * 「メダル獲得 +1」のような報酬は数値の形を借りていても advantage に置かない運用にする
+ * （schema の reward フィールドを使う。R03: 2026-09-12 レビュー）。
+ */
+export function parseAdvantage(advantage: string | undefined): ParsedAdvantage | undefined {
+  if (!advantage) return undefined;
+  const m = advantage.match(FRAME_ADVANTAGE_RE);
+  if (!m) return { freeform: advantage };
+  const [, prefix, value, note] = m;
+  return { frame: value, basis: prefix.trim() || undefined, note: note?.trim() || undefined };
+}
+
+/** この situation.kind では、測定条件の明記がないフレーム値に「相手復帰まで」を既定で補ってよい */
+const RECOVERY_BASIS_KINDS = new Set<SituationKind>(['knockdown', 'okiStart']);
+
+/**
+ * situation.advantage を画面表示用の 1 行に整形する。測定条件（basis）が元テキストに
+ * 無いフレーム値は、kind が knockdown/okiStart の場合のみ「相手復帰まで」を補う。それ以外の
+ * kind（neutral の ±0 など）は数値のみ表示し、未確認の前提を追加しない。
+ * reward はここでは扱わない（situationRewardText を使う）。
+ */
+export function situationAdvantageText(
+  situation: Pick<Situation, 'kind' | 'advantage'>,
+): string | undefined {
+  const adv = parseAdvantage(situation.advantage);
+  if (!adv) return undefined;
+  if (adv.freeform) return adv.freeform;
+  const basis = adv.basis ?? (RECOVERY_BASIS_KINDS.has(situation.kind) ? '相手復帰まで' : undefined);
+  const head = basis ? `${basis} ${adv.frame}` : adv.frame!;
+  return adv.note ? `${head}（${adv.note}）` : head;
+}
+
+/** situation.reward の表示文字列（フレーム有利とは別枠で表示する） */
+export function situationRewardText(situation: Pick<Situation, 'reward'>): string | undefined {
+  return situation.reward;
 }
 
 export const WAKEUP_COVERAGE_LABEL: Record<'both' | 'quick' | 'back', string> = {

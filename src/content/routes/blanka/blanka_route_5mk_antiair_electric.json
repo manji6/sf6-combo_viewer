@@ -31,6 +31,7 @@
     "saLevel": null
   },
   "damage": 2200,
+  "damageConfidence": "estimated",
   "difficulty": 2,
   "constraints": "対空の引き中Kが当たった時。ダメージは各技の基礎値合計（コンボ補正未反映）で、実測は今後の確認待ち。",
   "controlType": "both",

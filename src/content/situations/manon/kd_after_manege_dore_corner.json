@@ -9,7 +9,7 @@
   "kind": "knockdown",
   "position": "corner",
   "opponentState": "knockdown_hard",
-  "advantage": "メダル獲得 +1",
+  "reward": "メダル獲得 +1",
   "wakeupNote": "受け身不可（コマ投げ）",
   "notes": "コマ投げ後・画面端。起き攻めルートは未整理。"
 }

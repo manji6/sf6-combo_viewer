@@ -17,6 +17,8 @@ import {
   POSITION_LABEL,
   RISK_VAR,
   ROUTE_KIND_LABEL,
+  situationAdvantageText,
+  situationRewardText,
   SITUATION_KIND_LABEL,
   wakeupSummary,
 } from '../../../lib/ui';
@@ -37,6 +39,8 @@ const hasFlow = okis.length > 0;
 const flow = hasFlow ? buildSituationFlow(situation.id, 'classic') : null;
 const flowModern = hasFlow ? buildSituationFlow(situation.id, 'modern') : undefined;
 const hasClassicOnly = outs.some((r) => r.controlType === 'classic');
+const advText = situationAdvantageText(situation);
+const rewardText = situationRewardText(situation);
 ---
 
 <BaseLayout
@@ -50,9 +54,8 @@ const hasClassicOnly = outs.some((r) => r.controlType === 'classic');
         <span class="pixel-chip">{SITUATION_KIND_LABEL[situation.kind]}</span>
         <span class="pixel-chip">{POSITION_LABEL[situation.position]}</span>
         <span class="pixel-chip">{OPPONENT_STATE_LABEL[situation.opponentState]}</span>
-        {situation.advantage && (
-          <span class="pixel-chip">相手復帰まで {situation.advantage}</span>
-        )}
+        {advText && <span class="pixel-chip">{advText}</span>}
+        {rewardText && <span class="pixel-chip chip-reward">報酬: {rewardText}</span>}
         {situation.tags.map((t) => <span class="tag">{t}</span>)}
       </div>
       {situation.wakeupNote && (

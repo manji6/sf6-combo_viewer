@@ -10,7 +10,7 @@ import type {
 import { getCombo, getRoute, getSituation, stepModernCommand } from '../../data';
 import { outgoingRoutes } from './derive';
 import { commandToText } from '../notation/parse';
-import { frameAdvLabel, stepActionLabel } from '../ui';
+import { frameAdvLabel, situationAdvantageText, situationRewardText, stepActionLabel } from '../ui';
 
 export type FlowNodeType = 'step' | 'outcome' | 'start';
 
@@ -29,8 +29,10 @@ export interface FlowNode {
   situationId?: string;
   label?: string;
   sitKind?: SituationKind;
-  /** ダウンなど：相手が動けるようになるまでの有利フレーム（situation.advantage） */
+  /** situation.advantage の表示用整形済みテキスト（測定条件込み。R03: 生の advantage は出さない） */
   advantage?: string;
+  /** situation.reward（メダル獲得など）の表示テキスト。advantage とは別枠で表示する */
+  reward?: string;
   /** 既出ノードへ戻る（ループ）ことを示す */
   loop?: boolean;
   /** これ以上の展開は省略（詳細ページへ） */
@@ -114,8 +116,9 @@ function outcomeNode(
   situation: Situation,
   opts: { loop?: boolean; more?: boolean; repeat?: boolean } = {},
 ): FlowNode {
-  const showAdv =
-    (situation.kind === 'knockdown' || situation.kind === 'okiStart') && !!situation.advantage;
+  const advText = situationAdvantageText(situation);
+  const rewardText = situationRewardText(situation);
+  const extraLines = (advText ? 1 : 0) + (rewardText ? 1 : 0);
   const { w, h } = outcomeSize(situation.label);
   return {
     id,
@@ -123,12 +126,13 @@ function outcomeNode(
     situationId: situation.id,
     label: situation.label,
     sitKind: situation.kind,
-    advantage: showAdv ? situation.advantage : undefined,
+    advantage: advText,
+    reward: rewardText,
     loop: opts.loop,
     more: opts.more,
     repeat: opts.repeat,
     w,
-    h: showAdv ? h + 14 : h,
+    h: h + extraLines * 14,
   };
 }
 

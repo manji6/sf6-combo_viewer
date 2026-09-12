@@ -4,7 +4,7 @@ import { flattenCombo } from '../lib/graph/derive';
 import { getSituation } from '../data';
 import { driveLabel, POSITION_LABEL, superLabel } from '../lib/ui';
 import Stars from './Stars.astro';
-import Sequence from './notation/Sequence.astro';
+import StepCmd from './notation/StepCmd.astro';
 
 interface Props {
   combo: Combo;
@@ -18,19 +18,25 @@ const end = getSituation(combo.endAt);
 <a class="combo-card pixel-box" href={`/${combo.character}/combos/${combo.slug}/`}>
   <div class="head">
     <h3>{combo.name}</h3>
-    <span class="dmg">
+    <span class="dmg" data-confidence={flat.damageConfidence}>
       {flat.totalDamage.toLocaleString()}<small>dmg</small>
       {combo.damageNote && <small class="var">±</small>}
+      {flat.damageConfidence === 'estimated' && <small class="est">目安</small>}
     </span>
   </div>
   {combo.damageNote && <p class="dmg-note">{combo.damageNote}</p>}
+  {
+    flat.damageConfidence === 'estimated' && (
+      <p class="dmg-note dmg-note-est">各技の基礎値合計（コンボ補正未反映）。実測は確認待ち</p>
+    )
+  }
 
   <div class="recipe scroll-x">
     {
       flat.steps.map((st, i) => (
         <>
           {i > 0 && <span class="join">{st.boundary ? '»' : '›'}</span>}
-          <Sequence command={st.command} commandModern={st.commandModern} />
+          <StepCmd step={st} />
         </>
       ))
     }
@@ -87,10 +93,23 @@ const end = getSituation(combo.endAt);
     color: var(--accent);
     font-size: 0.8em;
   }
+  .dmg[data-confidence='estimated'] {
+    color: var(--text-dim);
+  }
+  .dmg .est {
+    font-size: 0.6em;
+    color: var(--text-faint);
+    border: 1px solid var(--text-faint);
+    padding: 0 0.3em;
+    margin-left: 0.3em;
+  }
   .dmg-note {
     margin: 0.1rem 0 0;
     font-size: 0.72rem;
     color: var(--text-faint);
+  }
+  .dmg-note-est {
+    font-style: italic;
   }
   .recipe {
     display: flex;

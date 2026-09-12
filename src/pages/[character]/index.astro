@@ -2,9 +2,9 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import ComboExplorer from '../../components/ComboExplorer.astro';
 import { characterById } from '../../data/characters';
-import { characters, combos, getSituation, situations } from '../../data';
-import { outgoingRoutes } from '../../lib/graph/derive';
-import { POSITION_LABEL } from '../../lib/ui';
+import { characters, combos, getSituation } from '../../data';
+import { getSetplayStarts, outgoingRoutes } from '../../lib/graph/derive';
+import { POSITION_LABEL, situationAdvantageText } from '../../lib/ui';
 
 export function getStaticPaths() {
   return characters.map((c) => ({ params: { character: c.id } }));
@@ -19,15 +19,9 @@ const charCombos = combos.filter(
   (c) => c.character === character.id && !SITUATIONAL.has(getSituation(c.startFrom).kind),
 );
 
-// セットプレイ＝特定状況から始まる読み合い。
-// ダウン／起き攻め起点／ガード連携で、okizeme パーツが出ているノードを起点とみなす。
-const SETPLAY_KINDS = new Set(['knockdown', 'okiStart', 'blockstring']);
-const setplayStarts = situations.filter(
-  (s) =>
-    s.character === character.id &&
-    SETPLAY_KINDS.has(s.kind) &&
-    outgoingRoutes(s.id).some((r) => r.kind === 'okizeme'),
-);
+// セットプレイ＝特定状況から始まる読み合い。kind やタグでは判定せず、
+// okizeme パーツが実際に出ているノードを起点とみなす（R04: 2026-09-12 レビュー）。
+const setplayStarts = getSetplayStarts(character.id);
 ---
 
 <BaseLayout
@@ -102,6 +96,7 @@ const setplayStarts = situations.filter(
         {
           setplayStarts.map((s) => {
             const outs = outgoingRoutes(s.id);
+            const advText = situationAdvantageText(s);
             return (
               <li class="sp-card pixel-box">
                 <a class="sp-title" href={`/${character.id}/situations/${s.id}/`}>
@@ -109,7 +104,8 @@ const setplayStarts = situations.filter(
                 </a>
                 <div class="sp-meta">
                   <span class="pixel-chip">{POSITION_LABEL[s.position]}</span>
-                  {s.advantage && <span class="pixel-chip">{s.advantage}</span>}
+                  {advText && <span class="pixel-chip">{advText}</span>}
+                  {s.reward && <span class="pixel-chip chip-reward">報酬: {s.reward}</span>}
                   <span class="pixel-chip">{outs.length} 択</span>
                 </div>
                 <ul class="sp-choices">

@@ -12,7 +12,7 @@ import {
   outgoingRoutes,
 } from '../../../lib/graph/derive';
 import { buildComboFlow } from '../../../lib/graph/flow';
-import { driveLabel, ROUTE_KIND_LABEL, superLabel } from '../../../lib/ui';
+import { driveLabel, ROUTE_KIND_LABEL, situationAdvantageText, superLabel } from '../../../lib/ui';
 
 export function getStaticPaths() {
   return combos.map((c) => ({ params: { character: c.character, slug: c.slug } }));
@@ -33,6 +33,7 @@ const partUsage = chainRoutes.map((r) => ({
   others: combosUsingRoute(r.id).filter((c) => c.slug !== combo.slug),
 }));
 const endOki = outgoingRoutes(end.id).filter((r) => r.kind === 'okizeme');
+const endAdvText = situationAdvantageText(end);
 ---
 
 <BaseLayout
@@ -47,9 +48,14 @@ const endOki = outgoingRoutes(end.id).filter((r) => r.kind === 'okizeme');
       {combo.description && <p class="desc">{combo.description}</p>}
       <div class="stat-row">
         <div class="stat">
-          <span class="k">ダメージ</span>
+          <span class="k">ダメージ{flat.damageConfidence === 'estimated' && '（目安）'}</span>
           <span class="v">{flat.totalDamage.toLocaleString()}</span>
           {combo.damageNote && <span class="sub">{combo.damageNote}</span>}
+          {
+            flat.damageConfidence === 'estimated' && (
+              <span class="sub">各技の基礎値合計（コンボ補正未反映）。実測は確認待ち</span>
+            )
+          }
         </div>
         <div class="stat"><span class="k">難易度</span><span class="v"><Stars value={combo.difficulty} showNumber /></span></div>
         <div class="stat"><span class="k">Dゲージ</span><span class="v">{driveLabel(flat.totalDrive)}</span></div>
@@ -59,39 +65,52 @@ const endOki = outgoingRoutes(end.id).filter((r) => r.kind === 'okizeme');
       <div class="tags">{combo.tags.map((t) => <span class="tag">{t}</span>)}</div>
     </header>
 
-    <section>
-      <h2>コンボフロー</h2>
-      <p class="lead">
-        左から右へコマンドが流れます。実線＝コンボ本線、水色＝分岐（別の締めなど）、
-        破線＝締めからの起き攻め。
-        {supportsModern
-          ? 'このコンボはモダンでも可能。ツールバーで表記を切替（モダン限定/クラシック限定のパーツは表示が変わります）。'
-          : 'このコンボはクラシックのみ。'}
-      </p>
-      <div class="full-bleed">
-        <div class="full-bleed-inner">
-          <FlowCanvas client:only="preact" graph={flow} graphModern={flowModern} characterId={character.id} height={860}>
-            <div slot="fallback" class="island-loading" style="height:860px">
-              コンボフローを準備中…
-            </div>
-          </FlowCanvas>
+    <div data-control="classic" data-ctl-sync-root>
+      <section>
+        <h2>コンボフロー</h2>
+        <p class="lead">
+          左から右へコマンドが流れます。実線＝コンボ本線、水色＝分岐（別の締めなど）、
+          破線＝締めからの起き攻め。
+          {supportsModern
+            ? 'このコンボはモダンでも可能。ツールバーで表記を切替（モダン限定/クラシック限定のパーツは表示が変わります。下のテキストレシピにも反映されます）。'
+            : 'このコンボはクラシックのみ。'}
+        </p>
+        <div class="full-bleed">
+          <div class="full-bleed-inner">
+            <FlowCanvas client:only="preact" graph={flow} graphModern={flowModern} characterId={character.id} height={860}>
+              <div slot="fallback" class="island-loading" style="height:860px">
+                コンボフローを準備中…
+              </div>
+            </FlowCanvas>
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <details class="text-recipe">
-      <summary>テキストで見る</summary>
-      <div class="tr-body scroll-x">
-        {
-          flat.steps.map((st, i) => (
-            <>
-              {i > 0 && <span class="j">{st.boundary ? '»' : '›'}</span>}
-              <StepCmd step={st} />
-            </>
-          ))
-        }
-      </div>
-    </details>
+      <details class="text-recipe">
+        <summary>テキストで見る</summary>
+        <div class="tr-body scroll-x">
+          {
+            flat.steps.map((st, i) => (
+              <>
+                {i > 0 && <span class="j">{st.boundary ? '»' : '›'}</span>}
+                <StepCmd step={st} />
+              </>
+            ))
+          }
+        </div>
+      </details>
+    </div>
+
+    <script>
+      // R10: フローの図（FlowCanvas）が発する 'sf6-control' を受け、
+      // 同じ祖先配下のテキストレシピ（StepCmd/Sequence）にも操作方式を反映する。
+      document.querySelectorAll<HTMLElement>('[data-ctl-sync-root]').forEach((root) => {
+        root.addEventListener('sf6-control', (ev) => {
+          const mode = (ev as CustomEvent<{ mode: 'classic' | 'modern' }>).detail?.mode;
+          if (mode) root.dataset.control = mode;
+        });
+      });
+    </script>
 
     <section>
       <h2>パーツと連結</h2>
@@ -130,7 +149,8 @@ const endOki = outgoingRoutes(end.id).filter((r) => r.kind === 'okizeme');
         <section>
           <h2>締め後の起き攻め</h2>
           <p class="lead">
-            <a href={`/${character.id}/situations/${end.id}/`}>{end.label}</a>（{end.advantage}）から {endOki.length} 択。
+            <a href={`/${character.id}/situations/${end.id}/`}>{end.label}</a>
+            {endAdvText && <>（{endAdvText}）</>} から {endOki.length} 択。
           </p>
           <ul class="oki-list">
             {endOki.map((r) => (
