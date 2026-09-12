@@ -9,7 +9,8 @@
   "startFrom": "neutral_mid",
   "endAt": "kd_after_ranversement_mid",
   "damageNote": "メダル保持数でダメージが変動",
-  "damageOverride": 3155,
+  "damageOverride": 2995,
+  "damageConfidence": "measured",
   "driveCostOverride": 1,
   "difficulty": 3,
   "tags": [
@@ -18,5 +19,5 @@
     "メダル",
     "OD"
   ],
-  "description": "無敵技をガードした時のコンボ。メダル1枚で3,155。名目2ゲージだがコンボ中に回復するため実質1消費。メダル3枚以下なら積極的にこちら、4枚からはコマ投げの方が火力が高い。"
+  "description": "無敵技をガードした時のコンボ。メダル1枚で2,995（実測内訳: 4強P 800・ODグランフェッテ 720・4強P 560・強ロン・ポワン 240〈浮き状態ヒットで2ヒット中1回のみ〉・弱ランヴェルセ 25+650）。名目2ゲージだがコンボ中に回復するため実質1消費。メダル3枚以下なら積極的にこちら、4枚からはコマ投げの方が火力が高い。"
 }
