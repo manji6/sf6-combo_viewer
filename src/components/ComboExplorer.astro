@@ -29,9 +29,9 @@ function driveBucket(n: number) {
 ---
 
 <div class="explorer" data-explorer>
-  <form class="filters pixel-box" data-filters>
-    <div class="fgroup">
-      <span class="flabel">立ち位置</span>
+  <form class="filters pixel-box" data-filters aria-label="コンボの絞り込み">
+    <fieldset class="fgroup">
+      <legend class="flabel">立ち位置</legend>
       {
         positions.map((p) => (
           <label class="chip">
@@ -40,10 +40,10 @@ function driveBucket(n: number) {
           </label>
         ))
       }
-    </div>
+    </fieldset>
 
-    <div class="fgroup">
-      <span class="flabel">始動技</span>
+    <fieldset class="fgroup">
+      <legend class="flabel">始動技</legend>
       {
         starterMoves.map((m) => (
           <label class="chip">
@@ -52,28 +52,28 @@ function driveBucket(n: number) {
           </label>
         ))
       }
-    </div>
+    </fieldset>
 
-    <div class="fgroup">
-      <span class="flabel">Dゲージ</span>
+    <fieldset class="fgroup">
+      <legend class="flabel">Dゲージ</legend>
       <label class="chip"><input type="checkbox" name="drive" value="0" />ノーゲージ</label>
       <label class="chip"><input type="checkbox" name="drive" value="1-2" />1〜2</label>
       <label class="chip"><input type="checkbox" name="drive" value="3+" />3以上</label>
-    </div>
+    </fieldset>
 
-    <div class="fgroup">
-      <span class="flabel">SA</span>
+    <fieldset class="fgroup">
+      <legend class="flabel">SA</legend>
       <label class="chip"><input type="checkbox" name="sa" value="yes" />使用</label>
       <label class="chip"><input type="checkbox" name="sa" value="no" />不使用</label>
-    </div>
+    </fieldset>
 
-    <div class="fgroup">
-      <span class="flabel">操作</span>
+    <fieldset class="fgroup">
+      <legend class="flabel">操作</legend>
       <label class="chip"><input type="checkbox" name="modern" value="yes" />モダン可</label>
-    </div>
+    </fieldset>
 
-    <div class="fgroup tags">
-      <span class="flabel">タグ</span>
+    <fieldset class="fgroup tags">
+      <legend class="flabel">タグ</legend>
       {
         allTags.map((t) => (
           <label class="chip">
@@ -82,11 +82,11 @@ function driveBucket(n: number) {
           </label>
         ))
       }
-    </div>
+    </fieldset>
 
     <div class="fgroup sortrow">
-      <span class="flabel">並べ替え</span>
-      <select name="sort" data-sort>
+      <label class="flabel" for="combo-sort">並べ替え</label>
+      <select id="combo-sort" name="sort" data-sort>
         <option value="damage">ダメージが高い順</option>
         <option value="diff-asc">難易度が低い順</option>
         <option value="diff-desc">難易度が高い順</option>
@@ -138,6 +138,9 @@ function driveBucket(n: number) {
     align-content: flex-start;
     gap: 0.35rem;
     min-height: 1.9em;
+    /* R09: <fieldset> の既定枠・余白を解除して見た目を維持する */
+    border: 0;
+    margin: 0;
   }
   /* R09: 12.5px 相当で --text-faint（3.56:1）は AA(4.5:1) 未達だったため --text-dim に変更 */
   .flabel {
@@ -149,6 +152,7 @@ function driveBucket(n: number) {
     font-size: 0.78rem;
     color: var(--text-dim);
     line-height: 1.3;
+    padding: 0; /* <legend> の既定余白を解除 */
   }
   @media (max-width: 480px) {
     .fgroup {
