@@ -1,0 +1,24 @@
+{
+  "character": "blanka",
+  "verifiedVersion": "Year3（公式フレームデータ参照。パッチ版数未確認）",
+  "key": "blanka-wildlift",
+  "name": "ワイルドリフト",
+  "category": "special",
+  "inputClassic": "2PP~P",
+  "inputModern": null,
+  "startup": 8,
+  "active": "8-14",
+  "recovery": "31",
+  "onHit": "D",
+  "onBlock": "-21",
+  "cancel": null,
+  "damage": 600,
+  "driveGainHit": 1000,
+  "driveLossBlock": -3000,
+  "driveLossPunishCounter": -4000,
+  "superGain": 500,
+  "attribute": [
+    "上"
+  ],
+  "notes": "フィアーダウン中に P で派生。相手を打ち上げる。近めの大K対空から拾うのに使う。モダンの入力は要検証。"
+}

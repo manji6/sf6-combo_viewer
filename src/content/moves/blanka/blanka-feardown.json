@@ -1,0 +1,22 @@
+{
+  "character": "blanka",
+  "verifiedVersion": "Year3（公式フレームデータ参照。パッチ版数未確認）",
+  "key": "blanka-feardown",
+  "name": "フィアーダウン",
+  "category": "special",
+  "inputClassic": "2PP",
+  "inputModern": null,
+  "startup": null,
+  "active": null,
+  "recovery": "全体98（下入力継続で+48F延長可、上入力で中断可）",
+  "onHit": null,
+  "onBlock": null,
+  "cancel": null,
+  "damage": 0,
+  "driveGainHit": 0,
+  "driveLossBlock": 0,
+  "driveLossPunishCounter": 0,
+  "superGain": 0,
+  "attribute": [],
+  "notes": "専用の伏せ移動技。ダメージなし。伏せ中に P でワイルドリフト、K でレイドジャンプへ派生。モダンの入力は要検証。"
+}

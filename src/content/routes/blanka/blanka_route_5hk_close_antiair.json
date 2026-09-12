@@ -1,0 +1,53 @@
+{
+  "character": "blanka",
+  "id": "blanka_route_5hk_close_antiair",
+  "from": "blanka_neutral_mid",
+  "to": "blanka_kd_after_rolling_mid",
+  "kind": "combo_route",
+  "label": "大K（近め対空）→ フィアーダウン → ワイルドリフト → 中バチカ → 中ロリ",
+  "steps": [
+    {
+      "move": "大K",
+      "command": "5HK",
+      "moveKey": "blanka-5hk",
+      "note": "近めで対空"
+    },
+    {
+      "move": "フィアーダウン",
+      "command": "2PP",
+      "moveKey": "blanka-feardown"
+    },
+    {
+      "move": "ワイルドリフト",
+      "command": "P",
+      "moveKey": "blanka-wildlift",
+      "cancel": true,
+      "note": "フィアーダウン中に P"
+    },
+    {
+      "move": "中バーチカルローリング",
+      "command": "[2]8MK",
+      "moveKey": "blanka-vertical-m",
+      "cancel": true,
+      "note": "空中無敵で拾う"
+    },
+    {
+      "move": "中ローリングアタック",
+      "command": "[4]6MP",
+      "moveKey": "blanka-rolling-m",
+      "note": "割り込みと相打ちになってもOK"
+    }
+  ],
+  "resources": {
+    "driveCost": 0,
+    "superCost": 0,
+    "saLevel": null
+  },
+  "damage": 3900,
+  "difficulty": 3,
+  "constraints": "大Kを近めで対空できた時のみ（遠めはフィアーダウンへ拾えない）。ダメージは各技の基礎値合計（コンボ補正未反映）で、実測は今後の確認待ち。",
+  "controlType": "classic",
+  "tags": [
+    "対空"
+  ]
+}

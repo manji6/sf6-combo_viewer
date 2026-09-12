@@ -1,4 +1,5 @@
-// drafts/<collection>__<id>.json を src/content/<collection>/manon/<id>.json へ移動する。
+// drafts/<collection>__<id>.json を src/content/<collection>/<character>/<id>.json へ移動する。
+// <character> はレコードの character フィールド（characters コレクションのみ id フィールド）から決める。
 // `npm run promote-draft`
 import { readdirSync, readFileSync, renameSync, mkdirSync } from 'node:fs';
 import { dirname, join } from 'node:path';
@@ -49,10 +50,16 @@ for (const f of files) {
     console.error(`検証エラー: ${f}\n${JSON.stringify(parsed.error, null, 2)}`);
     process.exit(1);
   }
-  const destDir = join(root, 'src', 'content', collection, 'manon');
+  const character = (raw as { character?: string; id?: string }).character
+    ?? (collection === 'characters' ? (raw as { id?: string }).id : undefined);
+  if (!character) {
+    console.error(`スキップ: ${f}（character フィールドが見つからない）`);
+    continue;
+  }
+  const destDir = join(root, 'src', 'content', collection, character);
   mkdirSync(destDir, { recursive: true });
   renameSync(join(draftsDir, f), join(destDir, `${id}.json`));
-  console.log(`${collection}/${id}.json ← ${f}`);
+  console.log(`${collection}/${character}/${id}.json ← ${f}`);
   moved++;
 }
 console.log(`${moved} 件を promote。npm run check で検証してください。`);

@@ -1,0 +1,10 @@
+{
+  "tags": [],
+  "id": "blanka_neutral_mid",
+  "character": "blanka",
+  "label": "中央・立ち回り",
+  "kind": "neutral",
+  "position": "midscreen",
+  "opponentState": "neutral",
+  "notes": "通常の間合い管理・対空判断からのスタート地点。"
+}

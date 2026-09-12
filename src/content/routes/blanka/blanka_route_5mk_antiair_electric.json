@@ -1,0 +1,40 @@
+{
+  "character": "blanka",
+  "id": "blanka_route_5mk_antiair_electric",
+  "from": "blanka_neutral_mid",
+  "to": "blanka_kd_after_electric_mid",
+  "kind": "combo_route",
+  "label": "引き中K（対空）→ 中K → OD電気",
+  "steps": [
+    {
+      "move": "引き中K",
+      "command": "4MK",
+      "moveKey": "blanka-5mk",
+      "note": "後ろ入力で対空。同じ技を通常入力すると中K"
+    },
+    {
+      "move": "中K",
+      "command": "5MK",
+      "moveKey": "blanka-5mk",
+      "cancel": true
+    },
+    {
+      "move": "OD エレクトリックサンダー",
+      "command": "214PP",
+      "moveKey": "blanka-electric-od",
+      "cancel": true
+    }
+  ],
+  "resources": {
+    "driveCost": 2,
+    "superCost": 0,
+    "saLevel": null
+  },
+  "damage": 2200,
+  "difficulty": 2,
+  "constraints": "対空の引き中Kが当たった時。ダメージは各技の基礎値合計（コンボ補正未反映）で、実測は今後の確認待ち。",
+  "controlType": "both",
+  "tags": [
+    "対空"
+  ]
+}

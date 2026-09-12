@@ -1,0 +1,24 @@
+{
+  "character": "blanka",
+  "verifiedVersion": "Year3（公式フレームデータ参照。パッチ版数未確認）",
+  "key": "blanka-5hk",
+  "name": "立ち強K（ワイルドダンス）",
+  "category": "normal",
+  "inputClassic": "5HK",
+  "inputModern": "5H",
+  "startup": 7,
+  "active": "7-15",
+  "recovery": "18",
+  "onHit": "6",
+  "onBlock": "-4",
+  "cancel": null,
+  "damage": 800,
+  "driveGainHit": 3000,
+  "driveLossBlock": -4000,
+  "driveLossPunishCounter": -10000,
+  "superGain": 1000,
+  "attribute": [
+    "上"
+  ],
+  "notes": "空中カウンター・空中パニッシュカウンター時吹き飛びダウン。強制立ち効果。近めの対空に使うとフィアーダウン→ワイルドリフトで拾える。"
+}

@@ -1,0 +1,24 @@
+{
+  "character": "blanka",
+  "verifiedVersion": "Year3（公式フレームデータ参照。パッチ版数未確認）",
+  "key": "blanka-5mk",
+  "name": "立ち中K（ブラッディーテイル）",
+  "category": "normal",
+  "inputClassic": "5MK",
+  "inputModern": "5M",
+  "startup": 8,
+  "active": "8-10",
+  "recovery": "17",
+  "onHit": "5",
+  "onBlock": "-2",
+  "cancel": "C",
+  "damage": 600,
+  "driveGainHit": 2000,
+  "driveLossBlock": -3000,
+  "driveLossPunishCounter": -6000,
+  "superGain": 700,
+  "attribute": [
+    "上"
+  ],
+  "notes": "空振り時硬直3F増加。後ろ入力（4MK＝引き中K）で対空にも使う。同じ技。"
+}

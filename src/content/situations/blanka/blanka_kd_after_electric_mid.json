@@ -1,0 +1,12 @@
+{
+  "tags": [
+    "対空"
+  ],
+  "id": "blanka_kd_after_electric_mid",
+  "character": "blanka",
+  "label": "OD電気締め後・中央ダウン",
+  "kind": "knockdown",
+  "position": "midscreen",
+  "opponentState": "knockdown_hard",
+  "notes": "引き中K対空からの拾い後のダウン。起き攻めルートは未整理。"
+}

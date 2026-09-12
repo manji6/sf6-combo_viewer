@@ -1,0 +1,25 @@
+{
+  "character": "blanka",
+  "verifiedVersion": "Year3（公式フレームデータ参照。パッチ版数未確認）",
+  "key": "blanka-rolling-m",
+  "name": "中ローリングアタック",
+  "category": "special",
+  "inputClassic": "[4]6MP",
+  "inputModern": null,
+  "inputModernPrecise": "[4]6MP",
+  "startup": 12,
+  "active": "12-30",
+  "recovery": "11",
+  "onHit": "D",
+  "onBlock": "-23",
+  "cancel": "SA3",
+  "damage": 1200,
+  "driveGainHit": 2000,
+  "driveLossBlock": -7500,
+  "driveLossPunishCounter": -5000,
+  "superGain": 1000,
+  "attribute": [
+    "上"
+  ],
+  "notes": "12-32F 空中判定。パニッシュカウンター時吹き飛び時間延長。持続の11F目まで SA3 キャンセル可。相手の割り込みと相打ちになっても本体は問題ない。"
+}
