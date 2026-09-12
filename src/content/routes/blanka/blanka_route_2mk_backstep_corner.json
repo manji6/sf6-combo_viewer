@@ -1,0 +1,50 @@
+{
+  "character": "blanka",
+  "id": "blanka_route_2mk_backstep_corner",
+  "from": "blanka_doll_set_corner",
+  "to": "blanka_kd_after_rolling_corner",
+  "kind": "okizeme",
+  "label": "しゃがみ中K（下段・送らせ）→ 中バクロリ → 中バチカ → 中ロリ",
+  "steps": [
+    {
+      "move": "しゃがみ中K",
+      "command": "2MK",
+      "moveKey": "blanka-2mk",
+      "note": "下段の崩し。最速だと繋がらないので少し送らせて当てる"
+    },
+    {
+      "move": "中バックステップローリング",
+      "command": "63214MK",
+      "moveKey": "blanka-backstep-m",
+      "cancel": true
+    },
+    {
+      "move": "中バーチカルローリング",
+      "command": "[2]8MK",
+      "moveKey": "blanka-vertical-m",
+      "cancel": true
+    },
+    {
+      "move": "中ローリングアタック",
+      "command": "[4]6MP",
+      "moveKey": "blanka-rolling-m"
+    }
+  ],
+  "resources": {
+    "driveCost": 0,
+    "superCost": 0,
+    "saLevel": null
+  },
+  "damage": 4000,
+  "difficulty": 4,
+  "constraints": "人形設置後の下段崩し。最大4000点程度。中段（技名は要確認、未登録）からも同じ強度チェーンで拾えるとのこと。",
+  "controlType": "classic",
+  "tags": [
+    "人形",
+    "崩し"
+  ],
+  "properties": {
+    "risk": "中",
+    "useWhen": "相手が引き中Kの暴れ潰し・投げばかり警戒してきたら下段で崩す"
+  }
+}

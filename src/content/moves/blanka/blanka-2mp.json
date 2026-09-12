@@ -1,0 +1,24 @@
+{
+  "character": "blanka",
+  "verifiedVersion": "Year3（公式フレームデータ参照。パッチ版数未確認）",
+  "key": "blanka-2mp",
+  "name": "しゃがみ中P（ベアクロー）",
+  "category": "normal",
+  "inputClassic": "2MP",
+  "inputModern": null,
+  "startup": 9,
+  "active": "9-13",
+  "recovery": "16",
+  "onHit": "-1",
+  "onBlock": "-5",
+  "cancel": "C",
+  "damage": 600,
+  "driveGainHit": 1500,
+  "driveLossBlock": -3000,
+  "driveLossPunishCounter": -4000,
+  "superGain": 500,
+  "attribute": [
+    "上"
+  ],
+  "notes": "立ち回りの主力差し込み。モダンには無い（モダンの↓中はしゃがみ中K）。"
+}

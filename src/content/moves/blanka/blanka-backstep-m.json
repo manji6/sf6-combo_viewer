@@ -1,0 +1,25 @@
+{
+  "character": "blanka",
+  "verifiedVersion": "Year3（公式フレームデータ参照。パッチ版数未確認）",
+  "key": "blanka-backstep-m",
+  "name": "中バックステップローリング",
+  "category": "special",
+  "inputClassic": "63214MK",
+  "inputModern": null,
+  "inputModernPrecise": "63214MK",
+  "startup": 41,
+  "active": "41-着地まで",
+  "recovery": "着地後5",
+  "onHit": "8",
+  "onBlock": "2",
+  "cancel": null,
+  "damage": 1000,
+  "driveGainHit": 2000,
+  "driveLossBlock": -8000,
+  "driveLossPunishCounter": -5000,
+  "superGain": 1000,
+  "attribute": [
+    "上"
+  ],
+  "notes": "中段の崩し後に繋げる中段〜ジャグリング用。"
+}

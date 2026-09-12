@@ -1,0 +1,42 @@
+{
+  "character": "blanka",
+  "id": "blanka_route_2mp_cr_5hk_mid",
+  "from": "blanka_neutral_mid",
+  "to": "blanka_juggle_can_wildlift",
+  "kind": "starter",
+  "label": "しゃがみ中P → キャンセルドライブラッシュ → 大K",
+  "steps": [
+    {
+      "move": "しゃがみ中P",
+      "command": "2MP",
+      "moveKey": "blanka-2mp",
+      "cancel": true,
+      "note": "ヒット確認できるならして、自信が無ければ入れ込みでキャンセルラッシュでもOK"
+    },
+    {
+      "move": "キャンセルドライブラッシュ",
+      "command": "DRC"
+    },
+    {
+      "move": "大K",
+      "command": "5HK",
+      "moveKey": "blanka-5hk"
+    }
+  ],
+  "resources": {
+    "driveCost": 3,
+    "superCost": 0,
+    "saLevel": null
+  },
+  "damage": 1400,
+  "difficulty": 3,
+  "constraints": "しゃがみ中Pがヒットした時。全体26Fで置き技並みに隙が少なく、リーチも長いので差し込みの主力。",
+  "controlType": "classic",
+  "tags": [
+    "頻出"
+  ],
+  "properties": {
+    "useWhen": "しゃがみ中P>CDR の後は、ヒット確認に自信が無ければ大Kの代わりに引き中K（後ろ入力の中K）にしておくとヒット・ガードどちらでも機能する。ガードされても4F暴れに負けず、そこから投げやシミーにも派生できる。",
+    "onBlock": "しゃがみ中Pの持続当てで隙が少ないため反撃を受けにくい"
+  }
+}

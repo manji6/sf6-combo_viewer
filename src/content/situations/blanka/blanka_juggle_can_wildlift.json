@@ -1,0 +1,13 @@
+{
+  "tags": [
+    "連結ハブ"
+  ],
+  "id": "blanka_juggle_can_wildlift",
+  "character": "blanka",
+  "label": "大K → フィアーダウン拾いが繋がる浮き",
+  "kind": "juggle",
+  "position": "midscreen",
+  "opponentState": "juggle",
+  "advantage": "限定浮き",
+  "notes": "対空の大K・地上コンボの大Kのどちらからもここへ到達し、フィアーダウン→ワイルドリフト→中バチカ→中ロリの締めを共有する。"
+}

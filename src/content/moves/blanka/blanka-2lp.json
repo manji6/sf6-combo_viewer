@@ -1,0 +1,25 @@
+{
+  "character": "blanka",
+  "verifiedVersion": "Year3（公式フレームデータ参照。パッチ版数未確認）",
+  "key": "blanka-2lp",
+  "name": "しゃがみ弱P（キャットクロー）",
+  "category": "normal",
+  "inputClassic": "2LP",
+  "inputModern": "2L",
+  "startup": 6,
+  "active": "6-8",
+  "recovery": "8",
+  "onHit": "5",
+  "onBlock": "-2",
+  "cancel": "C",
+  "damage": 300,
+  "comboScaling": "始動補正20%",
+  "driveGainHit": 250,
+  "driveLossBlock": -500,
+  "driveLossPunishCounter": -2000,
+  "superGain": 300,
+  "attribute": [
+    "上"
+  ],
+  "notes": "連打キャンセル対応。立ちではなくしゃがみを使うことで暴れ潰し時にジャストパリィを取られるリスクを下げる。"
+}

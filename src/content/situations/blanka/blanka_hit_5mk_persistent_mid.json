@@ -1,0 +1,10 @@
+{
+  "tags": [],
+  "id": "blanka_hit_5mk_persistent_mid",
+  "character": "blanka",
+  "label": "引き中K 持続ヒット後・中央",
+  "kind": "hit",
+  "position": "midscreen",
+  "opponentState": "standing_hit",
+  "notes": "引き中Kが持続当てでヒットした直後。中Kや電気で拾って通常のコンボ・人形展開へ移行できる（詳細は各コンボ参照）。"
+}

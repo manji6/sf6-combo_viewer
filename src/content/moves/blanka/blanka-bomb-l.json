@@ -1,0 +1,23 @@
+{
+  "character": "blanka",
+  "verifiedVersion": "Year3（公式フレームデータ参照。パッチ版数未確認）",
+  "key": "blanka-bomb-l",
+  "name": "ブランカちゃん爆弾（弱・設置）",
+  "category": "special",
+  "inputClassic": "22LP",
+  "inputModern": null,
+  "startup": null,
+  "active": null,
+  "recovery": "全体50",
+  "onHit": null,
+  "onBlock": null,
+  "cancel": null,
+  "damage": 0,
+  "comboScaling": "始動補正20%／コンボ補正20%",
+  "driveGainHit": 0,
+  "driveLossBlock": 0,
+  "driveLossPunishCounter": 0,
+  "superGain": 0,
+  "attribute": [],
+  "notes": "人形を設置するだけの技で直接ダメージなし。設置後1000F、電撃系の技・SAを人形に接触させると飛び道具として起動する。弱人形で基本OK。モダン入力は要検証。"
+}

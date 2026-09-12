@@ -1,0 +1,27 @@
+{
+  "character": "blanka",
+  "id": "blanka_route_forward_throw",
+  "from": "blanka_neutral_mid",
+  "to": "blanka_kd_after_wildfang_mid",
+  "kind": "starter",
+  "label": "前投げ",
+  "steps": [
+    {
+      "move": "前投げ（ワイルドファング）",
+      "command": "LPLK",
+      "moveKey": "blanka-throw-l"
+    }
+  ],
+  "resources": {
+    "driveCost": 0,
+    "superCost": 0,
+    "saLevel": null
+  },
+  "damage": 1200,
+  "difficulty": 1,
+  "constraints": "近距離で成立する通常投げ。",
+  "controlType": "both",
+  "tags": [
+    "投げ"
+  ]
+}

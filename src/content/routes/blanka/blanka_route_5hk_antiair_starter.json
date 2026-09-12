@@ -1,0 +1,28 @@
+{
+  "character": "blanka",
+  "id": "blanka_route_5hk_antiair_starter",
+  "from": "blanka_neutral_mid",
+  "to": "blanka_juggle_can_wildlift",
+  "kind": "starter",
+  "label": "大K（近め対空）",
+  "steps": [
+    {
+      "move": "大K",
+      "command": "5HK",
+      "moveKey": "blanka-5hk",
+      "note": "近めで対空"
+    }
+  ],
+  "resources": {
+    "driveCost": 0,
+    "superCost": 0,
+    "saLevel": null
+  },
+  "damage": 800,
+  "difficulty": 2,
+  "constraints": "近めで大Kが対空できた時のみ（遠めはこの後のワイルドリフトが届かない）。",
+  "controlType": "classic",
+  "tags": [
+    "対空"
+  ]
+}

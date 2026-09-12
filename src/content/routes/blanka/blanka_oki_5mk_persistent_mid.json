@@ -1,0 +1,37 @@
+{
+  "character": "blanka",
+  "id": "blanka_oki_5mk_persistent_mid",
+  "from": "blanka_kd_after_wildfang_mid",
+  "to": "blanka_hit_5mk_persistent_mid",
+  "kind": "okizeme",
+  "label": "引き中K 持続重ね",
+  "steps": [
+    {
+      "move": "引き中K",
+      "command": "4MK",
+      "moveKey": "blanka-5mk",
+      "note": "持続が長く判定も強い。全体26Fで置き技並みの隙"
+    }
+  ],
+  "resources": {
+    "driveCost": 0,
+    "superCost": 0,
+    "saLevel": null
+  },
+  "damage": 600,
+  "difficulty": 3,
+  "constraints": "ゲージに余裕があればラッシュ中段・下段（中足）で揺さぶってもよい（4フレ負けしないタイミングはやや難しい）。",
+  "controlType": "both",
+  "tags": [
+    "持続重ね"
+  ],
+  "properties": {
+    "frameAdvantage": {
+      "frames": "+5",
+      "note": "ガードさせた場合。ドライブインパクトもガードできる速さ"
+    },
+    "useWhen": "ヒットすれば中Kからの追撃・人形設置後の展開に、ガードされても+5から歩き投げ・シミー・もう一度引き中Kの選択肢がある",
+    "onBlock": "+5。歩き投げ／シミー（しゃがみ待ち）／再度引き中Kの三択",
+    "risk": "低"
+  }
+}

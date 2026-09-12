@@ -1,0 +1,16 @@
+{
+  "character": "blanka",
+  "slug": "blanka-mid-2mk-electric-sa2",
+  "name": "中央 しゃがみ中足 OD電気 SA2発動",
+  "situationLabel": "中央・地上ヒット確認",
+  "routeChain": [
+    "blanka_route_2mk_electric_sa2_mid"
+  ],
+  "startFrom": "blanka_neutral_mid",
+  "endAt": "blanka_sa2_active_mid",
+  "difficulty": 2,
+  "tags": [
+    "SA"
+  ],
+  "description": "しゃがみ中足を確認してOD電気→SA2でライトニングビースト状態に入る基本ルート。発動後は必殺技の性質が変わり、削り・運び・投げの読み合いに移行するが、その先の細かい連携は聞き取り精度の都合で今回は見送り。"
+}

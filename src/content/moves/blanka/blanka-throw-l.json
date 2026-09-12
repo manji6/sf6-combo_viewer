@@ -1,0 +1,25 @@
+{
+  "character": "blanka",
+  "verifiedVersion": "Year3（公式フレームデータ参照。パッチ版数未確認）",
+  "key": "blanka-throw-l",
+  "name": "ワイルドファング（弱・通常投げ）",
+  "category": "throw",
+  "inputClassic": "LPLK",
+  "inputModern": "LPLK",
+  "startup": 5,
+  "active": "5-7",
+  "recovery": "23",
+  "onHit": "D",
+  "onBlock": null,
+  "cancel": null,
+  "damage": 1200,
+  "comboScaling": "即時補正20%",
+  "driveGainHit": 2000,
+  "driveLossBlock": 0,
+  "driveLossPunishCounter": -10000,
+  "superGain": 2000,
+  "attribute": [
+    "投"
+  ],
+  "notes": "前投げ。パニッシュカウンター時ダメージ2040・SAゲージ4000増加・ハードノックダウン。ブランカは基本前投げでよい（画面端背負い中でも）。"
+}

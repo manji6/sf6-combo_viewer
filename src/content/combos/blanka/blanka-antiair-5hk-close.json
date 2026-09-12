@@ -4,7 +4,8 @@
   "name": "対空 大K（近め） フィアーダウン ワイルドリフト 拾い",
   "situationLabel": "中央・対空（近め）",
   "routeChain": [
-    "blanka_route_5hk_close_antiair"
+    "blanka_route_5hk_antiair_starter",
+    "blanka_route_wildlift_ender_mid"
   ],
   "startFrom": "blanka_neutral_mid",
   "endAt": "blanka_kd_after_rolling_mid",

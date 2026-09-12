@@ -1,17 +1,11 @@
 {
   "character": "blanka",
-  "id": "blanka_route_5hk_close_antiair",
-  "from": "blanka_neutral_mid",
+  "id": "blanka_route_wildlift_ender_mid",
+  "from": "blanka_juggle_can_wildlift",
   "to": "blanka_kd_after_rolling_mid",
-  "kind": "combo_route",
-  "label": "大K（近め対空）→ フィアーダウン → ワイルドリフト → 中バチカ → 中ロリ",
+  "kind": "ender",
+  "label": "フィアーダウン → ワイルドリフト → 中バチカ → 中ロリ",
   "steps": [
-    {
-      "move": "大K",
-      "command": "5HK",
-      "moveKey": "blanka-5hk",
-      "note": "近めで対空"
-    },
     {
       "move": "フィアーダウン",
       "command": "2PP",
@@ -43,11 +37,12 @@
     "superCost": 0,
     "saLevel": null
   },
-  "damage": 3900,
+  "damage": 3100,
   "difficulty": 3,
-  "constraints": "大Kを近めで対空できた時のみ（遠めはフィアーダウンへ拾えない）。ダメージは各技の基礎値合計（コンボ補正未反映）で、実測は今後の確認待ち。",
+  "constraints": "「大K→フィアーダウン拾いが繋がる浮き」からのみ。ダメージは各技の基礎値合計（コンボ補正未反映）で、実測は今後の確認待ち。",
   "controlType": "classic",
   "tags": [
-    "対空"
+    "〆",
+    "連結"
   ]
 }

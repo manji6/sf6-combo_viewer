@@ -1,0 +1,12 @@
+{
+  "tags": [
+    "画面端"
+  ],
+  "id": "blanka_kd_corner_setup",
+  "character": "blanka",
+  "label": "画面端ダウン（運び後）",
+  "kind": "knockdown",
+  "position": "corner",
+  "opponentState": "knockdown_hard",
+  "notes": "ワイルドリフトでの浮かせ運びやドライブインパクトなどで画面端までダウンさせた状態。ここから弱人形を設置する。"
+}

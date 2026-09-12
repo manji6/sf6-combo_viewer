@@ -1,0 +1,45 @@
+{
+  "character": "blanka",
+  "id": "blanka_oki_5mk_bomb_corner",
+  "from": "blanka_doll_set_corner",
+  "to": "blanka_kd_after_electric_corner",
+  "kind": "okizeme",
+  "label": "引き中K 重ね → 中K → 電気",
+  "steps": [
+    {
+      "move": "引き中K",
+      "command": "4MK",
+      "moveKey": "blanka-5mk",
+      "note": "人形設置後の+5から。9F発生で4F暴れと相打ちしてもコンボになる"
+    },
+    {
+      "move": "中K",
+      "command": "5MK",
+      "moveKey": "blanka-5mk",
+      "cancel": true
+    },
+    {
+      "move": "エレクトリックサンダー",
+      "command": "214P",
+      "moveKey": "blanka-electric",
+      "cancel": true
+    }
+  ],
+  "resources": {
+    "driveCost": 0,
+    "superCost": 0,
+    "saLevel": null
+  },
+  "damage": 2000,
+  "difficulty": 3,
+  "constraints": "安全重視の基本択。もう1つの選択肢としてしゃがみ中K始動の中段/下段崩しルート（下記）がある。",
+  "controlType": "both",
+  "tags": [
+    "人形",
+    "基本択"
+  ],
+  "properties": {
+    "risk": "低",
+    "useWhen": "安定して当てたい・暴れを咎めたい場面"
+  }
+}

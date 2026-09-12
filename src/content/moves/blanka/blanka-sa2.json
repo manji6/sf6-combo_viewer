@@ -1,0 +1,23 @@
+{
+  "character": "blanka",
+  "verifiedVersion": "Year3（公式フレームデータ参照。パッチ版数未確認）",
+  "key": "blanka-sa2",
+  "name": "SA2 ライトニングビースト",
+  "category": "super",
+  "inputClassic": "214214P",
+  "inputModern": "214214P",
+  "startup": null,
+  "active": null,
+  "recovery": "全体10",
+  "onHit": null,
+  "onBlock": null,
+  "cancel": null,
+  "damage": 0,
+  "comboScaling": "即時補正10%",
+  "driveGainHit": 0,
+  "driveLossBlock": 0,
+  "driveLossPunishCounter": 0,
+  "superGain": 0,
+  "attribute": [],
+  "notes": "SA2タイマー1500。発動中はワイルドハント以外の必殺技の性質が変化し、ローリング系必殺技から「ローリングキャノン」に派生可能。溜め無しでローリング系必殺技を即時発動できる。ダメージは無いがこの後の技のダメージが微増する。"
+}

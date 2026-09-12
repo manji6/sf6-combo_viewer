@@ -1,0 +1,28 @@
+{
+  "character": "blanka",
+  "id": "blanka_route_bomb_place_corner",
+  "from": "blanka_kd_corner_setup",
+  "to": "blanka_doll_set_corner",
+  "kind": "conversion",
+  "label": "弱人形設置",
+  "steps": [
+    {
+      "move": "ブランカちゃん爆弾（弱）",
+      "command": "22LP",
+      "moveKey": "blanka-bomb-l",
+      "note": "弱人形で基本OK"
+    }
+  ],
+  "resources": {
+    "driveCost": 0,
+    "superCost": 0,
+    "saLevel": null
+  },
+  "damage": 0,
+  "difficulty": 2,
+  "constraints": "相手がダウンしている間に設置する。設置自体はダメージなし。",
+  "controlType": "classic",
+  "tags": [
+    "人形"
+  ]
+}

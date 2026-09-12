@@ -1,0 +1,10 @@
+{
+  "tags": [],
+  "id": "blanka_kd_after_rolling_corner",
+  "character": "blanka",
+  "label": "中ローリングアタック締め後・画面端ダウン",
+  "kind": "knockdown",
+  "position": "corner",
+  "opponentState": "knockdown_hard",
+  "notes": "人形の下段始動コンボの締め。起き攻めルートは未整理。"
+}

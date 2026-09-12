@@ -1,0 +1,17 @@
+{
+  "character": "blanka",
+  "slug": "blanka-throw-forward",
+  "name": "前投げ",
+  "situationLabel": "中央・近距離",
+  "routeChain": [
+    "blanka_route_forward_throw"
+  ],
+  "startFrom": "blanka_neutral_mid",
+  "endAt": "blanka_kd_after_wildfang_mid",
+  "difficulty": 1,
+  "tags": [
+    "投げ",
+    "起き攻め"
+  ],
+  "description": "ブランカは前投げが最強。画面端を背負っていても前投げでよいくらい。前ステップで距離を詰めてから起き攻めへ移行する。"
+}

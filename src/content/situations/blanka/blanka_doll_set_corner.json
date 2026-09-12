@@ -1,0 +1,14 @@
+{
+  "tags": [
+    "起き攻め開始",
+    "人形"
+  ],
+  "id": "blanka_doll_set_corner",
+  "character": "blanka",
+  "label": "弱人形設置後・画面端",
+  "kind": "okiStart",
+  "position": "corner",
+  "opponentState": "knockdown_hard",
+  "advantage": "+5",
+  "notes": "人形を置いた時点で+5F相当のリード。引き中Kは9F発生で4F暴れと相打ちしてもコンボが入る。"
+}

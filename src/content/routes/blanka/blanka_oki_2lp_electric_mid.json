@@ -1,0 +1,44 @@
+{
+  "character": "blanka",
+  "id": "blanka_oki_2lp_electric_mid",
+  "from": "blanka_kd_after_wildfang_mid",
+  "to": "blanka_kd_after_electric_mid",
+  "kind": "okizeme",
+  "label": "しゃがみ弱P → 電気（暴れ潰し）",
+  "steps": [
+    {
+      "move": "しゃがみ弱P",
+      "command": "2LP",
+      "moveKey": "blanka-2lp",
+      "note": "立ちではなくしゃがみを使うことでジャストパリィのリスクを下げる"
+    },
+    {
+      "move": "エレクトリックサンダー",
+      "command": "214P",
+      "moveKey": "blanka-electric",
+      "cancel": true
+    }
+  ],
+  "resources": {
+    "driveCost": 0,
+    "superCost": 0,
+    "saLevel": null
+  },
+  "damage": 1100,
+  "difficulty": 2,
+  "constraints": "前ステ後の起き攻めで安定した暴れ潰し。相手が固まっている場合はサプライズフォワードから歩いて投げる択もある。",
+  "controlType": "classic",
+  "tags": [
+    "暴れ潰し"
+  ],
+  "properties": {
+    "useWhen": "相手が起き上がりに暴れそうな時の安定択",
+    "strongVs": [
+      "素の暴れ"
+    ],
+    "weakVs": [
+      "無敵技"
+    ],
+    "risk": "低"
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "character": "blanka",
+  "verifiedVersion": "Year3（公式フレームデータ参照。パッチ版数未確認）",
+  "key": "blanka-electric",
+  "name": "エレクトリックサンダー",
+  "category": "special",
+  "inputClassic": "214P",
+  "inputModern": "214P",
+  "startup": 10,
+  "active": "10-21",
+  "recovery": "17",
+  "onHit": "D",
+  "onBlock": "-3",
+  "cancel": "SA3",
+  "damage": 800,
+  "driveGainHit": 2000,
+  "driveLossBlock": -2000,
+  "driveLossPunishCounter": -5000,
+  "superGain": 1000,
+  "attribute": [
+    "上"
+  ],
+  "notes": "発動後にボタンホールドで延長可能。OD版は別技（manon-electric-od 相当の blanka-electric-od）。"
+}

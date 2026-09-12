@@ -1,0 +1,40 @@
+{
+  "character": "blanka",
+  "id": "blanka_route_2mk_electric_sa2_mid",
+  "from": "blanka_neutral_mid",
+  "to": "blanka_sa2_active_mid",
+  "kind": "combo_route",
+  "label": "しゃがみ中K → OD電気 → SA2",
+  "steps": [
+    {
+      "move": "しゃがみ中K",
+      "command": "2MK",
+      "moveKey": "blanka-2mk",
+      "cancel": true
+    },
+    {
+      "move": "OD エレクトリックサンダー",
+      "command": "214PP",
+      "moveKey": "blanka-electric-od",
+      "cancel": true
+    },
+    {
+      "move": "SA2（ライトニングビースト）",
+      "command": "214214P",
+      "moveKey": "blanka-sa2",
+      "cancel": true
+    }
+  ],
+  "resources": {
+    "driveCost": 2,
+    "superCost": 2,
+    "saLevel": 2
+  },
+  "damage": 1500,
+  "difficulty": 2,
+  "constraints": "SA2自体はダメージなし。OD電気からSA2をキャンセル発動し、ライトニングビースト状態（タイマー1500）に入る。他にも弱P始動・中パン始動のバリエーションあり（表記は要確認のため未登録）。",
+  "controlType": "both",
+  "tags": [
+    "SA"
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "tags": [
+    "起き攻め開始"
+  ],
+  "id": "blanka_kd_after_wildfang_mid",
+  "character": "blanka",
+  "label": "前投げ後・中央（受け身可）",
+  "kind": "knockdown",
+  "position": "midscreen",
+  "opponentState": "knockdown_soft",
+  "advantage": "前ステ後 +3",
+  "wakeupNote": "受け身可",
+  "notes": "前投げは画面端を背負っていても最優先の選択肢。前ステップで距離を詰めてから起き攻めへ。"
+}

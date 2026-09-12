@@ -4,9 +4,9 @@
   ],
   "id": "blanka_kd_after_electric_mid",
   "character": "blanka",
-  "label": "OD電気締め後・中央ダウン",
+  "label": "電気締め後・中央ダウン",
   "kind": "knockdown",
   "position": "midscreen",
   "opponentState": "knockdown_hard",
-  "notes": "引き中K対空からの拾い後のダウン。起き攻めルートは未整理。"
+  "notes": "電気（無印・OD）で締めた後のダウン。引き中K対空拾いと前投げ後の暴れ潰しの両方がここへ到達する。起き攻めルートは未整理。"
 }
