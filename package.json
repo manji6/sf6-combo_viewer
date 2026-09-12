@@ -14,6 +14,7 @@
     "test:watch": "vitest",
     "validate": "vite-node scripts/validate.ts",
     "promote-draft": "vite-node scripts/promote-draft.ts",
+    "damage:audit": "vite-node scripts/damage-audit.ts",
     "check": "npm run validate && npm run test && astro check",
     "deploy": "astro build && wrangler deploy",
     "cf:preview": "astro build && wrangler dev"
