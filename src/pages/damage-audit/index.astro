@@ -1,0 +1,134 @@
+---
+// dev 限定: ダメージ計算エンジン（候補ルール、DC-1 未確定）の答え合わせ用ページ。
+// 本番ビルドでは 404。表示・データは変更しない（scripts/damage-audit.ts のブラウザ版）。
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { combos } from '../../data';
+import { flattenCombo } from '../../lib/graph/derive';
+import { calculateComboDamage } from '../../lib/damage';
+
+if (!import.meta.env.DEV) {
+  return new Response(null, { status: 404 });
+}
+
+const rows = combos
+  .map((combo) => {
+    const flat = flattenCombo(combo);
+    const calc = calculateComboDamage(combo);
+    return {
+      combo,
+      confidence: flat.damageConfidence,
+      recorded: flat.totalDamage,
+      calc,
+      diff: calc.totalDamage - flat.totalDamage,
+    };
+  })
+  .sort((a, b) => Math.abs(b.diff) - Math.abs(a.diff));
+
+const exact = rows.filter((r) => r.diff === 0).length;
+---
+
+<BaseLayout title="ダメージ計算 答え合わせ（dev）" crumbs={[{ label: 'damage-audit' }]}>
+  <h1>ダメージ計算 答え合わせ</h1>
+  <p class="note">
+    候補ルール（<code>src/lib/damage/ruleset.ts</code>、公式一次資料未確認）で計算した値と、
+    現在登録されている値（<code>damageOverride</code> または route の合計）を並べています。
+    表示・データは変更しません。実際のゲーム内の数値と見比べて、ズレていたら
+    「どのコンボの何ヒット目がどれくらい違うか」を教えてください。
+  </p>
+  <p class="summary">{rows.length} 件中、一致 {exact} 件・不一致 {rows.length - exact} 件</p>
+
+  <table class="tbl">
+    <thead>
+      <tr>
+        <th>コンボ</th>
+        <th>確度</th>
+        <th>記録値</th>
+        <th>計算値</th>
+        <th>差</th>
+        <th>状態</th>
+      </tr>
+    </thead>
+    <tbody>
+      {
+        rows.map((r) => (
+          <>
+            <tr class={r.diff === 0 ? 'ok' : Math.abs(r.diff) >= 300 ? 'bad' : 'warn'}>
+              <td>
+                <a href={`/${r.combo.character}/combos/${r.combo.slug}/`} target="_blank">
+                  {r.combo.name}
+                </a>
+                <span class="slug">{r.combo.slug}</span>
+              </td>
+              <td>{r.confidence}</td>
+              <td class="num">{r.recorded.toLocaleString()}</td>
+              <td class="num">{r.calc.totalDamage.toLocaleString()}</td>
+              <td class="num diff">{r.diff > 0 ? `+${r.diff}` : r.diff}</td>
+              <td>{r.calc.status}{r.calc.issues.length > 0 && `（${r.calc.issues.length}件）`}</td>
+            </tr>
+            <tr class="detail-row">
+              <td colspan="6">
+                <details>
+                  <summary>ヒット内訳を見る</summary>
+                  <table class="hits">
+                    <thead>
+                      <tr>
+                        <th>#</th>
+                        <th>技</th>
+                        <th>素点</th>
+                        <th>段</th>
+                        <th>残存率</th>
+                        <th>ダメージ</th>
+                        <th>適用ルール</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {r.calc.hits.map((h) => (
+                        <tr>
+                          <td>{h.stepIndex}</td>
+                          <td>{h.move}</td>
+                          <td class="num">{h.baseDamage}</td>
+                          <td class="num">{h.stage}</td>
+                          <td class="num">{h.finalPercent}%</td>
+                          <td class="num">{h.damage}</td>
+                          <td class="rules">{h.appliedRules.join(' / ')}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                  {r.calc.issues.length > 0 && (
+                    <ul class="issues">
+                      {r.calc.issues.map((i) => (
+                        <li>{i.message}</li>
+                      ))}
+                    </ul>
+                  )}
+                </details>
+              </td>
+            </tr>
+          </>
+        ))
+      }
+    </tbody>
+  </table>
+</BaseLayout>
+
+<style>
+  h1 { color: var(--accent); }
+  .note { color: var(--text-dim); font-size: 0.9rem; max-width: 60rem; }
+  .summary { color: var(--text-dim); font-size: 0.88rem; margin-bottom: 1rem; }
+  .tbl { width: 100%; border-collapse: collapse; font-size: 0.86rem; }
+  .tbl th, .tbl td { padding: 0.4rem 0.6rem; border-bottom: 1px solid var(--border); text-align: left; }
+  .tbl .num { text-align: right; font-family: var(--font-pixel); }
+  .tbl tr.ok { background: color-mix(in srgb, var(--risk-low) 10%, transparent); }
+  .tbl tr.warn { background: color-mix(in srgb, var(--risk-mid) 10%, transparent); }
+  .tbl tr.bad { background: color-mix(in srgb, var(--risk-high) 12%, transparent); }
+  .diff { font-weight: 700; }
+  .slug { display: block; font-size: 0.7rem; color: var(--text-faint); }
+  .detail-row td { padding: 0 0.6rem 0.6rem; border-bottom: 2px solid var(--border-strong); }
+  .detail-row summary { cursor: pointer; color: var(--text-dim); font-size: 0.82rem; padding: 0.3rem 0; }
+  .hits { width: 100%; border-collapse: collapse; font-size: 0.8rem; margin-top: 0.3rem; background: var(--bg-sunken); }
+  .hits th, .hits td { padding: 0.25rem 0.5rem; border-bottom: 1px solid var(--border); }
+  .hits .num { text-align: right; }
+  .rules { color: var(--text-faint); font-size: 0.75rem; }
+  .issues { color: var(--risk-high); font-size: 0.8rem; }
+</style>
