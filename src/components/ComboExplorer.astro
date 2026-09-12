@@ -222,7 +222,10 @@ function driveBucket(n: number) {
     const emptyEl = root.querySelector<HTMLElement>('[data-empty]')!;
     const sortEl = form.querySelector<HTMLSelectElement>('[data-sort]')!;
     const GROUPS = ['pos', 'starter', 'drive', 'sa', 'modern', 'tag'] as const;
+    const SORTS = ['damage', 'diff-asc', 'diff-desc', 'name'];
+    const DEFAULT_SORT = 'damage';
 
+    // R11: sort が省略・不正な URL でも既定値へ正規化する（前回の select 値を残さない）
     function readURL() {
       const q = new URLSearchParams(location.search);
       GROUPS.forEach((g) => {
@@ -231,7 +234,8 @@ function driveBucket(n: number) {
           .querySelectorAll<HTMLInputElement>(`input[name="${g}"]`)
           .forEach((i) => (i.checked = vals.includes(i.value)));
       });
-      if (q.get('sort')) sortEl.value = q.get('sort')!;
+      const sort = q.get('sort');
+      sortEl.value = sort && SORTS.includes(sort) ? sort : DEFAULT_SORT;
     }
 
     function writeURL() {
@@ -242,7 +246,7 @@ function driveBucket(n: number) {
         ].map((i) => i.value);
         if (vals.length) q.set(g, vals.join(','));
       });
-      if (sortEl.value !== 'damage') q.set('sort', sortEl.value);
+      if (sortEl.value !== DEFAULT_SORT) q.set('sort', sortEl.value);
       const s = q.toString();
       // タブの #hash は残す
       history.replaceState(null, '', (s ? `?${s}` : location.pathname) + location.hash);
@@ -273,7 +277,9 @@ function driveBucket(n: number) {
       return true;
     }
 
-    function apply() {
+    // R11: フィルタ・ソートの反映（DOM 更新のみ）と、URL への書き込みを分離する。
+    // popstate（戻る／進む）は URL を読むだけで、render() の結果を再度 URL に書き戻さない。
+    function render() {
       const sort = sortEl.value;
       const sorted = [...items].sort((a, b) => {
         if (sort === 'damage') return +b.dataset.damage! - +a.dataset.damage!;
@@ -290,6 +296,11 @@ function driveBucket(n: number) {
       });
       countEl.textContent = `${visible} / ${items.length} 件`;
       emptyEl.hidden = visible > 0;
+    }
+
+    /** ユーザー操作（フィルタ変更・クリア）による反映。URL にも書く */
+    function apply() {
+      render();
       writeURL();
     }
 
@@ -300,10 +311,10 @@ function driveBucket(n: number) {
     });
     window.addEventListener('popstate', () => {
       readURL();
-      apply();
+      render();
     });
 
     readURL();
-    apply();
+    render();
   });
 </script>

@@ -1,0 +1,16 @@
+{
+  "key": "manon-test-classic-only",
+  "character": "manon",
+  "name": "テスト用クラシック専用技",
+  "category": "special",
+  "inputClassic": "236HK",
+  "inputModern": null,
+  "startup": 10,
+  "active": "10-11",
+  "recovery": "20",
+  "onHit": "+1",
+  "onBlock": "-1",
+  "cancel": null,
+  "damage": 500,
+  "verifiedVersion": "テスト用フィクスチャ"
+}

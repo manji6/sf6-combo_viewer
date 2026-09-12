@@ -3,7 +3,7 @@ import { describe, expect, it, vi } from 'vitest';
 // src/content は実データ専用（現状ほぼ空）。テストは tests/fixtures の旧ダミーで回す。
 vi.mock('../src/data', () => import('./fixtures/data'));
 
-import { combos, getCombo } from '../src/data';
+import { combos, getCombo, getRoute } from '../src/data';
 import {
   comboStarterMove,
   comboSupportsModern,
@@ -59,13 +59,35 @@ describe('flattenCombo', () => {
   });
 
   it('合計ダメージはパーツ damage の和（override 無しのとき）', () => {
+    // R12: 以前は totalDamage が誤って 1 になっても通る弱いテストだった（実際には
+    // step 数と正値であることしか確認していなかった）。route.damage の和との一致を検査する。
     const c = getCombo('manon-mid-2mk-bnb-degage');
+    expect(c.damageOverride ?? null).toBeNull(); // override 無しの前提を明示
     const flat = flattenCombo(c);
-    const sum = c.routeChain
-      .map((id) => flattenCombo(c).steps.filter((s) => s.routeId === id))
-      .flat().length;
-    expect(sum).toBeGreaterThan(0);
-    expect(flat.totalDamage).toBeGreaterThan(0);
+    const expected = c.routeChain.map(getRoute).reduce((sum, r) => sum + r.damage, 0);
+    expect(flat.totalDamage).toBe(expected);
+  });
+
+  it('damageOverride があればそちらを優先する', () => {
+    const c = combos.find((x) => x.damageOverride != null);
+    if (!c) return; // fixture に override 付きが無ければスキップ
+    expect(flattenCombo(c).totalDamage).toBe(c.damageOverride);
+  });
+
+  it('action（whiff/feint 等）は flatten 後も失われない（R02 回帰）', () => {
+    const inline = {
+      slug: 'x',
+      character: 'manon' as const,
+      name: 'x',
+      situationLabel: 'x',
+      routeChain: ['oki_wait_from_degage_light'],
+      startFrom: 'kd_after_degage_light_mid',
+      endAt: 'neutral_mid_plus',
+      difficulty: 1,
+      tags: [],
+    };
+    const flat = flattenCombo(inline);
+    expect(flat.steps[0].action).toBe('walk_back');
   });
 
   it('nodePath は startFrom で始まり endAt で終わる', () => {

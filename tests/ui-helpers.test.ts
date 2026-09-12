@@ -3,7 +3,13 @@ import { describe, expect, it, vi } from 'vitest';
 vi.mock('../src/data', () => import('./fixtures/data'));
 
 import { stepModernCommand } from '../src/data';
-import { frameAdvLabel, stepActionLabel, wakeupSummary } from '../src/lib/ui';
+import {
+  frameAdvLabel,
+  parseAdvantage,
+  situationAdvantageText,
+  stepActionLabel,
+  wakeupSummary,
+} from '../src/lib/ui';
 
 describe('wakeupSummary', () => {
   it('coverage を先頭に、その場/後ろを併記', () => {
@@ -65,10 +71,59 @@ describe('stepModernCommand（優先順位）', () => {
   it('どちらも無ければ undefined（呼び出し側で deriveModern にフォールバック）', () => {
     expect(stepModernCommand({ move: 'x', command: 'DR' })).toBeUndefined();
   });
-  it('moveKey の技が inputModern:null なら undefined', () => {
-    // manon-rondpoint-l は inputModern: null
+  it('inputModern:null でも inputModernPrecise があればそれを使う（R01 回帰）', () => {
+    // manon-rondpoint-l は inputModern: null, inputModernPrecise: "236L"。
+    // 以前は undefined を返し、呼び出し側の deriveModern が "236SP" に汎用変換していた。
     expect(
       stepModernCommand({ move: 'x', command: '236LK', moveKey: 'manon-rondpoint-l' }),
+    ).toBe('236L');
+  });
+  it('inputModern:null かつ inputModernPrecise も無ければ undefined（非対応）', () => {
+    expect(
+      stepModernCommand({ move: 'x', command: '236HK', moveKey: 'manon-test-classic-only' }),
     ).toBeUndefined();
+  });
+});
+
+describe('parseAdvantage / situationAdvantageText（R03 回帰）', () => {
+  it('数値フレームと自由記述を区別する', () => {
+    expect(parseAdvantage('+8')).toEqual({ frame: '+8', basis: undefined, note: undefined });
+    expect(parseAdvantage('パニカン誘発')).toEqual({ freeform: 'パニカン誘発' });
+  });
+  it('括弧の注記・前置の測定条件を取り出す', () => {
+    expect(parseAdvantage('+3（連続ガード）')).toEqual({
+      frame: '+3',
+      basis: undefined,
+      note: '連続ガード',
+    });
+    expect(parseAdvantage('前ステ後 +3')).toEqual({ frame: '+3', basis: '前ステ後', note: undefined });
+  });
+  it('「メダル獲得 +1」のような報酬は reward 側の責務（advantage には置かない運用）', () => {
+    // parseAdvantage 自体は数値の形があれば frame として解析するので reward/advantage の
+    // 切り分けはデータ側（schema.reward）で行う。ここでは解析結果自体の形を確認するのみ。
+    expect(parseAdvantage('メダル獲得 +1')?.frame).toBe('+1');
+  });
+  it('knockdown/okiStart は基準の明記が無ければ「相手復帰まで」を補う', () => {
+    expect(situationAdvantageText({ kind: 'knockdown', advantage: '+8' })).toBe('相手復帰まで +8');
+    expect(situationAdvantageText({ kind: 'okiStart', advantage: '+5' })).toBe('相手復帰まで +5');
+  });
+  it('基準が明記されていればそれを使い、二重に補わない', () => {
+    expect(situationAdvantageText({ kind: 'knockdown', advantage: '前ステ後 +3' })).toBe(
+      '前ステ後 +3',
+    );
+  });
+  it('knockdown/okiStart 以外は基準を補わず数値のみ', () => {
+    expect(situationAdvantageText({ kind: 'neutral', advantage: '±0' })).toBe('±0');
+    expect(situationAdvantageText({ kind: 'blockstring', advantage: '+3（連続ガード）' })).toBe(
+      '+3（連続ガード）',
+    );
+  });
+  it('自由記述はそのまま表示する（相手復帰まで等を付けない）', () => {
+    expect(situationAdvantageText({ kind: 'knockdown', advantage: '起き上がりに重ね' })).toBe(
+      '起き上がりに重ね',
+    );
+  });
+  it('advantage 無指定は undefined', () => {
+    expect(situationAdvantageText({ kind: 'knockdown', advantage: undefined })).toBeUndefined();
   });
 });

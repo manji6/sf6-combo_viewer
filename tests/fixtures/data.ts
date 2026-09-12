@@ -77,11 +77,17 @@ export function getMove(key: string): Move {
   if (!m) throw new Error(`未知の技: ${key}`);
   return m;
 }
+// src/data/index.ts の stepModernCommand と同じ優先順位（R01: 2026-09-12 レビュー）。
+// fixture 側に別実装を持たせているため、本体を直すだけでは fixture 経由のテストが
+// 回帰を検出できない（R12 で指摘）。両方を同時に直す。
 export function stepModernCommand(step: Step): string | undefined {
   if (step.commandModern) return step.commandModern;
   if (step.moveKey) {
     const m = moveByKey.get(step.moveKey);
-    if (m && m.inputModern) return m.inputModern;
+    if (m) {
+      if (m.inputModern) return m.inputModern;
+      if (m.inputModernPrecise) return m.inputModernPrecise;
+    }
   }
   return undefined;
 }
