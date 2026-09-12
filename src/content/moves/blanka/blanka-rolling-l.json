@@ -1,0 +1,25 @@
+{
+  "character": "blanka",
+  "verifiedVersion": "Year3（公式フレームデータ参照。パッチ版数未確認）",
+  "key": "blanka-rolling-l",
+  "name": "弱ローリングアタック",
+  "category": "special",
+  "inputClassic": "[4]6LP",
+  "inputModern": null,
+  "inputModernPrecise": "[4]6LP",
+  "startup": 10,
+  "active": "10-20",
+  "recovery": "11",
+  "onHit": "D",
+  "onBlock": "-23",
+  "cancel": "SA3",
+  "damage": 1000,
+  "driveGainHit": 2000,
+  "driveLossBlock": -7500,
+  "driveLossPunishCounter": -5000,
+  "superGain": 1000,
+  "attribute": [
+    "上"
+  ],
+  "notes": "2026-09-13 公式フレームデータから追加。10-23F 空中判定。"
+}

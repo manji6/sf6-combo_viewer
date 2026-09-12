@@ -1,0 +1,24 @@
+{
+  "character": "manon",
+  "verifiedVersion": "Year3（公式フレームデータ参照。パッチ版数未確認）",
+  "key": "manon-atere",
+  "name": "ア・テール（立ち中P→中K）",
+  "category": "unique",
+  "inputClassic": "5MP~MK",
+  "inputModern": null,
+  "startup": 10,
+  "active": "10-11",
+  "recovery": "17",
+  "onHit": "2",
+  "onBlock": "-5",
+  "cancel": null,
+  "damage": 500,
+  "driveGainHit": 2500,
+  "driveLossBlock": -2500,
+  "driveLossPunishCounter": -4000,
+  "superGain": 700,
+  "attribute": [
+    "上"
+  ],
+  "notes": "2026-09-13 公式フレームデータ・コマンドリストから追加。立ち中P（ツリテ）からの派生2段目。立ち中Pがパニッシュカウンター時に派生した場合はダウン。モダン入力は要検証。"
+}

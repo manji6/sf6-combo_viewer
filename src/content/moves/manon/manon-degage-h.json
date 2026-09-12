@@ -1,0 +1,25 @@
+{
+  "character": "manon",
+  "verifiedVersion": "Year3（公式フレームデータ参照。パッチ版数未確認）",
+  "key": "manon-degage-h",
+  "name": "強デガジェ",
+  "category": "special",
+  "inputClassic": "214HK",
+  "inputModern": null,
+  "inputModernPrecise": "214H",
+  "startup": 20,
+  "active": "20-22",
+  "recovery": "24",
+  "onHit": "3",
+  "onBlock": "-9",
+  "cancel": null,
+  "damage": 1000,
+  "driveGainHit": 3000,
+  "driveLossBlock": -4000,
+  "driveLossPunishCounter": -5000,
+  "superGain": 800,
+  "attribute": [
+    "中"
+  ],
+  "notes": "2026-09-13 公式フレームデータから追加。9-19F 足元無敵。モダンは強度自動選択。"
+}

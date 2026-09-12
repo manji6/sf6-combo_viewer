@@ -1,0 +1,24 @@
+{
+  "character": "blanka",
+  "verifiedVersion": "Year3（公式フレームデータ参照。パッチ版数未確認）",
+  "key": "blanka-2hp",
+  "name": "しゃがみ強P（スネークアッパー）",
+  "category": "normal",
+  "inputClassic": "2HP",
+  "inputModern": null,
+  "startup": 15,
+  "active": "15-19",
+  "recovery": "20",
+  "onHit": "0",
+  "onBlock": "-5",
+  "cancel": null,
+  "damage": 900,
+  "driveGainHit": 4000,
+  "driveLossBlock": -6000,
+  "driveLossPunishCounter": -10000,
+  "superGain": 1000,
+  "attribute": [
+    "上"
+  ],
+  "notes": "2026-09-13 公式フレームデータから追加。カウンター/パニッシュカウンター時吹き飛びダウン。強制立ち効果。モダンの割り当ては要検証。"
+}

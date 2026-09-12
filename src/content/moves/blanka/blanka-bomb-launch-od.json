@@ -1,0 +1,25 @@
+{
+  "character": "blanka",
+  "verifiedVersion": "Year3（公式フレームデータ参照。パッチ版数未確認）",
+  "key": "blanka-bomb-launch-od",
+  "name": "OD ブランカちゃん爆弾（射出）",
+  "category": "special",
+  "inputClassic": "(電撃技が人形に接触して起動)",
+  "inputModern": null,
+  "startup": null,
+  "active": null,
+  "recovery": "36",
+  "onHit": "D",
+  "onBlock": null,
+  "cancel": null,
+  "damage": 1200,
+  "comboScaling": "始動補正20%／コンボ補正20%",
+  "driveGainHit": 800,
+  "driveLossBlock": -1000,
+  "driveLossPunishCounter": -5000,
+  "superGain": 450,
+  "attribute": [
+    "弾"
+  ],
+  "notes": "2026-09-13 公式フレームデータから追加。OD設置人形の起動ダメージ。発生は起動開始時からの値。プレイヤーが直接入力する技ではない。"
+}

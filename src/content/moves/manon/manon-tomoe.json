@@ -1,0 +1,24 @@
+{
+  "character": "manon",
+  "verifiedVersion": "Year3（公式フレームデータ参照。パッチ版数未確認）",
+  "key": "manon-tomoe",
+  "name": "トモエ・デリエール",
+  "category": "unique",
+  "inputClassic": "3HP",
+  "inputModern": null,
+  "startup": 11,
+  "active": "11-19",
+  "recovery": "32",
+  "onHit": "26",
+  "onBlock": "-23",
+  "cancel": null,
+  "damage": 1000,
+  "driveGainHit": 3000,
+  "driveLossBlock": -6000,
+  "driveLossPunishCounter": -10000,
+  "superGain": 500,
+  "attribute": [
+    "上"
+  ],
+  "notes": "2026-09-13 公式フレームデータ・コマンドリストから追加。地上パニッシュカウンター時吹き飛び変化、空中パニッシュカウンター時吹き飛びダウン。モダン入力は要検証。"
+}

@@ -1,0 +1,25 @@
+{
+  "character": "manon",
+  "verifiedVersion": "Year3（公式フレームデータ参照。パッチ版数未確認）",
+  "key": "manon-2lk",
+  "name": "しゃがみ弱K（シーニュ・ナジェ）",
+  "category": "normal",
+  "inputClassic": "2LK",
+  "inputModern": null,
+  "startup": 5,
+  "active": "5-6",
+  "recovery": "13",
+  "onHit": "-1",
+  "onBlock": "-3",
+  "cancel": null,
+  "damage": 200,
+  "comboScaling": "始動補正20%",
+  "driveGainHit": 250,
+  "driveLossBlock": -500,
+  "driveLossPunishCounter": -2000,
+  "superGain": 300,
+  "attribute": [
+    "下"
+  ],
+  "notes": "2026-09-13 公式フレームデータから追加。連打キャンセル対応（表のキャンセル欄にCマークは無いが備考にはそう記載）。モダンの2L割り当ては要検証（しゃがみ弱Pとの優先関係未確認）。"
+}

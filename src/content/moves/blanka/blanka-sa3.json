@@ -1,0 +1,26 @@
+{
+  "character": "blanka",
+  "verifiedVersion": "Year3（公式フレームデータ参照。パッチ版数未確認）",
+  "key": "blanka-sa3",
+  "name": "SA3 グランドシェイブキャノンボール",
+  "category": "super",
+  "inputClassic": "236236P",
+  "inputModern": null,
+  "inputModernPrecise": "236236P",
+  "startup": 10,
+  "active": "10-12",
+  "recovery": "61",
+  "onHit": "D",
+  "onBlock": "-46",
+  "cancel": null,
+  "damage": 4000,
+  "comboScaling": "最低保障50%。即時補正10%（必殺技キャンセル時のみ適用）",
+  "driveGainHit": 0,
+  "driveLossBlock": -7500,
+  "driveLossPunishCounter": -15000,
+  "superGain": 0,
+  "attribute": [
+    "上"
+  ],
+  "notes": "2026-09-13 公式フレームデータから追加。1-12F 完全無敵、2-12F 空中判定。カウンター/パニッシュカウンターで数値が変動しない。モダン入力は要検証。"
+}

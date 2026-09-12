@@ -1,0 +1,24 @@
+{
+  "character": "manon",
+  "verifiedVersion": "Year3（公式フレームデータ参照。パッチ版数未確認）",
+  "key": "manon-2hp",
+  "name": "しゃがみ強P（ヴィクトワール・ポーム）",
+  "category": "normal",
+  "inputClassic": "2HP",
+  "inputModern": null,
+  "startup": 10,
+  "active": "10-14",
+  "recovery": "21",
+  "onHit": "-2",
+  "onBlock": "-8",
+  "cancel": null,
+  "damage": 600,
+  "driveGainHit": 3000,
+  "driveLossBlock": -6000,
+  "driveLossPunishCounter": -10000,
+  "superGain": 1000,
+  "attribute": [
+    "上"
+  ],
+  "notes": "2026-09-13 公式フレームデータから追加。モダンの割り当ては要検証。"
+}

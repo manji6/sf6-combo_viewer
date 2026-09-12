@@ -1,0 +1,24 @@
+{
+  "character": "manon",
+  "verifiedVersion": "Year3（公式フレームデータ参照。パッチ版数未確認）",
+  "key": "manon-5mk",
+  "name": "立ち中K（ラ・シェーヌ）",
+  "category": "normal",
+  "inputClassic": "5MK",
+  "inputModern": null,
+  "startup": 10,
+  "active": "10-12",
+  "recovery": "18",
+  "onHit": "0",
+  "onBlock": "-5",
+  "cancel": "C",
+  "damage": 600,
+  "driveGainHit": 1500,
+  "driveLossBlock": -3000,
+  "driveLossPunishCounter": -4000,
+  "superGain": 700,
+  "attribute": [
+    "上"
+  ],
+  "notes": "2026-09-13 公式フレームデータから追加。モダンの5M割り当ては立ち中Pが優先の可能性があり要検証。"
+}

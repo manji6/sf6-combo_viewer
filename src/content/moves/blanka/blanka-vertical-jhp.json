@@ -1,0 +1,24 @@
+{
+  "character": "blanka",
+  "verifiedVersion": "Year3（公式フレームデータ参照。パッチ版数未確認）",
+  "key": "blanka-vertical-jhp",
+  "name": "垂直ジャンプ強P（サバイバルクロー（垂直））",
+  "category": "normal",
+  "inputClassic": "j.HP",
+  "inputModern": null,
+  "startup": 7,
+  "active": "7-9",
+  "recovery": "着地後3",
+  "onHit": null,
+  "onBlock": null,
+  "cancel": null,
+  "damage": 800,
+  "driveGainHit": 2000,
+  "driveLossBlock": -4000,
+  "driveLossPunishCounter": -5000,
+  "superGain": 1000,
+  "attribute": [
+    "中"
+  ],
+  "notes": "2026-09-13 公式フレームデータから追加。垂直ジャンプ中に使用。空中ヒット時吹き飛びダウン。斜めジャンプの強Pとは発生・持続が異なる別データ。"
+}

@@ -1,0 +1,24 @@
+{
+  "character": "blanka",
+  "verifiedVersion": "Year3（公式フレームデータ参照。パッチ版数未確認）",
+  "key": "blanka-backstep-od",
+  "name": "OD バックステップローリング",
+  "category": "special",
+  "inputClassic": "63214KK",
+  "inputModern": "63214KK",
+  "startup": 8,
+  "active": "8-66",
+  "recovery": "着地後4",
+  "onHit": "10",
+  "onBlock": "6",
+  "cancel": "SA2",
+  "damage": 1000,
+  "driveGainHit": 0,
+  "driveLossBlock": -10000,
+  "driveLossPunishCounter": -5000,
+  "superGain": 1000,
+  "attribute": [
+    "上"
+  ],
+  "notes": "2026-09-13 公式フレームデータから追加。初段ヒット時吹き飛びダウン。初段の持続3F目までSA2/SA3でキャンセル可。"
+}

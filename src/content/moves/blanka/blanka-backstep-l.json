@@ -1,0 +1,25 @@
+{
+  "character": "blanka",
+  "verifiedVersion": "Year3（公式フレームデータ参照。パッチ版数未確認）",
+  "key": "blanka-backstep-l",
+  "name": "弱バックステップローリング",
+  "category": "special",
+  "inputClassic": "63214LK",
+  "inputModern": null,
+  "inputModernPrecise": "63214LK",
+  "startup": 41,
+  "active": "41-着地まで",
+  "recovery": "着地後5",
+  "onHit": "9",
+  "onBlock": "3",
+  "cancel": null,
+  "damage": 1000,
+  "driveGainHit": 2000,
+  "driveLossBlock": -8000,
+  "driveLossPunishCounter": -5000,
+  "superGain": 1000,
+  "attribute": [
+    "上"
+  ],
+  "notes": "2026-09-13 公式フレームデータから追加。モダンには弱・強のバックステップローリングは無い（中・ODのみ）。"
+}

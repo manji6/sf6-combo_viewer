@@ -1,0 +1,25 @@
+{
+  "character": "blanka",
+  "verifiedVersion": "Year3（公式フレームデータ参照。パッチ版数未確認）",
+  "key": "blanka-backstep-h-lb",
+  "name": "強バックステップローリング（ライトニングビースト中）",
+  "category": "special",
+  "inputClassic": "63214HK",
+  "inputModern": null,
+  "startup": 41,
+  "active": "41-着地まで",
+  "recovery": "着地後5",
+  "onHit": "8",
+  "onBlock": "4",
+  "cancel": null,
+  "damage": 1100,
+  "comboScaling": "始動補正10%／即時補正10%",
+  "driveGainHit": 2000,
+  "driveLossBlock": -8000,
+  "driveLossPunishCounter": -5000,
+  "superGain": 0,
+  "attribute": [
+    "上"
+  ],
+  "notes": "2026-09-13 公式フレームデータから追加。comboScaling の実際の適用は blanka-rolling-h-lb の注記を参照、実測未検証。SA2タイマー100消費。ヒット・ガード時ローリングキャノンへ派生可。"
+}

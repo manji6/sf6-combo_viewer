@@ -13,7 +13,7 @@
   "onBlock": null,
   "cancel": null,
   "damage": 4000,
-  "comboScaling": "最低保障50%。立ち強P・ロン・ポワンからのキャンセル時のみ即時補正15%",
+  "comboScaling": "最低保障50%。即時補正5%（立ち強P・ロン・ポワンからのキャンセル時は15%）",
   "driveGainHit": 0,
   "driveLossBlock": 0,
   "driveLossPunishCounter": 0,

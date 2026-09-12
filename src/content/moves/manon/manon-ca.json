@@ -1,0 +1,26 @@
+{
+  "character": "manon",
+  "verifiedVersion": "Year3（公式フレームデータ参照。パッチ版数未確認）",
+  "key": "manon-ca",
+  "name": "CA パ・ド・ドゥ",
+  "category": "super",
+  "inputClassic": "236236P",
+  "inputModern": null,
+  "inputModernPrecise": "236236P",
+  "startup": 7,
+  "active": "7-8",
+  "recovery": "72",
+  "onHit": "D",
+  "onBlock": null,
+  "cancel": null,
+  "damage": 4500,
+  "comboScaling": "最低保障50%。即時補正5%（立ち強P・ロン・ポワンからのキャンセル時は15%）",
+  "driveGainHit": 0,
+  "driveLossBlock": 0,
+  "driveLossPunishCounter": 0,
+  "superGain": 0,
+  "attribute": [
+    "投"
+  ],
+  "notes": "2026-09-13 公式フレームデータから追加。SA3 パ・ド・ドゥの体力25%以下版（クリティカルアーツ）。1-8F完全無敵。近距離。ダメージはメダルLv1（Lvで上昇: Lv5で5100）。カウンター/パニッシュカウンターで数値が変動しない。SA3で確認済みの「ロン・ポワン/立ち強Pからのキャンセル時は固定+50ダメージ」ボーナスが同様に適用されるかは未確認。モダン入力は要検証。"
+}

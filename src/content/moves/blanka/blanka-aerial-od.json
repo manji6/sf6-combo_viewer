@@ -1,0 +1,24 @@
+{
+  "character": "blanka",
+  "verifiedVersion": "Year3（公式フレームデータ参照。パッチ版数未確認）",
+  "key": "blanka-aerial-od",
+  "name": "OD エリアルローリング",
+  "category": "special",
+  "inputClassic": "j.[4]6PP",
+  "inputModern": "j.[4]6PP",
+  "startup": 13,
+  "active": "13-着地まで",
+  "recovery": "着地後15",
+  "onHit": "D",
+  "onBlock": null,
+  "cancel": null,
+  "damage": 1200,
+  "driveGainHit": 0,
+  "driveLossBlock": -4000,
+  "driveLossPunishCounter": -5000,
+  "superGain": 1300,
+  "attribute": [
+    "上"
+  ],
+  "notes": "2026-09-13 公式フレームデータから追加。ジャンプ中に発動。めくり性能。"
+}

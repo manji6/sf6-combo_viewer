@@ -1,0 +1,25 @@
+{
+  "character": "manon",
+  "verifiedVersion": "Year3（公式フレームデータ参照。パッチ版数未確認）",
+  "key": "manon-throw-back",
+  "name": "ウチマタ（後ろ投げ）",
+  "category": "throw",
+  "inputClassic": "4LPLK",
+  "inputModern": "4LPLK",
+  "startup": 5,
+  "active": "5-7",
+  "recovery": "23",
+  "onHit": "D",
+  "onBlock": null,
+  "cancel": null,
+  "damage": 1200,
+  "comboScaling": "即時補正20%",
+  "driveGainHit": 2000,
+  "driveLossBlock": 0,
+  "driveLossPunishCounter": -10000,
+  "superGain": 2000,
+  "attribute": [
+    "投"
+  ],
+  "notes": "2026-09-13 公式フレームデータから追加。パニッシュカウンター時ダメージ2040・SAゲージ4000増加・ハードノックダウン。"
+}

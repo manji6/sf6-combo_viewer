@@ -1,0 +1,24 @@
+{
+  "character": "blanka",
+  "verifiedVersion": "Year3（公式フレームデータ参照。パッチ版数未確認）",
+  "key": "blanka-electric-od-lb",
+  "name": "OD エレクトリックサンダー（ライトニングビースト中）",
+  "category": "special",
+  "inputClassic": "214PP",
+  "inputModern": "214PP",
+  "startup": 10,
+  "active": "10-21",
+  "recovery": "17",
+  "onHit": "D",
+  "onBlock": "4",
+  "cancel": "SA2",
+  "damage": 1100,
+  "driveGainHit": 0,
+  "driveLossBlock": -4000,
+  "driveLossPunishCounter": -5000,
+  "superGain": 0,
+  "attribute": [
+    "上"
+  ],
+  "notes": "2026-09-13 公式フレームデータから追加。発動後にボタンホールドで延長可能。"
+}

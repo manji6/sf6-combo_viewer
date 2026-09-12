@@ -1,0 +1,24 @@
+{
+  "character": "manon",
+  "verifiedVersion": "Year3（公式フレームデータ参照。パッチ版数未確認）",
+  "key": "manon-allonge",
+  "name": "アロンジェ（しゃがみ強P→強P）",
+  "category": "unique",
+  "inputClassic": "2HP~HP",
+  "inputModern": null,
+  "startup": 4,
+  "active": "4-7",
+  "recovery": "26",
+  "onHit": "1",
+  "onBlock": "-10",
+  "cancel": null,
+  "damage": 500,
+  "driveGainHit": 4000,
+  "driveLossBlock": -5000,
+  "driveLossPunishCounter": -7000,
+  "superGain": 1000,
+  "attribute": [
+    "上"
+  ],
+  "notes": "2026-09-13 公式フレームデータ・コマンドリストから追加。しゃがみ強P（ヴィクトワール・ポーム）からの派生2段目。モダン入力は要検証。"
+}

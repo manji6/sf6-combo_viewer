@@ -1,0 +1,25 @@
+{
+  "character": "blanka",
+  "verifiedVersion": "Year3（公式フレームデータ参照。パッチ版数未確認）",
+  "key": "blanka-5lk",
+  "name": "立ち弱K（ビーストキック）",
+  "category": "normal",
+  "inputClassic": "5LK",
+  "inputModern": null,
+  "startup": 4,
+  "active": "4-7",
+  "recovery": "7",
+  "onHit": "5",
+  "onBlock": "-2",
+  "cancel": "C",
+  "damage": 300,
+  "comboScaling": "始動補正20%",
+  "driveGainHit": 250,
+  "driveLossBlock": -500,
+  "driveLossPunishCounter": -2000,
+  "superGain": 300,
+  "attribute": [
+    "上"
+  ],
+  "notes": "2026-09-13 公式フレームデータから追加。連打キャンセル対応。モダンの割り当ては要検証。"
+}

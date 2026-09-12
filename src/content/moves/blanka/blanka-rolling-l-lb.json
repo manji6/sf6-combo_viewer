@@ -1,0 +1,26 @@
+{
+  "character": "blanka",
+  "verifiedVersion": "Year3（公式フレームデータ参照。パッチ版数未確認）",
+  "key": "blanka-rolling-l-lb",
+  "name": "弱ローリングアタック（ライトニングビースト中）",
+  "category": "special",
+  "inputClassic": "[4]6LP",
+  "inputModern": null,
+  "inputModernPrecise": "[4]6LP",
+  "startup": 10,
+  "active": "10-20",
+  "recovery": "11",
+  "onHit": "D",
+  "onBlock": "-21",
+  "cancel": "SA3",
+  "damage": 1100,
+  "comboScaling": "始動補正10%／即時補正10%",
+  "driveGainHit": 2000,
+  "driveLossBlock": -4000,
+  "driveLossPunishCounter": -5000,
+  "superGain": 0,
+  "attribute": [
+    "上"
+  ],
+  "notes": "2026-09-13 公式フレームデータから追加。SA2（ライトニングビースト）中は溜め無しで即時発動可能。強ローリングアタック（LB版）と同様、comboScaling は SA2 発動自体の即時補正10%と二重適用になる可能性があるため、実測で要継続確認（blanka-rolling-h-lb の notes 参照）。10-23F 空中判定。SA2タイマー100消費。ヒット・ガード時ローリングキャノンへ派生可。"
+}

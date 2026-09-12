@@ -1,0 +1,25 @@
+{
+  "character": "blanka",
+  "verifiedVersion": "Year3（公式フレームデータ参照。パッチ版数未確認）",
+  "key": "blanka-vertical-od-lb",
+  "name": "OD バーチカルローリング（ライトニングビースト中）",
+  "category": "special",
+  "inputClassic": "[2]8KK",
+  "inputModern": "[2]8KK",
+  "startup": 7,
+  "active": "7-22",
+  "recovery": "31+着地後17",
+  "onHit": "D",
+  "onBlock": "-40",
+  "cancel": null,
+  "damage": 1750,
+  "comboScaling": "始動補正40%／即時補正10%",
+  "driveGainHit": 0,
+  "driveLossBlock": -4000,
+  "driveLossPunishCounter": 0,
+  "superGain": 1000,
+  "attribute": [
+    "上"
+  ],
+  "notes": "2026-09-13 公式フレームデータから追加。始動補正40%は他のLB技の10%と異なる値で、SA2発動自体の補正とは別に本技固有の補正がある可能性がある（要実測）。SA2タイマー100消費。ヒット時ローリングキャノンへ派生可。4-53F 空中判定、1-10F 完全無敵。"
+}

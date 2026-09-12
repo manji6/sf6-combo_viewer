@@ -1,0 +1,25 @@
+{
+  "character": "blanka",
+  "verifiedVersion": "Year3（公式フレームデータ参照。パッチ版数未確認）",
+  "key": "blanka-wildnail",
+  "name": "ワイルドネイル",
+  "category": "unique",
+  "inputClassic": "6HP",
+  "inputModern": null,
+  "startup": 18,
+  "active": "18-21",
+  "recovery": "31",
+  "onHit": null,
+  "onBlock": "-15",
+  "cancel": null,
+  "damage": 1100,
+  "comboScaling": "始動補正20%",
+  "driveGainHit": 3000,
+  "driveLossBlock": -6000,
+  "driveLossPunishCounter": -10000,
+  "superGain": 1000,
+  "attribute": [
+    "上"
+  ],
+  "notes": "2026-09-13 公式フレームデータ・コマンドリストから追加。33-34F フィアーダウンへ派生可（通常のC/SAキャンセルではなく専用の派生ウィンドウ）。パニッシュカウンターで地上ヒット時膝崩れ・空中ヒット時床バウンドに変化。モダン入力は要検証。"
+}

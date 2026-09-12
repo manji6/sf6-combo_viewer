@@ -1,0 +1,24 @@
+{
+  "character": "manon",
+  "verifiedVersion": "Year3（公式フレームデータ参照。パッチ版数未確認）",
+  "key": "manon-jmp",
+  "name": "ジャンプ中P（クロワゼ・ドゥヴァン）",
+  "category": "normal",
+  "inputClassic": "j.MP",
+  "inputModern": null,
+  "startup": 8,
+  "active": "8-11",
+  "recovery": "着地後3",
+  "onHit": null,
+  "onBlock": null,
+  "cancel": null,
+  "damage": 700,
+  "driveGainHit": 1000,
+  "driveLossBlock": -2500,
+  "driveLossPunishCounter": -4000,
+  "superGain": 500,
+  "attribute": [
+    "中"
+  ],
+  "notes": "2026-09-13 公式フレームデータから追加。空中ヒット時吹き飛びダウン。モダンのジャンプ中攻撃割り当ては要検証。"
+}

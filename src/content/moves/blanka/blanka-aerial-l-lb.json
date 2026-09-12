@@ -1,0 +1,26 @@
+{
+  "character": "blanka",
+  "verifiedVersion": "Year3（公式フレームデータ参照。パッチ版数未確認）",
+  "key": "blanka-aerial-l-lb",
+  "name": "弱エリアルローリング（ライトニングビースト中）",
+  "category": "special",
+  "inputClassic": "j.[4]6LP",
+  "inputModern": null,
+  "inputModernPrecise": "j.[4]6LP",
+  "startup": 13,
+  "active": "13-着地まで",
+  "recovery": "着地後17",
+  "onHit": "D",
+  "onBlock": null,
+  "cancel": null,
+  "damage": 1100,
+  "comboScaling": "始動補正10%／即時補正10%",
+  "driveGainHit": 2000,
+  "driveLossBlock": -4000,
+  "driveLossPunishCounter": -5000,
+  "superGain": 0,
+  "attribute": [
+    "上"
+  ],
+  "notes": "2026-09-13 公式フレームデータから追加。comboScaling の実際の適用は blanka-rolling-h-lb の注記を参照、実測未検証。SA2タイマー100消費。ヒット・ガード時ローリングキャノンへ派生可。めくり性能。"
+}

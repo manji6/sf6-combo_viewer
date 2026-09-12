@@ -1,0 +1,24 @@
+{
+  "character": "blanka",
+  "verifiedVersion": "Year3（公式フレームデータ参照。パッチ版数未確認）",
+  "key": "blanka-2hk",
+  "name": "しゃがみ強K（ビーストテイル）",
+  "category": "normal",
+  "inputClassic": "2HK",
+  "inputModern": null,
+  "startup": 11,
+  "active": "11-14",
+  "recovery": "23",
+  "onHit": "D",
+  "onBlock": "-12",
+  "cancel": null,
+  "damage": 900,
+  "driveGainHit": 2000,
+  "driveLossBlock": -5000,
+  "driveLossPunishCounter": -10000,
+  "superGain": 1000,
+  "attribute": [
+    "下"
+  ],
+  "notes": "2026-09-13 公式フレームデータから追加。パニッシュカウンター時ダウン時間増加、ハードノックダウン。モダンの割り当ては要検証。"
+}

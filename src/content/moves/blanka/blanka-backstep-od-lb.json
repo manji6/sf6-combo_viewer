@@ -1,0 +1,25 @@
+{
+  "character": "blanka",
+  "verifiedVersion": "Year3（公式フレームデータ参照。パッチ版数未確認）",
+  "key": "blanka-backstep-od-lb",
+  "name": "OD バックステップローリング（ライトニングビースト中）",
+  "category": "special",
+  "inputClassic": "63214KK",
+  "inputModern": "63214KK",
+  "startup": 8,
+  "active": "8-66",
+  "recovery": "着地後4",
+  "onHit": "10",
+  "onBlock": "6",
+  "cancel": null,
+  "damage": 1200,
+  "comboScaling": "始動補正10%／即時補正10%",
+  "driveGainHit": 0,
+  "driveLossBlock": -10000,
+  "driveLossPunishCounter": -5000,
+  "superGain": 0,
+  "attribute": [
+    "上"
+  ],
+  "notes": "2026-09-13 公式フレームデータから追加。初段ヒット時吹き飛びダウン。SA2タイマー100消費。回転部分のヒット・ガード時ローリングキャノンへ派生可。"
+}

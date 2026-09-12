@@ -1,0 +1,22 @@
+{
+  "character": "blanka",
+  "verifiedVersion": "Year3（公式フレームデータ参照。パッチ版数未確認）",
+  "key": "blanka-raidjump",
+  "name": "レイドジャンプ",
+  "category": "special",
+  "inputClassic": "2PP~K",
+  "inputModern": null,
+  "startup": null,
+  "active": "43+着地後12",
+  "recovery": null,
+  "onHit": null,
+  "onBlock": null,
+  "cancel": null,
+  "damage": 0,
+  "driveGainHit": 0,
+  "driveLossBlock": 0,
+  "driveLossPunishCounter": 0,
+  "superGain": 0,
+  "attribute": [],
+  "notes": "2026-09-13 公式フレームデータから追加。フィアーダウン中に K で派生する跳躍技。ダメージなし。9-43F 空中判定、15-43F 空中での通常技・必殺技へ派生可。"
+}

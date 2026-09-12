@@ -11,7 +11,7 @@
   "recovery": "10",
   "onHit": "3",
   "onBlock": "-3",
-  "cancel": "C",
+  "cancel": null,
   "damage": 200,
   "comboScaling": "始動補正20%",
   "driveGainHit": 250,
@@ -21,5 +21,5 @@
   "attribute": [
     "下"
   ],
-  "notes": "連打キャンセル対応の下段。"
+  "notes": "連打キャンセル対応の下段（公式フレームデータの表記上、必殺技キャンセルを示すCマークは無し。2026-09-13 修正: cancelをCから null へ）。"
 }

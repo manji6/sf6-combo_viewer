@@ -1,0 +1,24 @@
+{
+  "character": "blanka",
+  "verifiedVersion": "Year3（公式フレームデータ参照。パッチ版数未確認）",
+  "key": "blanka-electric-lb",
+  "name": "エレクトリックサンダー（ライトニングビースト中）",
+  "category": "special",
+  "inputClassic": "214P",
+  "inputModern": "214P",
+  "startup": 10,
+  "active": "10-21",
+  "recovery": "17",
+  "onHit": "D",
+  "onBlock": "-3",
+  "cancel": "SA3",
+  "damage": 900,
+  "driveGainHit": 2000,
+  "driveLossBlock": -2000,
+  "driveLossPunishCounter": -5000,
+  "superGain": 0,
+  "attribute": [
+    "上"
+  ],
+  "notes": "2026-09-13 公式フレームデータから追加。発動後にボタンホールドで延長可能。ホールド時、4段目以降をヒット/ガードさせると追加攻撃に移行。"
+}

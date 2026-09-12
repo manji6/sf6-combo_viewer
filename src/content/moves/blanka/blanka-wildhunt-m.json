@@ -1,0 +1,25 @@
+{
+  "character": "blanka",
+  "verifiedVersion": "Year3（公式フレームデータ参照。パッチ版数未確認）",
+  "key": "blanka-wildhunt-m",
+  "name": "中ワイルドハント",
+  "category": "special",
+  "inputClassic": "236MK",
+  "inputModern": null,
+  "inputModernPrecise": "236MK",
+  "startup": 39,
+  "active": "39-41",
+  "recovery": "57",
+  "onHit": "D",
+  "onBlock": null,
+  "cancel": null,
+  "damage": 1700,
+  "driveGainHit": 5000,
+  "driveLossBlock": 0,
+  "driveLossPunishCounter": -10000,
+  "superGain": 3000,
+  "attribute": [
+    "投"
+  ],
+  "notes": "2026-09-13 公式フレームデータから追加。近距離の投げ必殺技。14-36F 空中判定。パニッシュカウンター時個別ダメージ1955。"
+}

@@ -1,0 +1,24 @@
+{
+  "character": "blanka",
+  "verifiedVersion": "Year3（公式フレームデータ参照。パッチ版数未確認）",
+  "key": "blanka-wildedge",
+  "name": "ワイルドエッジ",
+  "category": "unique",
+  "inputClassic": "4MK",
+  "inputModern": null,
+  "startup": 9,
+  "active": "9-14",
+  "recovery": "12",
+  "onHit": "8",
+  "onBlock": "2",
+  "cancel": "C",
+  "damage": 600,
+  "driveGainHit": 1500,
+  "driveLossBlock": -3000,
+  "driveLossPunishCounter": -4000,
+  "superGain": 500,
+  "attribute": [
+    "上"
+  ],
+  "notes": "2026-09-13 公式フレームデータ・コマンドリストから追加。空振り時硬直4F増加。モダン入力は要検証。"
+}

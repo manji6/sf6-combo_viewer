@@ -1,0 +1,25 @@
+{
+  "character": "blanka",
+  "verifiedVersion": "Year3（公式フレームデータ参照。パッチ版数未確認）",
+  "key": "blanka-vertical-l",
+  "name": "弱バーチカルローリング",
+  "category": "special",
+  "inputClassic": "[2]8LK",
+  "inputModern": null,
+  "inputModernPrecise": "[2]8LK",
+  "startup": 8,
+  "active": "8-27",
+  "recovery": "31+着地後17",
+  "onHit": "D",
+  "onBlock": "-27",
+  "cancel": null,
+  "damage": 1200,
+  "driveGainHit": 2000,
+  "driveLossBlock": -4000,
+  "driveLossPunishCounter": -5000,
+  "superGain": 1000,
+  "attribute": [
+    "上"
+  ],
+  "notes": "2026-09-13 公式フレームデータから追加。6-57F 空中判定、8-26F 空中判定の打撃・空弾属性に無敵。"
+}

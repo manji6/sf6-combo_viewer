@@ -1,0 +1,25 @@
+{
+  "character": "blanka",
+  "verifiedVersion": "Year3（公式フレームデータ参照。パッチ版数未確認）",
+  "key": "blanka-rolling-od-lb",
+  "name": "OD ローリングアタック（ライトニングビースト中）",
+  "category": "special",
+  "inputClassic": "[4]6PP",
+  "inputModern": "[4]6PP",
+  "startup": 18,
+  "active": "18-39",
+  "recovery": "17",
+  "onHit": "D",
+  "onBlock": "-7",
+  "cancel": null,
+  "damage": 900,
+  "comboScaling": "始動補正20%",
+  "driveGainHit": 0,
+  "driveLossBlock": -10000,
+  "driveLossPunishCounter": -5000,
+  "superGain": 0,
+  "attribute": [
+    "上"
+  ],
+  "notes": "2026-09-13 公式フレームデータから追加。18-41F 空中判定。SA2タイマー100消費。ガード時ローリングキャノンへ派生可。"
+}

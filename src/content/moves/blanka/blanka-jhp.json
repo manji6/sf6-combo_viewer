@@ -1,0 +1,24 @@
+{
+  "character": "blanka",
+  "verifiedVersion": "Year3（公式フレームデータ参照。パッチ版数未確認）",
+  "key": "blanka-jhp",
+  "name": "ジャンプ強P（サバイバルクロー）",
+  "category": "normal",
+  "inputClassic": "j.HP",
+  "inputModern": null,
+  "startup": 9,
+  "active": "9",
+  "recovery": "着地後3",
+  "onHit": null,
+  "onBlock": null,
+  "cancel": null,
+  "damage": 800,
+  "driveGainHit": 2000,
+  "driveLossBlock": -4000,
+  "driveLossPunishCounter": -5000,
+  "superGain": 1000,
+  "attribute": [
+    "中"
+  ],
+  "notes": "2026-09-13 公式フレームデータから追加。空中ヒット時叩き付けダウン。モダンのジャンプ強攻撃はジャンプ強Kが優先の可能性があり要検証。"
+}

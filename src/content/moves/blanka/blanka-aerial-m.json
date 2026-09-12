@@ -1,0 +1,25 @@
+{
+  "character": "blanka",
+  "verifiedVersion": "Year3（公式フレームデータ参照。パッチ版数未確認）",
+  "key": "blanka-aerial-m",
+  "name": "中エリアルローリング",
+  "category": "special",
+  "inputClassic": "j.[4]6MP",
+  "inputModern": null,
+  "inputModernPrecise": "j.[4]6MP",
+  "startup": 13,
+  "active": "13-着地まで",
+  "recovery": "着地後17",
+  "onHit": "D",
+  "onBlock": null,
+  "cancel": null,
+  "damage": 1000,
+  "driveGainHit": 2000,
+  "driveLossBlock": -4000,
+  "driveLossPunishCounter": -5000,
+  "superGain": 1000,
+  "attribute": [
+    "上"
+  ],
+  "notes": "2026-09-13 公式フレームデータから追加。ジャンプ中に発動。めくり性能。"
+}

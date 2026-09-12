@@ -1,0 +1,24 @@
+{
+  "character": "blanka",
+  "verifiedVersion": "Year3（公式フレームデータ参照。パッチ版数未確認）",
+  "key": "blanka-doubleknee",
+  "name": "ダブルニーボンバー",
+  "category": "unique",
+  "inputClassic": "6MK",
+  "inputModern": null,
+  "startup": 9,
+  "active": "9-20",
+  "recovery": "18",
+  "onHit": "6",
+  "onBlock": "-2",
+  "cancel": null,
+  "damage": 600,
+  "driveGainHit": 2000,
+  "driveLossBlock": -2000,
+  "driveLossPunishCounter": -3000,
+  "superGain": 500,
+  "attribute": [
+    "上"
+  ],
+  "notes": "2026-09-13 公式フレームデータ・コマンドリストから追加。初段が空中ヒット時吹き飛びダウン。強制立ち効果。モダン入力は要検証。"
+}

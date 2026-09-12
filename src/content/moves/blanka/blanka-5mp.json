@@ -1,0 +1,24 @@
+{
+  "character": "blanka",
+  "verifiedVersion": "Year3（公式フレームデータ参照。パッチ版数未確認）",
+  "key": "blanka-5mp",
+  "name": "立ち中P（ビーストチョップ）",
+  "category": "normal",
+  "inputClassic": "5MP",
+  "inputModern": null,
+  "startup": 9,
+  "active": "9-11",
+  "recovery": "15",
+  "onHit": "3",
+  "onBlock": "-4",
+  "cancel": "SA",
+  "damage": 700,
+  "driveGainHit": 2000,
+  "driveLossBlock": -4000,
+  "driveLossPunishCounter": -6000,
+  "superGain": 500,
+  "attribute": [
+    "上"
+  ],
+  "notes": "2026-09-13 公式フレームデータから追加。SAキャンセル可。モダンの5M割り当ては要検証（立ち中Kとの優先関係未確認）。"
+}

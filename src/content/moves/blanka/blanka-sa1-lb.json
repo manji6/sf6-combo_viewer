@@ -1,0 +1,26 @@
+{
+  "character": "blanka",
+  "verifiedVersion": "Year3（公式フレームデータ参照。パッチ版数未確認）",
+  "key": "blanka-sa1-lb",
+  "name": "SA1 シャウトオブアース（ライトニングビースト中）",
+  "category": "super",
+  "inputClassic": "236236K",
+  "inputModern": null,
+  "inputModernPrecise": "236236K",
+  "startup": 8,
+  "active": "8-16",
+  "recovery": "全体78",
+  "onHit": "D",
+  "onBlock": "-29",
+  "cancel": null,
+  "damage": 2200,
+  "comboScaling": "最低保障30%",
+  "driveGainHit": 0,
+  "driveLossBlock": -2500,
+  "driveLossPunishCounter": -5000,
+  "superGain": 0,
+  "attribute": [
+    "弾"
+  ],
+  "notes": "2026-09-13 公式フレームデータから追加。1-9F 打撃・投げに対して無敵。カウンター/パニッシュカウンターで数値が変動しない。"
+}

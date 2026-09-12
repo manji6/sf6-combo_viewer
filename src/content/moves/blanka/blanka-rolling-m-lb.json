@@ -1,0 +1,26 @@
+{
+  "character": "blanka",
+  "verifiedVersion": "Year3（公式フレームデータ参照。パッチ版数未確認）",
+  "key": "blanka-rolling-m-lb",
+  "name": "中ローリングアタック（ライトニングビースト中）",
+  "category": "special",
+  "inputClassic": "[4]6MP",
+  "inputModern": null,
+  "inputModernPrecise": "[4]6MP",
+  "startup": 12,
+  "active": "12-30",
+  "recovery": "11",
+  "onHit": "D",
+  "onBlock": "-21",
+  "cancel": "SA3",
+  "damage": 1300,
+  "comboScaling": "始動補正10%／即時補正10%",
+  "driveGainHit": 2000,
+  "driveLossBlock": -4000,
+  "driveLossPunishCounter": -5000,
+  "superGain": 0,
+  "attribute": [
+    "上"
+  ],
+  "notes": "2026-09-13 公式フレームデータから追加。comboScaling の実際の適用は blanka-rolling-h-lb の注記（SA2発動自体の即時補正10%との二重適用の懸念）を参照、実測未検証。12-32F 空中判定。パニッシュカウンター時吹き飛び時間延長。SA2タイマー100消費。ヒット・ガード時ローリングキャノンへ派生可。"
+}

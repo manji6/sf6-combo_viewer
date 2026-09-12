@@ -1,0 +1,24 @@
+{
+  "character": "blanka",
+  "verifiedVersion": "Year3（公式フレームデータ参照。パッチ版数未確認）",
+  "key": "blanka-jhk",
+  "name": "ジャンプ強K（サバイバルキック）",
+  "category": "normal",
+  "inputClassic": "j.HK",
+  "inputModern": "j.H",
+  "startup": 11,
+  "active": "11-16",
+  "recovery": "着地後3",
+  "onHit": null,
+  "onBlock": null,
+  "cancel": null,
+  "damage": 800,
+  "driveGainHit": 2000,
+  "driveLossBlock": -4000,
+  "driveLossPunishCounter": -5000,
+  "superGain": 1000,
+  "attribute": [
+    "中"
+  ],
+  "notes": "2026-09-13 公式フレームデータから追加。飛び込みに使う主力ジャンプ攻撃。"
+}

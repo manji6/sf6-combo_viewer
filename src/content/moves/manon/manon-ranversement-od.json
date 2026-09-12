@@ -1,0 +1,24 @@
+{
+  "character": "manon",
+  "verifiedVersion": "Year3（公式フレームデータ参照。パッチ版数未確認）",
+  "key": "manon-ranversement-od",
+  "name": "OD ランヴェルセ（メダルLvに応じて動作が変化）",
+  "category": "special",
+  "inputClassic": "236PP",
+  "inputModern": null,
+  "startup": 25,
+  "active": "25-26",
+  "recovery": "34",
+  "onHit": "D",
+  "onBlock": "-20",
+  "cancel": null,
+  "damage": 1500,
+  "driveGainHit": 0,
+  "driveLossBlock": -2000,
+  "driveLossPunishCounter": -8000,
+  "superGain": 2150,
+  "attribute": [
+    "上"
+  ],
+  "notes": "2026-09-13 公式フレームデータから追加。ダメージはメダルLv1（Lvで上昇: Lv2 1650・Lv3 1800・Lv4 1950・Lv5 2100）。3-26F 膝から上打撃・飛び道具に無敵。ボタンホールドでフェイント派生（全体27F）。ヒット時にメダルLv+1。弱/中/強と異なりSAキャンセル不可。モダン入力は要検証。"
+}
