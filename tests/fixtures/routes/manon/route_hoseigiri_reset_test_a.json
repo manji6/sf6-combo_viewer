@@ -1,0 +1,17 @@
+{
+  "id": "route_hoseigiri_reset_test_a",
+  "character": "manon",
+  "from": "neutral_mid",
+  "to": "hit_hoseigiri_reset_test",
+  "kind": "combo_route",
+  "label": "（テスト用）中P×2",
+  "steps": [
+    { "move": "中P", "command": "5MP", "moveKey": "manon-5mp", "cancel": true },
+    { "move": "中P", "command": "5MP", "moveKey": "manon-5mp" }
+  ],
+  "resources": { "driveCost": 0, "superCost": 0, "saLevel": null },
+  "damage": 1200,
+  "difficulty": 1,
+  "controlType": "both",
+  "tags": []
+}

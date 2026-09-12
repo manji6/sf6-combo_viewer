@@ -6,7 +6,9 @@
 //  - moveKey を持つ step のみ「ヒット」として扱う。DR/DRC/CDR（moveKey 無し・
 //    command が DR系）は非ヒット・以降 DR 係数を適用するだけの印。
 //  - action（whiff/feint/walk 等）付きの step は非ヒット。whiff/feint は「補正切り」
-//    として段（stage）を 1 にリセットする。
+//    として段（stage）を 1 にリセットする。空振り/フェイントを伴わない補正切り
+//    （タゲコンの浮かせ直し等）は、遷移先の situation が「補正切り」タグを
+//    持っていればパーツの境界でリセットする。
 //  - 技辞典の damage は多段技でも 1 つの数値しか持たないため、多段の内訳計算はしない
 //    （既存の手入力ダメージ運用と同じ粒度）。
 //
@@ -18,7 +20,7 @@
 //    以降の全ヒットの残存率から◯ポイントを差し引く。同じ技を2回使うと
 //    重ね掛けされる（画面端補正切りコンボの弱グランフェッテ2回で確認）。
 //    適用順は「段の残存率 − 即時補正の累計」→ DR係数 → floor。
-import { getRoute, moveByKey } from '../../data';
+import { getRoute, getSituation, moveByKey } from '../../data';
 import type { Combo, Move, Step } from '../../data/types';
 import {
   CANDIDATE_RULESET_2026_09,
@@ -147,6 +149,17 @@ export function calculateComboDamage(
       });
       stage++;
       if (ownImmediate != null) immediateOffset += ownImmediate;
+    }
+
+    // 補正切り: 空振り/フェイントを伴わない場合もある（タゲコンの浮かせ直し等で
+    // 相手が一度「ニュートラルに近い状態」へ戻り、真のコンボが終わるケース）。
+    // その状況ノードに「補正切り」タグが付いていれば、次のパーツの前で段をリセットする。
+    // 2026-09-13 オーナー実測（画面端補正切りコンボの全7ヒット + 補正切り後の
+    // 中マネージュ・ドレ）で確認した。
+    if (getSituation(route.to).tags.includes('補正切り')) {
+      stage = 1;
+      immediateOffset = 0;
+      drApplied = false;
     }
   }
 

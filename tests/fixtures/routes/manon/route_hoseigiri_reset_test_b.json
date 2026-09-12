@@ -1,0 +1,16 @@
+{
+  "id": "route_hoseigiri_reset_test_b",
+  "character": "manon",
+  "from": "hit_hoseigiri_reset_test",
+  "to": "kd_after_degage_light_mid",
+  "kind": "okizeme",
+  "label": "（テスト用）補正切り後の中P",
+  "steps": [
+    { "move": "中P", "command": "5MP", "moveKey": "manon-5mp" }
+  ],
+  "resources": { "driveCost": 0, "superCost": 0, "saLevel": null },
+  "damage": 600,
+  "difficulty": 1,
+  "controlType": "both",
+  "tags": []
+}

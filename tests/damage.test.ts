@@ -94,4 +94,17 @@ describe('calculateComboDamage', () => {
     expect(result.hits.map((h) => h.damage)).toEqual([1200]);
     expect(result.hits[0].appliedRules.some((r) => r.includes('即時補正'))).toBe(false);
   });
+
+  it('空振り/フェイントを伴わない補正切りも、situation の「補正切り」タグでリセットする', () => {
+    // タゲコンの浮かせ直し等、action:'whiff'|'feint' を伴わずにコンボが切れるケース
+    // （2026-09-13 オーナー実測: 画面端補正切りコンボの全7ヒットで確認）。
+    const combo = getCombo('manon-test-hoseigiri-reset');
+    const result = calculateComboDamage(combo);
+    expect(result.status).toBe('calculated');
+    // 中P(600,stage1=100%) → 中P(600,stage2=100%) →[補正切りタグでリセット]→
+    // 中P(600,stage1=100%、リセットされていなければ stage3=80%=480 になるはず)
+    expect(result.hits.map((h) => h.damage)).toEqual([600, 600, 600]);
+    expect(result.hits[2].stage).toBe(1);
+    expect(result.totalDamage).toBe(1800);
+  });
 });

@@ -1,0 +1,9 @@
+{
+  "id": "hit_hoseigiri_reset_test",
+  "character": "manon",
+  "label": "（テスト用）補正切りタグ付き状況",
+  "kind": "hit",
+  "position": "midscreen",
+  "opponentState": "neutral",
+  "tags": ["補正切り"]
+}
