@@ -1,0 +1,22 @@
+{
+  "id": "route_rondpoint_sa3_dr_test",
+  "character": "manon",
+  "from": "neutral_mid",
+  "to": "kd_after_degage_light_mid",
+  "kind": "combo_route",
+  "label": "（テスト用）中P → CDR → 2中P×3 → 弱ロン・ポワン → SA3",
+  "steps": [
+    { "move": "中P", "command": "5MP", "moveKey": "manon-5mp", "cancel": true },
+    { "move": "キャンセルドライブラッシュ", "command": "DRC" },
+    { "move": "2中P", "command": "2MP", "moveKey": "manon-2mp", "cancel": true },
+    { "move": "2中P", "command": "2MP", "moveKey": "manon-2mp", "cancel": true },
+    { "move": "2中P", "command": "2MP", "moveKey": "manon-2mp", "cancel": true },
+    { "move": "弱ロン・ポワン", "command": "236LK", "moveKey": "manon-rondpoint-l", "cancel": true },
+    { "move": "SA3（パ・ド・ドゥ）", "command": "236236P", "moveKey": "manon-sa3" }
+  ],
+  "resources": { "driveCost": 3, "superCost": 3, "saLevel": 3 },
+  "damage": 6800,
+  "difficulty": 4,
+  "controlType": "classic",
+  "tags": []
+}

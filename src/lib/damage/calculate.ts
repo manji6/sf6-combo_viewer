@@ -34,6 +34,17 @@ import type { CalculationIssue, CalculationResult, HitBreakdown } from './types'
 
 const DR_COMMAND_RE = /^(DR|DRC|CDR)$/;
 
+// SA3（manon-sa3）固有の即時補正（2026-09-13 オーナー実測・公式サイトの補正値
+// 説明で確認）。技辞典の comboScaling には「最低保障50%。立ち強P・ロン・ポワン
+// からのキャンセル時のみ即時補正15%」とあるが、実際の挙動は率ではなく
+// 「最低保証適用後の値に固定+50ダメージ」だった（弱ロン・ポワンからキャンセル、
+// 実測2050 = 4000×50%保証 + 50 で確認）。強P からの場合は未確認だが、
+// 技辞典の注記が両方を並べて書いているため同じ扱いにしておく。
+// 一般化した「即時補正」パーサでは表現できない技固有の例外のため、ここに直接書く。
+const SA3_MOVE_KEY = 'manon-sa3';
+const SA3_CANCEL_BONUS_SOURCE_RE = /^manon-(rondpoint|5hp)/;
+const SA3_CANCEL_BONUS_DAMAGE = 50;
+
 /** チェーン全体から最初の「本当のヒット」の step を探す（DR・action 付きは飛ばす） */
 function findFirstHitStep(stepGroups: Step[][]): Step | undefined {
   for (const group of stepGroups) {
@@ -60,6 +71,7 @@ export function calculateComboDamage(
   let stage = parseStarterScalingPercent(firstMove?.comboScaling) != null ? 2 : 1;
   let drApplied = false;
   let immediateOffset = 0; // 即時補正の累計（ポイント）。ヒットのたびに増えていく
+  let previousHitMoveKey: string | undefined;
   let stepIndex = 0;
 
   for (const route of chain) {
@@ -104,6 +116,32 @@ export function calculateComboDamage(
       const appliedRules = [`stage${stage}=${stagePercent}%`];
       let percent = stagePercent;
 
+      // 即時補正: このヒット自身にも、これまでの累計オフセットを適用する。
+      // ただしコンボの最初のヒット（例: 単発の投げ）には適用しない
+      // （始動補正と同様、始動そのものを自己ペナルティしない。投げの
+      // 「即時補正20%」を単発投げに適用すると実測と食い違うことを確認）。
+      // SA3 の「即時補正15%」は「立ち強P・ロン・ポワンからのキャンセル時のみ」
+      // という条件付きで、無条件の即時補正とは扱いが違う（下の SA3 固有処理を
+      // 参照）ため、ここでは読み取らない。
+      const isFirstHit = step === firstHit;
+      const ownImmediate =
+        isFirstHit || step.moveKey === SA3_MOVE_KEY
+          ? undefined
+          : parseImmediateScalingPercent(move.comboScaling);
+      if (!isFirstHit && (ownImmediate != null || immediateOffset > 0)) {
+        const totalOffset = immediateOffset + (ownImmediate ?? 0);
+        percent -= totalOffset;
+        appliedRules.push(`即時補正-${totalOffset}pt`);
+      }
+
+      if (drApplied) {
+        percent *= ruleset.driveRushMultiplier;
+        appliedRules.push(`DR×${ruleset.driveRushMultiplier}`);
+      }
+
+      // SA最低保証: DR 等で下がった後の値に対する「下限」として扱う（保証成立後に
+      // さらに DR 等を掛けない）。manon-mid-5mp-lethal-sa3 の実測（DR併用のSA3が
+      // 保証50%ちょうどになる）で確認。
       if (move.category === 'super') {
         const guarantee = parseMinGuaranteePercent(move.comboScaling);
         if (guarantee != null && guarantee > percent) {
@@ -111,28 +149,21 @@ export function calculateComboDamage(
           appliedRules.push(`SA最低保証${guarantee}%`);
         }
       }
-
-      // 即時補正: このヒット自身にも、これまでの累計オフセットを適用する。
-      // ただしコンボの最初のヒット（例: 単発の投げ）には適用しない
-      // （始動補正と同様、始動そのものを自己ペナルティしない。投げの
-      // 「即時補正20%」を単発投げに適用すると実測と食い違うことを確認）
-      const isFirstHit = step === firstHit;
-      const ownImmediate = isFirstHit ? undefined : parseImmediateScalingPercent(move.comboScaling);
-      if (!isFirstHit && (ownImmediate != null || immediateOffset > 0)) {
-        const totalOffset = immediateOffset + (ownImmediate ?? 0);
-        percent -= totalOffset;
-        appliedRules.push(`即時補正-${totalOffset}pt`);
-      }
       const guaranteedPercent = percent;
 
-      if (drApplied) {
-        percent *= ruleset.driveRushMultiplier;
-        appliedRules.push(`DR×${ruleset.driveRushMultiplier}`);
-      }
       const finalPercent = ruleset.roundScalingPercent ? Math.floor(percent) : percent;
 
       let damage = (move.damage * finalPercent) / 100;
       if (ruleset.roundFinalDamage) damage = Math.floor(damage);
+
+      if (
+        step.moveKey === SA3_MOVE_KEY &&
+        previousHitMoveKey &&
+        SA3_CANCEL_BONUS_SOURCE_RE.test(previousHitMoveKey)
+      ) {
+        damage += SA3_CANCEL_BONUS_DAMAGE;
+        appliedRules.push(`SA3即時補正+${SA3_CANCEL_BONUS_DAMAGE}`);
+      }
 
       hits.push({
         stepIndex: idx,
@@ -149,6 +180,7 @@ export function calculateComboDamage(
       });
       stage++;
       if (ownImmediate != null) immediateOffset += ownImmediate;
+      previousHitMoveKey = step.moveKey;
     }
 
     // 補正切り: 空振り/フェイントを伴わない場合もある（タゲコンの浮かせ直し等で

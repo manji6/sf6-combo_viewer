@@ -107,4 +107,20 @@ describe('calculateComboDamage', () => {
     expect(result.hits[2].stage).toBe(1);
     expect(result.totalDamage).toBe(1800);
   });
+
+  it('SA最低保証はDR等で下がった後の下限として働き、ロン・ポワンからのキャンセルSA3は固定+50される', () => {
+    // 2026-09-13 オーナー実測（弱ロン・ポワン→SA3、DR併用）で確認:
+    // SA3自体は段6=table50%×DR0.85=42.5%→42%だが、最低保証50%の方が高いので
+    // 50%が採用され（保証はDR後の下限）、さらにロン・ポワンからのキャンセル
+    // ボーナス+50が乗る。
+    const combo = getCombo('manon-test-sa3-rondpoint-cancel');
+    const result = calculateComboDamage(combo);
+    expect(result.status).toBe('calculated');
+    const sa3Hit = result.hits[result.hits.length - 1];
+    expect(sa3Hit.moveKey).toBe('manon-sa3');
+    expect(sa3Hit.finalPercent).toBe(50);
+    expect(sa3Hit.damage).toBe(2050); // 4000×50% + 50
+    expect(sa3Hit.appliedRules.join(' ')).toContain('SA最低保証50%');
+    expect(sa3Hit.appliedRules.join(' ')).toContain('SA3即時補正+50');
+  });
 });

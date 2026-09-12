@@ -1,0 +1,11 @@
+{
+  "slug": "manon-test-sa3-rondpoint-cancel",
+  "character": "manon",
+  "name": "（テスト用）弱ロン・ポワンキャンセルSA3",
+  "situationLabel": "テスト用",
+  "routeChain": ["route_rondpoint_sa3_dr_test"],
+  "startFrom": "neutral_mid",
+  "endAt": "kd_after_degage_light_mid",
+  "difficulty": 1,
+  "tags": []
+}

@@ -23,11 +23,15 @@ export interface HitBreakdown {
   move: string;
   /** このヒット時点での「段」（1 始まり。補正切りで 1 に戻る） */
   stage: number;
-  /** 段に対応する残存率（%）。適用順は stage% → SA 最低保証 → DR 係数 */
+  /** 段（stageScalingPercent テーブル）に対応する残存率（%） */
   stagePercent: number;
-  /** SA 最低保証を適用した後の残存率（%）。対象外ならは stagePercent と同じ */
+  /**
+   * 即時補正・DR係数・SA最低保証まで適用した後の残存率（%、floor 前）。
+   * 適用順は stage% → 即時補正 → DR係数 → SA最低保証（保証は DR 後の下限として
+   * 扱う。保証成立後にさらに DR を掛けない）。
+   */
   guaranteedPercent: number;
-  /** DR 係数（0.85）を適用した後の最終残存率（%） */
+  /** guaranteedPercent を floor した最終残存率（%） */
   finalPercent: number;
   baseDamage: number;
   damage: number;
