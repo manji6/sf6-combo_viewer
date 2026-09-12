@@ -1,8 +1,13 @@
 ---
 // dev 限定: drafts/*.json の検証結果とダイジェストを表示する（register-combo Skill 用）。
 // 本番ビルドでは 404。
+// R06/R12: 単体のスキーマ検証だけでなく、既存データとマージした仮想データセットで
+// validateAll() も実行し、promote 前に参照・chain 等の不整合も見える化する
+// （promote-draft.ts の事前検証と同じロジック）。
 import { existsSync, readFileSync, readdirSync } from 'node:fs';
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import { combos, moves, routes, situations } from '../../data';
+import { validateAll } from '../../lib/graph/derive';
 import {
   characterSchema,
   comboSchema,
@@ -15,18 +20,34 @@ if (!import.meta.env.DEV) {
   return new Response(null, { status: 404 });
 }
 
-const schemas: Record<string, { safeParse: (v: unknown) => { success: boolean; error?: any } }> = {
+const schemas: Record<string, { safeParse: (v: unknown) => { success: boolean; error?: any; data?: any } }> = {
   characters: characterSchema,
   situations: situationSchema,
   routes: routeSchema,
   combos: comboSchema,
   moves: moveSchema,
 };
+const ID_FIELD: Record<string, string> = {
+  characters: 'id',
+  situations: 'id',
+  routes: 'id',
+  combos: 'slug',
+  moves: 'key',
+};
+const EXISTING: Record<string, Record<string, unknown>[]> = { situations, routes, combos, moves };
 
 const dir = new URL('../../../drafts/', import.meta.url).pathname.replace(/^\/([A-Za-z]:)/, '$1');
 const files = existsSync(dir) ? readdirSync(dir).filter((f) => f.endsWith('.json')) : [];
 
-type Entry = { file: string; collection?: string; id?: string; ok: boolean; issues: string[]; json: string };
+type Entry = {
+  file: string;
+  collection?: string;
+  id?: string;
+  isUpdate?: boolean;
+  ok: boolean;
+  issues: string[];
+  json: string;
+};
 const entries: Entry[] = files.map((file) => {
   const m = file.match(/^([a-z]+)__(.+)\.json$/);
   let raw: unknown;
@@ -46,23 +67,65 @@ const entries: Entry[] = files.map((file) => {
     : (parsed.error.issues as { path: (string | number)[]; message: string }[]).map(
         (i) => `${i.path.join('.') || '(root)'}: ${i.message}`,
       );
-  return { file, collection, id, ok: parsed.success, issues, json };
+  const idField = ID_FIELD[collection];
+  const isUpdate = parsed.success && idField
+    ? (EXISTING[collection] ?? []).some((r) => r[idField] === (parsed.data as Record<string, unknown>)[idField])
+    : undefined;
+  return { file, collection, id, isUpdate, ok: parsed.success, issues, json };
 });
+
+// 仮想データセット（既存 ＋ ドラフト、同じ id/slug/key のドラフトは更新として置換）で
+// validateAll を実行し、参照・chain・character 整合の不具合も個別スキーマ検証より前に出す。
+function merge<T extends Record<string, unknown>>(collection: string, existing: T[]): T[] {
+  const idField = ID_FIELD[collection];
+  const byId = new Map(existing.map((r) => [r[idField], r]));
+  for (const e of entries) {
+    if (e.collection === collection && e.ok) {
+      const raw = JSON.parse(readFileSync(dir + e.file, 'utf8'));
+      byId.set(raw[idField], raw);
+    }
+  }
+  return [...byId.values()];
+}
+const graphErrors = entries.some((e) => !e.ok)
+  ? [] // スキーマ検証で落ちているものがあれば、まずそちらを直してもらう
+  : validateAll({
+      situations: merge('situations', situations),
+      routes: merge('routes', routes),
+      combos: merge('combos', combos),
+      moves: merge('moves', moves),
+    });
 ---
 
 <BaseLayout title="ドラフトプレビュー（dev）" crumbs={[{ label: 'preview' }]}>
   <h1>ドラフトプレビュー</h1>
   <p class="note">
     <code>drafts/*.json</code>（{entries.length} 件）の検証結果。承認後
-    <code>npm run promote-draft</code> で <code>src/content/</code> へ移動。
+    <code>npm run promote-draft</code>（<code>-- --dry-run</code> で反映せず確認のみ）で
+    <code>src/content/</code> へ移動。promote 側も同じ検証を通らない限り 1 件も反映しない。
   </p>
   {entries.length === 0 && <p class="empty">drafts/ に JSON がありません。</p>}
+  {
+    graphErrors.length > 0 && (
+      <section class="draft ng">
+        <h2><span class="badge">NG</span>全体検証（既存データとマージ後）</h2>
+        <p class="note">
+          個別のスキーマ検証は通っても、参照先・chain の連続性・character 整合等が既存データと
+          合わない場合はここに出る（promote-draft.ts の事前検証と同じ）。
+        </p>
+        <ul class="issues">
+          {graphErrors.map((e) => <li>{e}</li>)}
+        </ul>
+      </section>
+    )
+  }
   {
     entries.map((e) => (
       <section class={`draft ${e.ok ? 'ok' : 'ng'}`}>
         <h2>
           <span class="badge">{e.ok ? 'OK' : 'NG'}</span>
           {e.collection ?? '?'} / {e.id ?? e.file}
+          {e.isUpdate && <span class="upd">更新</span>}
         </h2>
         {e.issues.length > 0 && (
           <ul class="issues">
@@ -91,6 +154,7 @@ const entries: Entry[] = files.map((file) => {
   .badge { font-family: var(--font-pixel); font-size: 0.7rem; padding: 0 0.4em; background: var(--border-strong); color: var(--bg); }
   .draft.ok .badge { background: var(--risk-low); }
   .draft.ng .badge { background: var(--risk-high); }
+  .upd { font-size: 0.68rem; color: var(--text-faint); border: 1px solid var(--border-strong); padding: 0 0.4em; }
   .issues { margin: 0.3rem 0; color: var(--risk-high); font-size: 0.85rem; }
   pre { overflow-x: auto; font-size: 0.78rem; background: var(--bg-sunken); padding: 0.6rem; }
 </style>
