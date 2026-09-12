@@ -1,0 +1,17 @@
+{
+  "key": "manon-test-combo-correction",
+  "character": "manon",
+  "name": "（テスト用）コンボ補正持ちの技",
+  "category": "special",
+  "inputClassic": "5HP",
+  "inputModern": null,
+  "startup": 10,
+  "active": "10",
+  "recovery": "20",
+  "onHit": "+2",
+  "onBlock": "-2",
+  "cancel": null,
+  "damage": 600,
+  "comboScaling": "コンボ補正20%",
+  "verifiedVersion": "テスト用フィクスチャ"
+}

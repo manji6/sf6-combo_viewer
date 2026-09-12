@@ -123,4 +123,26 @@ describe('calculateComboDamage', () => {
     expect(sa3Hit.appliedRules.join(' ')).toContain('SA最低保証50%');
     expect(sa3Hit.appliedRules.join(' ')).toContain('SA3即時補正+50');
   });
+
+  it('パニッシュカウンター（PC）は基礎ダメージに ×1.2（2026-09-13 オーナー実測、強K/強P/DIの3例で確認）', () => {
+    const combo = getCombo('manon-test-pc-bonus');
+    const result = calculateComboDamage(combo);
+    expect(result.status).toBe('calculated');
+    // 中P(600) の PC ボーナス: 600×1.2=720、stage1=100% のまま
+    expect(result.hits[0].baseDamage).toBe(720);
+    expect(result.hits[0].damage).toBe(720);
+    expect(result.hits[0].appliedRules.some((r) => r.includes('PC×'))).toBe(true);
+  });
+
+  it('「コンボ補正」は始動補正と同種だが始動技以外でも発動し、自分自身には掛からない（manon-tanlie で確認）', () => {
+    const combo = getCombo('manon-test-combo-correction');
+    const result = calculateComboDamage(combo);
+    expect(result.status).toBe('calculated');
+    // 中P(600,stage1=100%)=600 → コンボ補正技(600,stage2=100%、自身は前進の影響なし)=600
+    // → 中P(600, 本来なら stage3=80%=480 のはずが、直前の技のコンボ補正で
+    //   1段前進した stage4=70%=420 になる)
+    expect(result.hits.map((h) => h.damage)).toEqual([600, 600, 420]);
+    expect(result.hits[2].stage).toBe(4);
+    expect(result.totalDamage).toBe(1620);
+  });
 });

@@ -1,0 +1,11 @@
+{
+  "slug": "manon-test-combo-correction",
+  "character": "manon",
+  "name": "（テスト用）コンボ補正の前進",
+  "situationLabel": "テスト用",
+  "routeChain": ["route_combo_correction_test"],
+  "startFrom": "neutral_mid",
+  "endAt": "kd_after_degage_light_mid",
+  "difficulty": 1,
+  "tags": []
+}

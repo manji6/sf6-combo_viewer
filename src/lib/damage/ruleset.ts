@@ -10,8 +10,6 @@
 // 未確定・未実装（既知の欠落。積極的に「それらしい値」で埋めていない）:
 //  - モダン簡易入力による補正（通常 0.8 倍、技によって継承・例外あり）
 //  - ジャストパリィ後の反撃（0.5 倍）、DI ガード壁やられ（0.8 倍）
-//  - パニッシュカウンターの基礎値ボーナス（強K で2例確認したが強P の1例と
-//    整合せず、技固有の可能性が高いため保留）
 //  - 端数処理は「率を都度 floor → 最後にダメージを floor」以外の方式も候補にある
 //
 // 判明済みだが実装していない既知の制限（技の仕様であって計算式のバグではない）:
@@ -27,18 +25,26 @@
 // 2026-09-13 オーナーが公式サイトの補正値説明ページの文言を確認・共有してくれた。
 // 用語の対応（本ファイルの実装との対応関係）:
 //   始動補正 = 「コンボの初段にヒットさせた際に加算される補正」
-//     → parseStarterScalingPercent（段の前進として実装）
+//     → parseStarterScalingPercent。この技自身の値は変えず、以降のヒットの
+//     段を1つ前進させる（自分自身には掛からない）。
 //   コンボ補正 = 「コンボの2段目以降にヒットさせた際に加算される補正」
-//     → stageScalingPercent のテーブルそのもの
+//     → 段階テーブル（stageScalingPercent）そのものに加えて、manon-tanlie 等の
+//     「コンボ補正◯%」表記も同じ性質の補正だと判明した（parseComboCorrectionPercent）。
+//     始動補正と同じく、この技自身には掛からず、以降のヒットの段を前進させる。
+//     始動補正との違いは「コンボの最初のヒットである必要がない」こと
+//     （manon-punish-5hp-pc-ranversement のタン・リエ＝2段目で確認）。
 //   即時補正 = 「コンボの2段目以降にヒットさせた際、その技自体に加算される補正」
-//     → parseImmediateScalingPercent。ただし「加算」の中身は技によって形が違う
-//     （グランフェッテは％の減算だったが、SA3 のロン・ポワンキャンセルは固定
-//     ダメージの加算だった。calculate.ts の SA3_CANCEL_BONUS_* を参照）
+//     → parseImmediateScalingPercent。コンボ補正と違い、この技自身にも掛かり、
+//     かつ以降にも持続する（グランフェッテで確認）。「加算」の中身は技によって
+//     形が違う（グランフェッテは％の減算だったが、SA3 のロン・ポワンキャンセルは
+//     固定ダメージの加算だった。calculate.ts の SA3_CANCEL_BONUS_* を参照）。
 //   乗算補正 = 「コンボに組み込んだ際に、それ以降のコンボ補正値に乗算される補正値」
 //     → driveRushMultiplier（DR の 0.85 倍）がこれに当たると考えられる
-// 「コンボ補正◯%」という表記（manon-tanlie 等）は、上の「コンボ補正」（段の
-// テーブルそのもの）とは別に技固有の値として書かれているように見えるが、
-// 実測と食い違ったため今回は計算に使っていない（要継続確認）。
+//
+// パニッシュカウンター（PC）は、当該ヒットの基礎ダメージに ×1.2 のボーナスが
+// 掛かることを強K・強P・ドライブインパクトの3例（いずれも合計値が完全一致）で
+// 確認した（calculate.ts の PC_DAMAGE_MULTIPLIER）。判定は step.command に
+// notation の PC メタトークンが含まれるかで行う。
 export interface DamageRuleset {
   id: string;
   /** 何を根拠にしたかの短い説明 */
@@ -111,5 +117,20 @@ export function parseStarterScalingPercent(comboScaling: string | null | undefin
 export function parseImmediateScalingPercent(comboScaling: string | null | undefined): number | undefined {
   if (!comboScaling) return undefined;
   const m = comboScaling.match(IMMEDIATE_SCALING_RE);
+  return m ? Number(m[1]) : undefined;
+}
+
+const COMBO_CORRECTION_RE = /コンボ補正(\d+)%/;
+
+/**
+ * Move.comboScaling の「コンボ補正◯%」を読み取る（無ければ undefined）。
+ * 2026-09-13 オーナー実測との答え合わせで確認: 始動補正と同じ「段を1つ前進」
+ * だが、始動技である必要がない（2段目以降でも発動する）。この技自身の値には
+ * 掛からず、以降のヒットにだけ効く（manon-tanlie を2段目で使うコンボで、
+ * 3段目以降がすべて1段前進した値になることを確認。tanlie 自身は前進なし）。
+ */
+export function parseComboCorrectionPercent(comboScaling: string | null | undefined): number | undefined {
+  if (!comboScaling) return undefined;
+  const m = comboScaling.match(COMBO_CORRECTION_RE);
   return m ? Number(m[1]) : undefined;
 }

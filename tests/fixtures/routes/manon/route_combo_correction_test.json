@@ -1,0 +1,18 @@
+{
+  "id": "route_combo_correction_test",
+  "character": "manon",
+  "from": "neutral_mid",
+  "to": "kd_after_degage_light_mid",
+  "kind": "combo_route",
+  "label": "（テスト用）中P → コンボ補正技 → 中P",
+  "steps": [
+    { "move": "中P", "command": "5MP", "moveKey": "manon-5mp", "cancel": true },
+    { "move": "コンボ補正技", "command": "5HP", "moveKey": "manon-test-combo-correction", "cancel": true },
+    { "move": "中P", "command": "5MP", "moveKey": "manon-5mp" }
+  ],
+  "resources": { "driveCost": 0, "superCost": 0, "saLevel": null },
+  "damage": 1800,
+  "difficulty": 1,
+  "controlType": "classic",
+  "tags": []
+}

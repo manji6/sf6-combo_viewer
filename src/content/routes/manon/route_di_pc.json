@@ -8,7 +8,7 @@
   "steps": [
     {
       "move": "ドライブインパクト",
-      "command": "DI",
+      "command": "PC DI",
       "moveKey": "manon-impact",
       "note": "相手のインパクト/技をパニカン、またはアーマー後にヒット"
     }

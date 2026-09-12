@@ -16,14 +16,20 @@
 //  - Move.comboScaling の「始動補正◯%」: この技がコンボの最初のヒットなら、
 //    以降のヒットの段が1つ前進する（弱P/弱K/2弱P/ドライブインパクトで確認。
 //    OD必殺技にも同じ表記があるが未確認）。
+//  - Move.comboScaling の「コンボ補正◯%」: 始動補正と同じ「段を1つ前進」だが、
+//    始動技である必要がない（manon-tanlie を2段目で使うコンボで確認）。
 //  - Move.comboScaling の「即時補正◯%」: この技がヒットした時点で、自身と
 //    以降の全ヒットの残存率から◯ポイントを差し引く。同じ技を2回使うと
 //    重ね掛けされる（画面端補正切りコンボの弱グランフェッテ2回で確認）。
 //    適用順は「段の残存率 − 即時補正の累計」→ DR係数 → floor。
+//  - パニッシュカウンター（PC）: 基礎ダメージに ×1.2（強K・強P・ドライブ
+//    インパクトの3例で確認、いずれも合計値が完全一致）。
 import { getRoute, getSituation, moveByKey } from '../../data';
 import type { Combo, Move, Step } from '../../data/types';
+import { parseCommand } from '../notation/parse';
 import {
   CANDIDATE_RULESET_2026_09,
+  parseComboCorrectionPercent,
   parseImmediateScalingPercent,
   parseMinGuaranteePercent,
   parseStarterScalingPercent,
@@ -33,6 +39,11 @@ import {
 import type { CalculationIssue, CalculationResult, HitBreakdown } from './types';
 
 const DR_COMMAND_RE = /^(DR|DRC|CDR)$/;
+const PC_DAMAGE_MULTIPLIER = 1.2;
+
+function isPunishCounterCommand(command: string): boolean {
+  return parseCommand(command).some((t) => t.kind === 'meta' && t.type === 'PC');
+}
 
 // SA3（manon-sa3）固有の即時補正（2026-09-13 オーナー実測・公式サイトの補正値
 // 説明で確認）。技辞典の comboScaling には「最低保障50%。立ち強P・ロン・ポワン
@@ -116,6 +127,12 @@ export function calculateComboDamage(
       const appliedRules = [`stage${stage}=${stagePercent}%`];
       let percent = stagePercent;
 
+      let baseDamage = move.damage;
+      if (isPunishCounterCommand(step.command)) {
+        baseDamage *= PC_DAMAGE_MULTIPLIER;
+        appliedRules.push(`PC×${PC_DAMAGE_MULTIPLIER}`);
+      }
+
       // 即時補正: このヒット自身にも、これまでの累計オフセットを適用する。
       // ただしコンボの最初のヒット（例: 単発の投げ）には適用しない
       // （始動補正と同様、始動そのものを自己ペナルティしない。投げの
@@ -153,7 +170,7 @@ export function calculateComboDamage(
 
       const finalPercent = ruleset.roundScalingPercent ? Math.floor(percent) : percent;
 
-      let damage = (move.damage * finalPercent) / 100;
+      let damage = (baseDamage * finalPercent) / 100;
       if (ruleset.roundFinalDamage) damage = Math.floor(damage);
 
       if (
@@ -174,11 +191,14 @@ export function calculateComboDamage(
         stagePercent,
         guaranteedPercent,
         finalPercent,
-        baseDamage: move.damage,
+        baseDamage,
         damage,
         appliedRules,
       });
-      stage++;
+      // コンボ補正（始動補正と同種だが始動技以外でも発動）を持つ技は、
+      // 自分自身には掛からず、次のヒットの段を1つ余分に前進させる
+      const comboCorrection = parseComboCorrectionPercent(move.comboScaling);
+      stage += comboCorrection != null ? 2 : 1;
       if (ownImmediate != null) immediateOffset += ownImmediate;
       previousHitMoveKey = step.moveKey;
     }

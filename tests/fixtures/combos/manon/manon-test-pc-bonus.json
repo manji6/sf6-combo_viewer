@@ -1,0 +1,11 @@
+{
+  "slug": "manon-test-pc-bonus",
+  "character": "manon",
+  "name": "（テスト用）パニッシュカウンターボーナス",
+  "situationLabel": "テスト用",
+  "routeChain": ["route_pc_bonus_test"],
+  "startFrom": "neutral_mid",
+  "endAt": "kd_after_degage_light_mid",
+  "difficulty": 1,
+  "tags": []
+}

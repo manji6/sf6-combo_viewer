@@ -33,6 +33,7 @@ export interface HitBreakdown {
   guaranteedPercent: number;
   /** guaranteedPercent を floor した最終残存率（%） */
   finalPercent: number;
+  /** 技辞典の damage。パニッシュカウンターなら ×1.2 適用後の値 */
   baseDamage: number;
   damage: number;
   /** このヒットに効いたルール（監査用のメモ） */

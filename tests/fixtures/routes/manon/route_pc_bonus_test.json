@@ -1,0 +1,16 @@
+{
+  "id": "route_pc_bonus_test",
+  "character": "manon",
+  "from": "neutral_mid",
+  "to": "kd_after_degage_light_mid",
+  "kind": "starter",
+  "label": "（テスト用）中Pパニカン単発",
+  "steps": [
+    { "move": "中P", "command": "PC 5MP", "moveKey": "manon-5mp" }
+  ],
+  "resources": { "driveCost": 0, "superCost": 0, "saLevel": null },
+  "damage": 600,
+  "difficulty": 1,
+  "controlType": "both",
+  "tags": []
+}
