@@ -9,10 +9,20 @@
 //
 // 未確定・未実装（既知の欠落。積極的に「それらしい値」で埋めていない）:
 //  - モダン簡易入力による補正（通常 0.8 倍、技によって継承・例外あり）
-//  - SA3 の「立ち強P・ロン・ポワンからのキャンセル時のみ即時補正15%」等、技固有の
-//    条件付き即時補正（対象技の識別ロジックが必要で、今回は見送り）
+//  - SA3 の「立ち強P・ロン・ポワンからのキャンセル時のみ即時補正15%」のような
+//    「特定の技からキャンセルされた場合のみ」発動する条件付き即時補正
+//    （calculate.ts は「この技自身が即時補正を持つか」しか見ておらず、
+//    「直前の技が何か」は見ていない）
 //  - ジャストパリィ後の反撃（0.5 倍）、DI ガード壁やられ（0.8 倍）
+//  - パニッシュカウンターの基礎値ボーナス（強K で2例確認したが強P の1例と
+//    整合せず、技固有の可能性が高いため保留）
+//  - 強ロン・ポワンで実測と食い違う例が1件あり（他ヒットは一致）、未解決
 //  - 端数処理は「率を都度 floor → 最後にダメージを floor」以外の方式も候補にある
+//
+// Move.comboScaling の「始動補正◯%」「即時補正◯%」は 2026-09-13 の実測答え合わせで
+// 確認できたため実装済み（parseStarterScalingPercent / parseImmediateScalingPercent）。
+// 「コンボ補正◯%」（manon-tanlie 等）は今回のデータでは上記と同じ扱いにすると
+// 実測と食い違ったため、あえて何もしない（説明文のまま、計算には使わない）。
 export interface DamageRuleset {
   id: string;
   /** 何を根拠にしたかの短い説明 */
@@ -54,5 +64,36 @@ const MIN_GUARANTEE_RE = /最低保[障証](\d+)%/;
 export function parseMinGuaranteePercent(comboScaling: string | null | undefined): number | undefined {
   if (!comboScaling) return undefined;
   const m = comboScaling.match(MIN_GUARANTEE_RE);
+  return m ? Number(m[1]) : undefined;
+}
+
+const STARTER_SCALING_RE = /始動補正(\d+)%/;
+const IMMEDIATE_SCALING_RE = /即時補正(\d+)%/;
+
+/**
+ * Move.comboScaling の「始動補正◯%」を読み取る（無ければ undefined）。
+ * 2026-09-13 オーナー実測との答え合わせで確認: この技を「コンボの最初のヒット」
+ * として使うと、以降のヒットの段の進み方が 1 段前進する（弱P/弱K/2弱P/ドライブ
+ * インパクト/OD必殺技の一部で確認）。現時点でデータ上の値はすべて 20% だが、
+ * 実装は「段を1つ前進」に固定している（表の間隔が不均一なため、他の％値が
+ * 出てきたら単純な変換式にはできない可能性がある。値が変わったら要見直し）。
+ */
+export function parseStarterScalingPercent(comboScaling: string | null | undefined): number | undefined {
+  if (!comboScaling) return undefined;
+  const m = comboScaling.match(STARTER_SCALING_RE);
+  return m ? Number(m[1]) : undefined;
+}
+
+/**
+ * Move.comboScaling の「即時補正◯%」を読み取る（無ければ undefined）。
+ * 2026-09-13 オーナー実測との答え合わせで確認: この技がヒットした時点で、
+ * その技自身とそれ以降の全ヒットの残存率から◯ポイントを差し引く（以降も
+ * 持続する）。同じ技を複数回使うと重ね掛けされる（弱グランフェッテを2回
+ * 使う画面端補正切りコンボで、2回目以降さらに10ポイント追加されることを確認）。
+ * 適用順は「段の残存率 − 即時補正の累計 → DR係数 → floor」。
+ */
+export function parseImmediateScalingPercent(comboScaling: string | null | undefined): number | undefined {
+  if (!comboScaling) return undefined;
+  const m = comboScaling.match(IMMEDIATE_SCALING_RE);
   return m ? Number(m[1]) : undefined;
 }

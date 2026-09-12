@@ -1,0 +1,11 @@
+{
+  "slug": "manon-test-throw-only",
+  "character": "manon",
+  "name": "（テスト用）通常投げ単発",
+  "situationLabel": "テスト用",
+  "routeChain": ["route_throw_only_test"],
+  "startFrom": "neutral_mid",
+  "endAt": "kd_after_degage_light_mid",
+  "difficulty": 1,
+  "tags": []
+}

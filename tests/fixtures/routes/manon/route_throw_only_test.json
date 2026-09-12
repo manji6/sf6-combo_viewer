@@ -1,0 +1,24 @@
+{
+  "id": "route_throw_only_test",
+  "character": "manon",
+  "from": "neutral_mid",
+  "to": "kd_after_degage_light_mid",
+  "kind": "starter",
+  "label": "（テスト用）通常投げ単発",
+  "steps": [
+    {
+      "move": "通常投げ",
+      "command": "5LPLK",
+      "moveKey": "manon-throw"
+    }
+  ],
+  "resources": {
+    "driveCost": 0,
+    "superCost": 0,
+    "saLevel": null
+  },
+  "damage": 1200,
+  "difficulty": 1,
+  "controlType": "both",
+  "tags": []
+}

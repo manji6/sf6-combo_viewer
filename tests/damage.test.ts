@@ -8,7 +8,9 @@ import { getCombo } from '../src/data';
 import { calculateComboDamage } from '../src/lib/damage/calculate';
 import {
   CANDIDATE_RULESET_2026_09,
+  parseImmediateScalingPercent,
   parseMinGuaranteePercent,
+  parseStarterScalingPercent,
   scalingPercentForStage,
 } from '../src/lib/damage/ruleset';
 
@@ -34,15 +36,30 @@ describe('parseMinGuaranteePercent', () => {
   });
 });
 
+describe('parseStarterScalingPercent / parseImmediateScalingPercent', () => {
+  it('「始動補正20%」「即時補正10%」を読み取る', () => {
+    expect(parseStarterScalingPercent('始動補正20%')).toBe(20);
+    expect(parseImmediateScalingPercent('即時補正10%')).toBe(10);
+  });
+  it('両方併記（グランフェッテ等）でもそれぞれ読み取れる', () => {
+    expect(parseStarterScalingPercent('始動補正20% / 即時補正10%')).toBe(20);
+    expect(parseImmediateScalingPercent('始動補正20% / 即時補正10%')).toBe(10);
+  });
+  it('記載が無ければ undefined', () => {
+    expect(parseStarterScalingPercent(undefined)).toBeUndefined();
+    expect(parseImmediateScalingPercent('コンボ補正20%')).toBeUndefined();
+  });
+});
+
 describe('calculateComboDamage', () => {
-  it('DR 無しの3ヒットコンボ: 各ヒットが段どおりの残存率で計算される', () => {
+  it('始動技（2中K）は「始動補正20%」を持つため、段が1つ前進した状態で計算される', () => {
     const combo = getCombo('manon-mid-2mk-bnb-degage');
     const result = calculateComboDamage(combo);
     expect(result.status).toBe('calculated');
     expect(result.issues).toEqual([]);
-    // 2中K(600,100%) + 中P(600,100%) + 弱デガジェ(1000,80%=800) = 2000
-    expect(result.hits.map((h) => h.damage)).toEqual([600, 600, 800]);
-    expect(result.totalDamage).toBe(2000);
+    // 2中K(600,stage2=100%)=600 → 中P(600,stage3=80%)=480 → 弱デガジェ(1000,stage4=70%)=700
+    expect(result.hits.map((h) => h.damage)).toEqual([600, 480, 700]);
+    expect(result.totalDamage).toBe(1780);
   });
 
   it('DRC を挟むと以降のヒットに 0.85 倍が掛かる（重ね掛けしない）', () => {
@@ -58,7 +75,7 @@ describe('calculateComboDamage', () => {
     expect(result.hits[1].appliedRules.some((r) => r.includes('DR'))).toBe(true);
   });
 
-  it('弱攻撃始動は段が1つ前進した状態（stage=2）から始まる（2026-09-13 オーナー実測で確認）', () => {
+  it('「始動補正」を持つ技が始動なら段が1つ前進した状態（stage=2）から始まる（弱P、2026-09-13 オーナー実測で確認）', () => {
     const combo = getCombo('manon-test-light-starter');
     const result = calculateComboDamage(combo);
     expect(result.status).toBe('calculated');
@@ -66,5 +83,15 @@ describe('calculateComboDamage', () => {
     expect(result.hits[0].stage).toBe(2);
     expect(result.hits.map((h) => h.damage)).toEqual([300, 800]);
     expect(result.totalDamage).toBe(1100);
+  });
+
+  it('「即時補正」はコンボ最初のヒットには適用しない（単発投げで確認）', () => {
+    // manon-throw は comboScaling: "即時補正20%" を持つが、単発（コンボの最初で
+    // 唯一のヒット）にまで自己ペナルティを掛けると実測（1200そのまま）と食い違う。
+    const combo = getCombo('manon-test-throw-only');
+    const result = calculateComboDamage(combo);
+    expect(result.status).toBe('calculated');
+    expect(result.hits.map((h) => h.damage)).toEqual([1200]);
+    expect(result.hits[0].appliedRules.some((r) => r.includes('即時補正'))).toBe(false);
   });
 });
