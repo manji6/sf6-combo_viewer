@@ -9,7 +9,7 @@
   ],
   "startFrom": "neutral_mid",
   "endAt": "kd_after_manege_dore_mid",
-  "damageOverride": 4680,
+  "damageOverride": 4520,
   "damageNote": "メダル保持数でダメージが変動",
   "difficulty": 5,
   "tags": [
