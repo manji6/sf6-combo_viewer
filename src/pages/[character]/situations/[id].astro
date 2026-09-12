@@ -250,7 +250,7 @@ const rewardText = situationRewardText(situation);
   h2 { font-size: 1rem; border-bottom: 2px solid var(--border-strong); padding-bottom: 0.25rem; margin: 0 0 0.6rem; }
   .lead { font-size: 0.83rem; color: var(--text-faint); margin: 0 0 0.8rem; }
 
-  .branch-cards { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 0.7rem; }
+  .branch-cards { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(300px, 100%), 1fr)); gap: 0.7rem; }
   .bc { padding: 0.7rem 0.85rem; border-left: 6px solid var(--risk, var(--border-strong)); }
   .bc-head { display: flex; align-items: center; gap: 0.5rem; }
   .bc-title { font-family: var(--font-pixel); font-size: 0.92rem; }

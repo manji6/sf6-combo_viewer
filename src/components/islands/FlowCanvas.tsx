@@ -214,6 +214,48 @@ export default function FlowCanvas({ graph, graphModern, height = 520, character
   const hasModern = !!graphModern;
   const activeGraph = modern && graphModern ? graphModern : graph;
 
+  // R09: 全画面をアクセシブルなモーダルとして扱う。
+  //  - フォーカスをコンテナ内に閉じ込める（Tab で背後の要素に抜けない）
+  //  - 開いた時に最初のボタンへフォーカス、閉じたら元のトリガーへ戻す
+  //  - 背景（ヘッダー・フッター）を inert にしてスクリーンリーダーからも隠す
+  const fullTriggerRef = useRef<HTMLElement | null>(null);
+  useEffect(() => {
+    const root = rootRef.current;
+    if (!full || !root) return;
+    fullTriggerRef.current = document.activeElement as HTMLElement | null;
+    const header = document.querySelector('.site-header');
+    const footer = document.querySelector('.site-footer');
+    const crumbs = document.querySelector('.crumbs');
+    const inerted = [header, footer, crumbs].filter(Boolean) as Element[];
+    inerted.forEach((el) => el.setAttribute('inert', ''));
+
+    const focusables = () =>
+      [...root.querySelectorAll<HTMLElement>('a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])')]
+        .filter((el) => el.offsetParent !== null);
+    focusables()[0]?.focus();
+
+    function onKeydown(ev: KeyboardEvent) {
+      if (ev.key !== 'Tab') return;
+      const items = focusables();
+      if (items.length === 0) return;
+      const first = items[0];
+      const last = items[items.length - 1];
+      if (ev.shiftKey && document.activeElement === first) {
+        ev.preventDefault();
+        last.focus();
+      } else if (!ev.shiftKey && document.activeElement === last) {
+        ev.preventDefault();
+        first.focus();
+      }
+    }
+    root.addEventListener('keydown', onKeydown);
+    return () => {
+      root.removeEventListener('keydown', onKeydown);
+      inerted.forEach((el) => el.removeAttribute('inert'));
+      fullTriggerRef.current?.focus();
+    };
+  }, [full]);
+
   function fitTo(width: number, worldH: number, mode: 'fit' | 'start' = 'start') {
     const vp = viewportRef.current;
     if (!vp) return;
@@ -319,6 +361,9 @@ export default function FlowCanvas({ graph, graphModern, height = 520, character
       class={`fc ${full ? 'fc-full' : ''}`}
       data-control={modern ? 'modern' : 'classic'}
       style={full ? undefined : { height: `${height}px` }}
+      role={full ? 'dialog' : undefined}
+      aria-modal={full ? 'true' : undefined}
+      aria-label={full ? 'コンボフロー（全画面）' : undefined}
     >
       <div class="fc-toolbar">
         <span class="fc-ctl" role="group" aria-label="操作タイプ">
@@ -347,13 +392,26 @@ export default function FlowCanvas({ graph, graphModern, height = 520, character
         <button type="button" onClick={() => lay && fitTo(lay.width, lay.height, 'start')}>
           先頭へ
         </button>
-        <button type="button" onClick={() => setView((v) => ({ ...v, k: Math.min(2.6, v.k * 1.15) }))}>
+        <button
+          type="button"
+          aria-label="拡大"
+          onClick={() => setView((v) => ({ ...v, k: Math.min(2.6, v.k * 1.15) }))}
+        >
           ＋
         </button>
-        <button type="button" onClick={() => setView((v) => ({ ...v, k: Math.max(0.15, v.k / 1.15) }))}>
+        <button
+          type="button"
+          aria-label="縮小"
+          onClick={() => setView((v) => ({ ...v, k: Math.max(0.15, v.k / 1.15) }))}
+        >
           －
         </button>
-        <button type="button" class="fc-full-btn" onClick={() => setFull((f) => !f)}>
+        <button
+          type="button"
+          class="fc-full-btn"
+          aria-pressed={full}
+          onClick={() => setFull((f) => !f)}
+        >
           {full ? '✕ 閉じる' : '⛶ 全画面'}
         </button>
         <span class="fc-legend">

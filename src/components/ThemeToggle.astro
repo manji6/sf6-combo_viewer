@@ -23,11 +23,15 @@
 </style>
 
 <script>
-  document.querySelector<HTMLButtonElement>('.theme-toggle')?.addEventListener('click', () => {
-    const next = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';
-    document.documentElement.dataset.theme = next;
-    try {
-      localStorage.setItem('sf6cv:theme', next);
-    } catch {}
+  // querySelectorAll: ページ内に複数配置されても（モバイルメニュー内の2個目等）
+  // 両方が動くようにする。
+  document.querySelectorAll<HTMLButtonElement>('.theme-toggle').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const next = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';
+      document.documentElement.dataset.theme = next;
+      try {
+        localStorage.setItem('sf6cv:theme', next);
+      } catch {}
+    });
   });
 </script>

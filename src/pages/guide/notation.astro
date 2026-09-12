@@ -161,11 +161,11 @@ const examples = [
   }
   .grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(min(150px, 100%), 1fr));
     gap: 0.5rem;
   }
   .grid.wide {
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(min(200px, 100%), 1fr));
   }
   .grid.dirs {
     grid-template-columns: repeat(3, 1fr);

@@ -44,6 +44,18 @@ const canonical = new URL(Astro.url.pathname, Astro.site).href;
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=DotGothic16&family=Silkscreen:wght@400;700&display=swap"
     />
+    <script>
+      // モバイルメニュー: リンククリック後・Escape で閉じる
+      document.querySelectorAll<HTMLDetailsElement>('.mobile-menu').forEach((menu) => {
+        menu.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => (menu.open = false)));
+        menu.addEventListener('keydown', (e) => {
+          if ((e as KeyboardEvent).key === 'Escape') {
+            menu.open = false;
+            menu.querySelector('summary')?.focus();
+          }
+        });
+      });
+    </script>
     <script is:inline>
       (function () {
         try {
@@ -84,6 +96,31 @@ const canonical = new URL(Astro.url.pathname, Astro.site).href;
           <NotationToggle />
           <ThemeToggle />
         </div>
+
+        <!-- R08: 狭幅ではヘッダーが何行にも折り返して画面の3割超を占めていたため、
+             ナビ・表記/テーマ切替をこの折りたたみメニューへ集約する（1〜2行に収める）。 -->
+        <details class="mobile-menu">
+          <summary aria-label="メニューを開く">☰ メニュー</summary>
+          <div class="mobile-menu-panel">
+            <nav class="mm-nav">
+              <p class="mm-heading">キャラクター</p>
+              {
+                characters.map((c) => (
+                  <a href={`/${c.id}/`} class="char-row">
+                    <span class="cr-name">{c.name}</span>
+                    <span class="cr-en">{c.nameEn}</span>
+                  </a>
+                ))
+              }
+              <a href="/guide/notation/">表記の見方</a>
+              <a href="/about/">このサイト</a>
+            </nav>
+            <div class="mm-tools">
+              <NotationToggle />
+              <ThemeToggle />
+            </div>
+          </div>
+        </details>
       </div>
     </header>
 
@@ -108,7 +145,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site).href;
     <footer class="site-footer">
       <div class="wrap">
         <p>
-          SF6 コンボ・セットプレイビューア — <strong>Phase 2（実データ投入中）</strong>
+          SF6 コンボ・セットプレイビューア
         </p>
         <p class="fine">
           誤り・要望の報告:
@@ -246,6 +283,81 @@ const canonical = new URL(Astro.url.pathname, Astro.site).href;
         display: flex;
         align-items: center;
         gap: 0.5rem;
+      }
+      .mobile-menu {
+        display: none;
+        position: relative;
+      }
+      .mobile-menu > summary {
+        list-style: none;
+        cursor: pointer;
+        font-family: var(--font-pixel);
+        font-size: 0.85rem;
+        color: var(--text-dim);
+        padding: 0.3em 0.6em;
+        border: 1px solid var(--border-strong);
+        background: var(--bg-raised);
+      }
+      .mobile-menu > summary::-webkit-details-marker {
+        display: none;
+      }
+      .mobile-menu[open] > summary {
+        color: var(--accent);
+        border-color: var(--accent);
+      }
+      .mobile-menu-panel {
+        position: absolute;
+        right: 0;
+        top: calc(100% + 0.4rem);
+        z-index: 30;
+        min-width: 220px;
+        max-width: calc(100vw - 2rem);
+        background: var(--panel);
+        border: 2px solid var(--border-strong);
+        box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.35);
+        padding: 0.6rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.6rem;
+      }
+      .mm-nav {
+        display: flex;
+        flex-direction: column;
+      }
+      .mm-nav a,
+      .mm-heading {
+        padding: 0.4rem 0.3rem;
+        color: var(--text-dim);
+      }
+      .mm-heading {
+        margin: 0;
+        font-size: 0.72rem;
+        color: var(--text-faint);
+        border-bottom: 1px solid var(--border);
+      }
+      .mm-nav a:hover {
+        color: var(--text);
+        background: var(--bg-sunken);
+      }
+      .mm-tools {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        padding-top: 0.4rem;
+        border-top: 1px solid var(--border);
+      }
+      @media (max-width: 640px) {
+        .header-inner {
+          flex-wrap: nowrap;
+        }
+        .main-nav,
+        .header-tools {
+          display: none;
+        }
+        .mobile-menu {
+          display: block;
+          margin-left: auto;
+        }
       }
       .crumbs {
         padding-top: 0.8rem;

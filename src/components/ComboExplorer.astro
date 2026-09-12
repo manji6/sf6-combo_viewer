@@ -139,6 +139,7 @@ function driveBucket(n: number) {
     gap: 0.35rem;
     min-height: 1.9em;
   }
+  /* R09: 12.5px 相当で --text-faint（3.56:1）は AA(4.5:1) 未達だったため --text-dim に変更 */
   .flabel {
     position: absolute;
     left: 0;
@@ -146,7 +147,7 @@ function driveBucket(n: number) {
     width: 5.8em;
     font-family: var(--font-pixel);
     font-size: 0.78rem;
-    color: var(--text-faint);
+    color: var(--text-dim);
     line-height: 1.3;
   }
   @media (max-width: 480px) {
@@ -191,14 +192,15 @@ function driveBucket(n: number) {
     font-size: 0.78rem;
     box-shadow: none;
   }
+  /* R09: 12.8px 相当で --text-faint（4.20:1 / light 4.18:1）は AA(4.5:1) 未達だったため変更 */
   .count {
     font-size: 0.8rem;
-    color: var(--text-faint);
+    color: var(--text-dim);
     margin: 0.8rem 0 0.4rem;
   }
   .grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(min(320px, 100%), 1fr));
     gap: 0.9rem;
   }
   .grid-item.hidden {
@@ -207,7 +209,7 @@ function driveBucket(n: number) {
   .empty {
     padding: 2rem;
     text-align: center;
-    color: var(--text-faint);
+    color: var(--text-dim);
   }
 </style>
 

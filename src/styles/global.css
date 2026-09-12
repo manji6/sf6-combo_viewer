@@ -96,6 +96,10 @@ a:hover {
   text-decoration: underline;
 }
 
+/* R09: h1 が <article>/<section> 等の中に入ると、ブラウザ既定の見出しサイズ計算
+   （セクショニングコンテンツ内で縮小される）に頼って 16px まで縮み、ページ名の
+   階層が弱くコントラスト基準（4.5:1）も割れていた。明示サイズで固定する。
+   h1 は 24px 以上（Large Text 判定の 3:1 基準）を満たす大きさにしている。 */
 h1,
 h2,
 h3 {
@@ -103,6 +107,15 @@ h3 {
   font-weight: 400;
   letter-spacing: 0.02em;
   line-height: 1.35;
+}
+h1 {
+  font-size: 1.6rem;
+}
+h2 {
+  font-size: 1.1rem;
+}
+h3 {
+  font-size: 1rem;
 }
 
 /* ── ピクセル調の枠 ─────────────────────────── */

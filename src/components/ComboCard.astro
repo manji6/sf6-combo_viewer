@@ -86,7 +86,7 @@ const end = getSituation(combo.endAt);
   }
   .dmg small {
     font-size: 0.6em;
-    color: var(--text-faint);
+    color: var(--text-dim);
     margin-left: 0.2em;
   }
   .dmg .var {
@@ -98,15 +98,16 @@ const end = getSituation(combo.endAt);
   }
   .dmg .est {
     font-size: 0.6em;
-    color: var(--text-faint);
+    color: var(--text-dim);
     border: 1px solid var(--text-faint);
     padding: 0 0.3em;
     margin-left: 0.3em;
   }
+  /* R09: 11.5px 相当で --text-faint（3.56:1）は AA(4.5:1) 未達だったため --text-dim に変更 */
   .dmg-note {
     margin: 0.1rem 0 0;
     font-size: 0.72rem;
-    color: var(--text-faint);
+    color: var(--text-dim);
   }
   .dmg-note-est {
     font-style: italic;
@@ -131,7 +132,7 @@ const end = getSituation(combo.endAt);
   .flow {
     margin-top: 0.5rem;
     font-size: 0.78rem;
-    color: var(--text-faint);
+    color: var(--text-dim);
     display: flex;
     gap: 0.4rem;
     flex-wrap: wrap;
