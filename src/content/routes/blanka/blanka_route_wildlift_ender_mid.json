@@ -29,7 +29,8 @@
       "move": "中ローリングアタック",
       "command": "[4]6MP",
       "moveKey": "blanka-rolling-m",
-      "note": "割り込みと相打ちになってもOK"
+      "action": "whiff",
+      "note": "ダウンした相手に近づくために出す（割り込みと相打ちになってもOK）。当てる技ではないためダメージには寄与しない"
     }
   ],
   "resources": {
@@ -37,10 +38,10 @@
     "superCost": 0,
     "saLevel": null
   },
-  "damage": 3100,
+  "damage": 1900,
   "damageConfidence": "estimated",
   "difficulty": 3,
-  "constraints": "「大K→フィアーダウン拾いが繋がる浮き」からのみ。ダメージは各技の基礎値合計（コンボ補正未反映）で、実測は今後の確認待ち。",
+  "constraints": "「大K→フィアーダウン拾いが繋がる浮き」からのみ。ダメージは各技の基礎値合計（コンボ補正未反映）。フィアーダウンは0ダメージ、中ローリングアタックはダウンへ近づくための空振りでダメージに寄与しない。",
   "controlType": "classic",
   "tags": [
     "〆",

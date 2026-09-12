@@ -20,7 +20,13 @@
     {
       "move": "大K",
       "command": "5HK",
-      "moveKey": "blanka-5hk"
+      "moveKey": "blanka-5hk",
+      "cancel": true
+    },
+    {
+      "move": "大P",
+      "command": "5HP",
+      "moveKey": "blanka-5hp"
     }
   ],
   "resources": {
@@ -28,7 +34,7 @@
     "superCost": 0,
     "saLevel": null
   },
-  "damage": 1400,
+  "damage": 2200,
   "difficulty": 3,
   "constraints": "しゃがみ中Pがヒットした時。全体26Fで置き技並みに隙が少なく、リーチも長いので差し込みの主力。",
   "controlType": "classic",

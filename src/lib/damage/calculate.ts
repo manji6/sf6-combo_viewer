@@ -24,6 +24,10 @@
 //    適用順は「段の残存率 − 即時補正の累計」→ DR係数 → floor。
 //  - パニッシュカウンター（PC）: 基礎ダメージに ×1.2（強K・強P・ドライブ
 //    インパクトの3例で確認、いずれも合計値が完全一致）。
+//  - damage が 0 の技（フィアーダウン等、当たっても損傷を与えない移動/設置系の
+//    技）は段を消費しない。DR/DRC/CDR と同じ扱い（ブランカの公式フレームデータで
+//    フィアーダウンの damage が 0 と確認、これを段消費ありで扱うと以降のヒットが
+//    ずれることを確認）。
 import { getRoute, getSituation, moveByKey } from '../../data';
 import type { Combo, Move, Step } from '../../data/types';
 import { parseCommand } from '../notation/parse';
@@ -195,10 +199,13 @@ export function calculateComboDamage(
         damage,
         appliedRules,
       });
-      // コンボ補正（始動補正と同種だが始動技以外でも発動）を持つ技は、
-      // 自分自身には掛からず、次のヒットの段を1つ余分に前進させる
-      const comboCorrection = parseComboCorrectionPercent(move.comboScaling);
-      stage += comboCorrection != null ? 2 : 1;
+      // damage が 0 の技（フィアーダウン等）は段を消費しない
+      if (move.damage !== 0) {
+        // コンボ補正（始動補正と同種だが始動技以外でも発動）を持つ技は、
+        // 自分自身には掛からず、次のヒットの段を1つ余分に前進させる
+        const comboCorrection = parseComboCorrectionPercent(move.comboScaling);
+        stage += comboCorrection != null ? 2 : 1;
+      }
       if (ownImmediate != null) immediateOffset += ownImmediate;
       previousHitMoveKey = step.moveKey;
     }

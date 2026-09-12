@@ -1,7 +1,7 @@
 {
   "character": "blanka",
   "slug": "blanka-mid-2mp-cr-5hk-wildlift",
-  "name": "中央 しゃがみ中P確認 CDR 大K ワイルドリフト拾い",
+  "name": "中央 しゃがみ中P確認 CDR 大K 大P ワイルドリフト拾い",
   "situationLabel": "中央・地上ヒット確認",
   "routeChain": [
     "blanka_route_2mp_cr_5hk_mid",
@@ -9,9 +9,11 @@
   ],
   "startFrom": "blanka_neutral_mid",
   "endAt": "blanka_kd_after_rolling_mid",
+  "damageOverride": 2841,
+  "damageConfidence": "measured",
   "difficulty": 3,
   "tags": [
     "頻出"
   ],
-  "description": "ブランカの立ち回りの主力、しゃがみ中Pからのヒット確認コンボ。ヒット確認に自信が無ければ入れ込みでキャンセルラッシュしてもよい。後半のフィアーダウン以降は対空コンボと共有パーツ。ガードされた場合は大Kの代わりに引き中Kに切り替えると安全に読み合いを続けられる。"
+  "description": "ブランカの立ち回りの主力、しゃがみ中Pからのヒット確認コンボ。ヒット確認に自信が無ければ入れ込みでキャンセルラッシュしてもよい。大Kからフィアーダウンで拾い、ワイルドリフト→中バーチカルローリングで打ち上げ、最後は中ローリングアタックでダウンへ近づく（この最後の一発はダメージに寄与しない）。ガードされた場合は大Kの代わりに引き中Kに切り替えると安全に読み合いを続けられる。"
 }
