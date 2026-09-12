@@ -1,0 +1,10 @@
+{
+  "tags": [],
+  "id": "blanka_kd_after_cannon_loop_mid",
+  "character": "blanka",
+  "label": "ローリングキャノン連携後・中央",
+  "kind": "knockdown",
+  "position": "midscreen",
+  "opponentState": "knockdown_hard",
+  "notes": "ライトニングビースト中のローリングキャノン連携の締め。起き攻めルートは未整理。"
+}

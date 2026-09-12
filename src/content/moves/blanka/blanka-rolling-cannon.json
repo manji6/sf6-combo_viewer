@@ -1,0 +1,20 @@
+{
+  "character": "blanka",
+  "verifiedVersion": "Year3（公式フレームデータ参照。パッチ版数未確認）",
+  "key": "blanka-rolling-cannon",
+  "name": "ローリングキャノン",
+  "category": "special",
+  "inputClassic": "(方向)P",
+  "inputModern": null,
+  "startup": 3,
+  "active": "3-27",
+  "recovery": "着地9",
+  "onHit": "D",
+  "onBlock": null,
+  "cancel": null,
+  "damage": 400,
+  "attribute": [
+    "上"
+  ],
+  "notes": "ライトニングビースト（SA2）中、ローリング系必殺技（ローリングアタック／バーチカルローリング／バックステップローリング）中に任意の方向＋P で派生。最大3回連続で派生可能。めくり性能あり。"
+}

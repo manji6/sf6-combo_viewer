@@ -1,0 +1,22 @@
+{
+  "character": "blanka",
+  "verifiedVersion": "Year3（公式フレームデータ参照。パッチ版数未確認）",
+  "key": "blanka-surprise-back",
+  "name": "サプライズバック",
+  "category": "special",
+  "inputClassic": "4KKK",
+  "inputModern": "4弱中強",
+  "startup": null,
+  "active": null,
+  "recovery": "全体32",
+  "onHit": null,
+  "onBlock": null,
+  "cancel": null,
+  "damage": 0,
+  "driveGainHit": 0,
+  "driveLossBlock": 0,
+  "driveLossPunishCounter": 0,
+  "superGain": 0,
+  "attribute": [],
+  "notes": "サプライズフォワードの後退版。11-21F空中判定。"
+}

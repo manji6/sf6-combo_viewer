@@ -1,0 +1,40 @@
+{
+  "character": "blanka",
+  "id": "blanka_route_backstep_vertical_od_corner",
+  "from": "blanka_juggle_can_backstep_corner",
+  "to": "blanka_kd_after_vertical_od_corner",
+  "kind": "ender",
+  "label": "強バクロリ → 強バチカ → ODバチカ",
+  "steps": [
+    {
+      "move": "強バックステップローリング",
+      "command": "63214HK",
+      "moveKey": "blanka-backstep-h",
+      "cancel": true
+    },
+    {
+      "move": "強バーチカルローリング",
+      "command": "[2]8HK",
+      "moveKey": "blanka-vertical-h",
+      "cancel": true
+    },
+    {
+      "move": "OD バーチカルローリング",
+      "command": "[2]8KK",
+      "moveKey": "blanka-vertical-od"
+    }
+  ],
+  "resources": {
+    "driveCost": 2,
+    "superCost": 0,
+    "saLevel": null
+  },
+  "damage": 4000,
+  "difficulty": 4,
+  "constraints": "「中段・下段から強バクロリが繋がる状態」からのみ。最大4000点程度（出典表現）。強バクロリ→ODロリ→強バチカの順でも成立するとのこと（未検証）。",
+  "controlType": "classic",
+  "tags": [
+    "人形",
+    "〆"
+  ]
+}

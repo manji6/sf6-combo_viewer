@@ -1,0 +1,42 @@
+{
+  "character": "blanka",
+  "id": "blanka_oki_surprise_forward_throw_mid",
+  "from": "blanka_kd_after_wildfang_mid",
+  "to": "blanka_kd_after_wildfang_mid_throw",
+  "kind": "okizeme",
+  "label": "サプライズフォワード → 歩き → 投げ",
+  "steps": [
+    {
+      "move": "サプライズフォワード",
+      "command": "6KKK",
+      "moveKey": "blanka-surprise-forward",
+      "note": "固まっている相手に前進で圧をかける"
+    },
+    {
+      "move": "歩き",
+      "action": "walk",
+      "command": "(歩き)"
+    },
+    {
+      "move": "前投げ",
+      "command": "LPLK",
+      "moveKey": "blanka-throw-l"
+    }
+  ],
+  "resources": {
+    "driveCost": 0,
+    "superCost": 0,
+    "saLevel": null
+  },
+  "damage": 1200,
+  "difficulty": 2,
+  "constraints": "相手が完全に固まっている（暴れてこない）と読んだ時の投げ。画面端まで追い詰めた場合は逆に一呼吸待ってから引き中Kを重ねるのもよい。",
+  "controlType": "both",
+  "tags": [
+    "投げ"
+  ],
+  "properties": {
+    "useWhen": "相手が完全ガード・様子見に徹してきた時",
+    "risk": "低"
+  }
+}

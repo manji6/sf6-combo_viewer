@@ -1,0 +1,33 @@
+{
+  "character": "blanka",
+  "id": "blanka_route_2mk_starter_corner",
+  "from": "blanka_doll_set_corner",
+  "to": "blanka_juggle_can_backstep_corner",
+  "kind": "okizeme",
+  "label": "しゃがみ中K（下段・送らせ）",
+  "steps": [
+    {
+      "move": "しゃがみ中K",
+      "command": "2MK",
+      "moveKey": "blanka-2mk",
+      "note": "下段の崩し。最速だと繋がらないので少し送らせて当てる"
+    }
+  ],
+  "resources": {
+    "driveCost": 0,
+    "superCost": 0,
+    "saLevel": null
+  },
+  "damage": 500,
+  "difficulty": 4,
+  "constraints": "人形設置後の下段崩し。中段（ロッククラッシュ）と同じ強バクロリ以降のチェーンに合流する。",
+  "controlType": "classic",
+  "tags": [
+    "人形",
+    "崩し"
+  ],
+  "properties": {
+    "risk": "中",
+    "useWhen": "相手が中段（ロッククラッシュ）を警戒してきたら下段で崩す"
+  }
+}

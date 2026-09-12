@@ -1,0 +1,13 @@
+{
+  "tags": [
+    "連結ハブ",
+    "人形"
+  ],
+  "id": "blanka_juggle_can_backstep_corner",
+  "character": "blanka",
+  "label": "中段・下段から強バクロリが繋がる状態・画面端",
+  "kind": "hit",
+  "position": "corner",
+  "opponentState": "standing_hit",
+  "notes": "中段（ロッククラッシュ）・下段（しゃがみ中K、送らせ当て）のどちらから拾っても同じ強バックステップローリング以降のチェーンに合流する。"
+}

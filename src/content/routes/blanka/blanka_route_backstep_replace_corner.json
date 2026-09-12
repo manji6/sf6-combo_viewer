@@ -1,0 +1,50 @@
+{
+  "character": "blanka",
+  "id": "blanka_route_backstep_replace_corner",
+  "from": "blanka_juggle_can_backstep_corner",
+  "to": "blanka_kd_corner_setup",
+  "kind": "ender",
+  "label": "強バクロリ → ラッシュ → 大P → フィアーダウン → ワイルドリフト（人形再設置）",
+  "steps": [
+    {
+      "move": "強バックステップローリング",
+      "command": "63214HK",
+      "moveKey": "blanka-backstep-h",
+      "cancel": true
+    },
+    {
+      "move": "ドライブラッシュ",
+      "command": "DR"
+    },
+    {
+      "move": "大P",
+      "command": "5HP",
+      "moveKey": "blanka-5hp",
+      "cancel": true
+    },
+    {
+      "move": "フィアーダウン",
+      "command": "2PP",
+      "moveKey": "blanka-feardown"
+    },
+    {
+      "move": "ワイルドリフト（リフト攻撃）",
+      "command": "P",
+      "moveKey": "blanka-wildlift",
+      "note": "フィアーダウン中に P"
+    }
+  ],
+  "resources": {
+    "driveCost": 1,
+    "superCost": 0,
+    "saLevel": null
+  },
+  "damage": 3000,
+  "difficulty": 4,
+  "constraints": "再度画面端でダウンを取り、人形を再設置したい場合のルート。生ドライブラッシュ1本。",
+  "controlType": "classic",
+  "tags": [
+    "人形",
+    "再設置"
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "character": "blanka",
+  "verifiedVersion": "Year3（公式フレームデータ参照。パッチ版数未確認）",
+  "key": "blanka-vertical-od",
+  "name": "OD バーチカルローリング",
+  "category": "special",
+  "inputClassic": "[2]8KK",
+  "inputModern": "[2]8KK",
+  "startup": 7,
+  "active": "7-22",
+  "recovery": "31+着地後17",
+  "onHit": "D",
+  "onBlock": "-40",
+  "cancel": null,
+  "damage": 1600,
+  "driveGainHit": 0,
+  "driveLossBlock": -4000,
+  "driveLossPunishCounter": 0,
+  "superGain": 1000,
+  "attribute": [
+    "上"
+  ],
+  "notes": "4-53F 空中判定、1-10F 完全無敵。"
+}

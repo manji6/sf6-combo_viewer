@@ -1,0 +1,25 @@
+{
+  "character": "blanka",
+  "verifiedVersion": "Year3（公式フレームデータ参照。パッチ版数未確認）",
+  "key": "blanka-5lp",
+  "name": "立ち弱P（ベアアタック）",
+  "category": "normal",
+  "inputClassic": "5LP",
+  "inputModern": "5L",
+  "startup": 5,
+  "active": "5-7",
+  "recovery": "10",
+  "onHit": "3",
+  "onBlock": "-3",
+  "cancel": "C",
+  "damage": 300,
+  "comboScaling": "始動補正20%",
+  "driveGainHit": 250,
+  "driveLossBlock": -500,
+  "driveLossPunishCounter": -2000,
+  "superGain": 300,
+  "attribute": [
+    "上"
+  ],
+  "notes": "近距離の差し込み・SA2発動の起点。"
+}

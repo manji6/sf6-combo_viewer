@@ -1,0 +1,40 @@
+{
+  "character": "blanka",
+  "id": "blanka_route_5lp_electric_sa2_mid",
+  "from": "blanka_neutral_mid",
+  "to": "blanka_sa2_active_mid",
+  "kind": "combo_route",
+  "label": "立ち弱P → OD電気 → SA2",
+  "steps": [
+    {
+      "move": "立ち弱P",
+      "command": "5LP",
+      "moveKey": "blanka-5lp",
+      "cancel": true
+    },
+    {
+      "move": "OD エレクトリックサンダー",
+      "command": "214PP",
+      "moveKey": "blanka-electric-od",
+      "cancel": true
+    },
+    {
+      "move": "SA2（ライトニングビースト）",
+      "command": "214214P",
+      "moveKey": "blanka-sa2",
+      "cancel": true
+    }
+  ],
+  "resources": {
+    "driveCost": 2,
+    "superCost": 2,
+    "saLevel": 2
+  },
+  "damage": 1100,
+  "difficulty": 2,
+  "constraints": "しゃがみ中足始動と同じ活用。近距離での差し込みからの発動。",
+  "controlType": "both",
+  "tags": [
+    "SA"
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "character": "blanka",
+  "verifiedVersion": "Year3（公式フレームデータ参照。パッチ版数未確認）",
+  "key": "blanka-5hp",
+  "name": "立ち強P（ジャングルアーチ）",
+  "category": "normal",
+  "inputClassic": "5HP",
+  "inputModern": "5AS H",
+  "startup": 10,
+  "active": "10-16",
+  "recovery": "22",
+  "onHit": "3",
+  "onBlock": "-3",
+  "cancel": "C",
+  "damage": 800,
+  "driveGainHit": 2000,
+  "driveLossBlock": -5000,
+  "driveLossPunishCounter": -8000,
+  "superGain": 1000,
+  "attribute": [
+    "上"
+  ],
+  "notes": "強制立ち効果。大パン。フィアーダウンへのキャンセルに使う。"
+}

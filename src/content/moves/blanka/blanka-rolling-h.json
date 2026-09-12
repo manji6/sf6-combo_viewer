@@ -1,0 +1,26 @@
+{
+  "character": "blanka",
+  "verifiedVersion": "Year3（公式フレームデータ参照。パッチ版数未確認）",
+  "key": "blanka-rolling-h",
+  "name": "強ローリングアタック",
+  "category": "special",
+  "inputClassic": "[4]6HP",
+  "inputModern": null,
+  "inputModernPrecise": "[4]6HP",
+  "startup": 22,
+  "active": "22-41",
+  "recovery": "26",
+  "onHit": "D",
+  "onBlock": "-15",
+  "cancel": "SA3",
+  "damage": 1300,
+  "comboScaling": "始動補正20%",
+  "driveGainHit": 2000,
+  "driveLossBlock": -10000,
+  "driveLossPunishCounter": -5000,
+  "superGain": 1000,
+  "attribute": [
+    "上"
+  ],
+  "notes": "20-42F 空中判定。パニッシュカウンター時吹き飛び時間延長。持続の6F目まで SA3 キャンセル可。"
+}

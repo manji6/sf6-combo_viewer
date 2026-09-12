@@ -1,0 +1,49 @@
+{
+  "character": "blanka",
+  "id": "blanka_route_cannon_pressure_loop_mid",
+  "from": "blanka_sa2_active_mid",
+  "to": "blanka_kd_after_cannon_loop_mid",
+  "kind": "okizeme",
+  "label": "強ロリ → ローリングキャノン（前→後ろ→前、全部最速）",
+  "steps": [
+    {
+      "move": "強ローリングアタック",
+      "command": "[4]6HP",
+      "moveKey": "blanka-rolling-h",
+      "note": "ライトニングビースト中は溜め無しで即発動可能"
+    },
+    {
+      "move": "ローリングキャノン（前）",
+      "command": "6P",
+      "moveKey": "blanka-rolling-cannon",
+      "cancel": true,
+      "note": "最速で派生"
+    },
+    {
+      "move": "ローリングキャノン（後ろ）",
+      "command": "4P",
+      "moveKey": "blanka-rolling-cannon",
+      "cancel": true,
+      "note": "最速で派生"
+    },
+    {
+      "move": "ローリングキャノン（前）",
+      "command": "6P",
+      "moveKey": "blanka-rolling-cannon",
+      "note": "最速で派生。3回目で最大"
+    }
+  ],
+  "resources": {
+    "driveCost": 0,
+    "superCost": 0,
+    "saLevel": null
+  },
+  "damage": 2500,
+  "difficulty": 4,
+  "constraints": "SA2（ライトニングビースト）発動中のみ。運び・削りが強力。ガードされ続けるとパリィを合わせられやすいので、下記のパリー読み投げと使い分ける。",
+  "controlType": "classic",
+  "tags": [
+    "SA",
+    "削り"
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "character": "blanka",
+  "verifiedVersion": "Year3（公式フレームデータ参照。パッチ版数未確認）",
+  "key": "blanka-rolling-od",
+  "name": "OD ローリングアタック",
+  "category": "special",
+  "inputClassic": "[4]6PP",
+  "inputModern": "[4]6PP",
+  "startup": 18,
+  "active": "18-39",
+  "recovery": "17",
+  "onHit": "D",
+  "onBlock": "-7",
+  "cancel": "SA2",
+  "damage": 800,
+  "comboScaling": "始動補正20%",
+  "driveGainHit": 0,
+  "driveLossBlock": -10000,
+  "driveLossPunishCounter": -5000,
+  "superGain": 1000,
+  "attribute": [
+    "上"
+  ],
+  "notes": "18-41F 空中判定。持続の2F目まで SA2/SA3 キャンセル可。"
+}

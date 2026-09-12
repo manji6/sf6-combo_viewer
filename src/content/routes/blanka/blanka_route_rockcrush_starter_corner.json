@@ -1,0 +1,33 @@
+{
+  "character": "blanka",
+  "id": "blanka_route_rockcrush_starter_corner",
+  "from": "blanka_doll_set_corner",
+  "to": "blanka_juggle_can_backstep_corner",
+  "kind": "okizeme",
+  "label": "ロッククラッシュ（中段）",
+  "steps": [
+    {
+      "move": "ロッククラッシュ",
+      "command": "6MP",
+      "moveKey": "blanka-rockcrush",
+      "note": "中段の崩し"
+    }
+  ],
+  "resources": {
+    "driveCost": 0,
+    "superCost": 0,
+    "saLevel": null
+  },
+  "damage": 600,
+  "difficulty": 3,
+  "constraints": "人形設置後の中段崩し。下段（しゃがみ中K）と同じ強バクロリ以降のチェーンに合流する。",
+  "controlType": "classic",
+  "tags": [
+    "人形",
+    "崩し"
+  ],
+  "properties": {
+    "risk": "中",
+    "useWhen": "相手が下段を警戒してきたら中段で崩す"
+  }
+}

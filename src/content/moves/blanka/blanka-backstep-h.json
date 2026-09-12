@@ -1,0 +1,24 @@
+{
+  "character": "blanka",
+  "verifiedVersion": "Year3（公式フレームデータ参照。パッチ版数未確認）",
+  "key": "blanka-backstep-h",
+  "name": "強バックステップローリング",
+  "category": "special",
+  "inputClassic": "63214HK",
+  "inputModern": null,
+  "startup": 41,
+  "active": "41-着地まで",
+  "recovery": "着地後5",
+  "onHit": "8",
+  "onBlock": "4",
+  "cancel": null,
+  "damage": 1000,
+  "driveGainHit": 2000,
+  "driveLossBlock": -8000,
+  "driveLossPunishCounter": -5000,
+  "superGain": 1000,
+  "attribute": [
+    "上"
+  ],
+  "notes": "モダンには弱・強のバックステップローリングは無い（中・ODのみ）。"
+}

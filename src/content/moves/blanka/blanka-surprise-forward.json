@@ -1,0 +1,22 @@
+{
+  "character": "blanka",
+  "verifiedVersion": "Year3（公式フレームデータ参照。パッチ版数未確認）",
+  "key": "blanka-surprise-forward",
+  "name": "サプライズフォワード",
+  "category": "special",
+  "inputClassic": "6KKK",
+  "inputModern": "6弱中強",
+  "startup": null,
+  "active": null,
+  "recovery": "全体27",
+  "onHit": null,
+  "onBlock": null,
+  "cancel": null,
+  "damage": 0,
+  "driveGainHit": 0,
+  "driveLossBlock": 0,
+  "driveLossPunishCounter": 0,
+  "superGain": 0,
+  "attribute": [],
+  "notes": "クラシックは弱中強Kの同時押し＋方向、モダンは弱中強の攻撃ボタン同時押し。必殺技キャンセル可能な通常技・特殊技からキャンセル発動。ダメージなしの移動技。"
+}

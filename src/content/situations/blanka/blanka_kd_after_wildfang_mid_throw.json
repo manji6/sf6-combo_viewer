@@ -1,0 +1,10 @@
+{
+  "tags": [],
+  "id": "blanka_kd_after_wildfang_mid_throw",
+  "character": "blanka",
+  "label": "歩き投げ後・中央",
+  "kind": "knockdown",
+  "position": "midscreen",
+  "opponentState": "knockdown_soft",
+  "notes": "サプライズフォワードからの歩き投げの後。起き攻めルートは未整理。"
+}

@@ -1,0 +1,24 @@
+{
+  "character": "blanka",
+  "verifiedVersion": "Year3（公式フレームデータ参照。パッチ版数未確認）",
+  "key": "blanka-rockcrush",
+  "name": "ロッククラッシュ",
+  "category": "special",
+  "inputClassic": "6MP",
+  "inputModern": null,
+  "startup": 20,
+  "active": "20-22",
+  "recovery": "20",
+  "onHit": "3",
+  "onBlock": "-3",
+  "cancel": null,
+  "damage": 600,
+  "driveGainHit": 1500,
+  "driveLossBlock": -2500,
+  "driveLossPunishCounter": -5000,
+  "superGain": 500,
+  "attribute": [
+    "上"
+  ],
+  "notes": "ブランカの中段（オーバーヘッド）はこれ。初段が空振り時のみ2段目が中段判定になる特殊な性質。クラシック限定。"
+}

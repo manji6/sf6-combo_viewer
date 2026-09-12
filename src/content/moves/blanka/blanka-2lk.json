@@ -1,0 +1,25 @@
+{
+  "character": "blanka",
+  "verifiedVersion": "Year3（公式フレームデータ参照。パッチ版数未確認）",
+  "key": "blanka-2lk",
+  "name": "しゃがみ弱K（ジャングルトラップ）",
+  "category": "normal",
+  "inputClassic": "2LK",
+  "inputModern": "2L",
+  "startup": 5,
+  "active": "5-6",
+  "recovery": "10",
+  "onHit": "3",
+  "onBlock": "-3",
+  "cancel": "C",
+  "damage": 200,
+  "comboScaling": "始動補正20%",
+  "driveGainHit": 250,
+  "driveLossBlock": -500,
+  "driveLossPunishCounter": -2000,
+  "superGain": 300,
+  "attribute": [
+    "下"
+  ],
+  "notes": "連打キャンセル対応の下段。"
+}

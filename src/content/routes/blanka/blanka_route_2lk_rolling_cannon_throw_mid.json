@@ -1,0 +1,55 @@
+{
+  "character": "blanka",
+  "id": "blanka_route_2lk_rolling_cannon_throw_mid",
+  "from": "blanka_sa2_active_mid",
+  "to": "blanka_kd_after_wildfang_mid",
+  "kind": "okizeme",
+  "label": "しゃがみ弱K → 強ロリ → 真下ローリングキャノン（空振り） → 投げ",
+  "steps": [
+    {
+      "move": "しゃがみ弱K",
+      "command": "2LK",
+      "moveKey": "blanka-2lk",
+      "cancel": true
+    },
+    {
+      "move": "強ローリングアタック",
+      "command": "[4]6HP",
+      "moveKey": "blanka-rolling-h",
+      "cancel": true
+    },
+    {
+      "move": "ローリングキャノン（真下）",
+      "command": "2P",
+      "moveKey": "blanka-rolling-cannon",
+      "action": "whiff",
+      "note": "相手に触れずキャンセルするだけ。ドライブパリィの読み外し"
+    },
+    {
+      "move": "前投げ",
+      "command": "LPLK",
+      "moveKey": "blanka-throw-l"
+    }
+  ],
+  "resources": {
+    "driveCost": 0,
+    "superCost": 0,
+    "saLevel": null
+  },
+  "damage": 1700,
+  "difficulty": 5,
+  "constraints": "SA2発動中、相手がドライブパリィで割り込もうとしてくると読んだ時の投げ。ローリングキャノンを真下へ空振りさせて相手のパリィ硬直を作ってから投げる。",
+  "controlType": "classic",
+  "tags": [
+    "SA",
+    "パリー読み",
+    "投げ"
+  ],
+  "properties": {
+    "useWhen": "相手がパリィで割り込もうとしてくる読みの時",
+    "strongVs": [
+      "ドライブパリィ割り込み"
+    ],
+    "risk": "高"
+  }
+}
