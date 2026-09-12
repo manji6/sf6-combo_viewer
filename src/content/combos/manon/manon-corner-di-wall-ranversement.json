@@ -9,7 +9,7 @@
   ],
   "startFrom": "neutral_corner",
   "endAt": "kd_after_ranversement_corner",
-  "damageOverride": 2490,
+  "damageOverride": 2385,
   "damageNote": "メダル保持数でダメージが変動",
   "difficulty": 1,
   "tags": [
