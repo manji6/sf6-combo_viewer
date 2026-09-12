@@ -11,8 +11,8 @@ function baseData(): {
   moves: Move[];
 } {
   const situations: Situation[] = [
-    { id: 's_start', label: '始点', kind: 'neutral', position: 'midscreen', opponentState: 'neutral', tags: [] },
-    { id: 's_end', label: '終点', kind: 'knockdown', position: 'midscreen', opponentState: 'knockdown_soft', tags: [] },
+    { id: 's_start', character: 'manon', label: '始点', kind: 'neutral', position: 'midscreen', opponentState: 'neutral', tags: [] },
+    { id: 's_end', character: 'manon', label: '終点', kind: 'knockdown', position: 'midscreen', opponentState: 'knockdown_soft', tags: [] },
   ];
   const moves: Move[] = [
     {

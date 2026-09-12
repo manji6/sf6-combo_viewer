@@ -222,3 +222,19 @@ active 確認済み。証明書発行に数分）。
 
 `main` に push すれば Workers Builds が走る。ビルド状況は
 `GET /accounts/{account_id}/builds/workers/{script_tag}/builds` or ダッシュボードで確認。
+
+---
+
+## 7. 将来アイデア: ダメージ計算ロジックの実装（未着手）
+
+現状はコンボのダメージを「素点合計（目安）」または実測値の手入力（`damageOverride`）で持っている。
+オーナーより提案: SF6 のコンボ補正（`comboScaling` に既に文字列で記録している「始動補正20%」
+「コンボ補正20%」「即時補正」等）を実際に計算式化すれば、技辞典のデータだけから正しい合計ダメージを
+算出でき、実測値の手入力に頼らなくて済む可能性がある。
+
+参考資料（オーナー提供）:
+- https://note.com/libitina_dgh/n/n6dd052c3f434
+- https://tatsujin.blog/sf6/beginner/damage-scaling/
+
+ブランカ対応が一段落してから検討。`comboScaling` を構造化フィールド（開始補正率・逓減テーブル等）に
+変えるスキーマ変更と、`flattenCombo` 側の計算ロジック追加が必要になる見込み。

@@ -2,17 +2,21 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import ComboExplorer from '../../components/ComboExplorer.astro';
 import { characterById } from '../../data/characters';
-import { combos, getSituation, situations } from '../../data';
+import { characters, combos, getSituation, situations } from '../../data';
 import { outgoingRoutes } from '../../lib/graph/derive';
 import { POSITION_LABEL } from '../../lib/ui';
 
-const character = characterById.get('manon')!;
+export function getStaticPaths() {
+  return characters.map((c) => ({ params: { character: c.id } }));
+}
+
+const character = characterById.get(Astro.params.character)!;
 
 // コンボ＝始動技から始まる経路（相手の状況を問わない）。
 // 始動が「特定状況（ダウン後・パリィ後など）」のものはセットプレイ側で扱う。
 const SITUATIONAL = new Set(['knockdown', 'okiStart', 'blockstring']);
-const manonCombos = combos.filter(
-  (c) => c.character === 'manon' && !SITUATIONAL.has(getSituation(c.startFrom).kind),
+const charCombos = combos.filter(
+  (c) => c.character === character.id && !SITUATIONAL.has(getSituation(c.startFrom).kind),
 );
 
 // セットプレイ＝特定状況から始まる読み合い。
@@ -20,6 +24,7 @@ const manonCombos = combos.filter(
 const SETPLAY_KINDS = new Set(['knockdown', 'okiStart', 'blockstring']);
 const setplayStarts = situations.filter(
   (s) =>
+    s.character === character.id &&
     SETPLAY_KINDS.has(s.kind) &&
     outgoingRoutes(s.id).some((r) => r.kind === 'okizeme'),
 );
@@ -33,7 +38,7 @@ const setplayStarts = situations.filter(
     <h1>{character.name}</h1>
     <p>{character.tagline}</p>
     <p class="ch-links">
-      <a href="/manon/graph/">相関グラフ（全体の見取り図）</a>
+      <a href={`/${character.id}/graph/`}>相関グラフ（全体の見取り図）</a>
     </p>
   </header>
 
@@ -46,7 +51,7 @@ const setplayStarts = situations.filter(
         aria-controls="panel-combos"
         aria-selected="true"
       >
-        コンボ一覧（{manonCombos.length}）
+        コンボ一覧（{charCombos.length}）
       </button>
       <button
         type="button"
@@ -72,10 +77,10 @@ const setplayStarts = situations.filter(
         どこまで伸びるか」。フィルタ／ソートで探せます。
       </p>
       {
-        manonCombos.length === 0 ? (
+        charCombos.length === 0 ? (
           <p class="empty">まだ登録がありません（実データ投入中）。</p>
         ) : (
-          <ComboExplorer combos={manonCombos} />
+          <ComboExplorer combos={charCombos} />
         )
       }
     </section>
@@ -99,7 +104,7 @@ const setplayStarts = situations.filter(
             const outs = outgoingRoutes(s.id);
             return (
               <li class="sp-card pixel-box">
-                <a class="sp-title" href={`/manon/situations/${s.id}/`}>
+                <a class="sp-title" href={`/${character.id}/situations/${s.id}/`}>
                   {s.label}
                 </a>
                 <div class="sp-meta">

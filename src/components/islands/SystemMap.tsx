@@ -40,6 +40,8 @@ interface Props {
   elements: GraphElements;
   center?: string;
   height?: number;
+  /** ノードクリック時の遷移先に使うキャラ ID（例: 'manon'） */
+  characterId: string;
 }
 
 interface PNode {
@@ -77,7 +79,7 @@ function nodeSize(lines: string[]) {
   return { w: Math.max(110, Math.min(240, 24 + w * 12)), h: lines.length > 1 ? 42 : 28 };
 }
 
-export default function SystemMap({ elements, center, height = 520 }: Props) {
+export default function SystemMap({ elements, center, height = 520, characterId }: Props) {
   const vpRef = useRef<HTMLDivElement>(null);
   const [uid] = useState(() => 'sm' + Math.random().toString(36).slice(2, 7));
   const [view, setView] = useState({ x: 0, y: 0, k: 1 });
@@ -311,7 +313,7 @@ export default function SystemMap({ elements, center, height = 520 }: Props) {
                   opacity={dim ? 0.05 : 0.5}
                   marker-end={`url(#${uid}-${e.data.kind})`}
                   style={{ cursor: 'pointer' }}
-                  onClick={() => (window.location.href = `/manon/routes/${e.data.id}/`)}
+                  onClick={() => (window.location.href = `/${characterId}/routes/${e.data.id}/`)}
                 >
                   <title>{e.data.label}</title>
                 </path>
@@ -323,7 +325,7 @@ export default function SystemMap({ elements, center, height = 520 }: Props) {
                 data-nav
                 transform={`translate(${n.x} ${n.y})`}
                 style={{ cursor: 'pointer' }}
-                onClick={() => (window.location.href = `/manon/situations/${n.id}/`)}
+                onClick={() => (window.location.href = `/${characterId}/situations/${n.id}/`)}
               >
                 <title>{n.label}</title>
                 <rect

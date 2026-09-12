@@ -4,6 +4,7 @@
     "画面端"
   ],
   "id": "kd_after_manege_dore_corner",
+  "character": "manon",
   "label": "マネージュ・ドレ後・画面端ダウン",
   "kind": "knockdown",
   "position": "corner",

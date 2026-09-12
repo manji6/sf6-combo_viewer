@@ -1,22 +1,31 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import SystemMap from '../../components/islands/SystemMap.tsx';
-import { combos, routes, situations } from '../../data';
+import { characterById } from '../../data/characters';
+import { characters, combos, routes, situations } from '../../data';
 import { fullGraph } from '../../lib/graph/systemmap';
 
-const elements = fullGraph();
+export function getStaticPaths() {
+  return characters.map((c) => ({ params: { character: c.id } }));
+}
+
+const character = characterById.get(Astro.params.character)!;
+const elements = fullGraph(character.id);
+const charCombos = combos.filter((c) => c.character === character.id);
+const charRoutes = routes.filter((r) => r.character === character.id);
+const charSituations = situations.filter((s) => s.character === character.id);
 ---
 
 <BaseLayout
   title="相関グラフ"
-  crumbs={[{ label: 'マノン', href: '/manon/' }, { label: '相関グラフ' }]}
+  crumbs={[{ label: character.name, href: `/${character.id}/` }, { label: '相関グラフ' }]}
 >
   <header class="head">
     <h1>相関グラフ</h1>
     <p>
-      状況ノード（{situations.length}）とパーツ（{routes.length}）のつながり。
+      状況ノード（{charSituations.length}）とパーツ（{charRoutes.length}）のつながり。
       同じ状況ノードを複数のパーツが共有していることで、コンボと起き攻めが連結されます。
-      コンボ数 {combos.length}。
+      コンボ数 {charCombos.length}。
     </p>
   </header>
 
@@ -26,7 +35,7 @@ const elements = fullGraph();
     ) : (
       <div class="full-bleed">
         <div class="full-bleed-inner">
-          <SystemMap client:only="preact" elements={elements} height={720}>
+          <SystemMap client:only="preact" elements={elements} characterId={character.id} height={720}>
             <div slot="fallback" class="island-loading" style="height:720px">
               相関グラフを準備中…
             </div>

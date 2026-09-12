@@ -1,5 +1,7 @@
 // データの読み込みと索引。
-// レコードは src/content/{collection}/manon/*.json（1 レコード 1 ファイル）。
+// レコードは src/content/{collection}/<character>/*.json（1 レコード 1 ファイル）。
+// 全キャラを横断して glob するので、situations/routes/combos の id はキャラをまたいで
+// 重複しないよう命名する（例: manon-* / blanka-* prefix。moves は元々 key が <char>-<技> 形式）。
 // import.meta.glob（Vite）で同期読み込みし、Zod で検証してから Map を組む。
 // この境界で「非同期取得」を吸収し、下流の導出関数は同期のまま。
 import type { ZodType } from 'zod';
@@ -31,27 +33,27 @@ function load<T>(entries: Record<string, unknown>, schema: ZodType<T>, collectio
 }
 
 export const characters = load<Character>(
-  import.meta.glob('../content/characters/manon/*.json', { eager: true, import: 'default' }),
+  import.meta.glob('../content/characters/*/*.json', { eager: true, import: 'default' }),
   characterSchema,
   'characters',
 );
 export const situations = load<Situation>(
-  import.meta.glob('../content/situations/manon/*.json', { eager: true, import: 'default' }),
+  import.meta.glob('../content/situations/*/*.json', { eager: true, import: 'default' }),
   situationSchema,
   'situations',
 );
 export const routes = load<Route>(
-  import.meta.glob('../content/routes/manon/*.json', { eager: true, import: 'default' }),
+  import.meta.glob('../content/routes/*/*.json', { eager: true, import: 'default' }),
   routeSchema,
   'routes',
 );
 export const combos = load<Combo>(
-  import.meta.glob('../content/combos/manon/*.json', { eager: true, import: 'default' }),
+  import.meta.glob('../content/combos/*/*.json', { eager: true, import: 'default' }),
   comboSchema,
   'combos',
 );
 export const moves = load<Move>(
-  import.meta.glob('../content/moves/manon/*.json', { eager: true, import: 'default' }),
+  import.meta.glob('../content/moves/*/*.json', { eager: true, import: 'default' }),
   moveSchema,
   'moves',
 );

@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { characters } from '../data';
 ---
 
 <BaseLayout title="ページが見つかりません" crumbs={[{ label: '404' }]}>
@@ -9,8 +10,11 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     <p class="lead">URL が変わったか、まだ存在しないページです。</p>
     <ul class="links">
       <li><a href="/">トップ</a></li>
-      <li><a href="/manon/">マノン コンボ・セットプレイ</a></li>
-      <li><a href="/manon/graph/">相関グラフ</a></li>
+      {
+        characters.map((c) => (
+          <li><a href={`/${c.id}/`}>{c.name} コンボ・セットプレイ</a></li>
+        ))
+      }
       <li><a href="/guide/notation/">コマンド表記の見方</a></li>
     </ul>
   </section>

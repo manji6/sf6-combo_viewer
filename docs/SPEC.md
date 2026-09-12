@@ -386,27 +386,29 @@ Dゲージ増減／SAゲージ増加／属性／備考。**WebFetch は 403（Cl
 
 ```
 src/
-  content/{characters,situations,routes,combos,moves}/manon/*.json   ← ★ データ本体（1 レコード 1 ファイル）
+  content/{characters,situations,routes,combos,moves}/<char>/*.json  ← ★ データ本体（1 レコード 1 ファイル、<char>=manon/blanka）
   content.config.ts   Astro コレクション登録（getCollection 用。同じ schema・JSON）
   data/
     schema.ts          ← ★ 形状の正（Zod）。型は z.infer
     types.ts           schema.ts の再エクスポート（互換）
     characters.ts       index.ts の再エクスポート（互換）
-    index.ts            import.meta.glob で JSON 読み込み＋Zod 検証＋ID 索引＋stepModernCommand
+    index.ts            import.meta.glob（キャラ横断 */*.json）で JSON 読み込み＋Zod 検証＋ID 索引＋stepModernCommand
   integrations/validate-data.ts   astro:build:start でデータ検証しビルド中止（RV-08）
   lib/
     notation/{parse,tokens}.ts
     graph/
       derive.ts         逆引き・flattenCombo・comboStarterMove・comboSupportsModern・validateAll(data?)
       flow.ts           buildComboFlow / buildSituationFlow（step 単位 DAG、expandFrom 完全再帰）
-      systemmap.ts      fullGraph() / neighborhood()（相関グラフ用データ）
+      systemmap.ts      fullGraph(character) / neighborhood()（相関グラフ用データ、キャラ単位）
     ui.ts               ラベル・frameAdvLabel・wakeupSummary・stepActionLabel など
   components/
     notation/{Tokens,Sequence,StepCmd,Arrow}.astro
     islands/{FlowCanvas,SystemMap,Notation}.tsx
     {ComboCard,ComboExplorer,StepList,Stars,NotationToggle,ThemeToggle}.astro
   layouts/BaseLayout.astro    ヘッダー・フッター（誤り報告リンク）・SEO メタ・テーマ/表記の inline 初期化
-  pages/…                     §4 参照（＋ 404.astro）
+  pages/[character]/{index,graph}.astro, {combos/[slug],routes/[id],situations/[id]}.astro
+                              ← キャラ動的ルート。getStaticPaths がレコードの character から生成
+  pages/{index,about,404,preview/index}.astro   キャラ非依存ページ（preview は dev 限定 §4）
   styles/global.css
 scripts/validate.ts           npm run validate（vite-node）
 tests/*.test.ts               vitest
@@ -457,6 +459,7 @@ docs/{SPEC, PROTOTYPE, ROADMAP, CONTENT, REVIEW-2026-09-10}.md
 | `1e7359d` `d60afef` | **実データ batch1・batch2**: すこれるブログのコンボ・起き攻め（出典明記、技フレームは公式）。moves24 / situations14 / routes24 / combos12 |
 | （batch3） | **実データ batch3**: SA1/2/3・OD グランフェッテ・OD デガジェ・強ランヴェルセ・弱ロン・ポワンを技辞典へ。無敵ガード〆 / 中P始動リーサル SA3 / J強K ODグランフェッテ / 強Kパニカン SA2 の4コンボ。SA・OD派生を使うルートは modern 入力未確認のため `controlType:'classic'` |
 | （C-1.5〜C-3） | **公開**: Cloudflare Workers Builds で `https://sf6.amanohashi.date` 稼働。`wrangler.jsonc`（Static Assets）、`main` push で自動デプロイ |
+| （複数キャラ対応） | **マノン専用 → 複数キャラ対応へ一般化**（ブランカ追加に向けて）: `characterIdSchema` に `blanka` 追加、`situationSchema` に `character` 必須フィールド追加、`src/pages/manon/*` → `src/pages/[character]/*` 動的ルートへ移行、`src/data/index.ts` の `import.meta.glob` をキャラ横断（`*/*.json`）に変更、`fullGraph()`/`FlowCanvas`/`SystemMap` にキャラID引数を追加、`validateAll` に route↔situation の character 不一致チェックを追加。id 命名規則は `docs/CONTENT.md §1-2` |
 
 ---
 

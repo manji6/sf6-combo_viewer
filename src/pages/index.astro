@@ -19,10 +19,6 @@ const setplayStarts = situations.filter((s) => s.tags.includes('起き攻め開�
       起き攻めの各択には「何に強い・弱い・いつ使う」を併記し、
       パーツがどのコンボとつながっているかも追えます。
     </p>
-    <div class="proto-note">
-      これは <strong>Phase 1 プロトタイプ</strong>です。表示しているマノンのデータはすべて
-      ダミー（仮）で、UI/UX の確認用です。
-    </div>
   </section>
 
   <section class="chars" id="characters">
@@ -37,10 +33,6 @@ const setplayStarts = situations.filter((s) => s.tags.includes('起き攻め開�
           </a>
         ))
       }
-      <div class="char-card pixel-box soon">
-        <span class="cc-name">他キャラ</span>
-        <span class="cc-tag">Phase 2 以降で追加予定</span>
-      </div>
     </div>
   </section>
 
@@ -48,24 +40,18 @@ const setplayStarts = situations.filter((s) => s.tags.includes('起き攻め開�
     <h2>入口</h2>
     <ul class="quick-list">
       <li>
-        <a href="/manon/">コンボ一覧・セットプレイ</a> — フィルタ／ソートで探す
-      </li>
-      <li>
-        <a href="/manon/graph/">相関グラフ</a> — 状況とパーツのつながりを俯瞰（{situations.length}ノード・{combos.length}コンボ）
-      </li>
-      <li>
         <a href="/guide/notation/">表記の見方</a> — アイコン／テキスト表記の凡例
       </li>
     </ul>
   </section>
 
   <section class="setplay-preview">
-    <h2>起き攻め起点</h2>
+    <h2>起き攻め起点（全キャラ・{situations.length}ノード・{combos.length}コンボ）</h2>
     <ul class="sp-list">
       {
         setplayStarts.map((s) => (
           <li>
-            <a href={`/manon/situations/${s.id}/`}>{s.label}</a>
+            <a href={`/${s.character}/situations/${s.id}/`}>{s.label}</a>
             {s.advantage && <span class="adv">{s.advantage}</span>}
           </li>
         ))

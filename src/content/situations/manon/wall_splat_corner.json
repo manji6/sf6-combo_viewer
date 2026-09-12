@@ -1,6 +1,7 @@
 {
   "tags": [],
   "id": "wall_splat_corner",
+  "character": "manon",
   "label": "ドライブインパクト 壁貼りつき・画面端",
   "kind": "juggle",
   "position": "corner",

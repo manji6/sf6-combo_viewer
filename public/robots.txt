@@ -1,5 +1,5 @@
 User-agent: *
 Allow: /
-Disallow: /manon/preview/
+Disallow: /preview/
 
 Sitemap: https://sf6.amanohashi.date/sitemap-index.xml

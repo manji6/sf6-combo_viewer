@@ -3,6 +3,7 @@
     "起き攻め開始"
   ],
   "id": "kd_after_super_mid",
+  "character": "manon",
   "label": "スーパーアーツ〆後・中央ダウン",
   "kind": "knockdown",
   "position": "midscreen",

@@ -3,6 +3,7 @@
     "始動"
   ],
   "id": "neutral_corner",
+  "character": "manon",
   "label": "画面端・立ち回り",
   "kind": "neutral",
   "position": "corner",

@@ -3,6 +3,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
 import StepCmd from '../../../components/notation/StepCmd.astro';
 import Stars from '../../../components/Stars.astro';
 import FlowCanvas from '../../../components/islands/FlowCanvas.tsx';
+import { characterById } from '../../../data/characters';
 import { combos, getRoute, getSituation } from '../../../data';
 import {
   combosUsingRoute,
@@ -14,11 +15,12 @@ import { buildComboFlow } from '../../../lib/graph/flow';
 import { driveLabel, ROUTE_KIND_LABEL, superLabel } from '../../../lib/ui';
 
 export function getStaticPaths() {
-  return combos.map((c) => ({ params: { slug: c.slug } }));
+  return combos.map((c) => ({ params: { character: c.character, slug: c.slug } }));
 }
 
 const { slug } = Astro.params;
 const combo = combos.find((c) => c.slug === slug)!;
+const character = characterById.get(combo.character)!;
 const flat = flattenCombo(combo);
 const chainRoutes = combo.routeChain.map(getRoute);
 const end = getSituation(combo.endAt);
@@ -36,7 +38,7 @@ const endOki = outgoingRoutes(end.id).filter((r) => r.kind === 'okizeme');
 <BaseLayout
   title={combo.name}
   description={combo.description}
-  crumbs={[{ label: 'マノン', href: '/manon/' }, { label: combo.name }]}
+  crumbs={[{ label: character.name, href: `/${character.id}/` }, { label: combo.name }]}
 >
   <article class="stack" style="--gap:1.6rem">
     <header class="c-head">
@@ -68,7 +70,7 @@ const endOki = outgoingRoutes(end.id).filter((r) => r.kind === 'okizeme');
       </p>
       <div class="full-bleed">
         <div class="full-bleed-inner">
-          <FlowCanvas client:only="preact" graph={flow} graphModern={flowModern} height={860}>
+          <FlowCanvas client:only="preact" graph={flow} graphModern={flowModern} characterId={character.id} height={860}>
             <div slot="fallback" class="island-loading" style="height:860px">
               コンボフローを準備中…
             </div>
@@ -99,7 +101,7 @@ const endOki = outgoingRoutes(end.id).filter((r) => r.kind === 'okizeme');
             <li class="pixel-box part">
               <div class="p-head">
                 <span class="pl-kind">{ROUTE_KIND_LABEL[route.kind]}</span>
-                <a href={`/manon/routes/${route.id}/`}>{route.label}</a>
+                <a href={`/${character.id}/routes/${route.id}/`}>{route.label}</a>
                 <span class="p-flow">
                   {getSituation(route.from).label} → {getSituation(route.to).label}
                 </span>
@@ -110,7 +112,7 @@ const endOki = outgoingRoutes(end.id).filter((r) => r.kind === 'okizeme');
                   {others.map((c, i) => (
                     <>
                       {i > 0 && '、'}
-                      <a href={`/manon/combos/${c.slug}/`}>{c.name}</a>
+                      <a href={`/${character.id}/combos/${c.slug}/`}>{c.name}</a>
                     </>
                   ))}
                 </p>
@@ -128,13 +130,13 @@ const endOki = outgoingRoutes(end.id).filter((r) => r.kind === 'okizeme');
         <section>
           <h2>締め後の起き攻め</h2>
           <p class="lead">
-            <a href={`/manon/situations/${end.id}/`}>{end.label}</a>（{end.advantage}）から {endOki.length} 択。
+            <a href={`/${character.id}/situations/${end.id}/`}>{end.label}</a>（{end.advantage}）から {endOki.length} 択。
           </p>
           <ul class="oki-list">
             {endOki.map((r) => (
               <li>
                 <span class="dot" data-risk={r.properties?.risk ?? ''} />
-                <a href={`/manon/routes/${r.id}/`}>{r.label}</a>
+                <a href={`/${character.id}/routes/${r.id}/`}>{r.label}</a>
                 {r.properties?.useWhen && <span class="uw">— {r.properties.useWhen}</span>}
               </li>
             ))}

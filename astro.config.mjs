@@ -16,6 +16,6 @@ export default defineConfig({
   integrations: [
     preact(),
     validateData(),
-    sitemap({ filter: (page) => !page.includes('/manon/preview') }),
+    sitemap({ filter: (page) => !page.includes('/preview') }),
   ],
 });

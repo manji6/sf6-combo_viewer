@@ -9,25 +9,32 @@
 
 ```
 src/content/
-  characters/manon/<id>.json      … キャラ
-  situations/manon/<id>.json       … 状況ノード
-  routes/manon/<id>.json           … パーツ（辺）
-  combos/manon/<slug>.json         … 名前付きコンボ
-  moves/manon/<key>.json           … 技辞典
+  characters/<char>/<id>.json      … キャラ
+  situations/<char>/<id>.json      … 状況ノード
+  routes/<char>/<id>.json          … パーツ（辺）
+  combos/<char>/<slug>.json        … 名前付きコンボ
+  moves/<char>/<key>.json          … 技辞典
 ```
 
 1 レコード 1 ファイル。ファイル名 = レコードの id / slug / key と一致させる。
+`<char>` は `manon` / `blanka` 等。データは `import.meta.glob('.../*/*.json')` で**全キャラ横断**して
+読み込む（`src/data/index.ts`）ので、`situations` / `routes` / `combos` の `id` / `slug` は
+**キャラをまたいで重複しないように**する（下記 §2 の接頭辞ルール）。`moves` の `key` はもともと
+`<char>-<技略称>` 形式なので自然に重複しない。ページも `src/pages/[character]/...` の動的ルートで、
+各レコードの `character` フィールドから自動生成される。
 
 ## 2. id / slug / key の命名規則（B-4）
 
 | 種類 | 規則 | 例 |
 |---|---|---|
-| Situation `id` | `<状況>_<修飾>` snake_case | `kd_after_degage_light_mid` / `neutral_mid` / `juggle_can_4hp_ranversement` |
-| Route `id` | `<役割>_<内容>` snake_case。起き攻めは `oki_` 接頭 | `starter_2mk_mid` / `route_4hp_ranversement_mid` / `oki_dr2mk_from_degage_light` |
-| Combo `slug` | `manon-<場所>-<始動>-<締め>` kebab-case（URL になる） | `manon-mid-5mp-drc-ranversement` |
-| Move `key` | `manon-<技略称>` kebab-case。強度は末尾 | `manon-5mp` / `manon-ranversement-m` / `manon-rondpoint-od` |
+| Situation `id` | `<char>` が manon 以外なら `<char>_` 接頭＋snake_case。manon は既存のまま無接頭 | `kd_after_degage_light_mid`（manon）/ `blanka_neutral_mid`（blanka） |
+| Route `id` | 同上。起き攻めは `oki_` 接頭（`blanka` 等は `<char>_oki_...`） | `route_4hp_ranversement_mid`（manon）/ `blanka_oki_...`（blanka） |
+| Combo `slug` | `<char>-<場所>-<始動>-<締め>` kebab-case（URL になる） | `manon-mid-5mp-cr-ranversement` / `blanka-...` |
+| Move `key` | `<char>-<技略称>` kebab-case。強度は末尾 | `manon-5mp` / `blanka-5mp` |
+| `character` フィールド | situations / routes / combos / moves 全てに必須（`characterIdSchema`） | `"character": "blanka"` |
 
-`moveKey` はこの Move `key` を指す。
+`moveKey` はこの Move `key` を指す。新キャラを追加したら `src/data/schema.ts` の
+`characterIdSchema` にも id を足す。
 
 ## 3. コマンド表記（`command`）
 

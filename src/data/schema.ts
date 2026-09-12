@@ -2,7 +2,7 @@
 // JSON レコード（src/content/**）と content.config.ts の両方がこれを使う。
 import { z } from 'zod';
 
-export const characterIdSchema = z.enum(['manon']);
+export const characterIdSchema = z.enum(['manon', 'blanka']);
 
 export const positionSchema = z.enum(['midscreen', 'near_corner', 'corner', 'anywhere']);
 
@@ -54,6 +54,7 @@ export const videoSchema = z
 
 export const situationSchema = z.object({
   id: z.string(),
+  character: characterIdSchema,
   label: z.string(),
   kind: situationKindSchema,
   position: positionSchema,

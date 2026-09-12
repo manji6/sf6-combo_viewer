@@ -3,6 +3,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
 import StepList from '../../../components/StepList.astro';
 import Stars from '../../../components/Stars.astro';
 import SystemMap from '../../../components/islands/SystemMap.tsx';
+import { characterById } from '../../../data/characters';
 import { getRoute, getSituation, routes } from '../../../data';
 import { combosUsingRoute, incomingRoutes, outgoingRoutes } from '../../../lib/graph/derive';
 import { neighborhood } from '../../../lib/graph/systemmap';
@@ -17,11 +18,12 @@ import {
 } from '../../../lib/ui';
 
 export function getStaticPaths() {
-  return routes.map((r) => ({ params: { id: r.id } }));
+  return routes.map((r) => ({ params: { character: r.character, id: r.id } }));
 }
 
 const { id } = Astro.params;
 const route = getRoute(id!);
+const character = characterById.get(route.character)!;
 const from = getSituation(route.from);
 const to = getSituation(route.to);
 const usedBy = combosUsingRoute(route.id);
@@ -33,7 +35,7 @@ const p = route.properties;
 
 <BaseLayout
   title={route.label}
-  crumbs={[{ label: 'マノン', href: '/manon/' }, { label: route.label }]}
+  crumbs={[{ label: character.name, href: `/${character.id}/` }, { label: route.label }]}
 >
   <article class="stack" style="--gap:1.5rem">
     <header>
@@ -43,9 +45,9 @@ const p = route.properties;
       </div>
       <h1>{route.label}</h1>
       <p class="flow">
-        <a href={`/manon/situations/${from.id}/`}>{from.label}</a>
+        <a href={`/${character.id}/situations/${from.id}/`}>{from.label}</a>
         <span class="arr">→</span>
-        <a href={`/manon/situations/${to.id}/`}>{to.label}</a>
+        <a href={`/${character.id}/situations/${to.id}/`}>{to.label}</a>
       </p>
     </header>
 
@@ -158,7 +160,7 @@ const p = route.properties;
               <ul>
                 {usedBy.map((c) => (
                   <li>
-                    <a href={`/manon/combos/${c.slug}/`}>{c.name}</a>
+                    <a href={`/${character.id}/combos/${c.slug}/`}>{c.name}</a>
                   </li>
                 ))}
               </ul>
@@ -174,7 +176,7 @@ const p = route.properties;
               <ul>
                 {alsoFromHere.map((r) => (
                   <li>
-                    <a href={`/manon/routes/${r.id}/`}>{r.label}</a>
+                    <a href={`/${character.id}/routes/${r.id}/`}>{r.label}</a>
                   </li>
                 ))}
               </ul>
@@ -190,7 +192,7 @@ const p = route.properties;
               <ul>
                 {alsoIntoTarget.map((r) => (
                   <li>
-                    <a href={`/manon/routes/${r.id}/`}>{r.label}</a>（{getSituation(r.from).label} から）
+                    <a href={`/${character.id}/routes/${r.id}/`}>{r.label}</a>（{getSituation(r.from).label} から）
                   </li>
                 ))}
               </ul>
@@ -202,7 +204,7 @@ const p = route.properties;
 
     <section>
       <h2>周辺の相関</h2>
-      <SystemMap client:only="preact" elements={nbh} center={route.from} height={360}>
+      <SystemMap client:only="preact" elements={nbh} center={route.from} characterId={character.id} height={360}>
         <div slot="fallback" class="island-loading" style="height:360px">周辺の相関を準備中…</div>
       </SystemMap>
     </section>

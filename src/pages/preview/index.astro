@@ -2,14 +2,14 @@
 // dev 限定: drafts/*.json の検証結果とダイジェストを表示する（register-combo Skill 用）。
 // 本番ビルドでは 404。
 import { existsSync, readFileSync, readdirSync } from 'node:fs';
-import BaseLayout from '../../../layouts/BaseLayout.astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
 import {
   characterSchema,
   comboSchema,
   moveSchema,
   routeSchema,
   situationSchema,
-} from '../../../data/schema';
+} from '../../data/schema';
 
 if (!import.meta.env.DEV) {
   return new Response(null, { status: 404 });
@@ -23,7 +23,7 @@ const schemas: Record<string, { safeParse: (v: unknown) => { success: boolean; e
   moves: moveSchema,
 };
 
-const dir = new URL('../../../../drafts/', import.meta.url).pathname.replace(/^\/([A-Za-z]:)/, '$1');
+const dir = new URL('../../../drafts/', import.meta.url).pathname.replace(/^\/([A-Za-z]:)/, '$1');
 const files = existsSync(dir) ? readdirSync(dir).filter((f) => f.endsWith('.json')) : [];
 
 type Entry = { file: string; collection?: string; id?: string; ok: boolean; issues: string[]; json: string };
@@ -50,7 +50,7 @@ const entries: Entry[] = files.map((file) => {
 });
 ---
 
-<BaseLayout title="ドラフトプレビュー（dev）" crumbs={[{ label: 'マノン', href: '/manon/' }, { label: 'preview' }]}>
+<BaseLayout title="ドラフトプレビュー（dev）" crumbs={[{ label: 'preview' }]}>
   <h1>ドラフトプレビュー</h1>
   <p class="note">
     <code>drafts/*.json</code>（{entries.length} 件）の検証結果。承認後

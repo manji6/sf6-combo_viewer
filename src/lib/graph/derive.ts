@@ -187,6 +187,7 @@ export function validateAll(data?: Partial<DataSet>): string[] {
   pushDuplicates(ds.moves.map((m) => m.key), 'move', errors);
 
   const sitIds = new Set(ds.situations.map((s) => s.id));
+  const sitByIdLocal = new Map(ds.situations.map((s) => [s.id, s]));
   const routeById = new Map(ds.routes.map((r) => [r.id, r]));
   const moveKeys = new Set(ds.moves.map((m) => m.key));
   const moveByKeyLocal = new Map(ds.moves.map((m) => [m.key, m]));
@@ -195,6 +196,14 @@ export function validateAll(data?: Partial<DataSet>): string[] {
     if (!sitIds.has(r.from)) errors.push(`route ${r.id}: from(${r.from}) が存在しない`);
     if (!sitIds.has(r.to)) errors.push(`route ${r.id}: to(${r.to}) が存在しない`);
     if (r.steps.length === 0) errors.push(`route ${r.id}: steps が空`);
+    const fromSit = sitByIdLocal.get(r.from);
+    if (fromSit && fromSit.character !== r.character) {
+      errors.push(`route ${r.id}: from(${r.from}) の character(${fromSit.character}) が route(${r.character}) と不一致`);
+    }
+    const toSit = sitByIdLocal.get(r.to);
+    if (toSit && toSit.character !== r.character) {
+      errors.push(`route ${r.id}: to(${r.to}) の character(${toSit.character}) が route(${r.character}) と不一致`);
+    }
     for (const st of r.steps) {
       if (st.moveKey && !moveKeys.has(st.moveKey)) {
         errors.push(`route ${r.id}: step の moveKey(${st.moveKey}) が技辞典に存在しない`);

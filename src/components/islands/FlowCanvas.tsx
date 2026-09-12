@@ -13,6 +13,8 @@ interface Props {
   /** モダン操作版のグラフ（あれば クラシック⇄モダン トグルを表示） */
   graphModern?: FlowGraph;
   height?: number;
+  /** ノード/エッジのリンク先 URL に使うキャラ ID（例: 'manon'） */
+  characterId: string;
 }
 
 interface Placed {
@@ -208,7 +210,7 @@ function edgePath(a: Placed, b: Placed): string {
 
 type LayoutState = ReturnType<typeof layout> | null;
 
-export default function FlowCanvas({ graph, graphModern, height = 520 }: Props) {
+export default function FlowCanvas({ graph, graphModern, height = 520, characterId }: Props) {
   const viewportRef = useRef<HTMLDivElement>(null);
   const measureRef = useRef<HTMLDivElement>(null);
   const [lay, setLay] = useState<LayoutState>(null);
@@ -370,7 +372,7 @@ export default function FlowCanvas({ graph, graphModern, height = 520 }: Props) 
         <div class="fc-measure" ref={measureRef} aria-hidden="true">
           {activeGraph.nodes.map((n) => (
             <div class="fc-mnode" data-mid={n.id} key={n.id}>
-              <NodeInner node={n} />
+              <NodeInner node={n} characterId={characterId} />
             </div>
           ))}
         </div>
@@ -406,7 +408,7 @@ export default function FlowCanvas({ graph, graphModern, height = 520 }: Props) 
                       {gb.group.risk && (
                         <span class={`gi-risk r-${gb.group.risk}`}>リスク{gb.group.risk}</span>
                       )}
-                      <a class="gi-link" href={`/manon/routes/${gb.group.routeId}/`}>
+                      <a class="gi-link" href={`/${characterId}/routes/${gb.group.routeId}/`}>
                         詳細
                       </a>
                     </div>
@@ -472,7 +474,7 @@ export default function FlowCanvas({ graph, graphModern, height = 520 }: Props) 
                 class="fc-pnode"
                 style={{ left: `${p.x}px`, top: `${p.y}px`, width: `${p.w}px`, height: `${p.h}px` }}
               >
-                <NodeInner node={p.node} />
+                <NodeInner node={p.node} characterId={characterId} />
               </div>
             ))}
           </div>
@@ -557,7 +559,7 @@ export default function FlowCanvas({ graph, graphModern, height = 520 }: Props) 
   );
 }
 
-function NodeInner({ node: n }: { node: FlowNode }) {
+function NodeInner({ node: n, characterId }: { node: FlowNode; characterId: string }) {
   if (n.type === 'step') {
     return (
       <div class={`fc-node n-step ${n.cancel ? 'n-cancel' : ''} ${n.action ? 'n-action' : ''}`}>
@@ -590,7 +592,7 @@ function NodeInner({ node: n }: { node: FlowNode }) {
       style={color ? { ['--sitc' as any]: color } : undefined}
     >
       {strip && <div class={`fc-oc-strip ${strip.cls}`}>{strip.text}</div>}
-      <a href={`/manon/situations/${n.situationId}/`}>{n.label}</a>
+      <a href={`/${characterId}/situations/${n.situationId}/`}>{n.label}</a>
       {n.advantage && <div class="fc-oc-adv">相手復帰まで {n.advantage}</div>}
     </div>
   );

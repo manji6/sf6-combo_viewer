@@ -1,5 +1,5 @@
 import { routes, situations } from '../../data';
-import type { Position, RouteKind, SituationKind } from '../../data/types';
+import type { CharacterId, Position, RouteKind, SituationKind } from '../../data/types';
 
 export interface GraphNodeData {
   id: string;
@@ -22,15 +22,19 @@ export interface GraphElements {
   edges: { data: GraphEdgeData }[];
 }
 
-/** 全ノード・全辺（相関グラフ用） */
-export function fullGraph(): GraphElements {
+/** 指定キャラの全ノード・全辺（相関グラフ用） */
+export function fullGraph(character: CharacterId): GraphElements {
   return {
-    nodes: situations.map((s) => ({
-      data: { id: s.id, label: s.label, kind: s.kind, position: s.position, tags: s.tags },
-    })),
-    edges: routes.map((r) => ({
-      data: { id: r.id, source: r.from, target: r.to, label: r.label, kind: r.kind },
-    })),
+    nodes: situations
+      .filter((s) => s.character === character)
+      .map((s) => ({
+        data: { id: s.id, label: s.label, kind: s.kind, position: s.position, tags: s.tags },
+      })),
+    edges: routes
+      .filter((r) => r.character === character)
+      .map((r) => ({
+        data: { id: r.id, source: r.from, target: r.to, label: r.label, kind: r.kind },
+      })),
   };
 }
 

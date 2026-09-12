@@ -3,6 +3,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
 import StepCmd from '../../../components/notation/StepCmd.astro';
 import Stars from '../../../components/Stars.astro';
 import FlowCanvas from '../../../components/islands/FlowCanvas.tsx';
+import { characterById } from '../../../data/characters';
 import { getSituation, situations } from '../../../data';
 import {
   combosThroughSituation,
@@ -21,11 +22,12 @@ import {
 } from '../../../lib/ui';
 
 export function getStaticPaths() {
-  return situations.map((s) => ({ params: { id: s.id } }));
+  return situations.map((s) => ({ params: { character: s.character, id: s.id } }));
 }
 
 const { id } = Astro.params;
 const situation = getSituation(id!);
+const character = characterById.get(situation.character)!;
 const outs = outgoingRoutes(situation.id);
 const okis = outs.filter((r) => r.kind === 'okizeme');
 const otherOuts = outs.filter((r) => r.kind !== 'okizeme');
@@ -39,7 +41,7 @@ const hasClassicOnly = outs.some((r) => r.controlType === 'classic');
 
 <BaseLayout
   title={situation.label}
-  crumbs={[{ label: 'マノン', href: '/manon/' }, { label: situation.label }]}
+  crumbs={[{ label: character.name, href: `/${character.id}/` }, { label: situation.label }]}
 >
   <article class="stack" style="--gap:1.6rem">
     <header>
@@ -75,6 +77,7 @@ const hasClassicOnly = outs.some((r) => r.controlType === 'classic');
                 client:only="preact"
                 graph={flow}
                 graphModern={flowModern}
+                characterId={character.id}
                 height={800}
               >
                 <div slot="fallback" class="island-loading" style="height:800px">
@@ -97,7 +100,7 @@ const hasClassicOnly = outs.some((r) => r.controlType === 'classic');
               return (
                 <li class="pixel-box bc" style={p?.risk ? `--risk:${RISK_VAR[p.risk]}` : ''}>
                   <div class="bc-head">
-                    <a class="bc-title" href={`/manon/routes/${r.id}/`}>
+                    <a class="bc-title" href={`/${character.id}/routes/${r.id}/`}>
                       {r.label}
                     </a>
                     {r.controlType === 'classic' && <span class="cl-only">クラシック限定</span>}
@@ -153,7 +156,7 @@ const hasClassicOnly = outs.some((r) => r.controlType === 'classic');
                   )}
                   <div class="bc-foot">
                     <Stars value={r.difficulty} />
-                    <span class="to">→ <a href={`/manon/situations/${r.to}/`}>{getSituation(r.to).label}</a></span>
+                    <span class="to">→ <a href={`/${character.id}/situations/${r.to}/`}>{getSituation(r.to).label}</a></span>
                   </div>
                 </li>
               );
@@ -170,7 +173,7 @@ const hasClassicOnly = outs.some((r) => r.controlType === 'classic');
           <ul class="route-list">
             {otherOuts.map((r) => (
               <li class="pixel-box">
-                <a class="rl-title" href={`/manon/routes/${r.id}/`}>
+                <a class="rl-title" href={`/${character.id}/routes/${r.id}/`}>
                   <span class="pl-kind">{ROUTE_KIND_LABEL[r.kind]}</span>
                   {r.label}
                 </a>
@@ -199,7 +202,7 @@ const hasClassicOnly = outs.some((r) => r.controlType === 'classic');
           <ul class="route-list">
             {ins.map((r) => (
               <li class="pixel-box">
-                <a class="rl-title" href={`/manon/routes/${r.id}/`}>
+                <a class="rl-title" href={`/${character.id}/routes/${r.id}/`}>
                   <span class="pl-kind">{ROUTE_KIND_LABEL[r.kind]}</span>
                   {r.label}
                 </a>
@@ -226,7 +229,7 @@ const hasClassicOnly = outs.some((r) => r.controlType === 'classic');
           <ul class="combo-links">
             {throughCombos.map((c) => (
               <li>
-                <a href={`/manon/combos/${c.slug}/`}>{c.name}</a>
+                <a href={`/${character.id}/combos/${c.slug}/`}>{c.name}</a>
               </li>
             ))}
           </ul>

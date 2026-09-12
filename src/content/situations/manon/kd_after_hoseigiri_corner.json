@@ -4,6 +4,7 @@
     "画面端"
   ],
   "id": "kd_after_hoseigiri_corner",
+  "character": "manon",
   "label": "補正切り +8F（画面端・5強P タン・リエ で立ち状態）",
   "kind": "hit",
   "position": "corner",
