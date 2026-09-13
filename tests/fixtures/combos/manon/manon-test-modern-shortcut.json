@@ -1,0 +1,11 @@
+{
+  "slug": "manon-test-modern-shortcut",
+  "character": "manon",
+  "name": "（テスト用）マネージュ・ドレ単発（モダン減衰確認用）",
+  "situationLabel": "テスト用",
+  "routeChain": ["route_modern_shortcut_test"],
+  "startFrom": "neutral_mid",
+  "endAt": "kd_after_degage_light_mid",
+  "difficulty": 1,
+  "tags": []
+}

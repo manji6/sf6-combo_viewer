@@ -1,0 +1,24 @@
+{
+  "id": "route_modern_shortcut_test",
+  "character": "manon",
+  "from": "neutral_mid",
+  "to": "kd_after_degage_light_mid",
+  "kind": "starter",
+  "label": "（テスト用）マネージュ・ドレ単発",
+  "steps": [
+    {
+      "move": "マネージュ・ドレ",
+      "command": "63214P",
+      "moveKey": "manon-manege-dore"
+    }
+  ],
+  "resources": {
+    "driveCost": 0,
+    "superCost": 0,
+    "saLevel": null
+  },
+  "damage": 2000,
+  "difficulty": 1,
+  "controlType": "both",
+  "tags": []
+}

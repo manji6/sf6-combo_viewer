@@ -1,0 +1,24 @@
+{
+  "id": "route_modern_same_input_test",
+  "character": "manon",
+  "from": "neutral_mid",
+  "to": "kd_after_degage_light_mid",
+  "kind": "starter",
+  "label": "（テスト用）モダンでも同じ入力の必殺技単発",
+  "steps": [
+    {
+      "move": "（テスト用）モダンでも同じ入力の必殺技",
+      "command": "214PP",
+      "moveKey": "manon-test-modern-same-input"
+    }
+  ],
+  "resources": {
+    "driveCost": 0,
+    "superCost": 0,
+    "saLevel": null
+  },
+  "damage": 1000,
+  "difficulty": 1,
+  "controlType": "both",
+  "tags": []
+}

@@ -7,7 +7,8 @@
 export type CalculationIssueCode =
   | 'missing_base_damage' // 技辞典に damage が無い（null）
   | 'unresolved_move' // moveKey が技辞典に見つからない
-  | 'no_hits'; // 実際に当たった技が 1 つも無い
+  | 'no_hits' // 実際に当たった技が 1 つも無い
+  | 'missing_modern_input'; // controlType:'modern' で、モダン入力有無が技辞典で未確認（inputModern が null）
 
 export interface CalculationIssue {
   code: CalculationIssueCode;
@@ -27,9 +28,10 @@ export interface HitBreakdown {
   /** 段（stageScalingPercent テーブル）に対応する残存率（%） */
   stagePercent: number;
   /**
-   * 即時補正・DR係数・SA最低保証まで適用した後の残存率（%、floor 前）。
-   * 適用順は stage% → 即時補正 → DR係数 → SA最低保証（保証は DR 後の下限として
-   * 扱う。保証成立後にさらに DR を掛けない）。
+   * 即時補正・DR係数・モダン簡易入力補正・SA最低保証まで適用した後の残存率
+   * （%、floor 前）。適用順は stage% → 即時補正 → DR係数 → モダン簡易入力補正
+   * （controlType:'modern' の対象技のみ）→ SA最低保証（保証は DR/モダン補正後の
+   * 下限として扱う。保証成立後にさらに掛け算しない）。
    */
   guaranteedPercent: number;
   /** guaranteedPercent を floor した最終残存率（%） */

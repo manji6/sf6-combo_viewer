@@ -145,4 +145,40 @@ describe('calculateComboDamage', () => {
     expect(result.hits[2].stage).toBe(4);
     expect(result.totalDamage).toBe(1620);
   });
+
+  describe('controlType: modern（2026-09-13 追加。SPボタン簡易入力のダメージ減衰）', () => {
+    it('inputModern が inputClassic と異なる技（簡易入力の代替手段がある）は modern で ×0.8', () => {
+      const combo = getCombo('manon-test-modern-shortcut');
+      const classic = calculateComboDamage(combo, CANDIDATE_RULESET_2026_09, 'classic');
+      const modern = calculateComboDamage(combo, CANDIDATE_RULESET_2026_09, 'modern');
+      expect(classic.hits[0].damage).toBe(2000);
+      expect(modern.status).toBe('calculated');
+      expect(modern.hits[0].damage).toBe(1600); // 2000×0.8（公式フレームデータの弱マネージュ・ドレと同じ比率）
+      expect(modern.hits[0].appliedRules.some((r) => r.includes('モダン簡易入力×0.8'))).toBe(true);
+    });
+
+    it('classic を明示的に指定した場合は減衰しない（デフォルトも classic のまま）', () => {
+      const combo = getCombo('manon-test-modern-shortcut');
+      const withoutArg = calculateComboDamage(combo);
+      expect(withoutArg.hits[0].damage).toBe(2000);
+    });
+
+    it('inputModern が inputClassic と同一（簡易入力の代替手段が無い）技は modern でも減衰しない', () => {
+      const combo = getCombo('manon-test-modern-same-input');
+      const modern = calculateComboDamage(combo, CANDIDATE_RULESET_2026_09, 'modern');
+      expect(modern.status).toBe('calculated');
+      expect(modern.hits[0].damage).toBe(1000);
+      expect(modern.hits[0].appliedRules.some((r) => r.includes('モダン簡易入力'))).toBe(false);
+    });
+
+    it('special/super で inputModern が未確認（null）の技は modern 計算で「不明」issue になり、結果から除外される', () => {
+      const combo = getCombo('manon-test-sa3-rondpoint-cancel');
+      const modern = calculateComboDamage(combo, CANDIDATE_RULESET_2026_09, 'modern');
+      expect(modern.status).toBe('incomplete');
+      expect(modern.issues.some((i) => i.code === 'missing_modern_input' && i.moveKey === 'manon-sa3')).toBe(
+        true,
+      );
+      expect(modern.hits.some((h) => h.moveKey === 'manon-sa3')).toBe(false);
+    });
+  });
 });

@@ -5,15 +5,18 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import { combos } from '../../data';
 import { flattenCombo } from '../../lib/graph/derive';
 import { calculateComboDamage } from '../../lib/damage';
+import type { ControlType } from '../../lib/damage/calculate';
 
 if (!import.meta.env.DEV) {
   return new Response(null, { status: 404 });
 }
 
+const controlType: ControlType = Astro.url.searchParams.get('modern') != null ? 'modern' : 'classic';
+
 const rows = combos
   .map((combo) => {
     const flat = flattenCombo(combo);
-    const calc = calculateComboDamage(combo);
+    const calc = calculateComboDamage(combo, undefined, controlType);
     return {
       combo,
       confidence: flat.damageConfidence,
@@ -30,10 +33,20 @@ const exact = rows.filter((r) => r.diff === 0).length;
 <BaseLayout title="ダメージ計算 答え合わせ（dev）" crumbs={[{ label: 'damage-audit' }]}>
   <h1>ダメージ計算 答え合わせ</h1>
   <p class="note">
-    候補ルール（<code>src/lib/damage/ruleset.ts</code>、公式一次資料未確認）で計算した値と、
-    現在登録されている値（<code>damageOverride</code> または route の合計）を並べています。
-    表示・データは変更しません。実際のゲーム内の数値と見比べて、ズレていたら
-    「どのコンボの何ヒット目がどれくらい違うか」を教えてください。
+    現在登録されている値（<code>damageOverride</code> または route の合計。全てクラシック実測）と、
+    <code>src/lib/damage/ruleset.ts</code> の計算値を並べています。表示・データは変更しません。
+  </p>
+  <p class="note">
+    表示中: <strong>{controlType === 'modern' ? 'モダン（SPボタン簡易入力前提）' : 'クラシック'}</strong>
+    　<a href={controlType === 'modern' ? '?' : '?modern=1'}>
+      {controlType === 'modern' ? 'クラシック表示に切替' : 'モダン表示に切替'}
+    </a>
+    {controlType === 'modern' && (
+      <span class="warn-text">
+        （記録値はクラシック実測なので「差」は実測との不一致ではない。モダン専用技が inputModern
+        未確認だと status が incomplete になる）
+      </span>
+    )}
   </p>
   <p class="summary">{rows.length} 件中、一致 {exact} 件・不一致 {rows.length - exact} 件</p>
 
@@ -131,4 +144,5 @@ const exact = rows.filter((r) => r.diff === 0).length;
   .hits .num { text-align: right; }
   .rules { color: var(--text-faint); font-size: 0.75rem; }
   .issues { color: var(--risk-high); font-size: 0.8rem; }
+  .warn-text { color: var(--risk-mid); }
 </style>

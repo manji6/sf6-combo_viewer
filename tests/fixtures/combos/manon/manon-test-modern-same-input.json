@@ -1,0 +1,11 @@
+{
+  "slug": "manon-test-modern-same-input",
+  "character": "manon",
+  "name": "（テスト用）モダンでも同じ入力の必殺技単発",
+  "situationLabel": "テスト用",
+  "routeChain": ["route_modern_same_input_test"],
+  "startFrom": "neutral_mid",
+  "endAt": "kd_after_degage_light_mid",
+  "difficulty": 1,
+  "tags": []
+}

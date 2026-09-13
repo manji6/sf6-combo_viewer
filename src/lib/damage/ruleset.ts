@@ -10,9 +10,26 @@
 // 値を直す時はこのファイルだけを直せばよいようにする（scripts/damage-audit.ts）。
 //
 // 未確定・未実装（既知の欠落。積極的に「それらしい値」で埋めていない）:
-//  - モダン簡易入力による補正（通常 0.8 倍、技によって継承・例外あり）
 //  - ジャストパリィ後の反撃（0.5 倍）、DI ガード壁やられ（0.8 倍）
 //  - 端数処理は「率を都度 floor → 最後にダメージを floor」以外の方式も候補にある
+//
+// 2026-09-13 モダン簡易入力の補正（オーナーの依頼で調査・実装）:
+//  ネット上の複数の解説記事で「モダン操作の SP ボタンで出す必殺技は、コマンド入力
+//  （クラシック的な操作）で出した場合の 80%（×0.8）のダメージになる。モダン操作中でも
+//  コマンド入力（Move.inputModernPrecise）で出せば据え置き」という一致した説明を確認した。
+//  公式フレームデータ自体にも根拠がある: マノンの弱/中/強/OD マネージュ・ドレ、
+//  弱/OD ランヴェルセの「■クラシック操作」「■モダン操作時」の並記ダメージが、
+//  Lv1基準でいずれも厳密に ×0.8（例: 弱マネージュ・ドレ 2000→1600、弱ランヴェルセ
+//  1350→1080、OD ランヴェルセ 1500→1200）になっていることを確認済み。
+//  スーパーアーツの最低保証（30/40/50%）はこの 0.8 倍が掛かった後でも保証として
+//  機能する（＝クラシックの DR 乗算補正と全く同じ位置・順序で効くと考えられる）。
+//  適用対象は「SPボタンの簡易入力という、コマンド入力と別の代替手段が実在する技」
+//  （technical にはモダン専用の入力方法を持つ special/super）のみで、通常技・投げ・
+//  ドライブインパクトのように入力方法自体が変わらない技には掛からない（判定は
+//  calculate.ts の usesModernSimplifiedInput() を参照）。
+//  技辞典側で Move.inputModern が未確認（null）のままの技（マノン/ブランカの
+//  SA1〜3 含む）は、モダン計算では「不明」として結果を incomplete にする
+//  （0.8 倍が掛かるかどうか不確かな値を確定計算として返さない）。
 //
 // 判明済みだが実装していない既知の制限（技の仕様であって計算式のバグではない）:
 //  - 強ロン・ポワンは本来2ヒットする技だが、技辞典の damage(800) は2ヒット分。
@@ -61,6 +78,12 @@ export interface DamageRuleset {
   stageScalingPercent: number[];
   /** コンボ中の（生）ドライブラッシュ 1 回につき、以降のヒットに掛かる係数（重ね掛けしない） */
   driveRushMultiplier: number;
+  /**
+   * モダン操作の SP ボタン簡易入力で special/super を出した時に、そのヒットの
+   * 残存率へ掛かる係数（DR 係数と同じ位置・順序で乗算、重ね掛けはしない）。
+   * コマンド入力（inputModernPrecise）を使った場合は掛からない。
+   */
+  modernSimplifiedInputMultiplier: number;
   /** 丸め: 各ヒットのダメージ確定前に「残存率（%）」を floor するか */
   roundScalingPercent: boolean;
   /** 丸め: 最終ダメージ（率適用後）を floor するか */
@@ -75,6 +98,7 @@ export const CANDIDATE_RULESET_2026_09: DamageRuleset = {
     '現在の値は実測確認済み。定数名・id は初期実装時のまま維持（互換のため未リネーム）。',
   stageScalingPercent: [100, 100, 80, 70, 60, 50, 40, 30, 20, 10],
   driveRushMultiplier: 0.85,
+  modernSimplifiedInputMultiplier: 0.8,
   roundScalingPercent: true,
   roundFinalDamage: true,
 };
@@ -139,4 +163,29 @@ export function parseComboCorrectionPercent(comboScaling: string | null | undefi
   if (!comboScaling) return undefined;
   const m = comboScaling.match(COMBO_CORRECTION_RE);
   return m ? Number(m[1]) : undefined;
+}
+
+/**
+ * この技が、コマンド入力とは別に「モダン操作の SP ボタン簡易入力」という
+ * 代替手段を持つか（＝モダンダメージ減衰の対象になりうるか）を、Move の
+ * inputModern / inputClassic だけから判定する。
+ *
+ * 判定: inputModern が inputClassic と異なる文字列を持つ場合のみ true。
+ * 単に「モダンでも同じボタンで出せる」だけ（OD版の PP 同時押し等、
+ * クラシックと入力自体が変わらない）の技は対象外
+ * （例: blanka-electric-od は inputModern も "214PP" で inputClassic と同一）。
+ */
+export function moveHasModernShortcutInput(move: {
+  inputClassic: string;
+  inputModern: string | null;
+}): boolean {
+  return move.inputModern != null && move.inputModern !== move.inputClassic;
+}
+
+/**
+ * モダン計算の対象カテゴリか（通常技・投げ・ドライブインパクト等は対象外）。
+ * 「投げ」でもマネージュ・ドレ等のコマンド投げは技辞典上 category:'special' のため対象になる。
+ */
+export function isModernPenaltyEligibleCategory(category: string): boolean {
+  return category === 'special' || category === 'super';
 }

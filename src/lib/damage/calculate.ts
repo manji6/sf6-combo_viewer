@@ -28,11 +28,20 @@
 //    技）は段を消費しない。DR/DRC/CDR と同じ扱い（ブランカの公式フレームデータで
 //    フィアーダウンの damage が 0 と確認、これを段消費ありで扱うと以降のヒットが
 //    ずれることを確認）。
+//
+// 2026-09-13 モダン簡易入力の減衰（ruleset.ts のコメントも参照）:
+//  - controlType:'modern' を指定すると、SPボタンの簡易入力という代替手段を持つ
+//    special/super のみ ×0.8 が掛かる（コマンド入力すれば掛からないが、モダンで
+//    選ぶ人の大半は簡易入力を使う想定でこちらを前提にする。2026-09-13 オーナー指示）。
+//  - 対象技の inputModern が技辞典で未確認（null）の場合は「不明」として issue を
+//    出し、そのヒットを結果から除外する（status は 'incomplete' になる）。
 import { getRoute, getSituation, moveByKey } from '../../data';
 import type { Combo, Move, Step } from '../../data/types';
 import { parseCommand } from '../notation/parse';
 import {
   CANDIDATE_RULESET_2026_09,
+  isModernPenaltyEligibleCategory,
+  moveHasModernShortcutInput,
   parseComboCorrectionPercent,
   parseImmediateScalingPercent,
   parseMinGuaranteePercent,
@@ -41,6 +50,9 @@ import {
   type DamageRuleset,
 } from './ruleset';
 import type { CalculationIssue, CalculationResult, HitBreakdown } from './types';
+
+/** どちらの操作方式で計算するか。'modern' は SP ボタン簡易入力を前提にする（2026-09-13 オーナー指示）。 */
+export type ControlType = 'classic' | 'modern';
 
 const DR_COMMAND_RE = /^(DR|DRC|CDR)$/;
 const PC_DAMAGE_MULTIPLIER = 1.2;
@@ -75,6 +87,7 @@ function findFirstHitStep(stepGroups: Step[][]): Step | undefined {
 export function calculateComboDamage(
   combo: Combo,
   ruleset: DamageRuleset = CANDIDATE_RULESET_2026_09,
+  controlType: ControlType = 'classic',
 ): CalculationResult {
   const chain = combo.routeChain.map(getRoute);
   const hits: HitBreakdown[] = [];
@@ -127,6 +140,23 @@ export function calculateComboDamage(
         continue;
       }
 
+      // モダン計算: SP簡易入力の対象カテゴリなのに inputModern が未確認（null）の
+      // 技は、0.8倍が掛かるか判断できないため「不明」として結果に含めない
+      // （2026-09-13 オーナー指示: SP簡易入力を前提に計算する）。
+      if (
+        controlType === 'modern' &&
+        isModernPenaltyEligibleCategory(move.category) &&
+        move.inputModern == null
+      ) {
+        issues.push({
+          code: 'missing_modern_input',
+          message: `技「${move.name}」のモダン入力（inputModern）が未確認のため、モダン計算では不明`,
+          stepIndex: idx,
+          moveKey: step.moveKey,
+        });
+        continue;
+      }
+
       const stagePercent = scalingPercentForStage(ruleset, stage);
       const appliedRules = [`stage${stage}=${stagePercent}%`];
       let percent = stagePercent;
@@ -158,6 +188,18 @@ export function calculateComboDamage(
       if (drApplied) {
         percent *= ruleset.driveRushMultiplier;
         appliedRules.push(`DR×${ruleset.driveRushMultiplier}`);
+      }
+
+      // モダン簡易入力補正: SPボタンでコマンド入力の代わりに出せる special/super は
+      // ×0.8（コマンド入力すれば掛からないが、controlType:'modern' では簡易入力を
+      // 前提にする）。DR係数と同じ位置（保証の前）で乗算する。
+      if (
+        controlType === 'modern' &&
+        isModernPenaltyEligibleCategory(move.category) &&
+        moveHasModernShortcutInput(move)
+      ) {
+        percent *= ruleset.modernSimplifiedInputMultiplier;
+        appliedRules.push(`モダン簡易入力×${ruleset.modernSimplifiedInputMultiplier}`);
       }
 
       // SA最低保証: DR 等で下がった後の値に対する「下限」として扱う（保証成立後に

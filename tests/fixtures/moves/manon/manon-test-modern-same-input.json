@@ -1,0 +1,22 @@
+{
+  "key": "manon-test-modern-same-input",
+  "character": "manon",
+  "name": "（テスト用）モダンでも同じ入力の必殺技",
+  "category": "special",
+  "inputClassic": "214PP",
+  "inputModern": "214PP",
+  "startup": 10,
+  "active": "10-21",
+  "recovery": "17",
+  "onHit": "D",
+  "onBlock": null,
+  "cancel": null,
+  "damage": 1000,
+  "driveGainHit": 0,
+  "driveLossBlock": 0,
+  "driveLossPunishCounter": 0,
+  "superGain": 0,
+  "attribute": ["上"],
+  "notes": "テスト用フィクスチャ。inputModern が inputClassic と同一＝簡易入力の代替手段が無いのでモダンでも減衰しない、を確認するため",
+  "verifiedVersion": "テスト用フィクスチャ"
+}

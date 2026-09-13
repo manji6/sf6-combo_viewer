@@ -3,17 +3,25 @@
 // src/lib/damage の計算結果を並べて比較する。表示・データは一切変更しない。
 //
 // 使い方:
-//   npm run damage:audit                    全コンボを一覧比較
+//   npm run damage:audit                    全コンボを一覧比較（クラシック）
 //   npm run damage:audit -- manon           slug に "manon" を含むものだけ
 //   npm run damage:audit -- --hits          差が大きい上位のヒット内訳も表示
+//   npm run damage:audit -- --modern        モダン計算（SPボタン簡易入力前提、2026-09-13〜）で表示
 //   npm run damage:audit -- manon-jump --hits   絞り込み＋内訳
+//
+// --modern 指定時: 「記録値」列は実測値ではない（実測は全てクラシックで採取済み）。
+// クラシック計算値をそのまま並べて参考表示するだけなので、「差」を実測との不一致として
+// 扱わない。モダン専用の技（inputModern 未確認）を含むコンボは calculated ではなく
+// incomplete になる（missing_modern_input issue）。
 import process from 'node:process';
 import { combos } from '../src/data';
 import { flattenCombo } from '../src/lib/graph/derive';
 import { calculateComboDamage } from '../src/lib/damage';
+import type { ControlType } from '../src/lib/damage/calculate';
 
 const args = process.argv.slice(2);
 const showHits = args.includes('--hits');
+const controlType: ControlType = args.includes('--modern') ? 'modern' : 'classic';
 const filter = args.find((a) => !a.startsWith('--'));
 
 const targets = combos
@@ -39,7 +47,7 @@ interface Row {
 const rows: Row[] = [];
 for (const combo of targets) {
   const flat = flattenCombo(combo);
-  const calc = calculateComboDamage(combo);
+  const calc = calculateComboDamage(combo, undefined, controlType);
   rows.push({
     slug: combo.slug,
     character: combo.character,
@@ -55,6 +63,7 @@ for (const combo of targets) {
 rows.sort((a, b) => Math.abs(b.diff) - Math.abs(a.diff));
 
 const pad = (s: string | number, n: number) => String(s).padEnd(n);
+console.log(`[controlType: ${controlType}]${controlType === 'modern' ? '（記録値はクラシック実測。モダン計算値との参考比較）' : ''}`);
 console.log(
   pad('slug', 42) + pad('char', 8) + pad('確度', 10) + pad('記録値', 8) + pad('計算値', 8) + pad('差', 8) + pad('状態', 10) + '問題',
 );
@@ -86,7 +95,7 @@ if (showHits) {
   console.log('\n=== ヒット内訳（差が大きい順、上位10件） ===');
   for (const r of rows.slice(0, 10)) {
     const combo = combos.find((c) => c.slug === r.slug)!;
-    const calc = calculateComboDamage(combo);
+    const calc = calculateComboDamage(combo, undefined, controlType);
     console.log(`\n[${r.slug}] 記録値=${r.recorded} 計算値=${r.calculated} 差=${r.diff}`);
     for (const h of calc.hits) {
       console.log(
