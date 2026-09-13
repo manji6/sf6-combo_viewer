@@ -1,0 +1,204 @@
+﻿{
+    "date":  "2026-09-12",
+    "commit":  "4e4f71f",
+    "environment":  "Playwright + headless Edge, local static dist server; viewport simulation, not physical mobile",
+    "interactions":  {
+                         "tabSelected":  "true",
+                         "tabBack":  {
+                                         "hash":  "",
+                                         "selected":  "コンボ一覧（18）"
+                                     },
+                         "modern":  {
+                                        "graph":  "modern",
+                                        "recipeControl":  null,
+                                        "graphCommands":  [
+                                                              "中K4中K中5中",
+                                                              "中K5中K中5中",
+                                                              "PP214PPPP214PP"
+                                                          ],
+                                        "visibleGraph":  "中継\n引き中K（対空）→ 中K → OD電気\n中央・立ち回り\n5中\n引き中K\n後ろ入力で対空。同じ技を通常入力すると中K\n5中\n中K\n214PP\nOD エレクトリックサンダー\n電気締め後・中央ダウン",
+                                        "recipe":  "テキストで見る\n4中K\n›\n5中K\n›\n214PP"
+                                    },
+                         "preciseInput":  "中継\n弱P×2 → 弱デガジェ〆\n起き攻め\n初回行動後 +5F\n受け身:両対応\nリスク低\n詳細\n◯ コパン暴れ（弱P 4F）・遅らせ暴れ\n× 垂直・バックジャンプ・無敵技\n起き攻め\n初回行動後 +8F\n受け身:両対応\nリスク低\n詳細\n◯ 暴れ・遅らせ暴れ\n× 垂直・バックジャンプ・無敵技\n起き攻め\n初回行動後 ±0F\n受け身:両対応\nリスク中\n詳細\n◯ ガード継続・しゃがみっぱ\n× 前・バックジャンプ・打撃暴れ・投げ抜け\n中央・立ち回り\n5弱\n弱P\n5弱\n弱P\n連打キャンセル\n214SP\n弱デガジェ\n〆。起き攻めが強い\n弱デガジェ締め後・中央ダウン\nDR\nドライブラッシュ\n2中\n2中K\n最速で持続重ね\n4強P → 中ランヴェルセ が繋がる浮き\nDR\nドライブラッシュ\n4強\n4強P\n持続重ね。ヒット確認で再度4強P\n4強P → 中ランヴェルセ が繋がる浮き\n5SP\n弱マネージュ・ドレ\nマネージュ・ドレ後・中央ダウン\n相手復帰まで メダル獲得 +1",
+                         "fullscreenFocus":  [
+                                                 {
+                                                     "focused":  "\u003ca class=\"gi-link\" href=\"/manon/routes/oki_dr2mk_from_degage/\"\u003e詳細\u003c/a\u003e",
+                                                     "inside":  true,
+                                                     "bodyOverflow":  "visible"
+                                                 },
+                                                 {
+                                                     "focused":  "\u003ca class=\"gi-link\" href=\"/manon/routes/oki_dr4hp_from_degage/\"\u003e詳細\u003c/a\u003e",
+                                                     "inside":  true,
+                                                     "bodyOverflow":  "visible"
+                                                 },
+                                                 {
+                                                     "focused":  "\u003ca class=\"gi-link\" href=\"/manon/routes/oki_grab_from_degage/\"\u003e詳細\u003c/a\u003e",
+                                                     "inside":  true,
+                                                     "bodyOverflow":  "visible"
+                                                 },
+                                                 {
+                                                     "focused":  "\u003ca href=\"/manon/situations/neutral_mid/\"\u003e中央・立ち回り\u003c/a\u003e",
+                                                     "inside":  true,
+                                                     "bodyOverflow":  "visible"
+                                                 },
+                                                 {
+                                                     "focused":  "\u003ca href=\"/manon/situations/kd_after_degage_light_mid/\"\u003e弱デガジェ締め後・中央ダウン\u003c/a\u003e",
+                                                     "inside":  true,
+                                                     "bodyOverflow":  "visible"
+                                                 },
+                                                 {
+                                                     "focused":  "\u003ca href=\"/manon/situations/juggle_can_4hp_ranversement/\"\u003e4強P → 中ランヴェルセ が繋がる浮き\u003c/a\u003e",
+                                                     "inside":  true,
+                                                     "bodyOverflow":  "visible"
+                                                 },
+                                                 {
+                                                     "focused":  "\u003ca href=\"/manon/situations/juggle_can_4hp_ranversement/\"\u003e4強P → 中ランヴェルセ が繋がる浮き\u003c/a\u003e",
+                                                     "inside":  true,
+                                                     "bodyOverflow":  "visible"
+                                                 },
+                                                 {
+                                                     "focused":  "\u003ca href=\"/manon/situations/kd_after_manege_dore_mid/\"\u003eマネージュ・ドレ後・中央ダウン\u003c/a\u003e",
+                                                     "inside":  true,
+                                                     "bodyOverflow":  "visible"
+                                                 },
+                                                 {
+                                                     "focused":  "\u003csummary data-astro-cid-inzxe2sm=\"\"\u003eテキストで見る\u003c/summary\u003e",
+                                                     "inside":  false,
+                                                     "bodyOverflow":  "visible"
+                                                 },
+                                                 {
+                                                     "focused":  "\u003ca href=\"/manon/routes/route_5lp5lp_degage_l/\" data-astro-cid-inzxe2sm=\"\"\u003e弱P×2 → 弱デガジェ〆\u003c/a\u003e",
+                                                     "inside":  false,
+                                                     "bodyOverflow":  "visible"
+                                                 },
+                                                 {
+                                                     "focused":  "\u003ca href=\"/manon/situations/kd_after_degage_light_mid/\" data-astro-cid-inzxe2sm=\"\"\u003e弱デガジェ締め後・中央ダウン\u003c/a\u003e",
+                                                     "inside":  false,
+                                                     "bodyOverflow":  "visible"
+                                                 },
+                                                 {
+                                                     "focused":  "\u003ca href=\"/manon/routes/oki_dr2mk_from_degage/\" data-astro-cid-inzxe2sm=\"\"\u003eラッシュ2中K 重ね\u003c/a\u003e",
+                                                     "inside":  false,
+                                                     "bodyOverflow":  "visible"
+                                                 },
+                                                 {
+                                                     "focused":  "\u003ca href=\"/manon/routes/oki_dr4hp_from_degage/\" data-astro-cid-inzxe2sm=\"\"\u003eラッシュ4強P 重ね\u003c/a\u003e",
+                                                     "inside":  false,
+                                                     "bodyOverflow":  "visible"
+                                                 },
+                                                 {
+                                                     "focused":  "\u003ca href=\"/manon/routes/oki_grab_from_degage/\" data-astro-cid-inzxe2sm=\"\"\u003e弱コマ投げ\u003c/a\u003e",
+                                                     "inside":  false,
+                                                     "bodyOverflow":  "visible"
+                                                 }
+                                             ],
+                         "wheel":  {
+                                       "yBefore":  840,
+                                       "yAfter":  840,
+                                       "transformBefore":  "transform: translate(12px, 157.75px) scale(1);",
+                                       "transformAfter":  "transform: translate(26.7857px, 186.685px) scale(0.892857);"
+                                   },
+                         "mobile":  {
+                                        "headerHeight":  269.75,
+                                        "recipeTop":  1692.09375,
+                                        "viewportHeight":  844,
+                                        "firstCardTop":  1363.71875
+                                    },
+                         "sortHistory":  {
+                                             "url":  "http://127.0.0.1:55680/manon/?sort=diff-asc#setplay",
+                                             "sort":  "diff-asc"
+                                         },
+                         "contrast":  [
+                                          {
+                                              "theme":  "dark",
+                                              "items":  [
+                                                            {
+                                                                "sel":  ".flabel",
+                                                                "color":  "rgb(115, 122, 138)",
+                                                                "bg":  "rgb(33, 37, 47)",
+                                                                "font":  "12.48px",
+                                                                "weight":  "400",
+                                                                "ratio":  3.560994524883284
+                                                            },
+                                                            {
+                                                                "sel":  ".page-head h1",
+                                                                "color":  "rgb(217, 164, 65)",
+                                                                "bg":  "rgb(20, 22, 28)",
+                                                                "font":  "16px",
+                                                                "weight":  "400",
+                                                                "ratio":  8.040168506943058
+                                                            },
+                                                            {
+                                                                "sel":  ".dmg-note",
+                                                                "color":  "rgb(115, 122, 138)",
+                                                                "bg":  "rgb(33, 37, 47)",
+                                                                "font":  "11.52px",
+                                                                "weight":  "400",
+                                                                "ratio":  3.560994524883284
+                                                            },
+                                                            {
+                                                                "sel":  ".stars .off",
+                                                                "color":  "rgb(74, 81, 98)",
+                                                                "bg":  "rgb(33, 37, 47)",
+                                                                "font":  "14.4px",
+                                                                "weight":  "400",
+                                                                "ratio":  1.929818562384455
+                                                            },
+                                                            {
+                                                                "sel":  ".count",
+                                                                "color":  "rgb(115, 122, 138)",
+                                                                "bg":  "rgb(20, 22, 28)",
+                                                                "font":  "12.8px",
+                                                                "weight":  "400",
+                                                                "ratio":  4.202080549588836
+                                                            }
+                                                        ]
+                                          },
+                                          {
+                                              "theme":  "light",
+                                              "items":  [
+                                                            {
+                                                                "sel":  ".flabel",
+                                                                "color":  "rgb(122, 115, 96)",
+                                                                "bg":  "rgb(255, 253, 246)",
+                                                                "font":  "12.48px",
+                                                                "weight":  "400",
+                                                                "ratio":  4.637941506478089
+                                                            },
+                                                            {
+                                                                "sel":  ".page-head h1",
+                                                                "color":  "rgb(165, 114, 26)",
+                                                                "bg":  "rgb(244, 241, 232)",
+                                                                "font":  "16px",
+                                                                "weight":  "400",
+                                                                "ratio":  3.702719470036332
+                                                            },
+                                                            {
+                                                                "sel":  ".dmg-note",
+                                                                "color":  "rgb(122, 115, 96)",
+                                                                "bg":  "rgb(255, 253, 246)",
+                                                                "font":  "11.52px",
+                                                                "weight":  "400",
+                                                                "ratio":  4.637941506478089
+                                                            },
+                                                            {
+                                                                "sel":  ".stars .off",
+                                                                "color":  "rgb(169, 159, 130)",
+                                                                "bg":  "rgb(255, 253, 246)",
+                                                                "font":  "14.4px",
+                                                                "weight":  "400",
+                                                                "ratio":  2.589272652294341
+                                                            },
+                                                            {
+                                                                "sel":  ".count",
+                                                                "color":  "rgb(122, 115, 96)",
+                                                                "bg":  "rgb(244, 241, 232)",
+                                                                "font":  "12.8px",
+                                                                "weight":  "400",
+                                                                "ratio":  4.179629540700503
+                                                            }
+                                                        ]
+                                          }
+                                      ]
+                     }
+}

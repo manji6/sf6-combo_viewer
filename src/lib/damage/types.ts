@@ -1,7 +1,8 @@
 // ダメージ計算の結果型（DC-2）。
 // 「計算できた」は入力モデルで計算が完了した、という意味であり、ゲーム内で検証済みという
 // 意味ではない。実測との一致状態は呼び出し側（監査スクリプト等）で別に扱う。
-// 参照: docs/DAMAGE-CALCULATION-DESIGN.md §5.5
+// 参照: docs/DAMAGE-CALCULATION-MECHANISM.md（確定した計算ロジックの言語化）。
+// 型設計時の検討経緯は docs/archive/DAMAGE-CALCULATION-DESIGN.md §5.5 に保存済み。
 
 export type CalculationIssueCode =
   | 'missing_base_damage' // 技辞典に damage が無い（null）

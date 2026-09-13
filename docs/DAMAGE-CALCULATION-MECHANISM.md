@@ -2,7 +2,7 @@
 
 作成日：2026-09-13。対象：`src/lib/damage/`（`calculate.ts` / `ruleset.ts` / `types.ts`）。
 
-[DAMAGE-CALCULATION-DESIGN.md](DAMAGE-CALCULATION-DESIGN.md) は実装前の設計・調査メモ（未確定事項の洗い出し）。本ドキュメントはその後、**オーナーが実際に対戦画面で確認した実測値との答え合わせを繰り返して確定した、クラシック操作限定の計算ロジック**をまとめたもの。設計メモにあった不確定要素の多くはここで決着している。
+[archive/DAMAGE-CALCULATION-DESIGN.md](archive/DAMAGE-CALCULATION-DESIGN.md) は実装前の設計・調査メモ（未確定事項の洗い出し）。本ドキュメントはその後、**オーナーが実際に対戦画面で確認した実測値との答え合わせを繰り返して確定した、クラシック操作限定の計算ロジック**をまとめたもの。設計メモにあった不確定要素の多くはここで決着している。
 
 ## 1. 位置づけ・スコープ
 

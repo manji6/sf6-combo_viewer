@@ -1,0 +1,1072 @@
+{
+  "counts": {
+    "characters": 2,
+    "situations": 33,
+    "routes": 52,
+    "combos": 23,
+    "moves": 60
+  },
+  "combos": [
+    {
+      "slug": "blanka-antiair-5hk-close",
+      "damage": 3900,
+      "drive": 0,
+      "super": 0,
+      "modern": false,
+      "starter": {
+        "moveKey": "blanka-5hk",
+        "label": "大K"
+      },
+      "nodes": 7,
+      "conditions": [
+        "近めで大Kが対空できた時のみ（遠めはこの後のワイルドリフトが届かない）。",
+        "「大K→フィアーダウン拾いが繋がる浮き」からのみ。ダメージは各技の基礎値合計（コンボ補正未反映）で、実測は今後の確認待ち。"
+      ]
+    },
+    {
+      "slug": "blanka-antiair-5mk-electric",
+      "damage": 2200,
+      "drive": 2,
+      "super": 0,
+      "modern": true,
+      "starter": {
+        "moveKey": "blanka-5mk",
+        "label": "引き中K"
+      },
+      "nodes": 5,
+      "conditions": [
+        "対空の引き中Kが当たった時。ダメージは各技の基礎値合計（コンボ補正未反映）で、実測は今後の確認待ち。"
+      ]
+    },
+    {
+      "slug": "blanka-mid-2mk-electric-sa2",
+      "damage": 1500,
+      "drive": 2,
+      "super": 2,
+      "modern": true,
+      "starter": {
+        "moveKey": "blanka-2mk",
+        "label": "しゃがみ中K"
+      },
+      "nodes": 15,
+      "conditions": [
+        "SA2自体はダメージなし。OD電気からSA2をキャンセル発動し、ライトニングビースト状態（タイマー1500）に入る。他にも弱P始動・中パン始動のバリエーションあり（表記は要確認のため未登録）。"
+      ]
+    },
+    {
+      "slug": "blanka-mid-2mp-cr-5hk-wildlift",
+      "damage": 4500,
+      "drive": 3,
+      "super": 0,
+      "modern": false,
+      "starter": {
+        "moveKey": "blanka-2mp",
+        "label": "しゃがみ中P"
+      },
+      "nodes": 9,
+      "conditions": [
+        "しゃがみ中Pがヒットした時。全体26Fで置き技並みに隙が少なく、リーチも長いので差し込みの主力。",
+        "「大K→フィアーダウン拾いが繋がる浮き」からのみ。ダメージは各技の基礎値合計（コンボ補正未反映）で、実測は今後の確認待ち。"
+      ]
+    },
+    {
+      "slug": "blanka-throw-forward",
+      "damage": 1200,
+      "drive": 0,
+      "super": 0,
+      "modern": true,
+      "starter": {
+        "moveKey": "blanka-throw-l",
+        "label": "前投げ（ワイルドファング）"
+      },
+      "nodes": 12,
+      "conditions": [
+        "近距離で成立する通常投げ。"
+      ]
+    },
+    {
+      "slug": "manon-corner-di-hoseigiri",
+      "damage": 4632,
+      "override": 4632,
+      "damageNote": "メダル保持数でダメージが変動",
+      "drive": 2,
+      "super": 0,
+      "modern": true,
+      "starter": {
+        "moveKey": "manon-impact",
+        "label": "ドライブインパクト"
+      },
+      "nodes": 14,
+      "conditions": [
+        "画面端。アクセントで撃つ程度（コマ投げの方が強いことが多い）",
+        "画面端インパクト壁貼りつきから。生ドライブラッシュ 1 本。5強P>タン・リエ のタゲコンで相手を立ち状態にしつつコンボを切る。",
+        "補正切りでコンボが切れているため 100% ダメージ。中マネージュ・ドレはメダル保持数で変動（2,000〜3,700）。+8F あるので暴れ・多くの起き上がり行動に勝てるが、無敵技・ジャンプには弱い。"
+      ]
+    },
+    {
+      "slug": "manon-corner-di-wall-ranversement",
+      "damage": 2490,
+      "override": 2490,
+      "damageNote": "メダル保持数でダメージが変動",
+      "drive": 1,
+      "super": 0,
+      "modern": true,
+      "starter": {
+        "moveKey": "manon-impact",
+        "label": "ドライブインパクト"
+      },
+      "nodes": 15,
+      "conditions": [
+        "画面端。アクセントで撃つ程度（コマ投げの方が強いことが多い）",
+        "画面端インパクト壁貼りつきから。ノーゲージコンボと同ルート"
+      ]
+    },
+    {
+      "slug": "manon-di-punish-ranversement",
+      "damage": 2580,
+      "override": 2580,
+      "damageNote": "メダル保持数でダメージが変動",
+      "drive": 1,
+      "super": 0,
+      "modern": false,
+      "starter": {
+        "moveKey": "manon-impact",
+        "label": "ドライブインパクト"
+      },
+      "nodes": 6,
+      "conditions": [
+        "パニッシュカウンター or アーマー成立後にヒット（膝崩れ）",
+        "インパクト膝崩れから。メダル1枚しかない時用（2枚あればコマ投げでよい）。ノーゲージ"
+      ]
+    },
+    {
+      "slug": "manon-jump-jhk-hoseigiri-feint",
+      "damage": 4680,
+      "override": 4680,
+      "damageNote": "メダル保持数でダメージが変動",
+      "drive": 2,
+      "super": 0,
+      "modern": false,
+      "starter": {
+        "moveKey": "manon-jhk",
+        "label": "J強K"
+      },
+      "nodes": 8,
+      "conditions": [
+        "飛びが通った時のリーサル用。ODグランフェッテ（名目2本、スピン中に回復）。中ランヴェルセはフェイントに派生させてコンボを切る。",
+        "補正切りでコンボが切れているため 100% ダメージ。強マネージュ・ドレはメダル保持数で変動（2,000〜3,700）。+1F からの読み合いで確定ではない。"
+      ]
+    },
+    {
+      "slug": "manon-jump-jhk-hoseigiri",
+      "damage": 5272,
+      "override": 5272,
+      "damageNote": "メダル保持数でダメージが変動",
+      "drive": 3,
+      "super": 0,
+      "modern": false,
+      "starter": {
+        "moveKey": "manon-jhk",
+        "label": "J強K"
+      },
+      "nodes": 27,
+      "conditions": [
+        "飛びが通った時のリーサル用。ODグランフェッテ（名目2本、スピン中に回復）＋ 生ドライブラッシュ 1 本。強ランヴェルセは当てずに空振りしてコンボを切る。"
+      ]
+    },
+    {
+      "slug": "manon-jump-jhk-mp-degage",
+      "damage": 2200,
+      "override": 2200,
+      "drive": 0,
+      "super": 0,
+      "modern": true,
+      "starter": {
+        "moveKey": "manon-jhk",
+        "label": "J強K"
+      },
+      "nodes": 23,
+      "conditions": [
+        "飛び道具読み前ジャンプが通った時。4強P が届かなそうならこちら。強ロン・ポワン>SA3 や ODロン・ポワン>SA2 も可"
+      ]
+    },
+    {
+      "slug": "manon-jump-jhk-odfouette",
+      "damage": 3380,
+      "override": 3380,
+      "damageNote": "メダル保持数でダメージが変動",
+      "drive": 1,
+      "super": 0,
+      "modern": true,
+      "starter": {
+        "moveKey": "manon-jhk",
+        "label": "J強K"
+      },
+      "nodes": 8,
+      "conditions": [
+        "飛び道具読み前ジャンプが通った時。2ゲージ使用（コンボ中に回復し実質1本程度）。ノーゲージなら 4強P>中ランヴェルセ〆。実測: メダル1枚で 3,620dmg。"
+      ]
+    },
+    {
+      "slug": "manon-mid-2lp-rondpoint",
+      "damage": 1100,
+      "override": 1100,
+      "drive": 0,
+      "super": 0,
+      "modern": false,
+      "starter": {
+        "moveKey": "manon-2lp",
+        "label": "2弱P"
+      },
+      "nodes": 18,
+      "conditions": [
+        "小技/4F暴れ始動。2弱P からは デガジェ は繋がらない"
+      ]
+    },
+    {
+      "slug": "manon-mid-5mp-cr-ranversement",
+      "damage": 2480,
+      "override": 2480,
+      "damageNote": "メダル保持数でダメージが変動",
+      "drive": 3,
+      "super": 0,
+      "modern": false,
+      "starter": {
+        "moveKey": "manon-5mp",
+        "label": "中P"
+      },
+      "nodes": 14,
+      "conditions": [
+        "中P がヒット確認できたら。中P>CDR>2中P はガードでも連続ガード＋3F有利",
+        "「4強P → 中ランヴェルセ が繋がる浮き」からのみ。ヒット確認できるなら 4強P>弱ランヴェルセ の方が有利F高い"
+      ]
+    },
+    {
+      "slug": "manon-mid-5mp-cr-rondpoint",
+      "damage": 1904,
+      "override": 1904,
+      "drive": 3,
+      "super": 0,
+      "modern": false,
+      "starter": {
+        "moveKey": "manon-5mp",
+        "label": "中P"
+      },
+      "nodes": 7,
+      "conditions": [
+        "中P>CDR>2中P の2択で 2中P がヒットした時。ロン・ポワンは弱/中/強/OD どれでも可（OD なら追撃可）"
+      ]
+    },
+    {
+      "slug": "manon-mid-5mp-lethal-sa3",
+      "damage": 4508,
+      "override": 4508,
+      "damageNote": "メダル保持数でダメージが変動",
+      "drive": 6,
+      "super": 3,
+      "modern": false,
+      "starter": {
+        "moveKey": "manon-5mp",
+        "label": "中P"
+      },
+      "nodes": 14,
+      "conditions": [
+        "中P がヒット確認できたら。中P>CDR>2中P はガードでも連続ガード＋3F有利",
+        "「4強P → 中ランヴェルセ が繋がる浮き」から。2つ目の CDR で 3 本消費（コンボ全体で Dゲージ 6 本）。"
+      ]
+    },
+    {
+      "slug": "manon-mid-enhaut-cr-ranversement",
+      "damage": 2914,
+      "override": 2914,
+      "damageNote": "メダル保持数でダメージが変動",
+      "drive": 3,
+      "super": 0,
+      "modern": false,
+      "starter": {
+        "moveKey": "manon-enhaut",
+        "label": "アン・オー"
+      },
+      "nodes": 15,
+      "conditions": [
+        "アン・オーがヒット。起き攻めの4中K重ねから同ルート。ゲージ節約なら アン・オー>弱/中デガジェ〆",
+        "「4強P → 中ランヴェルセ が繋がる浮き」からのみ。ヒット確認できるなら 4強P>弱ランヴェルセ の方が有利F高い"
+      ]
+    },
+    {
+      "slug": "manon-mid-lp-degage",
+      "damage": 1240,
+      "override": 1240,
+      "drive": 0,
+      "super": 0,
+      "modern": true,
+      "starter": {
+        "moveKey": "manon-5lp",
+        "label": "弱P"
+      },
+      "nodes": 23,
+      "conditions": [
+        "立ち弱P 始動（2弱P 始動ではデガジェが繋がらない）"
+      ]
+    },
+    {
+      "slug": "manon-punish-5hk-pc-degage",
+      "damage": 2280,
+      "override": 2280,
+      "drive": 0,
+      "super": 0,
+      "modern": false,
+      "starter": {
+        "moveKey": "manon-5hk",
+        "label": "強K"
+      },
+      "nodes": 4,
+      "conditions": [
+        "遠めの差し返し 強K がパニッシュカウンターした時"
+      ]
+    },
+    {
+      "slug": "manon-punish-5hk-pc-sa2",
+      "damage": 3880,
+      "override": 3880,
+      "drive": 0,
+      "super": 2,
+      "modern": false,
+      "starter": {
+        "moveKey": "manon-5hk",
+        "label": "強K"
+      },
+      "nodes": 4,
+      "conditions": [
+        "遠めの差し返し 強K がパニッシュカウンターした時。SA2 はノーキャンセルで繋がる。"
+      ]
+    },
+    {
+      "slug": "manon-punish-5hp-pc-ranversement",
+      "damage": 2861,
+      "override": 2861,
+      "damageNote": "メダル保持数でダメージが変動",
+      "drive": 3,
+      "super": 0,
+      "modern": false,
+      "starter": {
+        "moveKey": "manon-5hp",
+        "label": "5強P"
+      },
+      "nodes": 8,
+      "conditions": [
+        "5強P がパニッシュカウンター（差し返し）した時",
+        "ゲージ内訳: OD ロン・ポワン 2 ＋ 生ドライブラッシュ 1 ＝ 3 本。メダルを溜める貴重なコンボ"
+      ]
+    },
+    {
+      "slug": "manon-punish-5lk-ranversement",
+      "damage": 1690,
+      "override": 1690,
+      "damageNote": "メダル保持数でダメージが変動",
+      "drive": 3,
+      "super": 0,
+      "modern": false,
+      "starter": {
+        "moveKey": "manon-5lk",
+        "label": "弱K"
+      },
+      "nodes": 14,
+      "conditions": [
+        "遠めの 5F/6F 確定反撃（例: マリーザ 弱クアトリガ ガード時）。弱K>CDR でコンボに行けるのはマノンの強み",
+        "「4強P → 中ランヴェルセ が繋がる浮き」からのみ。ヒット確認できるなら 4強P>弱ランヴェルセ の方が有利F高い"
+      ]
+    },
+    {
+      "slug": "manon-punish-invincible-odfouette",
+      "damage": 3155,
+      "override": 3155,
+      "damageNote": "メダル保持数でダメージが変動",
+      "drive": 1,
+      "super": 0,
+      "modern": true,
+      "starter": {
+        "moveKey": "manon-4hp",
+        "label": "4強P"
+      },
+      "nodes": 7,
+      "conditions": [
+        "無敵技をガードした時のコンボ。名目Dゲージ2本だがコンボ中に回復するため実質1本消費。メダル4枚以上ならコマ投げの方が火力上。"
+      ]
+    }
+  ],
+  "situationAdvantages": [
+    {
+      "id": "blanka_doll_set_corner",
+      "kind": "okiStart",
+      "advantage": "+5"
+    },
+    {
+      "id": "blanka_juggle_can_wildlift",
+      "kind": "juggle",
+      "advantage": "限定浮き"
+    },
+    {
+      "id": "blanka_kd_after_wildfang_mid",
+      "kind": "knockdown",
+      "advantage": "前ステ後 +3"
+    },
+    {
+      "id": "blockstring_5mp_cr_2mp",
+      "kind": "blockstring",
+      "advantage": "+3（連続ガード）"
+    },
+    {
+      "id": "juggle_can_4hp_ranversement",
+      "kind": "juggle",
+      "advantage": "限定浮き"
+    },
+    {
+      "id": "juggle_di_pc",
+      "kind": "juggle",
+      "advantage": "膝崩れ"
+    },
+    {
+      "id": "juggle_pc_5hp",
+      "kind": "juggle",
+      "advantage": "パニカン誘発"
+    },
+    {
+      "id": "kd_after_hoseigiri_corner",
+      "kind": "hit",
+      "advantage": "+8"
+    },
+    {
+      "id": "kd_after_hoseigiri_feint_mid",
+      "kind": "hit",
+      "advantage": "+1"
+    },
+    {
+      "id": "kd_after_hoseigiri_mid",
+      "kind": "knockdown",
+      "advantage": "起き上がりに重ね"
+    },
+    {
+      "id": "kd_after_manege_dore_corner",
+      "kind": "knockdown",
+      "advantage": "メダル獲得 +1"
+    },
+    {
+      "id": "kd_after_manege_dore_mid",
+      "kind": "knockdown",
+      "advantage": "メダル獲得 +1"
+    },
+    {
+      "id": "neutral_corner",
+      "kind": "neutral",
+      "advantage": "±0"
+    },
+    {
+      "id": "neutral_mid",
+      "kind": "neutral",
+      "advantage": "±0"
+    },
+    {
+      "id": "wall_splat_corner",
+      "kind": "juggle",
+      "advantage": "壁貼りつき"
+    }
+  ],
+  "unknownTokens": [
+    {
+      "route": "route_di_pc",
+      "command": "DI",
+      "unknown": [
+        {
+          "kind": "text",
+          "text": "D",
+          "raw": "D"
+        },
+        {
+          "kind": "text",
+          "text": "I",
+          "raw": "I"
+        }
+      ]
+    },
+    {
+      "route": "starter_di_corner",
+      "command": "DI",
+      "unknown": [
+        {
+          "kind": "text",
+          "text": "D",
+          "raw": "D"
+        },
+        {
+          "kind": "text",
+          "text": "I",
+          "raw": "I"
+        }
+      ]
+    }
+  ],
+  "modernResolution": [
+    {
+      "route": "blanka_oki_5mk_bomb_corner",
+      "move": "引き中K",
+      "classic": "4MK",
+      "key": "blanka-5mk",
+      "resolved": "5M"
+    },
+    {
+      "route": "blanka_oki_5mk_bomb_corner",
+      "move": "中K",
+      "classic": "5MK",
+      "key": "blanka-5mk",
+      "resolved": "5M"
+    },
+    {
+      "route": "blanka_oki_5mk_bomb_corner",
+      "move": "エレクトリックサンダー",
+      "classic": "214P",
+      "key": "blanka-electric",
+      "resolved": "214P"
+    },
+    {
+      "route": "blanka_oki_5mk_persistent_mid",
+      "move": "引き中K",
+      "classic": "4MK",
+      "key": "blanka-5mk",
+      "resolved": "5M"
+    },
+    {
+      "route": "blanka_oki_surprise_forward_throw_mid",
+      "move": "サプライズフォワード",
+      "classic": "6KKK",
+      "key": "blanka-surprise-forward",
+      "resolved": "6弱中強"
+    },
+    {
+      "route": "blanka_oki_surprise_forward_throw_mid",
+      "move": "前投げ",
+      "classic": "LPLK",
+      "key": "blanka-throw-l",
+      "resolved": "LPLK"
+    },
+    {
+      "route": "blanka_route_2mk_electric_sa2_mid",
+      "move": "しゃがみ中K",
+      "classic": "2MK",
+      "key": "blanka-2mk",
+      "resolved": "2M"
+    },
+    {
+      "route": "blanka_route_2mk_electric_sa2_mid",
+      "move": "OD エレクトリックサンダー",
+      "classic": "214PP",
+      "key": "blanka-electric-od",
+      "resolved": "214PP"
+    },
+    {
+      "route": "blanka_route_2mk_electric_sa2_mid",
+      "move": "SA2（ライトニングビースト）",
+      "classic": "214214P",
+      "key": "blanka-sa2",
+      "resolved": "214214P"
+    },
+    {
+      "route": "blanka_route_5lp_electric_sa2_mid",
+      "move": "立ち弱P",
+      "classic": "5LP",
+      "key": "blanka-5lp",
+      "resolved": "5L"
+    },
+    {
+      "route": "blanka_route_5lp_electric_sa2_mid",
+      "move": "OD エレクトリックサンダー",
+      "classic": "214PP",
+      "key": "blanka-electric-od",
+      "resolved": "214PP"
+    },
+    {
+      "route": "blanka_route_5lp_electric_sa2_mid",
+      "move": "SA2（ライトニングビースト）",
+      "classic": "214214P",
+      "key": "blanka-sa2",
+      "resolved": "214214P"
+    },
+    {
+      "route": "blanka_route_5mk_antiair_electric",
+      "move": "引き中K",
+      "classic": "4MK",
+      "key": "blanka-5mk",
+      "resolved": "5M"
+    },
+    {
+      "route": "blanka_route_5mk_antiair_electric",
+      "move": "中K",
+      "classic": "5MK",
+      "key": "blanka-5mk",
+      "resolved": "5M"
+    },
+    {
+      "route": "blanka_route_5mk_antiair_electric",
+      "move": "OD エレクトリックサンダー",
+      "classic": "214PP",
+      "key": "blanka-electric-od",
+      "resolved": "214PP"
+    },
+    {
+      "route": "blanka_route_forward_throw",
+      "move": "前投げ（ワイルドファング）",
+      "classic": "LPLK",
+      "key": "blanka-throw-l",
+      "resolved": "LPLK"
+    },
+    {
+      "route": "bs_4hp_5mp_cr_2mp",
+      "move": "4強P",
+      "classic": "4HP",
+      "key": "manon-4hp",
+      "resolved": "4H"
+    },
+    {
+      "route": "bs_grab_5mp_cr_2mp",
+      "move": "強マネージュ・ドレ",
+      "classic": "63214HP",
+      "key": "manon-manege-h",
+      "resolved": "5SP"
+    },
+    {
+      "route": "oki_dr2mk_from_degage",
+      "move": "ドライブラッシュ",
+      "classic": "DR",
+      "fallback": "DR"
+    },
+    {
+      "route": "oki_dr2mk_from_degage",
+      "move": "2中K",
+      "classic": "2MK",
+      "key": "manon-2mk",
+      "resolved": "2M"
+    },
+    {
+      "route": "oki_dr2mk_from_rondpoint_h",
+      "move": "ドライブラッシュ",
+      "classic": "DR",
+      "fallback": "DR"
+    },
+    {
+      "route": "oki_dr2mk_from_rondpoint_h",
+      "move": "2中K",
+      "classic": "2MK",
+      "key": "manon-2mk",
+      "resolved": "2M"
+    },
+    {
+      "route": "oki_dr4hp_from_degage",
+      "move": "ドライブラッシュ",
+      "classic": "DR",
+      "fallback": "DR"
+    },
+    {
+      "route": "oki_dr4hp_from_degage",
+      "move": "4強P",
+      "classic": "4HP",
+      "key": "manon-4hp",
+      "resolved": "4H"
+    },
+    {
+      "route": "oki_grab_from_degage",
+      "move": "弱マネージュ・ドレ",
+      "classic": "63214LP",
+      "key": "manon-manege-l",
+      "resolved": "5SP"
+    },
+    {
+      "route": "oki_hoseigiri_manege_h",
+      "move": "強マネージュ・ドレ",
+      "classic": "63214HP",
+      "key": "manon-manege-h",
+      "resolved": "5SP"
+    },
+    {
+      "route": "oki_hoseigiri_manege_l",
+      "move": "弱マネージュ・ドレ",
+      "classic": "63214LP",
+      "key": "manon-manege-l",
+      "resolved": "5SP"
+    },
+    {
+      "route": "oki_hoseigiri_manege_m",
+      "move": "中マネージュ・ドレ",
+      "classic": "63214MP",
+      "key": "manon-manege-m",
+      "resolved": "5SP"
+    },
+    {
+      "route": "route_5hp_pc_tanlie",
+      "move": "5強P",
+      "classic": "PC 5HP",
+      "key": "manon-5hp",
+      "resolved": "5H"
+    },
+    {
+      "route": "route_5hp_pc_tanlie",
+      "move": "強P（タン・リエ）",
+      "classic": "~HP",
+      "key": "manon-tanlie",
+      "resolved": "5H~H"
+    },
+    {
+      "route": "route_5lk_cr_5lp",
+      "move": "弱K",
+      "classic": "5LK",
+      "key": "manon-5lk",
+      "resolved": "5L"
+    },
+    {
+      "route": "route_5lk_cr_5lp",
+      "move": "キャンセルドライブラッシュ",
+      "classic": "DRC",
+      "fallback": "DRC"
+    },
+    {
+      "route": "route_5lk_cr_5lp",
+      "move": "弱P",
+      "classic": "5LP",
+      "key": "manon-5lp",
+      "resolved": "5L"
+    },
+    {
+      "route": "route_5lp5lp_degage_l",
+      "move": "弱P",
+      "classic": "5LP",
+      "key": "manon-5lp",
+      "resolved": "5L"
+    },
+    {
+      "route": "route_5lp5lp_degage_l",
+      "move": "弱P",
+      "classic": "5LP",
+      "key": "manon-5lp",
+      "resolved": "5L"
+    },
+    {
+      "route": "route_5lp5lp_degage_l",
+      "move": "弱デガジェ",
+      "classic": "214LK",
+      "key": "manon-degage-l",
+      "fallback": "214SP",
+      "precise": "214L"
+    },
+    {
+      "route": "route_di_pc",
+      "move": "ドライブインパクト",
+      "classic": "DI",
+      "key": "manon-impact",
+      "resolved": "DI"
+    },
+    {
+      "route": "route_di_wall_4hp_ranversement_l",
+      "move": "4強P",
+      "classic": "4HP",
+      "key": "manon-4hp",
+      "resolved": "4H"
+    },
+    {
+      "route": "route_di_wall_4hp_ranversement_l",
+      "move": "弱ランヴェルセ",
+      "classic": "236LP",
+      "key": "manon-ranversement-l",
+      "resolved": "2SP",
+      "precise": "236L"
+    },
+    {
+      "route": "route_di_wall_hoseigiri_setup",
+      "move": "ドライブラッシュ",
+      "classic": "DR",
+      "fallback": "DR"
+    },
+    {
+      "route": "route_di_wall_hoseigiri_setup",
+      "move": "4強P",
+      "classic": "4HP",
+      "key": "manon-4hp",
+      "resolved": "4H"
+    },
+    {
+      "route": "route_di_wall_hoseigiri_setup",
+      "move": "弱グランフェッテ",
+      "classic": "236LP~K",
+      "key": "manon-grandfouette",
+      "fallback": "236SP~K",
+      "precise": "236P~K"
+    },
+    {
+      "route": "route_di_wall_hoseigiri_setup",
+      "move": "4強P",
+      "classic": "4HP",
+      "key": "manon-4hp",
+      "resolved": "4H"
+    },
+    {
+      "route": "route_di_wall_hoseigiri_setup",
+      "move": "弱グランフェッテ",
+      "classic": "236LP~K",
+      "key": "manon-grandfouette",
+      "fallback": "236SP~K",
+      "precise": "236P~K"
+    },
+    {
+      "route": "route_di_wall_hoseigiri_setup",
+      "move": "5強P",
+      "classic": "5HP",
+      "key": "manon-5hp",
+      "resolved": "5H"
+    },
+    {
+      "route": "route_di_wall_hoseigiri_setup",
+      "move": "強P（タン・リエ）",
+      "classic": "~HP",
+      "key": "manon-tanlie",
+      "resolved": "5H~H"
+    },
+    {
+      "route": "route_jhk_mp_degage_l",
+      "move": "J強K",
+      "classic": "j.HK",
+      "key": "manon-jhk",
+      "resolved": "j.H"
+    },
+    {
+      "route": "route_jhk_mp_degage_l",
+      "move": "中P",
+      "classic": "5MP",
+      "key": "manon-5mp",
+      "resolved": "5M"
+    },
+    {
+      "route": "route_jhk_mp_degage_l",
+      "move": "弱デガジェ",
+      "classic": "214LK",
+      "key": "manon-degage-l",
+      "fallback": "214SP",
+      "precise": "214L"
+    },
+    {
+      "route": "route_jhk_odfouette_ranversement",
+      "move": "J強K",
+      "classic": "j.HK",
+      "key": "manon-jhk",
+      "resolved": "j.H"
+    },
+    {
+      "route": "route_jhk_odfouette_ranversement",
+      "move": "4強P",
+      "classic": "4HP",
+      "key": "manon-4hp",
+      "resolved": "4H"
+    },
+    {
+      "route": "route_jhk_odfouette_ranversement",
+      "move": "ODグランフェッテ",
+      "classic": "236PP~K",
+      "key": "manon-grandfouette-od",
+      "fallback": "236AS SP~K",
+      "precise": "236PP~K"
+    },
+    {
+      "route": "route_jhk_odfouette_ranversement",
+      "move": "4強P",
+      "classic": "4HP",
+      "key": "manon-4hp",
+      "resolved": "4H"
+    },
+    {
+      "route": "route_jhk_odfouette_ranversement",
+      "move": "強ロン・ポワン",
+      "classic": "236HK",
+      "key": "manon-rondpoint-h",
+      "resolved": "6SP",
+      "precise": "236H"
+    },
+    {
+      "route": "route_jhk_odfouette_ranversement",
+      "move": "弱ランヴェルセ",
+      "classic": "236LP",
+      "key": "manon-ranversement-l",
+      "resolved": "2SP",
+      "precise": "236L"
+    },
+    {
+      "route": "route_odfouette_ranversement",
+      "move": "4強P",
+      "classic": "4HP",
+      "key": "manon-4hp",
+      "resolved": "4H"
+    },
+    {
+      "route": "route_odfouette_ranversement",
+      "move": "ODグランフェッテ",
+      "classic": "236PP~K",
+      "key": "manon-grandfouette-od",
+      "fallback": "236AS SP~K",
+      "precise": "236PP~K"
+    },
+    {
+      "route": "route_odfouette_ranversement",
+      "move": "4強P",
+      "classic": "4HP",
+      "key": "manon-4hp",
+      "resolved": "4H"
+    },
+    {
+      "route": "route_odfouette_ranversement",
+      "move": "強ロン・ポワン",
+      "classic": "236HK",
+      "key": "manon-rondpoint-h",
+      "resolved": "6SP",
+      "precise": "236H"
+    },
+    {
+      "route": "route_odfouette_ranversement",
+      "move": "弱ランヴェルセ",
+      "classic": "236LP",
+      "key": "manon-ranversement-l",
+      "resolved": "2SP",
+      "precise": "236L"
+    },
+    {
+      "route": "starter_di_corner",
+      "move": "ドライブインパクト",
+      "classic": "DI",
+      "key": "manon-impact",
+      "resolved": "DI"
+    }
+  ],
+  "feints": [
+    {
+      "route": "route_jhk_hoseigiri_feint_setup",
+      "step": {
+        "move": "中ランヴェルセ",
+        "command": "236MP",
+        "action": "feint",
+        "moveKey": "manon-ranversement-m",
+        "note": "コマンド最後の P をホールドしてフェイント派生（全体32F）。フレーム消費でコンボを切り +1F を作る"
+      }
+    }
+  ],
+  "unreferencedMoves": [
+    "blanka-backstep-m",
+    "blanka-rolling-od",
+    "blanka-surprise-back",
+    "manon-degage-od",
+    "manon-manege-od",
+    "manon-sa1"
+  ],
+  "versionCounts": {
+    "Year3（公式フレームデータ参照。パッチ版数未確認）": 60
+  },
+  "crossCharacterMoveValidation": [],
+  "outOfRangeAccepted": true,
+  "unknownKey": {
+    "accepted": true,
+    "kept": false
+  },
+  "graphStats": {
+    "maxComboNodes": 27,
+    "maxSituationNodes": 93
+  },
+  "setplayCoverage": [
+    {
+      "id": "blanka_doll_set_corner",
+      "kind": "okiStart",
+      "home": true,
+      "hub": true
+    },
+    {
+      "id": "blanka_kd_after_wildfang_mid",
+      "kind": "knockdown",
+      "home": true,
+      "hub": true
+    },
+    {
+      "id": "blanka_sa2_active_mid",
+      "kind": "hit",
+      "home": false,
+      "hub": false
+    },
+    {
+      "id": "blockstring_5mp_cr_2mp",
+      "kind": "blockstring",
+      "home": false,
+      "hub": true
+    },
+    {
+      "id": "kd_after_degage_light_mid",
+      "kind": "knockdown",
+      "home": true,
+      "hub": true
+    },
+    {
+      "id": "kd_after_hoseigiri_corner",
+      "kind": "hit",
+      "home": false,
+      "hub": false
+    },
+    {
+      "id": "kd_after_hoseigiri_feint_mid",
+      "kind": "hit",
+      "home": false,
+      "hub": false
+    },
+    {
+      "id": "kd_after_hoseigiri_mid",
+      "kind": "knockdown",
+      "home": false,
+      "hub": true
+    },
+    {
+      "id": "kd_after_rondpoint_h_mid",
+      "kind": "knockdown",
+      "home": false,
+      "hub": true
+    }
+  ],
+  "builtLinks": {
+    "pages": 117,
+    "links": 1908,
+    "broken": []
+  },
+  "builtSizes": [
+    {
+      "file": "dist\\manon\\index.html",
+      "bytes": 165133
+    },
+    {
+      "file": "dist\\manon\\situations\\neutral_mid\\index.html",
+      "bytes": 86630
+    },
+    {
+      "file": "dist\\manon\\situations\\kd_after_degage_light_mid\\index.html",
+      "bytes": 58493
+    },
+    {
+      "file": "dist\\blanka\\situations\\blanka_sa2_active_mid\\index.html",
+      "bytes": 57175
+    },
+    {
+      "file": "dist\\manon\\combos\\manon-corner-di-hoseigiri\\index.html",
+      "bytes": 54044
+    },
+    {
+      "file": "dist\\guide\\notation\\index.html",
+      "bytes": 53680
+    },
+    {
+      "file": "dist\\manon\\situations\\kd_after_hoseigiri_mid\\index.html",
+      "bytes": 52120
+    },
+    {
+      "file": "dist\\manon\\combos\\manon-mid-lp-degage\\index.html",
+      "bytes": 51356
+    }
+  ]
+}

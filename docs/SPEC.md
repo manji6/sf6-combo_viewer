@@ -1,9 +1,12 @@
 # SF6 コンボ・セットプレイビューア — 仕様・設計・実装まとめ
 
-最終更新: 2026-09-10（Phase 1 プロトタイプ、レビュー反映後。スキーマ決定 A-1〜A-4 を反映）
+最終更新: 2026-09-10（Phase 1 プロトタイプ、レビュー反映後。スキーマ決定 A-1〜A-4 を反映）。
+下部の「変更履歴」表は継続的に追記しており、2026-09-13 時点の最新反映は同表の末尾を参照（本文冒頭の
+「現在地」等、フェーズ導入部分は Phase 1 時点の記述のまま更新していない箇所がある）。
 このドキュメントが現状の唯一の正。承認済みの元計画は `C:\Users\ryosu\.claude\plans\web-iridescent-flame.md`、
-レビュー用の短いガイドは `docs/PROTOTYPE.md`、作業一覧と進捗は `docs/ROADMAP.md`、
-第三者レビューと対応方針は `docs/REVIEW-2026-09-10.md`。
+作業一覧と進捗は `docs/ROADMAP.md`、ダメージ計算の仕組みは `docs/DAMAGE-CALCULATION-MECHANISM.md`。
+過去の第三者レビュー・Phase 1 レビューガイドは `docs/archive/` を参照（`REVIEW-2026-09-10.md` /
+`REVIEW-2026-09-12.md`）。
 
 > **A-1〜A-4（2026-09-10 決定・実装済み）**: 要約は §3.0。
 > スキーマ本体（`src/data/types.ts`）・ダミーデータ・描画への適用まで完了。
@@ -28,7 +31,10 @@ Street Fighter 6 のコンボと**起き攻めセットプレイ（分岐択）*
 | データ | 素の TS 配列（`src/data/dummy/*.ts`）、マノンのみ、すべて仮 | Content Collections + Zod、実データ、複数キャラ |
 | 成果物 | 全画面が実物コンポーネントで動く Astro 最小アプリ | SEO・登録 Skill・デプロイまで |
 
-**現在地**: Phase 1 レビュー完了間近（A-1〜A-4 / U-4 / U-7 / R-1 / V-1〜V-6 決着）。`npm run build` 45 ページ、`astro check` 0 エラー。
+**現在地（2026-09-10 時点、Phase 1 表）**: Phase 1 レビュー完了間近（A-1〜A-4 / U-4 / U-7 / R-1 / V-1〜V-6 決着）。`npm run build` 45 ページ、`astro check` 0 エラー。
+**現在地（2026-09-13 時点）**: Phase 2 進行中。マノン・ブランカ2キャラ対応、技辞典は公式フレームデータで
+全技を照合済み。ダメージ計算（クラシック）は確定・実装済み（監査運用、`docs/DAMAGE-CALCULATION-MECHANISM.md`）。
+`npm run build` 114 ページ、テスト 83 件 green、`astro check` 0 エラー。詳細は本文末尾の変更履歴表と `docs/ROADMAP.md`。
 
 ### 決定事項
 
@@ -460,7 +466,10 @@ docs/{SPEC, PROTOTYPE, ROADMAP, CONTENT, REVIEW-2026-09-10}.md
 | （batch3） | **実データ batch3**: SA1/2/3・OD グランフェッテ・OD デガジェ・強ランヴェルセ・弱ロン・ポワンを技辞典へ。無敵ガード〆 / 中P始動リーサル SA3 / J強K ODグランフェッテ / 強Kパニカン SA2 の4コンボ。SA・OD派生を使うルートは modern 入力未確認のため `controlType:'classic'` |
 | （C-1.5〜C-3） | **公開**: Cloudflare Workers Builds で `https://sf6.amanohashi.date` 稼働。`wrangler.jsonc`（Static Assets）、`main` push で自動デプロイ |
 | （複数キャラ対応） | **マノン専用 → 複数キャラ対応へ一般化**（ブランカ追加に向けて）: `characterIdSchema` に `blanka` 追加、`situationSchema` に `character` 必須フィールド追加、`src/pages/manon/*` → `src/pages/[character]/*` 動的ルートへ移行、`src/data/index.ts` の `import.meta.glob` をキャラ横断（`*/*.json`）に変更、`fullGraph()`/`FlowCanvas`/`SystemMap` にキャラID引数を追加、`validateAll` に route↔situation の character 不一致チェックを追加。id 命名規則は `docs/CONTENT.md §1-2` |
-| （レビュー対応 R01-R12） | **2026-09-12 第三者レビュー対応**（ダメージ計算ロジック自体は対象外）。表示: `stepModernCommand` が `inputModernPrecise` を見ずに汎用変換していた不具合を修正（R01）、`ComboCard` を `StepCmd` に統一し action（空振り・フェイント）表示を復元・`FlowCanvas` の action 辞書を `lib/ui.ts` に統一（R02）、`situation.reward` を新設し「相手復帰まで」の一律ラベル付けを `parseAdvantage`/`situationAdvantageText` で数値/自由記述/報酬に分離（R03）、`getSetplayStarts()` でセットプレイ入口判定をキャラページ・トップ間で統一（R04）、`route.damageConfidence`（'estimated'）を追加し一覧・詳細に「目安」表示（R05）、`FlowCanvas` のクラシック/モダン切替をカスタムイベントでテキストレシピへ同期（R10）。検証: schema を `.strict()` 化・`difficulty`/`damage` に意味のある値域・route の `moveKey` character 不一致検出を追加（R07）。入稿: `promote-draft.ts` を全件事前検証（既存とマージした仮想データセットで `validateAll`）→ 全件反映の一括方式に書き換え、1 件でも不正なら反映しない（R06）。UI: `ComboExplorer` の戻る操作での sort 復元バグ修正（R11）。テスト: 合計ダメージ・R01〜R03 の回帰テスト追加（R12）。デプロイ: Workers Builds の build command を `npm run check && npm run build` に変更（公開ゲートに型検査・テストを必須化）。詳細は `docs/REVIEW-2026-09-12.md` |
+| （レビュー対応 R01-R12） | **2026-09-12 第三者レビュー対応**（ダメージ計算ロジック自体は対象外）。表示: `stepModernCommand` が `inputModernPrecise` を見ずに汎用変換していた不具合を修正（R01）、`ComboCard` を `StepCmd` に統一し action（空振り・フェイント）表示を復元・`FlowCanvas` の action 辞書を `lib/ui.ts` に統一（R02）、`situation.reward` を新設し「相手復帰まで」の一律ラベル付けを `parseAdvantage`/`situationAdvantageText` で数値/自由記述/報酬に分離（R03）、`getSetplayStarts()` でセットプレイ入口判定をキャラページ・トップ間で統一（R04）、`route.damageConfidence`（'estimated'）を追加し一覧・詳細に「目安」表示（R05）、`FlowCanvas` のクラシック/モダン切替をカスタムイベントでテキストレシピへ同期（R10）。検証: schema を `.strict()` 化・`difficulty`/`damage` に意味のある値域・route の `moveKey` character 不一致検出を追加（R07）。入稿: `promote-draft.ts` を全件事前検証（既存とマージした仮想データセットで `validateAll`）→ 全件反映の一括方式に書き換え、1 件でも不正なら反映しない（R06）。UI: `ComboExplorer` の戻る操作での sort 復元バグ修正（R11）。テスト: 合計ダメージ・R01〜R03 の回帰テスト追加（R12）。デプロイ: Workers Builds の build command を `npm run check && npm run build` に変更（公開ゲートに型検査・テストを必須化）。詳細は `docs/archive/REVIEW-2026-09-12.md` |
+| （ダメージ計算・クラシック確定） | **DC-0〜3**: `src/lib/damage/`（`calculate.ts`/`ruleset.ts`/`types.ts`）実装。段階補正・始動補正・コンボ補正・即時補正・DR乗算補正・SA最低保証・PC倍率・SA3固有ボーナス・補正切りを、オーナーの実測値との答え合わせで確定。監査専用（`scripts/damage-audit.ts`、開発限定 `/damage-audit/`）、公開表示へは未接続。仕組みは `docs/DAMAGE-CALCULATION-MECHANISM.md`。実戦21コンボ中17件完全一致、残り4件も強/弱ロン・ポワンの多段本質という既知の制限で説明済み |
+| （技辞典・公式データ照合） | 公式サイトのフレームデータ・コマンドリストを取得し、マノン・ブランカ両キャラの全技を技辞典と照合。既存データ誤り1件（`blanka-2lk` のキャンセル欄）を修正、未登録技を約67件追加（通常技の抜け・特殊技・必殺技の強度/ライトニングビースト派生違い・投げ・SA1/SA3/CA）。全キャラ共通の汎用システム技（ステップ・ドライブパリィ等）は moveKey 参照が無いため対象外 |
+| （docs 整理） | Phase 1 専用レビューガイド `PROTOTYPE.md` を削除（死んだリンクのみで内容は CONTENT.md/SPEC.md に包含済み）。`REVIEW-2026-09-10.md`・`REVIEW-2026-09-12.md`・`DAMAGE-CALCULATION-DESIGN.md`・`DAMAGE-CALCULATION-RESEARCH-2026-09-12.md`・`review-assets/` を `docs/archive/` へ移動（内容は全て対応済み・実測確認済みで、現行の正はそれぞれ本ファイル・`DAMAGE-CALCULATION-MECHANISM.md`）。相互参照リンクを更新 |
 
 ---
 

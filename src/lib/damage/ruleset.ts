@@ -1,11 +1,13 @@
-// SF6 ダメージ補正の候補ルール（DC-1 未確定・監査用）。
+// SF6 ダメージ補正ルール（クラシック操作・監査用）。
 //
-// ここに書く数値は docs/DAMAGE-CALCULATION-DESIGN.md と
-// docs/DAMAGE-CALCULATION-RESEARCH-2026-09-12.md がネットの検証記事・公開計算機
-// から拾った「候補値」であり、公式一次資料や実機での確認は済んでいない。
-// オーナーの指示（2026-09-13）により、この候補ルールで実際にいくつかのコンボの
-// ダメージを計算し、オーナーが実測値と突き合わせて精度を確認する運用で導入する
-// （scripts/damage-audit.ts）。値を直す時はこのファイルだけを直せばよいようにする。
+// 2026-09-13 時点でクラシック操作の計算ロジックは、オーナーが対戦画面で確認した
+// 実測値との答え合わせを繰り返して確定済み（21コンボ中17件が完全一致、残りも
+// 既知の制限で説明できている）。仕組みの言語化は docs/DAMAGE-CALCULATION-MECHANISM.md
+// を参照。当初の調査メモ（community記事の候補値）は docs/archive/
+// DAMAGE-CALCULATION-DESIGN.md / DAMAGE-CALCULATION-RESEARCH-2026-09-12.md に
+// 移動済み（実装前の調査時点の記録として保存、値の根拠は既にこのファイルと
+// MECHANISM.md の実測確認に置き換わっている）。
+// 値を直す時はこのファイルだけを直せばよいようにする（scripts/damage-audit.ts）。
 //
 // 未確定・未実装（既知の欠落。積極的に「それらしい値」で埋めていない）:
 //  - モダン簡易入力による補正（通常 0.8 倍、技によって継承・例外あり）
@@ -68,7 +70,9 @@ export interface DamageRuleset {
 export const CANDIDATE_RULESET_2026_09: DamageRuleset = {
   id: 'candidate-2026-09',
   source:
-    'docs/DAMAGE-CALCULATION-RESEARCH-2026-09-12.md（ハメコ2023-07-01・はるか2023-08-26 等の検証記事の候補値）。公式一次資料未確認。',
+    '2026-09-13 オーナーの実測値（対戦画面）との答え合わせで確定（docs/DAMAGE-CALCULATION-MECHANISM.md）。' +
+    '当初はネット検証記事の候補値から出発したが（経緯は docs/archive/DAMAGE-CALCULATION-RESEARCH-2026-09-12.md）、' +
+    '現在の値は実測確認済み。定数名・id は初期実装時のまま維持（互換のため未リネーム）。',
   stageScalingPercent: [100, 100, 80, 70, 60, 50, 40, 30, 20, 10],
   driveRushMultiplier: 0.85,
   roundScalingPercent: true,
