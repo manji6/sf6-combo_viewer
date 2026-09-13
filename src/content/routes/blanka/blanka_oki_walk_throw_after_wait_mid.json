@@ -1,0 +1,33 @@
+{
+  "character": "blanka",
+  "id": "blanka_oki_walk_throw_after_wait_mid",
+  "from": "blanka_dr_wait_read_mid",
+  "to": "blanka_kd_after_wildfang_mid_throw",
+  "kind": "okizeme",
+  "label": "（相手のドライブパリィを見てから）歩いて投げる",
+  "steps": [
+    {
+      "move": "微歩き",
+      "action": "walk",
+      "command": "(微歩き)"
+    },
+    {
+      "move": "前投げ",
+      "command": "LPLK",
+      "moveKey": "blanka-throw-l"
+    }
+  ],
+  "resources": {
+    "driveCost": 0,
+    "superCost": 0,
+    "saLevel": null
+  },
+  "damage": 1200,
+  "difficulty": 2,
+  "constraints": "相手がドライブパリィで割り込もうとして硬直しているのを見てから、歩いて投げる。",
+  "controlType": "both",
+  "tags": [
+    "投げ",
+    "パリー読み"
+  ]
+}

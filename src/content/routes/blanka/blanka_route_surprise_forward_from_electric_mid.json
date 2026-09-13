@@ -1,0 +1,29 @@
+{
+  "character": "blanka",
+  "id": "blanka_route_surprise_forward_from_electric_mid",
+  "from": "blanka_kd_after_electric_mid",
+  "to": "blanka_close_surprise_forward_mid",
+  "kind": "okizeme",
+  "label": "サプライズフォワードで距離を詰める",
+  "steps": [
+    {
+      "move": "サプライズフォワード",
+      "command": "6KKK",
+      "moveKey": "blanka-surprise-forward",
+      "note": "ブランカは前ステップよりこちらで距離を詰めるのが基本"
+    }
+  ],
+  "resources": {
+    "driveCost": 0,
+    "superCost": 0,
+    "saLevel": null
+  },
+  "damage": 0,
+  "difficulty": 1,
+  "constraints": "距離を詰めた後の有利フレームは+3。前投げ後と同じ起き攻めツリーに合流する。",
+  "controlType": "both",
+  "tags": [
+    "起き攻め",
+    "距離詰め"
+  ]
+}

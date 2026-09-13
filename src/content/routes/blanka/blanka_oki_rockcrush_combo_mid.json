@@ -1,0 +1,47 @@
+{
+  "character": "blanka",
+  "id": "blanka_oki_rockcrush_combo_mid",
+  "from": "blanka_dr_pressure_wildfang_mid",
+  "to": "blanka_kd_after_vertical_l_mid",
+  "kind": "okizeme",
+  "label": "ロッククラッシュ（中段）→ 5強K → しゃがみ弱P → 弱バーチカルローリング",
+  "steps": [
+    {
+      "move": "ロッククラッシュ",
+      "command": "6MP",
+      "moveKey": "blanka-rockcrush",
+      "note": "ブランカの中段（オーバーヘッド）"
+    },
+    {
+      "move": "5強K",
+      "command": "5HK",
+      "moveKey": "blanka-5hk"
+    },
+    {
+      "move": "しゃがみ弱P",
+      "command": "2LP",
+      "moveKey": "blanka-2lp",
+      "cancel": true
+    },
+    {
+      "move": "弱バーチカルローリング",
+      "command": "[2]8LK",
+      "moveKey": "blanka-vertical-l"
+    }
+  ],
+  "resources": {
+    "driveCost": 0,
+    "superCost": 0,
+    "saLevel": null
+  },
+  "damage": 2900,
+  "damageConfidence": "estimated",
+  "difficulty": 4,
+  "constraints": "ドライブラッシュ後の中段択がヒットした時の締め。ダメージは各技の基礎値合計（コンボ補正未反映）。ロッククラッシュはクラシック限定技。",
+  "controlType": "classic",
+  "tags": [
+    "中段",
+    "崩し",
+    "〆"
+  ]
+}

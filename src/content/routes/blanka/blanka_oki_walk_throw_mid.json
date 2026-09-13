@@ -1,0 +1,40 @@
+{
+  "character": "blanka",
+  "id": "blanka_oki_walk_throw_mid",
+  "from": "blanka_close_surprise_forward_mid",
+  "to": "blanka_kd_after_wildfang_mid_throw",
+  "kind": "okizeme",
+  "label": "微歩き → 投げ",
+  "steps": [
+    {
+      "move": "微歩き",
+      "action": "walk",
+      "command": "(微歩き)"
+    },
+    {
+      "move": "前投げ",
+      "command": "LPLK",
+      "moveKey": "blanka-throw-l"
+    }
+  ],
+  "resources": {
+    "driveCost": 0,
+    "superCost": 0,
+    "saLevel": null
+  },
+  "damage": 1200,
+  "difficulty": 2,
+  "constraints": "相手が完全に固まっている（暴れてこない）と読んだ時の投げ。小技暴れと後ろ歩きに弱い。",
+  "controlType": "both",
+  "tags": [
+    "投げ"
+  ],
+  "properties": {
+    "useWhen": "相手が完全ガード・様子見に徹してきた時",
+    "weakVs": [
+      "小技暴れ",
+      "後ろ歩き"
+    ],
+    "risk": "中"
+  }
+}

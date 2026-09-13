@@ -1,7 +1,7 @@
 {
   "character": "blanka",
   "id": "blanka_oki_2lp_electric_mid",
-  "from": "blanka_kd_after_wildfang_mid",
+  "from": "blanka_close_surprise_forward_mid",
   "to": "blanka_kd_after_electric_mid",
   "kind": "okizeme",
   "label": "しゃがみ弱P → 電気（暴れ潰し）",
@@ -26,7 +26,7 @@
   },
   "damage": 1100,
   "difficulty": 2,
-  "constraints": "前ステ後の起き攻めで安定した暴れ潰し。相手が固まっている場合はサプライズフォワードから歩いて投げる択もある。",
+  "constraints": "サプライズフォワードで距離を詰めた後の安定した暴れ潰し（小技暴れに有効）。相手が完全に固まっている場合は微歩き→投げの択もある。",
   "controlType": "classic",
   "tags": [
     "暴れ潰し"

@@ -1,0 +1,37 @@
+{
+  "character": "blanka",
+  "id": "blanka_route_dr_wait_wildfang_mid",
+  "from": "blanka_dr_pressure_wildfang_mid",
+  "to": "blanka_dr_wait_read_mid",
+  "kind": "okizeme",
+  "label": "停止（様子見）",
+  "steps": [
+    {
+      "move": "様子見",
+      "action": "wait",
+      "command": "(何もしない)"
+    }
+  ],
+  "resources": {
+    "driveCost": 0,
+    "superCost": 0,
+    "saLevel": null
+  },
+  "damage": 0,
+  "difficulty": 3,
+  "constraints": "相手のドライブパリィ割り込み・無敵技暴れ・投げを読んだ時の様子見。パリィならガードして歩いて投げ、無敵技暴れをガードできればそのまま確定反撃、投げを打たれた場合はシミー成立でこちらも確定反撃できる。",
+  "controlType": "both",
+  "tags": [
+    "様子見",
+    "シミー"
+  ],
+  "properties": {
+    "useWhen": "相手がドライブパリィ・無敵技で割り込んでくると読んだ時",
+    "strongVs": [
+      "ドライブパリィ割り込み",
+      "無敵技暴れ",
+      "投げ"
+    ],
+    "risk": "中"
+  }
+}

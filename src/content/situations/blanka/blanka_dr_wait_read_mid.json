@@ -1,0 +1,10 @@
+{
+  "tags": [],
+  "id": "blanka_dr_wait_read_mid",
+  "character": "blanka",
+  "label": "ドライブラッシュ後・様子見（相手の行動を確認）",
+  "kind": "neutral",
+  "position": "midscreen",
+  "opponentState": "neutral",
+  "notes": "ドライブラッシュ後に何もせず様子を見た状態。相手がドライブパリィで割り込もうとしていれば歩いて投げ、無敵技で暴れて来た場合はガードして確定反撃、投げを打ってきた場合はシミー成立でこちらも確定反撃できる。"
+}

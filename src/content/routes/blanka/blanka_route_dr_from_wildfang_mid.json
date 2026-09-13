@@ -1,0 +1,28 @@
+{
+  "character": "blanka",
+  "id": "blanka_route_dr_from_wildfang_mid",
+  "from": "blanka_kd_after_wildfang_mid",
+  "to": "blanka_dr_pressure_wildfang_mid",
+  "kind": "okizeme",
+  "label": "ドライブラッシュで距離を詰める",
+  "steps": [
+    {
+      "move": "ドライブラッシュ",
+      "command": "DR"
+    }
+  ],
+  "resources": {
+    "driveCost": 1,
+    "superCost": 0,
+    "saLevel": null
+  },
+  "damage": 0,
+  "difficulty": 1,
+  "constraints": "サプライズフォワードより崩し・火力を強めたい時の起点。",
+  "controlType": "both",
+  "tags": [
+    "起き攻め",
+    "距離詰め",
+    "ドライブ"
+  ]
+}

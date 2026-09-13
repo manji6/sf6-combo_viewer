@@ -1,0 +1,36 @@
+{
+  "character": "blanka",
+  "id": "blanka_punish_5hp_after_wait_mid",
+  "from": "blanka_dr_wait_read_mid",
+  "to": "blanka_juggle_can_wildlift",
+  "kind": "okizeme",
+  "label": "（相手の投げ空振り・無敵技ガード時）5強P → フィアーダウン",
+  "steps": [
+    {
+      "move": "5強P",
+      "command": "5HP",
+      "moveKey": "blanka-5hp",
+      "cancel": true
+    },
+    {
+      "move": "フィアーダウン",
+      "command": "2PP",
+      "moveKey": "blanka-feardown"
+    }
+  ],
+  "resources": {
+    "driveCost": 0,
+    "superCost": 0,
+    "saLevel": null
+  },
+  "damage": 800,
+  "damageConfidence": "estimated",
+  "difficulty": 3,
+  "constraints": "相手が投げを空振った（シミー成立）、または無敵技をガードできた時の確定反撃の始動。ここからワイルドリフト経由の締め（中バーチカルローリング→中ローリングアタック、アマゾンリバーラン、弱バーチカルローリングのいずれか）につながる。",
+  "controlType": "classic",
+  "tags": [
+    "確定反撃",
+    "シミー",
+    "連結"
+  ]
+}

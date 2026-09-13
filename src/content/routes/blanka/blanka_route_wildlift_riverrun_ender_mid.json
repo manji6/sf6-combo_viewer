@@ -1,0 +1,37 @@
+{
+  "character": "blanka",
+  "id": "blanka_route_wildlift_riverrun_ender_mid",
+  "from": "blanka_juggle_can_wildlift",
+  "to": "blanka_kd_after_riverrun_mid",
+  "kind": "ender",
+  "label": "ワイルドリフト → アマゾンリバーラン",
+  "steps": [
+    {
+      "move": "ワイルドリフト",
+      "command": "P",
+      "moveKey": "blanka-wildlift",
+      "cancel": true,
+      "note": "フィアーダウン中に P"
+    },
+    {
+      "move": "アマゾンリバーラン",
+      "command": "3HK",
+      "moveKey": "blanka-riverrun",
+      "note": "浮いた相手に追撃"
+    }
+  ],
+  "resources": {
+    "driveCost": 0,
+    "superCost": 0,
+    "saLevel": null
+  },
+  "damage": 1600,
+  "damageConfidence": "estimated",
+  "difficulty": 3,
+  "constraints": "ワイルドリフト後の締めの一つ。ダメージは各技の基礎値合計（コンボ補正未反映）。",
+  "controlType": "classic",
+  "tags": [
+    "〆",
+    "連結"
+  ]
+}

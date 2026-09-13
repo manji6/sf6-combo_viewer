@@ -1,0 +1,42 @@
+{
+  "character": "blanka",
+  "id": "blanka_oki_2mk_5mk_electric_mid",
+  "from": "blanka_dr_pressure_wildfang_mid",
+  "to": "blanka_kd_after_electric_mid",
+  "kind": "okizeme",
+  "label": "しゃがみ中K → 5中K → エレクトリックサンダー",
+  "steps": [
+    {
+      "move": "しゃがみ中K",
+      "command": "2MK",
+      "moveKey": "blanka-2mk",
+      "note": "下段"
+    },
+    {
+      "move": "5中K",
+      "command": "5MK",
+      "moveKey": "blanka-5mk"
+    },
+    {
+      "move": "エレクトリックサンダー",
+      "command": "214P",
+      "moveKey": "blanka-electric",
+      "cancel": true
+    }
+  ],
+  "resources": {
+    "driveCost": 0,
+    "superCost": 0,
+    "saLevel": null
+  },
+  "damage": 1900,
+  "damageConfidence": "estimated",
+  "difficulty": 3,
+  "constraints": "ドライブラッシュ後の下段択がヒットした時の締め。ダメージは各技の基礎値合計（コンボ補正未反映）。ここからまたサプライズフォワード起点の起き攻めに戻れる。",
+  "controlType": "both",
+  "tags": [
+    "下段",
+    "崩し",
+    "〆"
+  ]
+}

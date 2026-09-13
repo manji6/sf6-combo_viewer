@@ -1,0 +1,13 @@
+{
+  "tags": [
+    "連結ハブ"
+  ],
+  "id": "blanka_close_surprise_forward_mid",
+  "character": "blanka",
+  "label": "サプライズフォワードで距離を詰めた後・中央",
+  "kind": "knockdown",
+  "position": "midscreen",
+  "opponentState": "knockdown_soft",
+  "advantage": "+3",
+  "notes": "前投げ後・電気締め後のどちらからも、サプライズフォワードで距離を詰めるとここへ到達する（前ステップは使わない）。"
+}

@@ -1,0 +1,36 @@
+{
+  "character": "blanka",
+  "id": "blanka_route_wildlift_vertical_l_ender_mid",
+  "from": "blanka_juggle_can_wildlift",
+  "to": "blanka_kd_after_vertical_l_mid",
+  "kind": "ender",
+  "label": "ワイルドリフト → 弱バーチカルローリング",
+  "steps": [
+    {
+      "move": "ワイルドリフト",
+      "command": "P",
+      "moveKey": "blanka-wildlift",
+      "cancel": true,
+      "note": "フィアーダウン中に P"
+    },
+    {
+      "move": "弱バーチカルローリング",
+      "command": "[2]8LK",
+      "moveKey": "blanka-vertical-l"
+    }
+  ],
+  "resources": {
+    "driveCost": 0,
+    "superCost": 0,
+    "saLevel": null
+  },
+  "damage": 1800,
+  "damageConfidence": "estimated",
+  "difficulty": 3,
+  "constraints": "ワイルドリフト後の締めの一つ。ダメージは各技の基礎値合計（コンボ補正未反映）。",
+  "controlType": "classic",
+  "tags": [
+    "〆",
+    "連結"
+  ]
+}
