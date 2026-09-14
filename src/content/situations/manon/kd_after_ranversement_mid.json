@@ -4,10 +4,10 @@
   ],
   "id": "kd_after_ranversement_mid",
   "character": "manon",
-  "label": "中ランヴェルセ締め後・中央ダウン",
+  "label": "ランヴェルセ締め後・中央ダウン",
   "kind": "knockdown",
   "position": "midscreen",
   "opponentState": "knockdown_soft",
   "wakeupNote": "受け身可",
-  "notes": "メダルLv+1。詳しい起き攻めはバッチ2以降で整理（記事では 弱デガジェ〆・強ロン・ポワン〆 が主）。"
+  "notes": "弱・中・強どのランヴェルセで締めても起き攻めの選択肢は共通のため統合（2026-09-15 オーナー確認）。メダルLv+1。詳しい起き攻めルートは未整理。"
 }
