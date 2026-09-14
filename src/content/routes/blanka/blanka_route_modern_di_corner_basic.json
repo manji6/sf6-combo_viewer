@@ -1,0 +1,56 @@
+{
+  "character": "blanka",
+  "id": "blanka_route_modern_di_corner_basic",
+  "from": "blanka_neutral_corner",
+  "to": "blanka_kd_after_vertical_h_corner",
+  "kind": "combo_route",
+  "label": "ドライブインパクト → 立ち強P → フィアーダウン → ワイルドリフト → 強バーチカルローリング",
+  "steps": [
+    {
+      "move": "ドライブインパクト",
+      "command": "DI",
+      "moveKey": "blanka-impact",
+      "note": "画面端でガードorヒット"
+    },
+    {
+      "move": "立ち強P",
+      "command": "5HP",
+      "moveKey": "blanka-5hp",
+      "cancel": true
+    },
+    {
+      "move": "フィアーダウン",
+      "command": "2PP",
+      "moveKey": "blanka-feardown"
+    },
+    {
+      "move": "ワイルドリフト",
+      "command": "P",
+      "moveKey": "blanka-wildlift",
+      "cancel": true,
+      "note": "フィアーダウン中に P"
+    },
+    {
+      "move": "強バーチカルローリング",
+      "command": "[2]8HK",
+      "moveKey": "blanka-vertical-h",
+      "note": "最後のみコマンド入力（難しければダメージダウンするがモダン入力の中バーチカルローリングでも可）"
+    }
+  ],
+  "resources": {
+    "driveCost": 1,
+    "superCost": 0,
+    "saLevel": null
+  },
+  "damage": 3000,
+  "damageConfidence": "estimated",
+  "difficulty": 2,
+  "constraints": "画面端でドライブインパクトをガードorヒットさせた時のルート。ダメージは各技の基礎値合計（コンボ補正未反映）。",
+  "controlType": "both",
+  "tags": [
+    "モダン",
+    "DI",
+    "画面端",
+    "基本"
+  ]
+}

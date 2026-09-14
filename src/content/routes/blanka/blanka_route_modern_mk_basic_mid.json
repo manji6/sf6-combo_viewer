@@ -1,0 +1,41 @@
+{
+  "character": "blanka",
+  "id": "blanka_route_modern_mk_basic_mid",
+  "from": "blanka_neutral_mid",
+  "to": "blanka_kd_after_electric_mid",
+  "kind": "combo_route",
+  "label": "立ち中K → しゃがみ中K → エレクトリックサンダー",
+  "steps": [
+    {
+      "move": "立ち中K",
+      "command": "5MK",
+      "moveKey": "blanka-5mk",
+      "cancel": true
+    },
+    {
+      "move": "しゃがみ中K",
+      "command": "2MK",
+      "moveKey": "blanka-2mk",
+      "cancel": true
+    },
+    {
+      "move": "エレクトリックサンダー",
+      "command": "214P",
+      "moveKey": "blanka-electric"
+    }
+  ],
+  "resources": {
+    "driveCost": 0,
+    "superCost": 0,
+    "saLevel": null
+  },
+  "damage": 1900,
+  "damageConfidence": "estimated",
+  "difficulty": 1,
+  "constraints": "ドライブゲージが少ない時の代用ルート。ここで止めず3段目まで出すとODローリングアタックに派生してしまうので注意。",
+  "controlType": "both",
+  "tags": [
+    "モダン",
+    "基本"
+  ]
+}

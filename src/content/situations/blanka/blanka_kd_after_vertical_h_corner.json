@@ -1,0 +1,10 @@
+{
+  "tags": [],
+  "id": "blanka_kd_after_vertical_h_corner",
+  "character": "blanka",
+  "label": "強バーチカルローリング締め後・画面端",
+  "kind": "knockdown",
+  "position": "corner",
+  "opponentState": "knockdown_hard",
+  "notes": "起き攻めルートは未整理。"
+}

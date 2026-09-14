@@ -1,0 +1,62 @@
+{
+  "character": "blanka",
+  "id": "blanka_route_modern_lk_gauge_mid",
+  "from": "blanka_neutral_mid",
+  "to": "blanka_kd_after_electric_mid",
+  "kind": "combo_route",
+  "label": "立ち弱K → しゃがみ弱P → CDR → 立ち弱K → ダブルニーボンバー → 立ち弱K → エレクトリックサンダー",
+  "steps": [
+    {
+      "move": "立ち弱K",
+      "command": "5LK",
+      "moveKey": "blanka-5lk",
+      "cancel": true
+    },
+    {
+      "move": "しゃがみ弱P",
+      "command": "2LP",
+      "moveKey": "blanka-2lp",
+      "cancel": true
+    },
+    {
+      "move": "キャンセルドライブラッシュ",
+      "command": "CDR"
+    },
+    {
+      "move": "立ち弱K",
+      "command": "5LK",
+      "moveKey": "blanka-5lk",
+      "cancel": true
+    },
+    {
+      "move": "ダブルニーボンバー",
+      "command": "6MK",
+      "moveKey": "blanka-doubleknee"
+    },
+    {
+      "move": "立ち弱K",
+      "command": "5LK",
+      "moveKey": "blanka-5lk",
+      "cancel": true
+    },
+    {
+      "move": "エレクトリックサンダー",
+      "command": "214P",
+      "moveKey": "blanka-electric"
+    }
+  ],
+  "resources": {
+    "driveCost": 3,
+    "superCost": 0,
+    "saLevel": null
+  },
+  "damage": 2900,
+  "damageConfidence": "estimated",
+  "difficulty": 3,
+  "constraints": "ドライブゲージに余裕がある時・画面端が近い時用。コンボを運ぶ距離が伸びる。ダメージは各技の基礎値合計（コンボ補正未反映）。",
+  "controlType": "both",
+  "tags": [
+    "モダン",
+    "ゲージ使用"
+  ]
+}

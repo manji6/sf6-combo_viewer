@@ -1,0 +1,10 @@
+{
+  "tags": [],
+  "id": "blanka_kd_after_vertical_m_mid",
+  "character": "blanka",
+  "label": "中バーチカルローリング締め後・中央",
+  "kind": "knockdown",
+  "position": "midscreen",
+  "opponentState": "knockdown_hard",
+  "notes": "起き攻めルートは未整理。"
+}

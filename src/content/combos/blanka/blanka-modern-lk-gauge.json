@@ -1,0 +1,20 @@
+{
+  "character": "blanka",
+  "slug": "blanka-modern-lk-gauge",
+  "name": "モダン 弱攻撃始動 ゲージ使用",
+  "situationLabel": "中央・地上ヒット確認",
+  "routeChain": [
+    "blanka_route_modern_lk_gauge_mid"
+  ],
+  "startFrom": "blanka_neutral_mid",
+  "endAt": "blanka_kd_after_electric_mid",
+  "damageOverride": 1553,
+  "damageNote": "1,553〜1,617（キャンセルドライブラッシュのタイミング等で変動）",
+  "damageConfidence": "estimated",
+  "difficulty": 3,
+  "tags": [
+    "モダン",
+    "ゲージ使用"
+  ],
+  "description": "アシスト弱攻撃ヒットからダブルニーボンバー経由でダメージを伸ばすコンボ。運ぶ距離も伸びるので、画面端が近い時やドライブゲージに余裕がある時に。"
+}

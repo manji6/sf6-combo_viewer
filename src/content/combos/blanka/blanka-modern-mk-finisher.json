@@ -1,0 +1,20 @@
+{
+  "character": "blanka",
+  "slug": "blanka-modern-mk-finisher",
+  "name": "モダン 中攻撃始動 倒し切り",
+  "situationLabel": "中央・地上ヒット確認（アシスト中攻撃を3回出してしまった後）",
+  "routeChain": [
+    "blanka_route_modern_mk_finisher_mid"
+  ],
+  "startFrom": "blanka_neutral_mid",
+  "endAt": "blanka_kd_after_sa3_mid",
+  "damageOverride": 4300,
+  "damageConfidence": "estimated",
+  "difficulty": 4,
+  "tags": [
+    "モダン",
+    "倒し切り",
+    "SA"
+  ],
+  "description": "アシスト中攻撃を3回出してODローリングアタックまで出てしまった後に倒し切りを狙うコンボ。ODバックステップローリングは前入れっぱなしにしておくとフルヒットする。"
+}

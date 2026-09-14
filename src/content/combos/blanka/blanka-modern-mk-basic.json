@@ -1,0 +1,20 @@
+{
+  "character": "blanka",
+  "slug": "blanka-modern-mk-basic",
+  "name": "モダン 中攻撃始動 ノーゲージ",
+  "situationLabel": "中央・地上ヒット確認",
+  "routeChain": [
+    "blanka_route_modern_mk_basic_mid"
+  ],
+  "startFrom": "blanka_neutral_mid",
+  "endAt": "blanka_kd_after_electric_mid",
+  "damageOverride": 1612,
+  "damageNote": "1,612〜1,740",
+  "damageConfidence": "estimated",
+  "difficulty": 1,
+  "tags": [
+    "モダン",
+    "基本"
+  ],
+  "description": "ドライブゲージが少ない時の代用コンボ。アシスト中攻撃を2回で止めてエレクトリックサンダーで締める（3回出すとODローリングアタックに派生してしまう）。"
+}

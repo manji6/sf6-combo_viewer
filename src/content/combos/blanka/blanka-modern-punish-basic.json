@@ -1,0 +1,20 @@
+{
+  "character": "blanka",
+  "slug": "blanka-modern-punish-basic",
+  "name": "モダン 確定反撃 ノーゲージ",
+  "situationLabel": "中央・OD無敵技等をガードした後の立ち強Pがパニッシュカウンター",
+  "routeChain": [
+    "blanka_route_modern_punish_basic_mid"
+  ],
+  "startFrom": "blanka_neutral_mid",
+  "endAt": "blanka_kd_after_vertical_m_mid",
+  "damageOverride": 2912,
+  "damageNote": "2,912〜3,150。最後をSA1にすれば3,600程度まで伸びる",
+  "damageConfidence": "estimated",
+  "difficulty": 2,
+  "tags": [
+    "モダン",
+    "確定反撃"
+  ],
+  "description": "OD無敵技などをガードした後に出すべきコンボ。ゲージ消費無しで3,000以上のダメージが出るので非常に効率が良い。"
+}

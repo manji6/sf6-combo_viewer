@@ -1,0 +1,21 @@
+{
+  "character": "blanka",
+  "slug": "blanka-modern-di-gauge",
+  "name": "モダン 中央インパクト始動 ゲージ使用",
+  "situationLabel": "中央・ドライブインパクトがパニッシュカウンター",
+  "routeChain": [
+    "blanka_route_modern_di_gauge_mid"
+  ],
+  "startFrom": "blanka_neutral_mid",
+  "endAt": "blanka_kd_after_vertical_m_mid",
+  "damageOverride": 3056,
+  "damageNote": "3,056〜3,174",
+  "damageConfidence": "estimated",
+  "difficulty": 4,
+  "tags": [
+    "モダン",
+    "DI",
+    "ゲージ使用"
+  ],
+  "description": "ドライブゲージを消費してダメージを伸ばすコンボ。立ち強P→ラッシュ立ち強Kは繰り返すだけでダメージアップできるパーツなので、練習して手に馴染ませておくとよい。"
+}

@@ -1,0 +1,20 @@
+{
+  "character": "blanka",
+  "slug": "blanka-modern-di-corner-basic",
+  "name": "モダン 画面端インパクト始動",
+  "situationLabel": "画面端・ドライブインパクトをガードorヒット",
+  "routeChain": [
+    "blanka_route_modern_di_corner_basic"
+  ],
+  "startFrom": "blanka_neutral_corner",
+  "endAt": "blanka_kd_after_vertical_h_corner",
+  "damageOverride": 2016,
+  "damageConfidence": "estimated",
+  "difficulty": 2,
+  "tags": [
+    "モダン",
+    "DI",
+    "画面端"
+  ],
+  "description": "画面端でドライブインパクトをガードorヒットさせた時のコンボ。最後のコマンド入力が難しければ、ダメージダウンするもののモダン入力の中バーチカルローリングでも問題ない。"
+}

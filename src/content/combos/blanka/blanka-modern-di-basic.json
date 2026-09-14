@@ -1,0 +1,21 @@
+{
+  "character": "blanka",
+  "slug": "blanka-modern-di-basic",
+  "name": "モダン 中央インパクト始動 基本",
+  "situationLabel": "中央・ドライブインパクトがパニッシュカウンター",
+  "routeChain": [
+    "blanka_route_modern_di_basic_mid"
+  ],
+  "startFrom": "blanka_neutral_mid",
+  "endAt": "blanka_kd_after_vertical_m_mid",
+  "damageOverride": 2596,
+  "damageNote": "2,596〜2,800",
+  "damageConfidence": "estimated",
+  "difficulty": 3,
+  "tags": [
+    "モダン",
+    "DI",
+    "基本"
+  ],
+  "description": "ドライブインパクトがパニッシュカウンターした時のコンボ。アシスト強攻撃でワイルドリフトまで出し、最後の中バーチカルローリングのみコマンド入力する。"
+}

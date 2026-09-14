@@ -1,0 +1,48 @@
+{
+  "character": "blanka",
+  "id": "blanka_route_modern_punish_basic_mid",
+  "from": "blanka_neutral_mid",
+  "to": "blanka_kd_after_vertical_m_mid",
+  "kind": "combo_route",
+  "label": "立ち強P（パニカン） → フィアーダウン → ワイルドリフト → 中バーチカルローリング",
+  "steps": [
+    {
+      "move": "立ち強P",
+      "command": "PC 5HP",
+      "moveKey": "blanka-5hp",
+      "cancel": true
+    },
+    {
+      "move": "フィアーダウン",
+      "command": "2PP",
+      "moveKey": "blanka-feardown"
+    },
+    {
+      "move": "ワイルドリフト",
+      "command": "P",
+      "moveKey": "blanka-wildlift",
+      "cancel": true,
+      "note": "フィアーダウン中に P"
+    },
+    {
+      "move": "中バーチカルローリング",
+      "command": "[2]8MK",
+      "moveKey": "blanka-vertical-m",
+      "note": "最後のみコマンド入力でダウンを取る"
+    }
+  ],
+  "resources": {
+    "driveCost": 0,
+    "superCost": 0,
+    "saLevel": null
+  },
+  "damage": 2700,
+  "damageConfidence": "estimated",
+  "difficulty": 2,
+  "constraints": "OD無敵技などをガードした後に出すべき確定反撃。ゲージ消費無しでダメージ効率が良い。最後をSA1にすればさらにダメージが伸びる。ダメージは各技の基礎値合計（コンボ補正未反映）。",
+  "controlType": "both",
+  "tags": [
+    "モダン",
+    "確定反撃"
+  ]
+}

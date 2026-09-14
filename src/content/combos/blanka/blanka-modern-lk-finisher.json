@@ -1,0 +1,20 @@
+{
+  "character": "blanka",
+  "slug": "blanka-modern-lk-finisher",
+  "name": "モダン 弱攻撃始動 倒し切り",
+  "situationLabel": "中央・地上ヒット確認（相手の残り体力が少ない時）",
+  "routeChain": [
+    "blanka_route_modern_lk_finisher_mid"
+  ],
+  "startFrom": "blanka_neutral_mid",
+  "endAt": "blanka_kd_after_sa3_mid",
+  "damageOverride": 4376,
+  "damageConfidence": "estimated",
+  "difficulty": 5,
+  "tags": [
+    "モダン",
+    "倒し切り",
+    "SA"
+  ],
+  "description": "発生の速いアシスト弱攻撃から倒し切りを狙う高難度コンボ。前半はアシスト弱攻撃・ゲージ使用コンボと共通するパーツを流用できる。"
+}

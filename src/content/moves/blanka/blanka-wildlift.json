@@ -6,6 +6,7 @@
   "category": "special",
   "inputClassic": "2PP~P",
   "inputModern": null,
+  "inputModernPrecise": "2PP~P",
   "startup": 8,
   "active": "8-14",
   "recovery": "31",
@@ -20,5 +21,5 @@
   "attribute": [
     "上"
   ],
-  "notes": "フィアーダウン中に P で派生。相手を打ち上げる。近めの大K対空から拾うのに使う。モダンの入力は要検証。"
+  "notes": "フィアーダウン中に P で派生。相手を打ち上げる。近めの大K対空から拾うのに使う。モダンでもコマンド入力自体は可能（2026-09-14 モダンコンボレシピで確認）。"
 }

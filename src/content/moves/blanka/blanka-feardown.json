@@ -6,6 +6,7 @@
   "category": "special",
   "inputClassic": "2PP",
   "inputModern": null,
+  "inputModernPrecise": "2PP",
   "startup": null,
   "active": null,
   "recovery": "全体98（下入力継続で+48F延長可、上入力で中断可）",
@@ -18,5 +19,5 @@
   "driveLossPunishCounter": 0,
   "superGain": 0,
   "attribute": [],
-  "notes": "専用の伏せ移動技。ダメージなし。伏せ中に P でワイルドリフト、K でレイドジャンプへ派生。モダンの入力は要検証。"
+  "notes": "専用の伏せ移動技。ダメージなし。伏せ中に P でワイルドリフト、K でレイドジャンプへ派生。モダンでもコマンド入力（2PP）自体は可能（2026-09-14 モダンコンボレシピで確認）。"
 }

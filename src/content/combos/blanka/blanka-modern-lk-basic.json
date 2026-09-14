@@ -1,0 +1,19 @@
+{
+  "character": "blanka",
+  "slug": "blanka-modern-lk-basic",
+  "name": "モダン 弱攻撃始動 基本",
+  "situationLabel": "中央・地上ヒット確認",
+  "routeChain": [
+    "blanka_route_modern_lk_basic_mid"
+  ],
+  "startFrom": "blanka_neutral_mid",
+  "endAt": "blanka_kd_after_electric_mid",
+  "damageOverride": 1210,
+  "damageConfidence": "estimated",
+  "difficulty": 1,
+  "tags": [
+    "モダン",
+    "基本"
+  ],
+  "description": "モダン操作のアシスト弱攻撃連打（立ち弱K→しゃがみ弱P→エレクトリックサンダー）で出せる基本コンボ。起き攻めなど近距離ではこれで十分。ガードされるとエレクトリックサンダーが出ないので、その場合は歩いて投げに切り替える。"
+}

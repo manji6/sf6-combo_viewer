@@ -1,0 +1,21 @@
+{
+  "character": "blanka",
+  "slug": "blanka-modern-stun-gauge",
+  "name": "モダン 相手スタン時 ゲージ使用",
+  "situationLabel": "中央・相手がスタン",
+  "routeChain": [
+    "blanka_route_modern_stun_gauge_mid"
+  ],
+  "startFrom": "blanka_stun_mid",
+  "endAt": "blanka_kd_after_vertical_m_mid",
+  "damageOverride": 2912,
+  "damageNote": "2,912〜3,120",
+  "damageConfidence": "estimated",
+  "difficulty": 4,
+  "tags": [
+    "モダン",
+    "スタン",
+    "ゲージ使用"
+  ],
+  "description": "相手をスタンさせた時のコンボ。設置したブランカちゃん爆弾をOD電気で起爆させると合計3ヒットしつつ追撃可能なので、ダメージを大きく稼げる。"
+}

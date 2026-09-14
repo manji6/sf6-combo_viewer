@@ -1,0 +1,20 @@
+{
+  "character": "blanka",
+  "slug": "blanka-modern-mk-gauge",
+  "name": "モダン 中攻撃始動 ゲージ使用",
+  "situationLabel": "中央・地上ヒット確認",
+  "routeChain": [
+    "blanka_route_modern_mk_gauge_mid"
+  ],
+  "startFrom": "blanka_neutral_mid",
+  "endAt": "blanka_kd_after_vertical_m_mid",
+  "damageOverride": 2412,
+  "damageNote": "2,412〜2,650",
+  "damageConfidence": "estimated",
+  "difficulty": 3,
+  "tags": [
+    "モダン",
+    "ゲージ使用"
+  ],
+  "description": "ODローリングアタックまではアシスト中攻撃で出し、最後の中バーチカルローリングのみコマンド入力してダウンを取るコンボ。SAゲージを節約できる。"
+}

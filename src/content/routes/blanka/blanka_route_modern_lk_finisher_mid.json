@@ -1,0 +1,91 @@
+{
+  "character": "blanka",
+  "id": "blanka_route_modern_lk_finisher_mid",
+  "from": "blanka_neutral_mid",
+  "to": "blanka_kd_after_sa3_mid",
+  "kind": "combo_route",
+  "label": "立ち弱K始動 → CDR連携 → フィアーダウン拾い → 中ローリングアタック → SA3",
+  "steps": [
+    {
+      "move": "立ち弱K",
+      "command": "5LK",
+      "moveKey": "blanka-5lk",
+      "cancel": true
+    },
+    {
+      "move": "しゃがみ弱P",
+      "command": "2LP",
+      "moveKey": "blanka-2lp",
+      "cancel": true
+    },
+    {
+      "move": "キャンセルドライブラッシュ",
+      "command": "CDR"
+    },
+    {
+      "move": "立ち弱K",
+      "command": "5LK",
+      "moveKey": "blanka-5lk"
+    },
+    {
+      "move": "立ち中K",
+      "command": "5MK",
+      "moveKey": "blanka-5mk",
+      "cancel": true
+    },
+    {
+      "move": "キャンセルドライブラッシュ",
+      "command": "CDR"
+    },
+    {
+      "move": "立ち強K",
+      "command": "5HK",
+      "moveKey": "blanka-5hk"
+    },
+    {
+      "move": "立ち強P",
+      "command": "5HP",
+      "moveKey": "blanka-5hp",
+      "cancel": true
+    },
+    {
+      "move": "フィアーダウン",
+      "command": "2PP",
+      "moveKey": "blanka-feardown"
+    },
+    {
+      "move": "ワイルドリフト",
+      "command": "P",
+      "moveKey": "blanka-wildlift",
+      "cancel": true,
+      "note": "フィアーダウン中に P"
+    },
+    {
+      "move": "中ローリングアタック",
+      "command": "[4]6MP",
+      "moveKey": "blanka-rolling-m",
+      "cancel": true,
+      "note": "後方チャージから前入れで発動"
+    },
+    {
+      "move": "SA3（グランドシェイブキャノンボール）",
+      "command": "236236P",
+      "moveKey": "blanka-sa3"
+    }
+  ],
+  "resources": {
+    "driveCost": 6,
+    "superCost": 3,
+    "saLevel": 3
+  },
+  "damage": 6200,
+  "damageConfidence": "estimated",
+  "difficulty": 5,
+  "constraints": "発生の速い立ち弱Kから倒し切りを狙う高難度コンボ。ラッシュ立ち強攻撃からアシスト強攻撃への繋ぎがシビア。ダメージは各技の基礎値合計（コンボ補正未反映）。",
+  "controlType": "both",
+  "tags": [
+    "モダン",
+    "倒し切り",
+    "SA"
+  ]
+}

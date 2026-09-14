@@ -1,0 +1,22 @@
+{
+  "character": "blanka",
+  "slug": "blanka-modern-punish-finisher",
+  "name": "モダン 確定反撃 倒し切り",
+  "situationLabel": "中央・立ち強Kがパニッシュカウンター（相手の残り体力が少ない時）",
+  "routeChain": [
+    "blanka_route_modern_punish_finisher_mid"
+  ],
+  "startFrom": "blanka_neutral_mid",
+  "endAt": "blanka_kd_after_sa3_mid",
+  "damageOverride": 5964,
+  "damageNote": "5,964〜6,024",
+  "damageConfidence": "estimated",
+  "difficulty": 4,
+  "tags": [
+    "モダン",
+    "確定反撃",
+    "倒し切り",
+    "SA"
+  ],
+  "description": "完走すれば6,000程度のダメージが出る高火力の確定反撃倒し切り。レシピ自体は単純だが、ラッシュ立ち強攻撃からアシスト強攻撃への繋ぎがシビアで練習が必要。"
+}

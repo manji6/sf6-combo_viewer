@@ -1,0 +1,41 @@
+{
+  "character": "blanka",
+  "id": "blanka_route_modern_lk_basic_mid",
+  "from": "blanka_neutral_mid",
+  "to": "blanka_kd_after_electric_mid",
+  "kind": "combo_route",
+  "label": "立ち弱K → しゃがみ弱P → エレクトリックサンダー",
+  "steps": [
+    {
+      "move": "立ち弱K",
+      "command": "5LK",
+      "moveKey": "blanka-5lk",
+      "cancel": true
+    },
+    {
+      "move": "しゃがみ弱P",
+      "command": "2LP",
+      "moveKey": "blanka-2lp",
+      "cancel": true
+    },
+    {
+      "move": "エレクトリックサンダー",
+      "command": "214P",
+      "moveKey": "blanka-electric"
+    }
+  ],
+  "resources": {
+    "driveCost": 0,
+    "superCost": 0,
+    "saLevel": null
+  },
+  "damage": 1400,
+  "damageConfidence": "estimated",
+  "difficulty": 1,
+  "constraints": "モダン操作のアシスト弱攻撃連打（立ち弱K→しゃがみ弱P→エレクトリックサンダー）と同じ内訳。ガードされるとエレクトリックサンダーは出ないため、その場合は歩いて投げに切り替える。",
+  "controlType": "both",
+  "tags": [
+    "モダン",
+    "基本"
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "tags": [],
+  "id": "blanka_neutral_corner",
+  "character": "blanka",
+  "label": "画面端・立ち回り",
+  "kind": "neutral",
+  "position": "corner",
+  "opponentState": "neutral",
+  "notes": "相手を画面端に追い詰めた状態での立ち回り。"
+}

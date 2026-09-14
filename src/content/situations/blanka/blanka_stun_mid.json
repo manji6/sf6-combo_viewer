@@ -1,0 +1,12 @@
+{
+  "tags": [
+    "スタン"
+  ],
+  "id": "blanka_stun_mid",
+  "character": "blanka",
+  "label": "相手スタン中・中央",
+  "kind": "hit",
+  "position": "midscreen",
+  "opponentState": "standing_hit",
+  "notes": "相手のドライブゲージ・スタンゲージが尽きてスタン（気絶）状態になった時。opponentState は近い状態として standing_hit を流用（スキーマにスタン専用の状態が無いため）。スタン中は行動不能で確定コンボが伸ばせる。"
+}
