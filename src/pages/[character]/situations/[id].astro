@@ -97,10 +97,19 @@ const rewardText = situationRewardText(situation);
       !hasFlow && situation.kind === 'knockdown' && (
         <section>
           <h2>起き攻め</h2>
-          <p class="not-ready">
-            この状況からの起き攻めルートはまだ登録されていません。下の「この状況を通るコンボ」は、
-            このダウンに到達するコンボの一覧です（起き攻めの選択肢の一覧ではありません）。
-          </p>
+          {
+            situation.tags.includes('起き攻めなし') ? (
+              <p class="not-ready">
+                このダウンからは特筆すべき起き攻めはありません。下の「この状況を通るコンボ」は、
+                このダウンに到達するコンボの一覧です。
+              </p>
+            ) : (
+              <p class="not-ready">
+                この状況からの起き攻めルートは登録されていません。下の「この状況を通るコンボ」は、
+                このダウンに到達するコンボの一覧です（起き攻めの選択肢の一覧ではありません）。
+              </p>
+            )
+          }
         </section>
       )
     }
