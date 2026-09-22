@@ -1,7 +1,8 @@
 # 作業リスト・ロードマップ
 
-最終更新: 2026-09-13（docs ディレクトリ整理。§7 をダメージ計算の確定状況に更新、Phase 1 専用のガイドだった
-`PROTOTYPE.md` は削除、過去レビュー・調査メモは `docs/archive/` へ移動。他節は今回範囲外のため再判定していない）
+最終更新: 2026-09-15（ダメージ計算にモダン簡易入力補正を追加、SA1〜3/CAのモダン入力を全キャラ共通コマンドで確定、
+ブランカの前投げ後・中央の起き攻めツリーを修正、モダン専用ブランカコンボ12種を登録、起き攻め未整備ノードの
+UX修正（「起き攻めなし」タグでの出し分け）。詳細は git log 参照）
 仕様の正は `docs/SPEC.md`。このファイルは**作業の一覧と進捗**。
 
 ## ステータス凡例
@@ -25,15 +26,50 @@
   P2-3（検証ゲート）/ P2-5（CONTENT.md 草案）/ P2-8（SEO 土台）/ RV-05・RV-06・RV-07
 - 2026-09-12 レビュー（R01〜R12）: 全12件対応済み（詳細・対応コミットは `docs/SPEC.md` の変更履歴表、
   元レビューは `docs/archive/REVIEW-2026-09-12.md`）
-- ダメージ計算（クラシック）: 確定・実装済み、監査運用中（§7 参照）
+- ダメージ計算: クラシックは確定・実装済み、モダンのSPボタン簡易入力補正（×0.8）も実装済み（監査運用中、§7 参照）。
+  SA1〜3・CA のモダン入力は全キャラ共通コマンドとしてオーナー確認済み
 - 2キャラクター対応（マノン・ブランカ）、技辞典は公式フレームデータで全技を取り込み・照合済み（2026-09-13）
-- テスト green（83件）・`astro check` 0エラー・build 114 ページ（検証ゲート込み）
+- ブランカのモダン専用コンボ12種を対戦ガイドから登録（弱/中攻撃・DI・確定反撃・スタン、2026-09-15）
+- 起き攻めUX: 起き攻めルート未登録の終着点で紛らわしかったフォールバック表示を修正。「起き攻めなし」タグで
+  「本当に起き攻めが無い」と「単に未登録」を区別できるようにした（2026-09-15、§1-D参照）
+- テスト green（87件）・`astro check` 0エラー・build 156 ページ（検証ゲート込み）
 
 **本番公開中**: https://sf6.amanohashi.date （Cloudflare Workers Builds、`main` push で自動デプロイ）。
 
-**残るオーナー作業**: P2-4a（実機での入力方式確認、優先度は低め）。
+**残るオーナー作業**: P2-4a（実機での入力方式確認、優先度は低め）／ §1-D の起き攻め未確認リスト（実機で確認でき次第）。
 **残る開発**: P2-6 拡張（画像・動画・フルプレビュー）／ P2-10 UX 実機検証 ／ P2-11 deriveModern ／ P2-12 公開ゲート／
 DC-6（ダメージ計算の公開表示への接続）／DC-7 残作業（モダン簡易入力の inputModern 補完・実測裏取り、§7 参照）。
+
+---
+
+## 1-D. 起き攻め未確認リスト（2026-09-15、オーナー実機確認待ち）
+
+コンボの終着点になっている状況ノードのうち、起き攻めルートが1件も登録されていないもの。
+「実際に起き攻めがある（後で埋める）」か「起き攻めというほどのものが無い（`tags` に `起き攻めなし` を追加）」かを
+オーナーに確認してから対応する。**全部に起き攻めがあるとは限らない**（無いものは無い、というのがオーナーの弁）。
+
+`kd_after_ranversement_mid`（ランヴェルセ締め後・中央）は確認済み：弱/中/強どれで締めても起き攻めの選択肢は
+共通、実際に起き攻めは存在するので「起き攻めなし」タグは付けない（ラベルの強度表記だけ2026-09-15に修正済み）。
+
+未確認（11件）:
+
+| situation id | ラベル | 終着点にしているコンボ |
+|---|---|---|
+| `blanka_kd_after_cannon_loop_mid` | ローリングキャノン連携後・中央 | `blanka-mid-2mk-electric-sa2` |
+| `blanka_kd_after_rolling_mid` | 中ローリングアタック締め後・中央 | `blanka-mid-2mp-cr-5hk-wildlift` |
+| `blanka_kd_after_sa3_mid` | SA3締め後・中央 | `blanka-modern-lk-finisher` / `blanka-modern-mk-finisher` / `blanka-modern-punish-finisher` |
+| `blanka_kd_after_vertical_h_corner` | 強バーチカルローリング締め後・画面端 | `blanka-modern-di-corner-basic` |
+| `blanka_kd_after_vertical_m_mid` | 中バーチカルローリング締め後・中央 | `blanka-modern-di-basic` / `blanka-modern-di-gauge` / `blanka-modern-mk-gauge` / `blanka-modern-punish-basic` / `blanka-modern-stun-gauge` |
+| `kd_after_degage_mid_mid`（manon） | 中デガジェ締め後・中央 | `manon-punish-5hk-pc-degage` |
+| `kd_after_manege_dore_corner`（manon） | マネージュ・ドレ後・画面端 | `manon-corner-di-hoseigiri` |
+| `kd_after_manege_dore_mid`（manon） | マネージュ・ドレ後・中央 | `manon-jump-jhk-hoseigiri-feint` |
+| `kd_after_ranversement_corner`（manon） | ランヴェルセ締め後・画面端 | `manon-corner-di-wall-ranversement` |
+| `kd_after_rondpoint_mid`（manon） | 中ロン・ポワン締め後・中央 | `manon-mid-5mp-cr-rondpoint` |
+| `kd_after_super_mid`（manon） | スーパーアーツ〆後・中央 | `manon-mid-5mp-lethal-sa3` / `manon-punish-5hk-pc-sa2` |
+
+対応方法: 各ノードについて、①実際に起き攻めの選択肢がある → 該当キャラの起き攻めをヒアリングして
+`route`（`kind:"okizeme"`）を追加、②本当に起き攻めが無い → `situation.tags` に `"起き攻めなし"` を追加するだけ。
+実装（UI側の出し分け）は `src/pages/[character]/situations/[id].astro` に反映済みなので、データを直すだけでよい。
 
 ---
 
